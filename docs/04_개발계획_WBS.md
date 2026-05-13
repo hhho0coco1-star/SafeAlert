@@ -56,7 +56,7 @@
 | 1-A-2 | User 엔티티, Repository 구현 | 0.5일 | [O] |
 | 1-A-3 | 회원가입 API 구현 (bcrypt 해싱) | 0.5일 | [O] |
 | 1-A-4 | 로그인 + JWT Access/Refresh Token 발급 | 1일 | [O] |
-| 1-A-5 | Redis에 Refresh Token 저장/검증 | 0.5일 | [ ] |
+| 1-A-5 | Redis에 Refresh Token 저장/검증 | 0.5일 | [O] |
 | 1-A-6 | 토큰 갱신 / 로그아웃 API 구현 | 0.5일 | [ ] |
 | 1-A-7 | Kubernetes Deployment, Service YAML 작성 | 0.5일 | [ ] |
 | 1-A-8 | 단위 테스트 작성 | 0.5일 | [ ] |
