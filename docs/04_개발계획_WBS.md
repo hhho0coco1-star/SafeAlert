@@ -26,15 +26,15 @@
 
 | # | 작업 | 예상 소요 | 완료 |
 |---|------|---------|------|
-| 0-1 | minikube 설치 및 클러스터 시작 | 0.5일 | [ ] |
-| 0-2 | Helm 설치 및 저장소 추가 | 0.5일 | [ ] |
-| 0-3 | Kafka + Zookeeper Helm 배포 | 1일 | [ ] |
-| 0-4 | Redis Cluster Helm 배포 | 0.5일 | [ ] |
-| 0-5 | PostgreSQL (5개 인스턴스) 배포 | 1일 | [ ] |
-| 0-6 | MongoDB 배포 | 0.5일 | [ ] |
-| 0-7 | Namespace 분리 (app/infra/monitor) | 0.5일 | [ ] |
-| 0-8 | NGINX Ingress Controller 설치 | 0.5일 | [ ] |
-| 0-9 | 인프라 연결 테스트 | 0.5일 | [ ] |
+| 0-1 | minikube 설치 및 클러스터 시작 | 0.5일 | [x] |
+| 0-2 | Helm 설치 및 저장소 추가 | 0.5일 | [x] |
+| 0-3 | Kafka 배포 (apache/kafka KRaft 모드) | 1일 | [x] |
+| 0-4 | Redis standalone 배포 | 0.5일 | [x] |
+| 0-5 | PostgreSQL 배포 (auth/subscription/notification DB) | 1일 | [x] |
+| 0-6 | MongoDB 배포 (event_store) | 0.5일 | [x] |
+| 0-7 | Namespace 분리 (app/infra/monitor) | 0.5일 | [x] |
+| 0-8 | NGINX Ingress Controller 설치 | 0.5일 | [x] |
+| 0-9 | 인프라 연결 테스트 (Redis PING, PostgreSQL DB 조회, Kafka 토픽 생성) | 0.5일 | [x] |
 
 **검증 기준:**
 - `kubectl get pods -n safealert-infra` → 모든 Pod Running
