@@ -1,0 +1,17 @@
+controller:
+  replicaCount: 1          # 로컬 환경이라 1개로 충분 (운영은 3개)
+
+kraft:
+  enabled: true            # Zookeeper 없이 Kafka 자체만으로 운영하는 최신 방식
+
+persistence:
+  enabled: true
+  size: 5Gi                # 메시지 저장 디스크 크기
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"

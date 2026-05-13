@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: safealert-app
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: safealert-infra
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: safealert-monitor

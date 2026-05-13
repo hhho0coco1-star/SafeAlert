@@ -1,0 +1,25 @@
+auth:
+  postgresPassword: "safealert123"
+  username: "safealert"
+  password: "safealert123"
+  database: "auth_db"      # 기본 DB. 나머지는 initdb 스크립트로 생성
+
+primary:
+  persistence:
+    enabled: true
+    size: 5Gi
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "400m"
+  initdb:
+    scripts:
+      init.sql: |
+        CREATE DATABASE subscription_db;
+        CREATE DATABASE notification_db;
+        GRANT ALL PRIVILEGES ON DATABASE auth_db TO safealert;
+        GRANT ALL PRIVILEGES ON DATABASE subscription_db TO safealert;
+        GRANT ALL PRIVILEGES ON DATABASE notification_db TO safealert;

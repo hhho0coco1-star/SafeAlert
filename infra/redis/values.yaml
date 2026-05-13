@@ -1,0 +1,16 @@
+architecture: standalone     # 로컬용 단일 인스턴스 (운영은 replication)
+
+auth:
+  enabled: false           # 로컬 개발 편의를 위해 인증 비활성화
+
+master:
+  persistence:
+    enabled: true
+    size: 2Gi
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"

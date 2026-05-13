@@ -1,0 +1,35 @@
+# Java / Spring Boot 빌드 산출물
+target/
+*.class
+*.jar
+*.war
+
+# IDE 설정 파일
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# Maven / Gradle
+.mvn/
+.gradle/
+build/
+
+# 환경변수 / 시크릿 (절대 커밋 금지)
+.env
+*.env
+application-local.yml
+application-secret.yml
+*-secret.yaml
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# 로그
+*.log
+logs/
+
+# Kubernetes 시크릿 파일 (생성 시 제외)
+*-secret.yaml
+*kubeconfig*
