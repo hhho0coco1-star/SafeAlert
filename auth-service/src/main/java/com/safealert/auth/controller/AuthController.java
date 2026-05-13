@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.safealert.auth.dto.LoginRequest;
+import com.safealert.auth.dto.TokenResponse;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,5 +28,11 @@ public class AuthController {
         // @Valid -> "데이터가 들어오자마자 제대로 된 형식인지 검사해라"라는 뜻
         authService.signup(request);
         return ResponseEntity.ok(ApiResponse.ok(null));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<TokenResponse>> login(@Valid @RequestBody LoginRequest request) {
+        TokenResponse tokenResponse = authService.login(request);
+        return ResponseEntity.ok(ApiResponse.ok(tokenResponse));
     }
 }

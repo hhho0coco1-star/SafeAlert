@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.safealert.auth.dto.LoginRequest;
+import com.safealert.auth.dto.TokenResponse;
+import com.safealert.auth.security.JwtProvider;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +17,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public void signup(SignupRequest request) {
@@ -24,5 +28,20 @@ public class AuthService {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User user = User.create(request.getEmail(), encodedPassword, request.getNickname());
         userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public TokenResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다");
+        }
+
+        String accessToken = jwtProvider.generateAccessToken(user.getUserId());
+        String refreshToken = jwtProvider.generateRefreshToken(user.getUserId());
+
+        return new TokenResponse(accessToken, refreshToken);
     }
 }

@@ -9,4 +9,5 @@
    - 예시: `[Phase 1-A-1] Spring Boot auth-service 프로젝트 초기 구성 및 Gradle 의존성 설정`
 4. `git add .` 실행
 5. 작성한 메시지로 커밋 실행
-6. 커밋 완료 후 결과 요약 보고
+6. 커밋 완료 후 `git push origin main` 실행하여 github에 psuh 진행
+7. 모두 완료 후 결과 요약 보고
