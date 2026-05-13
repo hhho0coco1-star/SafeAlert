@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.safealert.auth.dto.LoginRequest;
 import com.safealert.auth.dto.TokenResponse;
+import org.springframework.http.HttpHeaders;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -34,5 +35,22 @@ public class AuthController {
     public ResponseEntity<ApiResponse<TokenResponse>> login(@Valid @RequestBody LoginRequest request) {
         TokenResponse tokenResponse = authService.login(request);
         return ResponseEntity.ok(ApiResponse.ok(tokenResponse));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<String>> refresh(@RequestBody String refreshToken) {
+        String newAccessToken = authService.refresh(refreshToken);
+        return ResponseEntity.ok(ApiResponse.ok(newAccessToken));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(
+            @org.springframework.web.bind.annotation.RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
+        // ResponseEntity<...> (가장 바깥 상자 - HTTP 상태 코드)
+        // ApiResponse<...> (중간 상자 - 공통 응답 포맷)
+        // <Void> (가장 안쪽 - 데이터 내용물)
+        String accessToken = authHeader.replace("Bearer ", "");
+        authService.logout(accessToken);
+        return ResponseEntity.ok(ApiResponse.ok(null));
     }
 }

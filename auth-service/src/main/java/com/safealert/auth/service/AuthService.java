@@ -12,6 +12,7 @@ import com.safealert.auth.dto.TokenResponse;
 import com.safealert.auth.security.JwtProvider;
 import org.springframework.data.redis.core.RedisTemplate;
 import java.util.concurrent.TimeUnit;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RedisTemplate<String, String> redisTemplate;
 
-    @Transactional
+    @Transactional // "All or Nothing"
     public void signup(SignupRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("이미 가입된 이메일입니다");
@@ -54,5 +55,23 @@ public class AuthService {
         );
 
         return new TokenResponse(accessToken, refreshToken);
+    }
+
+    public String refresh(String refreshToken) {
+        // 전달받은 리프레시 토큰이 서버(Redis)에 저장된 것과 일치하는지 확인하여, 
+        // 통과 시 새로운 액세스 토큰을 발급해주는 토큰 갱신 로직
+        UUID userId = jwtProvider.getUserId(refreshToken);
+        String savedToken = redisTemplate.opsForValue().get("token:refresh:" + userId);
+
+        if (savedToken == null || !savedToken.equals(refreshToken)) {
+            throw new IllegalArgumentException("유효하지 않은 Refresh Token입니다");
+        }
+
+        return jwtProvider.generateAccessToken(userId);
+    }
+
+    public void logout(String accessToken) {
+        UUID userId = jwtProvider.getUserId(accessToken);
+        redisTemplate.delete("token:refresh:" + userId);
     }
 }
