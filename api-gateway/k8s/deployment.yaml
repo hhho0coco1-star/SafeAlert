@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: safealert-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: api-gateway:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AUTH_SERVICE_URL
+              value: "http://auth-service.safealert-app.svc.cluster.local:8081"
+            - name: SUBSCRIPTION_SERVICE_URL
+              value: "http://subscription-service.safealert-app.svc.cluster.local:8082"
+            - name: NOTIFICATION_SERVICE_URL
+              value: "http://notification-service.safealert-app.svc.cluster.local:8083"
+            - name: REDIS_HOST
+              value: "redis-master.safealert-infra.svc.cluster.local"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: secret
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"
