@@ -12,3 +12,23 @@
 4. **다음 단계 안내 후 대기**: 다음 단계를 설명하고 다시 승인을 기다린다
 
 여러 단계를 연속으로 실행하지 말고, 반드시 각 단계마다 사용자의 확인을 받아야 한다.
+
+---
+
+## API 설계서 준수 규칙 (필수)
+
+새로운 API를 구현하거나 기존 API를 수정할 때는 반드시 아래 절차를 따른다:
+
+1. **설계서 먼저 확인**: `docs/03_API_DB설계.md`를 읽어 해당 API의 Request / Response 스펙을 확인한다
+2. **DTO 일치 여부 검토**: 설계서의 `data` 필드와 실제 DTO 클래스의 필드가 일치하는지 대조한다
+3. **불일치 발견 시 보고**: 설계서와 구현이 다르면 사용자에게 먼저 보고하고 어떻게 할지 결정을 받는다
+4. **구현은 설계서 기준**: 특별한 이유가 없으면 구현을 설계서에 맞게 수정한다 (설계서가 기준)
+
+### 현재까지 확인된 설계서 기반 응답 스펙
+
+| API | data 필드 |
+|-----|----------|
+| POST /api/auth/signup | `{ userId, email, nickname }` |
+| POST /api/auth/login | `{ accessToken, refreshToken, expiresIn: 900 }` |
+| POST /api/auth/refresh | `{ accessToken, expiresIn: 900 }` |
+| POST /api/auth/logout | `200 OK` (data 없음) |

@@ -23,15 +23,13 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RedisTemplate<String, String> redisTemplate;
 
-    @Transactional // "All or Nothing"
-    public void signup(SignupRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+    @Transactional // All or Nothing
+    public User signup(SignupRequest request) {
+        if (userRepository.existsByEmail(request.getEmail()))
             throw new IllegalArgumentException("이미 가입된 이메일입니다");
-        }
-
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User user = User.create(request.getEmail(), encodedPassword, request.getNickname());
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
