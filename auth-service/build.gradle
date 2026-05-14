@@ -44,8 +44,13 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // ByteBuddy Java 24 지원 버전
+    testImplementation 'net.bytebuddy:byte-buddy:1.15.10'
+    testImplementation 'net.bytebuddy:byte-buddy-agent:1.15.10'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+    jvmArgs '-XX:+EnableDynamicAgentLoading', '-Xshare:off'
 }
