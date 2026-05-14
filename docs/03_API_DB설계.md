@@ -262,7 +262,38 @@
 
 ---
 
-## 6. 에러 코드 정의
+## 6. 프론트엔드 페이지 설계
+
+### 기술 스택
+- React 18 + Vite
+- Axios (API 호출, JWT 인터셉터)
+- React Router v6 (페이지 라우팅)
+- STOMP.js + SockJS (WebSocket 실시간 알림)
+- Tailwind CSS (스타일링)
+
+### 페이지 목록
+
+| 페이지 | 경로 | 인증 | 사용 API |
+|--------|------|------|---------|
+| 랜딩 | `/` | 불필요 | 없음 |
+| 로그인 | `/login` | 불필요 | POST /api/auth/login |
+| 회원가입 | `/signup` | 불필요 | POST /api/auth/signup |
+| 메인 대시보드 | `/dashboard` | 필요 | GET /api/subscriptions, GET /api/notifications, WebSocket |
+| 구독 설정 | `/subscriptions` | 필요 | GET/POST/DELETE /api/subscriptions/regions, PUT /api/subscriptions/categories |
+| 알림 이력 | `/history` | 필요 | GET /api/notifications |
+| 내 계정 | `/profile` | 필요 | POST /api/auth/logout |
+| 관리자 대시보드 | `/admin` | 관리자 | GET /api/admin/stats/alerts, POST /api/admin/alerts/manual |
+
+### 공통 규칙
+- JWT Access Token → `localStorage`에 저장
+- 모든 API 요청 시 axios 인터셉터가 자동으로 `Authorization: Bearer {token}` 헤더 추가
+- Access Token 만료 시 자동으로 `/api/auth/refresh` 호출 후 재요청
+- 로그인 안 한 사용자가 인증 필요 페이지 접근 시 `/login`으로 자동 이동
+- 관리자가 아닌 사용자가 `/admin` 접근 시 `/dashboard`로 자동 이동
+
+---
+
+## 7. 에러 코드 정의
 
 | 코드 | HTTP 상태 | 설명 |
 |------|----------|------|
