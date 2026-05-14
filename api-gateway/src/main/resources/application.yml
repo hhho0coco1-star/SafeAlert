@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: 6379
+
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/auth/**
+
+        - id: subscription-service
+          uri: ${SUBSCRIPTION_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/subscriptions/**
+
+        - id: notification-service
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/notifications/**
+
+        - id: notification-ws
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/notifications/ws/**
+
+        - id: admin-service
+          uri: ${ADMIN_SERVICE_URL:http://localhost:8087}
+          predicates:
+            - Path=/api/admin/**
+
+jwt:
+  secret: ${JWT_SECRET:default-secret-key-for-development-minimum-32-chars}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
