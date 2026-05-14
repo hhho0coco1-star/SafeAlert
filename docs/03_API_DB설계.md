@@ -436,7 +436,7 @@
 | 용도 | Key 패턴 | 타입 | TTL | 예시 |
 |------|----------|------|-----|------|
 | Refresh Token | `token:refresh:{userId}` | String | 7일 | `token:refresh:abc123` |
-| Rate Limit | `ratelimit:{ip}:{window}` | String | 1분 | `ratelimit:192.168.1.1:202501011200` |
+| Rate Limit | `ratelimit:{ip}` | String | 1분 | `ratelimit:192.168.1.1` |
 | 알림 중복 방지 | `alert:dedup:{alertId}` | String | 24시간 | `alert:dedup:uuid` |
 | 알림 캐시 | `alert:recent:{regionCode}` | List | 5분 | `alert:recent:11010` |
 | WS 세션 | `ws:user:{userId}` | String | Session | `ws:user:abc123` |
