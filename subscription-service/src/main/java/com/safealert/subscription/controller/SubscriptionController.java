@@ -17,7 +17,7 @@ public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
 
-    @GetMapping("/me")
+    @GetMapping
     public ResponseEntity<SubscriptionResponse> getMySubscription(
             @RequestHeader("X-User-Id") String userId) {
         return ResponseEntity.ok(subscriptionService.getMySubscription(UUID.fromString(userId)));
@@ -37,10 +37,11 @@ public class SubscriptionController {
     }
 
     @DeleteMapping("/regions/{regionCode}")
-    public ResponseEntity<SubscriptionResponse> removeRegion(
+    public ResponseEntity<Void> removeRegion(
             @RequestHeader("X-User-Id") String userId,
             @PathVariable String regionCode) {
-        return ResponseEntity.ok(subscriptionService.removeRegion(UUID.fromString(userId), regionCode));
+        subscriptionService.removeRegion(UUID.fromString(userId), regionCode);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/categories")

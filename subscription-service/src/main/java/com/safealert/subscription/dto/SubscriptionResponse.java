@@ -19,12 +19,12 @@ public class SubscriptionResponse {
 
     @Getter
     public static class RegionDto {
-        private String regionCode;
-        private String regionName;
+        private String code;
+        private String name;
 
         public RegionDto(SubscriptionRegion region) {
-            this.regionCode = region.getRegionCode();
-            this.regionName = region.getRegionName();
+            this.code = region.getRegionCode();
+            this.name = region.getRegionName();
         }
     }
 

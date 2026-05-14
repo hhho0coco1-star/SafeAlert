@@ -39,7 +39,7 @@ public class SubscriptionService {
     public SubscriptionResponse addRegion(UUID userId, SubscriptionRequest.AddRegion request) {
         Subscription subscription = subscriptionRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
-        subscription.addRegion(request.getRegionCode(), request.getRegionName());
+        subscription.addRegion(request.getRegionCode(), request.getRegionCode());
         return new SubscriptionResponse(subscription);
     }
 

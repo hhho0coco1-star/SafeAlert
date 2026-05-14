@@ -14,8 +14,6 @@ public class SubscriptionRequest {
     public static class AddRegion {
         @NotBlank
         private String regionCode;
-        @NotBlank
-        private String regionName;
     }
 
     @Getter
