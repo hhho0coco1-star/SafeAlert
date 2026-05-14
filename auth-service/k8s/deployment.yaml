@@ -1,0 +1,64 @@
+# 1. 스크립트의 버전과 종류 정의
+apiVersion: apps/v1        # 이 오브젝트를 생성하기 위해 사용하는 쿠버네티스 API 버전
+kind: Deployment           # 어떤 종류의 리소스를 만들 것인지 정의 (여기서는 배포 관리자)
+
+# 2. 배포 대상의 메타데이터 (이름, 소속 등)
+metadata:
+  name: auth-service       # 이 배포(Deployment)의 이름
+  namespace: safealert-app # 이 리소스가 생성될 논리적 그룹(네임스페이스)
+
+# 3. 배포될 상태의 상세 명세
+spec:
+  replicas: 1              # 항상 유지해야 하는 포드(서버 컨테이너 단위)의 개수
+  selector:
+    matchLabels:
+      app: auth-service    # 아래 template에 정의된 라벨과 일치하는 포드를 관리함
+  
+  # 4. 실제 생성될 포드(Pod)의 설계도
+  template:
+    metadata:
+      labels:
+        app: auth-service  # 이 포드를 식별하기 위한 라벨 (위의 selector와 일치해야 함)
+    spec:
+      containers:
+        - name: auth-service       # 컨테이너의 이름
+          image: auth-service:latest # 실행할 도커 이미지 경로 및 태그
+          ports:
+            - containerPort: 8081  # 컨테이너가 외부로 개방할 포트 번호
+
+          # 5. 리소스 할당 제한 (서버 자원 관리)
+          resources:
+            requests:              # 실행을 위해 필요한 최소 자원
+              cpu: 300m            # CPU 0.3개 분량
+              memory: 256Mi        # 메모리 256MB
+            limits:                # 사용할 수 있는 최대 자원 제한
+              cpu: 400m            # CPU 0.4개 분량
+              memory: 512Mi        # 메모리 512MB
+
+          # 6. 애플리케이션 내부에서 사용할 환경 변수 설정
+          env:
+            # DB 접속 주소 (Host, Port, DB명 포함)
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgresql.safealert-infra:5432/auth_db
+            
+            # DB 접속 계정명
+            - name: SPRING_DATASOURCE_USERNAME
+              value: safealert
+            
+            # DB 비밀번호 (보안을 위해 Secret 리소스에서 참조)
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets # auth-secrets라는 이름의 시크릿 뭉치에서
+                  key: db-password   # db-password라는 키에 해당하는 값을 가져옴
+            
+            # 레디스 서버 주소
+            - name: SPRING_DATA_REDIS_HOST
+              value: redis.safealert-infra
+            
+            # JWT 토큰 생성 및 검증을 위한 비밀키 (보안 사항)
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets # 시크릿에서 가져와서 보안 유지
+                  key: jwt-secret
