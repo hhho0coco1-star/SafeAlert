@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.safealert.subscription.dto.RegionCodeResponse;
+import java.util.List;
 
 import java.util.UUID;
 
@@ -49,5 +51,10 @@ public class SubscriptionController {
             @RequestHeader("X-User-Id") String userId,
             @Valid @RequestBody SubscriptionRequest.UpdateCategories request) {
         return ResponseEntity.ok(subscriptionService.updateCategories(UUID.fromString(userId), request));
+    }
+
+    @GetMapping("/regions/available") // 구독 가능한 지역 전체 목록을 반환 -> 인증 불필요
+    public ResponseEntity<List<RegionCodeResponse>> getAvailableRegions() {
+        return ResponseEntity.ok(subscriptionService.getAvailableRegions());
     }
 }

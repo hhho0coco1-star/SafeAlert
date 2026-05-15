@@ -7,6 +7,9 @@ import com.safealert.subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.safealert.subscription.repository.RegionCodeRepository;
+import com.safealert.subscription.dto.RegionCodeResponse;
+import java.util.List;
 
 import java.util.UUID;
 
@@ -17,6 +20,7 @@ public class SubscriptionService {
     // 스프링의 의존성 주입(DI)을 간결하고 안전하게 처리해주는 롬복 어노테이션
 
     private final SubscriptionRepository subscriptionRepository;
+    private final RegionCodeRepository regionCodeRepository;
 
     @Transactional(readOnly = true) // 읽기 전용 모드 -> 조회만 하겠다
     public SubscriptionResponse getMySubscription(UUID userId) {
@@ -39,7 +43,10 @@ public class SubscriptionService {
     public SubscriptionResponse addRegion(UUID userId, SubscriptionRequest.AddRegion request) {
         Subscription subscription = subscriptionRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
-        subscription.addRegion(request.getRegionCode(), request.getRegionCode());
+        String regionName = regionCodeRepository.findById(request.getRegionCode())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 지역 코드입니다."))
+                .getName();
+        subscription.addRegion(request.getRegionCode(), regionName);
         return new SubscriptionResponse(subscription);
     }
 
@@ -57,5 +64,12 @@ public class SubscriptionService {
                 .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
         subscription.updateCategories(request.getCategories());
         return new SubscriptionResponse(subscription);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RegionCodeResponse> getAvailableRegions() {
+        return regionCodeRepository.findAll().stream()
+                .map(RegionCodeResponse::new)
+                .toList();
     }
 }

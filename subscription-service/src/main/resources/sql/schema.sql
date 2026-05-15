@@ -35,3 +35,9 @@ CREATE TABLE IF NOT EXISTS outbox_events (
 );
 
 CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_events (status, created_at);
+
+CREATE TABLE IF NOT EXISTS region_codes (
+    code        VARCHAR(10) PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    parent_code VARCHAR(10)
+);
