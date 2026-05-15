@@ -11,6 +11,9 @@ import com.safealert.subscription.repository.RegionCodeRepository;
 import com.safealert.subscription.dto.RegionCodeResponse;
 import java.util.List;
 import com.safealert.subscription.dto.SubscriberResponse;
+import com.safealert.subscription.domain.OutboxEvent;
+import com.safealert.subscription.repository.OutboxEventRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.UUID;
 
@@ -22,6 +25,8 @@ public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
     private final RegionCodeRepository regionCodeRepository;
+    private final OutboxEventRepository outboxEventRepository;
+    private final ObjectMapper objectMapper;
 
     @Transactional(readOnly = true) // 읽기 전용 모드 -> 조회만 하겠다
     public SubscriptionResponse getMySubscription(UUID userId) {
@@ -37,6 +42,7 @@ public class SubscriptionService {
         }
         Subscription subscription = Subscription.create(userId);
         subscriptionRepository.save(subscription);
+        saveOutboxEvent(subscription, "SUBSCRIPTION_CREATED");
         return new SubscriptionResponse(subscription);
     }
 
@@ -48,6 +54,7 @@ public class SubscriptionService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 지역 코드입니다."))
                 .getName();
         subscription.addRegion(request.getRegionCode(), regionName);
+        saveOutboxEvent(subscription, "REGION_ADDED");
         return new SubscriptionResponse(subscription);
     }
 
@@ -56,6 +63,7 @@ public class SubscriptionService {
         Subscription subscription = subscriptionRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
         subscription.removeRegion(regionCode);
+        saveOutboxEvent(subscription, "REGION_REMOVED");
         return new SubscriptionResponse(subscription);
     }
 
@@ -64,6 +72,7 @@ public class SubscriptionService {
         Subscription subscription = subscriptionRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
         subscription.updateCategories(request.getCategories());
+        saveOutboxEvent(subscription, "CATEGORIES_UPDATED");
         return new SubscriptionResponse(subscription);
     }
 
@@ -79,5 +88,20 @@ public class SubscriptionService {
         List<UUID> userIds = subscriptionRepository
                 .findUserIdsByRegionCodeAndCategory(regionCode, category);
         return new SubscriberResponse(regionCode, category, userIds);
+    }
+
+    private void saveOutboxEvent(Subscription subscription, String eventType) {
+        try {
+            String payload = objectMapper.writeValueAsString(new java.util.HashMap<>() {{
+                put("subscriptionId", subscription.getSubscriptionId().toString());
+                put("userId", subscription.getUserId().toString());
+                put("eventType", eventType);
+            }});
+            outboxEventRepository.save(
+                OutboxEvent.create("SUBSCRIPTION", subscription.getSubscriptionId(), eventType, payload)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("OutboxEvent 저장 실패" , e);
+        }
     }
 }
