@@ -71,6 +71,19 @@
 | 1-B-4 | Rate Limiting 필터 (Redis 기반) | 0.5일 | [O] |
 | 1-B-5 | K8s 배포 | 0.5일 | [O] |
 
+### 1-E. OAuth2 간편로그인 (Google + Kakao) — 1-D 완료 후 진행
+
+| # | 작업 | 예상 소요 | 완료 |
+|---|------|---------|------|
+| 1-E-1 | Google OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | 0.5일 | [ ] |
+| 1-E-2 | Kakao OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | 0.5일 | [ ] |
+| 1-E-3 | users 테이블 oauth_provider / oauth_id 컬럼 추가 | 0.5일 | [ ] |
+| 1-E-4 | OAuth2 로그인 성공 핸들러 구현 (JWT 발급 + 리다이렉트) | 1일 | [ ] |
+| 1-E-5 | 프론트엔드 소셜 로그인 버튼 + 콜백 페이지 추가 | 0.5일 | [ ] |
+| 1-E-6 | API Gateway 화이트리스트에 OAuth2 경로 추가 | 0.5일 | [ ] |
+
+---
+
 ### 1-D. React 프론트엔드 (1.5주)
 
 | # | 작업 | 예상 소요 | 완료 |

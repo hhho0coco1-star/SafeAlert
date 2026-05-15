@@ -111,6 +111,44 @@
 
 ---
 
+### GET /api/auth/oauth2/google — Google 간편로그인 시작
+
+- 인증 불필요
+- 브라우저를 Google 로그인 페이지로 리다이렉트
+
+---
+
+### GET /api/auth/oauth2/kakao — Kakao 간편로그인 시작
+
+- 인증 불필요
+- 브라우저를 Kakao 로그인 페이지로 리다이렉트
+
+---
+
+### GET /api/auth/oauth2/callback/google — Google 로그인 콜백
+
+- Google 인증 완료 후 자동 호출
+- 신규 사용자 자동 가입 처리
+
+**Response:** 프론트엔드 콜백 URL로 리다이렉트
+```
+/oauth2/success?accessToken=eyJ...&refreshToken=eyJ...
+```
+
+---
+
+### GET /api/auth/oauth2/callback/kakao — Kakao 로그인 콜백
+
+- Kakao 인증 완료 후 자동 호출
+- 신규 사용자 자동 가입 처리
+
+**Response:** 프론트엔드 콜백 URL로 리다이렉트
+```
+/oauth2/success?accessToken=eyJ...&refreshToken=eyJ...
+```
+
+---
+
 ## 2. Subscription Service API
 
 ### GET /api/subscriptions — 내 구독 목록 조회
@@ -322,14 +360,16 @@
 |--------|------|------|------|
 | user_id | UUID | PK | 사용자 ID |
 | email | VARCHAR(100) | UNIQUE, NOT NULL | 이메일 |
-| password_hash | VARCHAR(255) | NOT NULL | bcrypt 해시 |
+| password_hash | VARCHAR(255) | NULL | bcrypt 해시 (소셜 로그인 시 NULL) |
 | nickname | VARCHAR(50) | NOT NULL | 닉네임 |
 | role | VARCHAR(20) | NOT NULL | USER / ADMIN |
+| oauth_provider | VARCHAR(20) | NULL | google / kakao (일반 로그인 시 NULL) |
+| oauth_id | VARCHAR(100) | NULL | OAuth 제공자의 사용자 고유 ID |
 | created_at | TIMESTAMP | NOT NULL | 생성일시 |
 | updated_at | TIMESTAMP | NOT NULL | 수정일시 |
 | is_deleted | BOOLEAN | DEFAULT false | 소프트 삭제 |
 
-**인덱스:** `email (UNIQUE)`
+**인덱스:** `email (UNIQUE)`, `(oauth_provider, oauth_id) UNIQUE`
 
 ---
 
