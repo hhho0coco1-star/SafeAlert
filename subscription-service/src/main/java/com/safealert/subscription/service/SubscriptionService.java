@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.safealert.subscription.repository.RegionCodeRepository;
 import com.safealert.subscription.dto.RegionCodeResponse;
 import java.util.List;
+import com.safealert.subscription.dto.SubscriberResponse;
 
 import java.util.UUID;
 
@@ -71,5 +72,12 @@ public class SubscriptionService {
         return regionCodeRepository.findAll().stream()
                 .map(RegionCodeResponse::new)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public SubscriberResponse getSubscribers(String regionCode, String category) {
+        List<UUID> userIds = subscriptionRepository
+                .findUserIdsByRegionCodeAndCategory(regionCode, category);
+        return new SubscriberResponse(regionCode, category, userIds);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.safealert.subscription.dto.RegionCodeResponse;
 import java.util.List;
+import com.safealert.subscription.dto.SubscriberResponse;
 
 import java.util.UUID;
 
@@ -57,4 +58,12 @@ public class SubscriptionController {
     public ResponseEntity<List<RegionCodeResponse>> getAvailableRegions() {
         return ResponseEntity.ok(subscriptionService.getAvailableRegions());
     }
+
+    @GetMapping("/subscribers")
+    public ResponseEntity<SubscriberResponse> getSubscribers(
+            @RequestParam String regionCode,
+            @RequestParam String category) {
+    return ResponseEntity.ok(subscriptionService.getSubscribers(regionCode, category)); 
+    }
+    
 }
