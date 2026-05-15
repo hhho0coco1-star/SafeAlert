@@ -33,3 +33,7 @@ spring:
 logging:
   level:
     com.safealert: INFO
+
+kafka:
+  topic:
+    subscription-events: subscription-events

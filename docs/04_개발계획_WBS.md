@@ -94,7 +94,7 @@
 | 1-C-3 | 지역 코드 데이터 로드 (행정구역 코드) | 0.5일 | [O] |
 | 1-C-4 | 구독자 목록 조회 API (Notification Service 호출용) | 0.5일 | [O] |
 | 1-C-5 | Outbox 테이블 및 발행 스케줄러 구현 | 1일 | [O] |
-| 1-C-6 | Kafka Producer 연동 | 0.5일 | [ ] |
+| 1-C-6 | Kafka Producer 연동 | 0.5일 | [O] |
 | 1-C-7 | K8s 배포 | 0.5일 | [ ] |
 
 **Phase 1 검증 기준:**

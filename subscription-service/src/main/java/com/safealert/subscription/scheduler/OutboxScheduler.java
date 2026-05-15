@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.List;
 
@@ -16,6 +18,10 @@ import java.util.List;
 public class OutboxScheduler {
 
     private final OutboxEventRepository outboxEventRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+
+    @Value("${kafka.topic.subscription-events:subscription-events}")
+    private String topic;
 
     @Scheduled(fixedDelay = 5000)
     @Transactional
@@ -35,7 +41,8 @@ public class OutboxScheduler {
     }
 
     private void publish(OutboxEvent event) {
-        // 1-C-6에서 Kafka Producer 연동
-        log.info("OutboxEvent 발행 대기: eventId={}, type={}", event.getEventId(), event.getEventType());
+        kafkaTemplate.send(topic, event.getAggregateId().toString(), event.getPayload());
+        log.info("Kafka 발행 완료: eventId={}, type={}, topic={}",
+                event.getEventId(), event.getEventType(), topic);
     }
 }
