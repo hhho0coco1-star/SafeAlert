@@ -46,6 +46,26 @@
 
 ---
 
+## 프론트엔드 페이지 구현 전 목업 확인 (필수 준수)
+
+프론트엔드 페이지(*.jsx)를 새로 구현하거나 수정할 때는 반드시 아래 순서를 따른다:
+
+1. `docs/mockup/` 폴더에서 해당 페이지의 목업 HTML 파일을 Read로 읽는다
+2. 목업의 레이아웃, 섹션 구조, 컴포넌트 구성을 파악한 후 구현을 시작한다
+3. 목업과 다르게 구현해야 할 경우 반드시 사용자에게 먼저 알리고 승인을 받는다
+
+| 페이지 | 목업 파일 |
+|--------|----------|
+| Landing.jsx | safealert_landing.html |
+| Login.jsx | safealert_login.html |
+| Dashboard.jsx | safealert_dashboard.html |
+| Subscriptions.jsx | safealert_subscriptions.html |
+| History.jsx | safealert_history.html |
+| Profile.jsx | safealert_profile.html |
+| Admin.jsx | safealert_admin.html |
+
+---
+
 ## 파일 단위 오타 체크 (필수 준수)
 
 사용자가 파일 입력 완료(ㅇㄹ 또는 "완료")를 알리면, 다음 파일 안내 전에 반드시 직전 파일을 Read로 읽어 오타/누락을 즉시 확인한다.
