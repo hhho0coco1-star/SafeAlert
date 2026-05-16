@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeAlert — 랜딩 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #1a1a1a; }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; border-bottom: 0.5px solid #e5e5e5; }
+  .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; color: #1a1a1a; }
+  .nav-logo i { font-size: 20px; color: #E24B4A; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-link { font-size: 14px; color: #666; text-decoration: none; }
+  .nav-link:hover { color: #1a1a1a; }
+  .nav-actions { display: flex; gap: 8px; }
+  .btn { padding: 7px 16px; border-radius: 8px; font-size: 14px; cursor: pointer; border: 0.5px solid #ccc; background: transparent; color: #1a1a1a; }
+  .btn:hover { background: #f5f5f5; }
+  .btn-primary { background: #E24B4A; color: #fff; border-color: #E24B4A; }
+  .btn-primary:hover { background: #c93f3e; }
+
+  /* ── 히어로: 2단 레이아웃 ── */
+  .hero-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 72px 48px 56px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .hero-left { flex: 0 0 440px; min-width: 0; }
+  .hero-right { flex: 0 0 360px; }
+
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: #FCEBEB; color: #A32D2D; font-size: 12px; padding: 4px 12px; border-radius: 99px; margin-bottom: 24px; }
+  .hero-badge i { font-size: 14px; }
+  .hero-left h1 { font-size: 34px; font-weight: 500; color: #1a1a1a; line-height: 1.25; margin-bottom: 16px; }
+  .hero-left h1 span { color: #E24B4A; }
+  .hero-left p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 12px; margin-bottom: 24px; }
+  .btn-lg { padding: 11px 28px; font-size: 15px; border-radius: 8px; }
+
+  /* 데이터 출처 배지 */
+  .hero-sources { display: flex; flex-direction: column; gap: 10px; }
+  .hero-sources-label { font-size: 11px; color: #bbb; letter-spacing: 0.04em; }
+  .hero-source-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .source-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 6px; border: 0.5px solid #e5e5e5; background: #fff; font-size: 12px; font-weight: 500; color: #444; }
+  .source-badge i { font-size: 13px; }
+
+  /* ── 알림 피드 ── */
+  .feed-box {
+    background: #fff;
+    border: 0.5px solid #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+  }
+  .feed-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid #e5e5e5;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    background: #fafafa;
+  }
+  .feed-header .live-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #E24B4A;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  .feed-list {
+    position: absolute;
+    top: 45px; left: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .feed-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    border-bottom: 0.5px solid #f0f0f0;
+    background: #fff;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .feed-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .feed-item.exit {
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .alert-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .alert-dot.red   { background: #E24B4A; }
+  .alert-dot.amber { background: #BA7517; }
+  .alert-dot.blue  { background: #378ADD; }
+  .alert-dot.green { background: #639922; }
+
+  .feed-content { flex: 1; min-width: 0; }
+  .feed-title { font-size: 12px; font-weight: 500; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .feed-meta  { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+  .alert-badge { font-size: 10px; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; }
+  .badge-red   { background: #FCEBEB; color: #A32D2D; }
+  .badge-amber { background: #FAEEDA; color: #854F0B; }
+  .badge-blue  { background: #E6F1FB; color: #185FA5; }
+  .badge-green { background: #EAF3DE; color: #3B6D11; }
+
+  /* 상하 페이드 마스크 */
+  .feed-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #fff);
+    pointer-events: none;
+  }
+
+  /* ── 통계 ── */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 48px 64px; max-width: 800px; margin: 0 auto; }
+  .stat-card { background: #f8f8f6; border-radius: 8px; padding: 20px; text-align: center; }
+  .stat-num { font-size: 28px; font-weight: 500; color: #1a1a1a; }
+  .stat-label { font-size: 13px; color: #666; margin-top: 4px; }
+
+  .section-title { font-size: 22px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; text-align: center; }
+  .section-sub { font-size: 14px; color: #666; text-align: center; margin-bottom: 32px; }
+
+  .features { padding: 0 48px 64px; max-width: 880px; margin: 0 auto; }
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .feature-card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 20px; }
+  .feature-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 18px; }
+  .feature-icon.red   { background: #FCEBEB; color: #A32D2D; }
+  .feature-icon.blue  { background: #E6F1FB; color: #185FA5; }
+  .feature-icon.green { background: #EAF3DE; color: #3B6D11; }
+  .feature-icon.amber { background: #FAEEDA; color: #854F0B; }
+  .feature-card h3 { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 6px; }
+  .feature-card p  { font-size: 13px; color: #666; line-height: 1.6; }
+
+  .alert-preview { padding: 0 48px 64px; max-width: 880px; margin: 0 auto; }
+  .alert-list { display: flex; flex-direction: column; gap: 8px; }
+  .alert-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #fff; border: 0.5px solid #e5e5e5; border-radius: 8px; }
+  .alert-content { flex: 1; }
+  .alert-title { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+  .alert-meta  { font-size: 12px; color: #888; margin-top: 2px; }
+  .alert-badge-lg { font-size: 11px; padding: 3px 8px; border-radius: 99px; flex-shrink: 0; }
+
+  .cta { padding: 48px; text-align: center; background: #f8f8f6; margin: 0 48px 48px; border-radius: 12px; max-width: 784px; margin-left: auto; margin-right: auto; }
+  .cta h2 { font-size: 22px; font-weight: 500; margin-bottom: 8px; }
+  .cta p  { font-size: 14px; color: #666; margin-bottom: 28px; }
+
+  /* CTA 카테고리 배지 */
+  .cta-categories { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+  .cta-cat { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 99px; font-size: 13px; font-weight: 500; }
+  .cta-cat i { font-size: 15px; }
+  .cta-cat.red   { background: #FCEBEB; color: #A32D2D; }
+  .cta-cat.amber { background: #FAEEDA; color: #854F0B; }
+  .cta-cat.blue  { background: #E6F1FB; color: #185FA5; }
+  .cta-cat.green { background: #EAF3DE; color: #3B6D11; }
+
+  /* CTA 3단계 플로우 */
+  .cta-steps { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 32px; }
+  .cta-step { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 140px; }
+  .cta-step-icon { width: 44px; height: 44px; border-radius: 12px; background: #fff; border: 0.5px solid #e5e5e5; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #E24B4A; }
+  .cta-step-num { font-size: 11px; font-weight: 600; color: #E24B4A; letter-spacing: 0.05em; }
+  .cta-step-label { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+  .cta-step-sub { font-size: 11px; color: #999; margin-top: -4px; }
+  .cta-arrow { color: #ccc; font-size: 18px; margin: 0 4px; padding-bottom: 24px; }
+
+  .footer { padding: 20px 48px; border-top: 0.5px solid #e5e5e5; display: flex; justify-content: space-between; align-items: center; }
+  .footer-text { font-size: 13px; color: #888; }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-link { font-size: 13px; color: #888; text-decoration: none; }
+  .footer-link:hover { color: #1a1a1a; }
+
+  .divider { height: 0.5px; background: #e5e5e5; margin: 0 48px 48px; }
+</style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <i class="ti ti-alert-triangle"></i>
+      SafeAlert
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="#">기능</a>
+      <a class="nav-link" href="#">알림 유형</a>
+      <a class="nav-link" href="#">공지사항</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn">로그인</button>
+      <button class="btn btn-primary">회원가입</button>
+    </div>
+  </nav>
+
+  <!-- 히어로 -->
+  <div class="hero-wrap">
+    <!-- 좌측: 텍스트 -->
+    <div class="hero-left">
+      <div class="hero-badge">
+        <i class="ti ti-circle-dot"></i>
+        실시간 재난 알림 서비스
+      </div>
+      <h1>재난 정보, 빠르게<br><span>하나로 받아보세요</span></h1>
+      <p>기상청·행정안전부·환경부 공공데이터를 통합하여<br>내 지역 재난 알림을 5초 이내 실시간으로 전달합니다.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg">무료로 시작하기</button>
+        <button class="btn btn-lg">서비스 둘러보기</button>
+      </div>
+
+      <div class="hero-sources">
+        <div class="hero-sources-label">공공데이터 공식 API 연동</div>
+        <div class="hero-source-badges">
+          <span class="source-badge"><i class="ti ti-cloud" style="color:#E24B4A;"></i> 기상청</span>
+          <span class="source-badge"><i class="ti ti-building" style="color:#639922;"></i> 행정안전부</span>
+          <span class="source-badge"><i class="ti ti-leaf" style="color:#378ADD;"></i> 환경부</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 우측: 실시간 알림 피드 -->
+    <div class="hero-right">
+      <div class="feed-box">
+        <div class="feed-header">
+          <div class="live-dot"></div>
+          실시간 알림
+        </div>
+        <div class="feed-list" id="feedList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 통계 -->
+  <div class="stats" id="statsSection">
+    <div class="stat-card">
+      <div class="stat-num" data-target="5" data-suffix="초">0초</div>
+      <div class="stat-label">재난 감지 후 알림 발송</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="4" data-suffix="종">0종</div>
+      <div class="stat-label">기상·지진·미세먼지·재난문자</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="99.9" data-suffix="%" data-decimal="1">0%</div>
+      <div class="stat-label">서비스 가용성</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 핵심 기능 -->
+  <section class="features">
+    <p class="section-title">핵심 기능</p>
+    <p class="section-sub">내 지역, 내가 원하는 알림만 선택하세요</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon red"><i class="ti ti-bolt"></i></div>
+        <h3>실시간 WebSocket 알림</h3>
+        <p>페이지를 새로고침하지 않아도 재난 발생 즉시 브라우저로 알림을 수신합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon blue"><i class="ti ti-map-pin"></i></div>
+        <h3>지역별 구독 설정</h3>
+        <p>시·도·군·구 단위로 관심 지역을 등록하고 해당 지역 알림만 선택적으로 받습니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green"><i class="ti ti-adjustments"></i></div>
+        <h3>알림 카테고리 선택</h3>
+        <p>기상특보, 지진, 미세먼지, 재난문자 중 원하는 유형만 골라 구독할 수 있습니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon amber"><i class="ti ti-history"></i></div>
+        <h3>알림 이력 조회</h3>
+        <p>과거에 수신한 알림을 날짜·카테고리별로 필터링하여 검색하고 확인합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>지금 바로 시작하세요</h2>
+    <p>회원가입 후 내 지역과 알림 유형을 설정하면 즉시 수신됩니다.</p>
+
+    <!-- B: 카테고리 배지 -->
+    <div class="cta-categories">
+      <span class="cta-cat red">  <i class="ti ti-cloud-storm"></i> 기상특보</span>
+      <span class="cta-cat amber"><i class="ti ti-wave-sine"></i>   지진</span>
+      <span class="cta-cat blue"> <i class="ti ti-wind"></i>        미세먼지</span>
+      <span class="cta-cat green"><i class="ti ti-message-dots"></i> 재난문자</span>
+    </div>
+
+    <!-- C: 3단계 온보딩 플로우 -->
+    <div class="cta-steps">
+      <div class="cta-step">
+        <div class="cta-step-icon"><i class="ti ti-user-plus"></i></div>
+        <div class="cta-step-num">STEP 1</div>
+        <div class="cta-step-label">회원가입</div>
+        <div class="cta-step-sub">이메일 또는 소셜</div>
+      </div>
+      <i class="ti ti-chevron-right cta-arrow"></i>
+      <div class="cta-step">
+        <div class="cta-step-icon"><i class="ti ti-map-pin"></i></div>
+        <div class="cta-step-num">STEP 2</div>
+        <div class="cta-step-label">지역·카테고리 설정</div>
+        <div class="cta-step-sub">내 관심 지역 선택</div>
+      </div>
+      <i class="ti ti-chevron-right cta-arrow"></i>
+      <div class="cta-step">
+        <div class="cta-step-icon"><i class="ti ti-bell-ringing"></i></div>
+        <div class="cta-step-num">STEP 3</div>
+        <div class="cta-step-label">실시간 알림 수신</div>
+        <div class="cta-step-sub">5초 이내 즉시 전달</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; justify-content: center;">
+      <button class="btn btn-primary btn-lg">무료 회원가입</button>
+      <button class="btn btn-lg">로그인</button>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <i class="ti ti-alert-triangle" style="font-size:16px; color: #E24B4A;"></i>
+      <span class="footer-text" style="font-weight: 500; color: #1a1a1a;">SafeAlert</span>
+    </div>
+    <span class="footer-text">공공데이터 기반 실시간 재난 알림 플랫폼</span>
+    <div class="footer-links">
+      <a class="footer-link" href="#">이용약관</a>
+      <a class="footer-link" href="#">개인정보처리방침</a>
+    </div>
+  </footer>
+
+<script>
+  /* ── A. 실시간 알림 피드 ── */
+  const alerts = [
+    { dot: 'red',   title: '서울특별시 전역 호우 경보 발령',       meta: '기상청 · 방금 전',    badge: '기상특보', badgeClass: 'badge-red'   },
+    { dot: 'amber', title: '경북 포항시 규모 3.2 지진 발생',        meta: '기상청 · 1분 전',    badge: '지진',    badgeClass: 'badge-amber' },
+    { dot: 'blue',  title: '수도권 미세먼지 농도 매우나쁨 예보',    meta: '환경부 · 3분 전',    badge: '미세먼지', badgeClass: 'badge-blue'  },
+    { dot: 'green', title: '부산 해운대구 산불 주의 재난문자',      meta: '행정안전부 · 5분 전', badge: '재난문자', badgeClass: 'badge-green' },
+    { dot: 'red',   title: '경기도 전역 강풍 주의보 발령',          meta: '기상청 · 7분 전',    badge: '기상특보', badgeClass: 'badge-red'   },
+    { dot: 'amber', title: '전남 여수시 규모 2.8 지진 발생',        meta: '기상청 · 10분 전',   badge: '지진',    badgeClass: 'badge-amber' },
+    { dot: 'blue',  title: '충청권 미세먼지 나쁨 지속',             meta: '환경부 · 12분 전',   badge: '미세먼지', badgeClass: 'badge-blue'  },
+    { dot: 'green', title: '강원 강릉시 폭설 재난문자 발송',        meta: '행정안전부 · 15분 전',badge: '재난문자', badgeClass: 'badge-green' },
+  ];
+
+  const VISIBLE_COUNT = 4;
+  const feedList = document.getElementById('feedList');
+  let currentIndex = 0;
+  let items = [];
+
+  function createItem(data) {
+    const el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = `
+      <div class="alert-dot ${data.dot}"></div>
+      <div class="feed-content">
+        <div class="feed-title">${data.title}</div>
+        <div class="feed-meta">${data.meta}</div>
+      </div>
+      <span class="alert-badge ${data.badgeClass}">${data.badge}</span>
+    `;
+    return el;
+  }
+
+  // 초기 4개 렌더
+  function initFeed() {
+    for (let i = 0; i < VISIBLE_COUNT; i++) {
+      const el = createItem(alerts[i % alerts.length]);
+      feedList.appendChild(el);
+      items.push(el);
+      setTimeout(() => el.classList.add('visible'), i * 150);
+    }
+    currentIndex = VISIBLE_COUNT;
+  }
+
+  // 주기적으로 맨 위 제거 + 맨 아래 추가
+  function rotateFeed() {
+    const outgoing = items.shift();
+    outgoing.classList.remove('visible');
+    outgoing.classList.add('exit');
+    setTimeout(() => outgoing.remove(), 400);
+
+    const newData = alerts[currentIndex % alerts.length];
+    currentIndex++;
+    const newEl = createItem(newData);
+    feedList.appendChild(newEl);
+    items.push(newEl);
+    setTimeout(() => newEl.classList.add('visible'), 50);
+  }
+
+  initFeed();
+  setInterval(rotateFeed, 2200);
+
+  /* ── C. 카운트업 ── */
+  function countUp(el) {
+    const target  = parseFloat(el.dataset.target);
+    const suffix  = el.dataset.suffix || '';
+    const decimal = parseInt(el.dataset.decimal || '0');
+    const duration = 1200;
+    const step = 16;
+    const steps = duration / step;
+    let current = 0;
+    const increment = target / steps;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = current.toFixed(decimal) + suffix;
+    }, step);
+  }
+
+  const statsSection = document.getElementById('statsSection');
+  let counted = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !counted) {
+        counted = true;
+        statsSection.querySelectorAll('[data-target]').forEach(el => countUp(el));
+      }
+    });
+  }, { threshold: 0.4 });
+
+  observer.observe(statsSection);
+</script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeAlert — 대시보드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; min-height: 100vh; }
+
+  /* ── 네비게이션 ── */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: #fff; border-bottom: 0.5px solid #e5e5e5; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: #1a1a1a; text-decoration: none; flex-shrink: 0; }
+  .nav-logo i { font-size: 18px; color: #E24B4A; }
+
+  .nav-tabs { display: flex; align-items: center; height: 100%; gap: 4px; }
+  .nav-tab { display: flex; align-items: center; gap: 6px; height: 100%; padding: 0 16px; font-size: 14px; color: #888; text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.15s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; }
+  .nav-tab:hover { color: #1a1a1a; }
+  .nav-tab.active { color: #E24B4A; border-bottom-color: #E24B4A; font-weight: 500; }
+  .nav-tab i { font-size: 15px; }
+
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-ws { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #639922; background: #EAF3DE; padding: 4px 10px; border-radius: 99px; }
+  .nav-ws .ws-dot { width: 6px; height: 6px; border-radius: 50%; background: #639922; animation: pulse 1.5s ease-in-out infinite; }
+  .nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: #FCEBEB; color: #E24B4A; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 0.5px solid #e5e5e5; }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
+
+  /* ── 본문 ── */
+  .main { max-width: 1040px; margin: 0 auto; padding: 28px 24px 48px; }
+
+  /* 인사말 */
+  .greeting { margin-bottom: 24px; }
+  .greeting h2 { font-size: 18px; font-weight: 500; color: #1a1a1a; }
+  .greeting p  { font-size: 13px; color: #888; margin-top: 3px; }
+
+  /* ── 상단 2단 그리드 ── */
+  .top-grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; margin-bottom: 16px; }
+
+  /* 카드 공통 */
+  .card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; border-bottom: 0.5px solid #f0f0f0; }
+  .card-title { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #1a1a1a; }
+  .card-title i { font-size: 15px; color: #888; }
+  .card-body { padding: 16px 20px; }
+
+  /* ── 실시간 피드 카드 ── */
+  .feed-card .card-body { padding: 0; }
+  .feed-item { display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-bottom: 0.5px solid #f5f5f5; transition: background 0.15s; cursor: default; }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-item:hover { background: #fafafa; }
+  .feed-item.new { animation: slideIn 0.4s ease; }
+  @keyframes slideIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+  .feed-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .feed-dot.red   { background: #E24B4A; }
+  .feed-dot.amber { background: #BA7517; }
+  .feed-dot.blue  { background: #378ADD; }
+  .feed-dot.green { background: #639922; }
+  .feed-content { flex: 1; min-width: 0; }
+  .feed-title { font-size: 13px; font-weight: 500; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .feed-meta  { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .feed-badge { font-size: 11px; padding: 3px 8px; border-radius: 99px; flex-shrink: 0; }
+
+  .badge-red   { background: #FCEBEB; color: #A32D2D; }
+  .badge-amber { background: #FAEEDA; color: #854F0B; }
+  .badge-blue  { background: #E6F1FB; color: #185FA5; }
+  .badge-green { background: #EAF3DE; color: #3B6D11; }
+
+  /* ── 구독 현황 카드 ── */
+  .sub-stat { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 0.5px solid #f0f0f0; }
+  .sub-stat:last-child { border-bottom: none; padding-bottom: 0; }
+  .sub-stat:first-child { padding-top: 0; }
+  .sub-stat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .sub-stat-icon.red   { background: #FCEBEB; color: #A32D2D; }
+  .sub-stat-icon.blue  { background: #E6F1FB; color: #185FA5; }
+  .sub-stat-icon.green { background: #EAF3DE; color: #3B6D11; }
+  .sub-stat-info { flex: 1; }
+  .sub-stat-label { font-size: 12px; color: #888; }
+  .sub-stat-val   { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-top: 1px; }
+  .sub-stat-val span { font-size: 12px; font-weight: 400; color: #aaa; margin-left: 2px; }
+
+  .btn-setting { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin-top: 14px; padding: 8px; border-radius: 8px; border: 0.5px solid #e5e5e5; background: #fafafa; font-size: 13px; color: #555; cursor: pointer; text-decoration: none; transition: background 0.15s; }
+  .btn-setting:hover { background: #f0f0f0; }
+  .btn-setting i { font-size: 14px; }
+
+  /* ── 요약 스탯 ── */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .stat-mini { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 10px; padding: 14px 16px; }
+  .stat-mini-label { font-size: 11px; color: #999; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+  .stat-mini-label i { font-size: 13px; }
+  .stat-mini-val { font-size: 20px; font-weight: 500; color: #1a1a1a; }
+  .stat-mini-val.red   { color: #E24B4A; }
+  .stat-mini-val.green { color: #639922; }
+
+  /* ── 최근 알림 이력 ── */
+  .history-card { margin-top: 0; }
+  .history-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 0.5px solid #f5f5f5; }
+  .history-item:last-child { border-bottom: none; }
+  .history-item:hover { background: #fafafa; }
+  .history-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .history-dot.red   { background: #E24B4A; }
+  .history-dot.amber { background: #BA7517; }
+  .history-dot.blue  { background: #378ADD; }
+  .history-dot.green { background: #639922; }
+  .history-content { flex: 1; min-width: 0; }
+  .history-title { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+  .history-meta  { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .history-time  { font-size: 11px; color: #bbb; flex-shrink: 0; }
+
+  .card-footer { padding: 12px 20px; border-top: 0.5px solid #f0f0f0; text-align: center; }
+  .card-footer a { font-size: 13px; color: #888; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .card-footer a:hover { color: #E24B4A; }
+
+  /* 빈 상태 */
+  .empty-state { padding: 32px 20px; text-align: center; color: #bbb; font-size: 13px; }
+  .empty-state i { font-size: 28px; display: block; margin-bottom: 8px; }
+
+  /* 링크 버튼 */
+  .btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 0.5px solid #ccc; background: transparent; color: #1a1a1a; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: background 0.15s; }
+  .btn:hover { background: #f5f5f5; }
+  .btn-primary { background: #E24B4A; color: #fff; border-color: #E24B4A; }
+  .btn-primary:hover { background: #c93f3e; }
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+  /* ── 알림 모달 ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    animation: fadeOverlay 0.2s ease;
+  }
+  .modal-overlay.show { display: flex; }
+  @keyframes fadeOverlay { from { opacity:0; } to { opacity:1; } }
+
+  .modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    animation: modalPop 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+  }
+  @keyframes modalPop { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+
+  /* 상단 컬러 헤더 */
+  .modal-head {
+    padding: 28px 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .modal-head.red   { background: #FCEBEB; }
+  .modal-head.amber { background: #FAEEDA; }
+  .modal-head.blue  { background: #E6F1FB; }
+  .modal-head.green { background: #EAF3DE; }
+
+  /* 진동 아이콘 */
+  .modal-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    animation: shake 0.5s ease 0.2s;
+  }
+  .modal-icon.red   { background: #E24B4A; color: #fff; }
+  .modal-icon.amber { background: #BA7517; color: #fff; }
+  .modal-icon.blue  { background: #378ADD; color: #fff; }
+  .modal-icon.green { background: #639922; color: #fff; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0) rotate(0); }
+    20%      { transform: translateX(-5px) rotate(-6deg); }
+    40%      { transform: translateX(5px) rotate(6deg); }
+    60%      { transform: translateX(-4px) rotate(-4deg); }
+    80%      { transform: translateX(4px) rotate(4deg); }
+  }
+
+  .modal-badge { font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; letter-spacing: 0.03em; }
+  .modal-badge.red   { background: #E24B4A; color: #fff; }
+  .modal-badge.amber { background: #BA7517; color: #fff; }
+  .modal-badge.blue  { background: #378ADD; color: #fff; }
+  .modal-badge.green { background: #639922; color: #fff; }
+
+  /* 경고 스트로브 테두리 */
+  .modal.red   { border: 2px solid #E24B4A; animation: modalPop 0.25s cubic-bezier(0.34,1.56,0.64,1), borderPulse-red 1s ease-in-out 0.4s 3; }
+  .modal.amber { border: 2px solid #BA7517; animation: modalPop 0.25s cubic-bezier(0.34,1.56,0.64,1), borderPulse-amber 1s ease-in-out 0.4s 3; }
+  .modal.blue  { border: 2px solid #378ADD; animation: modalPop 0.25s cubic-bezier(0.34,1.56,0.64,1), borderPulse-blue 1s ease-in-out 0.4s 3; }
+  .modal.green { border: 2px solid #639922; animation: modalPop 0.25s cubic-bezier(0.34,1.56,0.64,1), borderPulse-green 1s ease-in-out 0.4s 3; }
+
+  @keyframes borderPulse-red   { 0%,100%{box-shadow:0 0 0 0 rgba(226,75,74,0)}  50%{box-shadow:0 0 0 8px rgba(226,75,74,0.25)} }
+  @keyframes borderPulse-amber { 0%,100%{box-shadow:0 0 0 0 rgba(186,117,23,0)} 50%{box-shadow:0 0 0 8px rgba(186,117,23,0.25)} }
+  @keyframes borderPulse-blue  { 0%,100%{box-shadow:0 0 0 0 rgba(55,138,221,0)} 50%{box-shadow:0 0 0 8px rgba(55,138,221,0.25)} }
+  @keyframes borderPulse-green { 0%,100%{box-shadow:0 0 0 0 rgba(99,153,34,0)}  50%{box-shadow:0 0 0 8px rgba(99,153,34,0.25)} }
+
+  .modal-body { padding: 20px 28px 24px; text-align: center; }
+  .modal-title { font-size: 16px; font-weight: 600; color: #1a1a1a; line-height: 1.4; margin-bottom: 6px; }
+  .modal-meta  { font-size: 12px; color: #888; margin-bottom: 20px; }
+  .modal-time  { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #aaa; background: #f5f5f5; padding: 3px 10px; border-radius: 99px; margin-bottom: 20px; }
+
+  .modal-confirm {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    transition: filter 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .modal-confirm:hover { filter: brightness(0.9); }
+  .modal-confirm.red   { background: #E24B4A; }
+  .modal-confirm.amber { background: #BA7517; }
+  .modal-confirm.blue  { background: #378ADD; }
+  .modal-confirm.green { background: #639922; }
+</style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <nav class="nav">
+    <a class="nav-logo" href="safealert_landing.html">
+      <i class="ti ti-alert-triangle"></i>
+      SafeAlert
+    </a>
+
+    <div class="nav-tabs">
+      <a class="nav-tab active" href="#">
+        <i class="ti ti-layout-dashboard"></i> 대시보드
+      </a>
+      <a class="nav-tab" href="#">
+        <i class="ti ti-bell"></i> 구독 설정
+      </a>
+      <a class="nav-tab" href="#">
+        <i class="ti ti-history"></i> 알림 이력
+      </a>
+      <a class="nav-tab" href="#">
+        <i class="ti ti-user"></i> 내 계정
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-ws">
+        <div class="ws-dot"></div>
+        실시간 연결됨
+      </div>
+      <div class="nav-avatar">
+        <i class="ti ti-user"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 본문 -->
+  <main class="main">
+
+    <!-- 인사말 -->
+    <div class="greeting">
+      <h2>안녕하세요, 주임님 👋</h2>
+      <p>현재 서울특별시 외 2개 지역의 알림을 수신 중입니다.</p>
+    </div>
+
+    <!-- 요약 스탯 4개 -->
+    <div class="stat-row">
+      <div class="stat-mini">
+        <div class="stat-mini-label"><i class="ti ti-bell-ringing" style="color:#E24B4A;"></i> 오늘 수신 알림</div>
+        <div class="stat-mini-val red">7</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label"><i class="ti ti-cloud-storm" style="color:#E24B4A;"></i> 기상특보</div>
+        <div class="stat-mini-val red">3</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label"><i class="ti ti-wave-sine" style="color:#BA7517;"></i> 지진</div>
+        <div class="stat-mini-val" style="color:#BA7517;">1</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label"><i class="ti ti-wind" style="color:#378ADD;"></i> 미세먼지</div>
+        <div class="stat-mini-val" style="color:#378ADD;">2</div>
+      </div>
+    </div>
+
+    <!-- 상단 2단 그리드 -->
+    <div class="top-grid">
+
+      <!-- 실시간 알림 피드 -->
+      <div class="card feed-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="ti ti-bolt"></i>
+            실시간 알림
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#639922;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#639922;animation:pulse 1.5s ease-in-out infinite;"></div>
+            수신 중
+          </div>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div id="liveFeed"></div>
+        </div>
+        <div class="card-footer">
+          <a href="#">알림 이력 전체 보기 <i class="ti ti-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 구독 현황 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="ti ti-adjustments"></i>
+            내 구독 현황
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="sub-stat">
+            <div class="sub-stat-icon blue"><i class="ti ti-map-pin"></i></div>
+            <div class="sub-stat-info">
+              <div class="sub-stat-label">구독 지역</div>
+              <div class="sub-stat-val">3 <span>개 지역</span></div>
+            </div>
+          </div>
+          <div class="sub-stat" style="padding-left:0;">
+            <div style="padding-left:0; width:100%;">
+              <div style="font-size:11px; color:#bbb; margin-bottom:6px; padding-top:2px;">서울특별시 · 경기도 · 부산광역시</div>
+            </div>
+          </div>
+          <div class="sub-stat">
+            <div class="sub-stat-icon red"><i class="ti ti-bell"></i></div>
+            <div class="sub-stat-info">
+              <div class="sub-stat-label">구독 카테고리</div>
+              <div class="sub-stat-val">4 <span>종 전체</span></div>
+            </div>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; margin-bottom:8px;">
+            <span style="font-size:10px; padding:2px 8px; border-radius:99px; background:#FCEBEB; color:#A32D2D;">기상특보</span>
+            <span style="font-size:10px; padding:2px 8px; border-radius:99px; background:#FAEEDA; color:#854F0B;">지진</span>
+            <span style="font-size:10px; padding:2px 8px; border-radius:99px; background:#E6F1FB; color:#185FA5;">미세먼지</span>
+            <span style="font-size:10px; padding:2px 8px; border-radius:99px; background:#EAF3DE; color:#3B6D11;">재난문자</span>
+          </div>
+          <div class="sub-stat">
+            <div class="sub-stat-icon green"><i class="ti ti-clock"></i></div>
+            <div class="sub-stat-info">
+              <div class="sub-stat-label">마지막 알림 수신</div>
+              <div class="sub-stat-val">3 <span>분 전</span></div>
+            </div>
+          </div>
+          <a class="btn-setting" href="#">
+            <i class="ti ti-settings"></i> 구독 설정 변경
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+
+  <!-- 알림 모달 -->
+  <div class="modal-overlay" id="alertModal">
+    <div class="modal" id="modalCard">
+      <div class="modal-head" id="modalHead">
+        <div class="modal-icon" id="modalIcon"><i id="modalIconI" class="ti ti-alert-triangle"></i></div>
+        <span class="modal-badge" id="modalBadge">기상특보</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-title" id="modalTitle">알림 제목</div>
+        <div class="modal-meta" id="modalMeta">출처 · 시간</div>
+        <div class="modal-time"><i class="ti ti-clock"></i> <span id="modalTime">방금 전</span></div>
+        <button class="modal-confirm" id="modalConfirm" onclick="closeModal()">확인</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const alerts = [
+    { dot:'red',   title:'서울특별시 전역 호우 경보 발령',       meta:'기상청',      time:'방금 전',   badge:'기상특보', bc:'badge-red',   icon:'ti-cloud-storm'   },
+    { dot:'amber', title:'경북 포항시 규모 3.2 지진 발생',        meta:'기상청',      time:'1분 전',    badge:'지진',    bc:'badge-amber', icon:'ti-wave-sine'     },
+    { dot:'blue',  title:'수도권 미세먼지 농도 매우나쁨 예보',    meta:'환경부',      time:'3분 전',    badge:'미세먼지', bc:'badge-blue',  icon:'ti-wind'          },
+    { dot:'green', title:'부산 해운대구 산불 주의 재난문자',      meta:'행정안전부',  time:'5분 전',    badge:'재난문자', bc:'badge-green', icon:'ti-message-dots'  },
+    { dot:'red',   title:'경기도 전역 강풍 주의보 발령',          meta:'기상청',      time:'7분 전',    badge:'기상특보', bc:'badge-red',   icon:'ti-cloud-storm'   },
+    { dot:'amber', title:'전남 여수시 규모 2.8 지진 발생',        meta:'기상청',      time:'10분 전',   badge:'지진',    bc:'badge-amber', icon:'ti-wave-sine'     },
+    { dot:'blue',  title:'충청권 미세먼지 나쁨 지속',             meta:'환경부',      time:'12분 전',   badge:'미세먼지', bc:'badge-blue',  icon:'ti-wind'          },
+    { dot:'green', title:'강원 강릉시 폭설 재난문자 발송',        meta:'행정안전부',  time:'15분 전',   badge:'재난문자', bc:'badge-green', icon:'ti-message-dots'  },
+  ];
+
+  const MAX = 7;
+  const feed = document.getElementById('liveFeed');
+  let idx = 0;
+  let items = [];
+  let modalPending = null;
+
+  function makeItem(d, isNew) {
+    const el = document.createElement('div');
+    el.className = 'feed-item' + (isNew ? ' new' : '');
+    el.innerHTML = `
+      <div class="feed-dot ${d.dot}"></div>
+      <div class="feed-content">
+        <div class="feed-title">${d.title}</div>
+        <div class="feed-meta">${d.meta} · ${d.time}</div>
+      </div>
+      <span class="feed-badge ${d.bc}">${d.badge}</span>
+    `;
+    return el;
+  }
+
+  function showModal(d) {
+    const modal   = document.getElementById('modalCard');
+    const overlay = document.getElementById('alertModal');
+    const head    = document.getElementById('modalHead');
+
+    // 색상 클래스 초기화
+    modal.className   = 'modal ' + d.dot;
+    head.className    = 'modal-head ' + d.dot;
+    document.getElementById('modalIcon').className    = 'modal-icon ' + d.dot;
+    document.getElementById('modalIconI').className   = 'ti ' + d.icon;
+    document.getElementById('modalBadge').className   = 'modal-badge ' + d.dot;
+    document.getElementById('modalBadge').textContent = d.badge;
+    document.getElementById('modalTitle').textContent = d.title;
+    document.getElementById('modalMeta').textContent  = d.meta;
+    document.getElementById('modalTime').textContent  = d.time;
+    document.getElementById('modalConfirm').className = 'modal-confirm ' + d.dot;
+
+    // 모달 재실행 애니메이션 리셋
+    modal.style.animation = 'none';
+    modal.offsetHeight;
+    modal.style.animation = '';
+
+    overlay.classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('alertModal').classList.remove('show');
+  }
+
+  // 초기 7개 (모달 없이)
+  for (let i = 0; i < MAX; i++) {
+    const el = makeItem(alerts[i % alerts.length], false);
+    feed.appendChild(el);
+    items.push(el);
+    idx++;
+  }
+
+  // 2.5초마다 새 알림 + 모달 표시
+  setInterval(() => {
+    const out = items.shift();
+    out.style.transition = 'opacity 0.3s, transform 0.3s';
+    out.style.opacity = '0';
+    out.style.transform = 'translateY(-8px)';
+    setTimeout(() => out.remove(), 300);
+
+    const d = alerts[idx % alerts.length];
+    idx++;
+    const el = makeItem(d, true);
+    feed.appendChild(el);
+    items.push(el);
+
+    // 이전 모달이 열려있으면 닫고 새 알림으로 교체
+    showModal(d);
+  }, 2500);
+</script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeAlert — 관리자</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; min-height: 100vh; }
+
+  /* ── 네비게이션 ── */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: #fff; border-bottom: 0.5px solid #e5e5e5; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: #1a1a1a; text-decoration: none; flex-shrink: 0; }
+  .nav-logo i { font-size: 18px; color: #E24B4A; }
+  .nav-tabs { display: flex; align-items: center; height: 100%; gap: 4px; }
+  .nav-tab { display: flex; align-items: center; gap: 6px; height: 100%; padding: 0 16px; font-size: 14px; color: #888; text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.15s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; }
+  .nav-tab:hover { color: #1a1a1a; }
+  .nav-tab.active { color: #E24B4A; border-bottom-color: #E24B4A; font-weight: 500; }
+  .nav-tab i { font-size: 15px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-ws { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #639922; background: #EAF3DE; padding: 4px 10px; border-radius: 99px; }
+  .nav-ws .ws-dot { width: 6px; height: 6px; border-radius: 50%; background: #639922; animation: pulse 1.5s ease-in-out infinite; }
+  .nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: #FCEBEB; color: #E24B4A; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 0.5px solid #e5e5e5; }
+  .admin-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 99px; background: #FFF3CD; color: #856404; border: 0.5px solid #FFD700; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
+
+  /* ── 본문 ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 64px; }
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .page-header-left h2 { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+  .page-header-left p { font-size: 13px; color: #888; margin-top: 4px; }
+
+  /* ── 스탯 카드 ── */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 20px; }
+  .stat-label { font-size: 12px; color: #888; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .stat-label i { font-size: 14px; }
+  .stat-value { font-size: 28px; font-weight: 600; color: #1a1a1a; line-height: 1; }
+  .stat-sub { font-size: 11px; color: #aaa; margin-top: 6px; }
+  .stat-up { color: #639922; }
+  .stat-status { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: #639922; }
+  .stat-dot { width: 8px; height: 8px; border-radius: 50%; background: #639922; animation: pulse 1.5s ease-in-out infinite; }
+
+  /* ── 2단 그리드 ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  /* ── 카드 공통 ── */
+  .card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; overflow: hidden; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 12px; border-bottom: 0.5px solid #f0f0f0; }
+  .card-title { display: flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 500; color: #1a1a1a; }
+  .card-title i { font-size: 16px; color: #888; }
+  .card-badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; background: #f5f5f5; color: #666; }
+  .card-body { padding: 0; }
+
+  /* ── 알림 목록 ── */
+  .alert-list { }
+  .alert-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 20px; border-bottom: 0.5px solid #f5f5f5; transition: background 0.1s; cursor: pointer; }
+  .alert-item:last-child { border-bottom: none; }
+  .alert-item:hover { background: #fafafa; }
+  .alert-item.new-item { animation: slideInAlert 0.4s ease; }
+  @keyframes slideInAlert { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+  .alert-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .alert-content { flex: 1; min-width: 0; }
+  .alert-top { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; flex-wrap: wrap; }
+  .cat-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 99px; white-space: nowrap; }
+  .cat-weather { background: #FDECEA; color: #E24B4A; }
+  .cat-quake   { background: #FEF3DC; color: #BA7517; }
+  .cat-dust    { background: #E8F1FB; color: #378ADD; }
+  .cat-civil   { background: #EAF3DE; color: #639922; }
+  .alert-title { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+  .alert-meta { font-size: 11px; color: #aaa; display: flex; gap: 8px; }
+  .alert-region { color: #888; }
+  .alert-count { font-size: 11px; color: #aaa; background: #f5f5f5; padding: 2px 7px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; }
+
+  /* ── 회원 테이블 ── */
+  .member-table { width: 100%; border-collapse: collapse; }
+  .member-table th { font-size: 11px; color: #888; font-weight: 500; text-align: left; padding: 10px 20px; border-bottom: 0.5px solid #f0f0f0; background: #fafafa; }
+  .member-table td { font-size: 13px; padding: 12px 20px; border-bottom: 0.5px solid #f5f5f5; vertical-align: middle; }
+  .member-table tr:last-child td { border-bottom: none; }
+  .member-table tr:hover td { background: #fafafa; }
+  .member-name { font-weight: 500; color: #1a1a1a; }
+  .member-email { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .member-status { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 7px; border-radius: 99px; }
+  .status-active { background: #EAF3DE; color: #639922; }
+  .status-inactive { background: #f5f5f5; color: #aaa; }
+  .sub-count { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; }
+  .sub-count i { font-size: 12px; color: #378ADD; }
+
+  /* ── 알림 발송 폼 ── */
+  .send-card { margin-bottom: 0; }
+  .send-form { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label { font-size: 12px; color: #666; font-weight: 500; }
+  .form-select, .form-input, .form-textarea {
+    border: 0.5px solid #e5e5e5; border-radius: 8px; padding: 9px 12px;
+    font-size: 13px; color: #1a1a1a; background: #fff; outline: none;
+    transition: border-color 0.15s; font-family: inherit;
+  }
+  .form-select:focus, .form-input:focus, .form-textarea:focus { border-color: #E24B4A; }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 4px; }
+  .send-info { font-size: 12px; color: #aaa; display: flex; align-items: center; gap: 5px; }
+  .send-info i { font-size: 13px; }
+
+  /* ── 버튼 ── */
+  .btn-primary { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; background: #E24B4A; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; white-space: nowrap; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 6px; border: 0.5px solid #e5e5e5; background: #fff; color: #666; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .btn-sm:hover { background: #f5f5f5; }
+
+  /* ── 발송 확인 모달 ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .modal-overlay.show { opacity: 1; pointer-events: all; }
+  .modal { background: #fff; border-radius: 14px; padding: 28px 28px 24px; width: 400px; max-width: 90vw; }
+  .modal-icon { width: 48px; height: 48px; border-radius: 50%; background: #FFF3CD; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .modal-icon i { font-size: 24px; color: #BA7517; }
+  .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .modal p { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; }
+  .modal-summary { background: #f8f8f6; border-radius: 8px; padding: 12px 14px; margin-bottom: 20px; font-size: 12px; color: #555; line-height: 1.8; }
+  .modal-summary strong { color: #1a1a1a; }
+  .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-cancel { padding: 9px 18px; border-radius: 8px; border: 0.5px solid #e5e5e5; background: #fff; color: #666; font-size: 13px; cursor: pointer; }
+  .btn-confirm { padding: 9px 18px; border-radius: 8px; border: none; background: #E24B4A; color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; }
+
+  /* ── 실시간 업데이트 토스트 ── */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; color: #fff; padding: 10px 16px; border-radius: 8px; font-size: 13px; display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateY(8px); transition: all 0.25s; z-index: 200; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast i { color: #639922; font-size: 15px; }
+</style>
+</head>
+<body>
+
+<!-- ── 네비게이션 ── -->
+<nav class="nav">
+  <a class="nav-logo" href="safealert_landing.html">
+    <i class="ti ti-shield-check"></i> SafeAlert
+  </a>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="safealert_dashboard.html"><i class="ti ti-layout-dashboard"></i> 대시보드</a>
+    <a class="nav-tab" href="safealert_subscriptions.html"><i class="ti ti-bell"></i> 구독 설정</a>
+    <a class="nav-tab" href="safealert_history.html"><i class="ti ti-history"></i> 알림 이력</a>
+    <a class="nav-tab" href="safealert_profile.html"><i class="ti ti-user"></i> 내 계정</a>
+    <a class="nav-tab active" href="safealert_admin.html"><i class="ti ti-settings"></i> 관리자</a>
+  </div>
+  <div class="nav-right">
+    <span class="admin-badge"><i class="ti ti-shield-lock"></i> ADMIN</span>
+    <div class="nav-ws">
+      <div class="ws-dot"></div>
+      실시간 연결됨
+    </div>
+    <div class="nav-avatar">주</div>
+  </div>
+</nav>
+
+<!-- ── 본문 ── -->
+<main class="main">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h2><i class="ti ti-dashboard" style="font-size:18px;color:#BA7517"></i> 관리자 대시보드</h2>
+      <p>실시간 시스템 현황 및 알림 발송 관리</p>
+    </div>
+    <button class="btn-sm" onclick="refreshStats()"><i class="ti ti-refresh"></i> 새로고침</button>
+  </div>
+
+  <!-- 스탯 카드 -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label"><i class="ti ti-users" style="color:#378ADD"></i> 전체 회원</div>
+      <div class="stat-value" id="stat-members">2,847</div>
+      <div class="stat-sub"><span class="stat-up">+12</span> 오늘 신규 가입</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label"><i class="ti ti-send" style="color:#E24B4A"></i> 오늘 발송</div>
+      <div class="stat-value" id="stat-sent">1,204</div>
+      <div class="stat-sub">총 <span id="stat-sent-total">38,492</span>건 누적</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label"><i class="ti ti-bell-ringing" style="color:#639922"></i> 활성 구독</div>
+      <div class="stat-value" id="stat-subs">7,391</div>
+      <div class="stat-sub">회원당 평균 2.6개</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label"><i class="ti ti-server" style="color:#888"></i> 시스템 상태</div>
+      <div class="stat-value" style="font-size:16px;padding-top:4px">
+        <div class="stat-status"><div class="stat-dot"></div> 정상 운영 중</div>
+      </div>
+      <div class="stat-sub">응답속도 42ms · 가용성 99.9%</div>
+    </div>
+  </div>
+
+  <!-- 2단: 최근 발송 알림 + 회원 현황 -->
+  <div class="grid-2">
+    <!-- 최근 발송 알림 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="ti ti-radio"></i> 최근 발송 알림</div>
+        <span class="card-badge" id="alert-count-badge">실시간</span>
+      </div>
+      <div class="card-body">
+        <div class="alert-list" id="alert-feed"></div>
+      </div>
+    </div>
+
+    <!-- 회원 현황 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="ti ti-users"></i> 최근 가입 회원</div>
+        <span class="card-badge">총 2,847명</span>
+      </div>
+      <div class="card-body">
+        <table class="member-table">
+          <thead>
+            <tr>
+              <th>회원</th>
+              <th>구독</th>
+              <th>가입일</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody id="member-tbody">
+            <tr>
+              <td><div class="member-name">김민준</div><div class="member-email">minjun@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 3개</span></td>
+              <td style="font-size:12px;color:#aaa">05.15</td>
+              <td><span class="member-status status-active"><i class="ti ti-circle-filled" style="font-size:8px"></i> 활성</span></td>
+            </tr>
+            <tr>
+              <td><div class="member-name">이서연</div><div class="member-email">seoyeon@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 5개</span></td>
+              <td style="font-size:12px;color:#aaa">05.14</td>
+              <td><span class="member-status status-active"><i class="ti ti-circle-filled" style="font-size:8px"></i> 활성</span></td>
+            </tr>
+            <tr>
+              <td><div class="member-name">박도현</div><div class="member-email">dohyun@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 1개</span></td>
+              <td style="font-size:12px;color:#aaa">05.14</td>
+              <td><span class="member-status status-inactive">비활성</span></td>
+            </tr>
+            <tr>
+              <td><div class="member-name">최지우</div><div class="member-email">jiwoo@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 4개</span></td>
+              <td style="font-size:12px;color:#aaa">05.13</td>
+              <td><span class="member-status status-active"><i class="ti ti-circle-filled" style="font-size:8px"></i> 활성</span></td>
+            </tr>
+            <tr>
+              <td><div class="member-name">정수아</div><div class="member-email">sua@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 2개</span></td>
+              <td style="font-size:12px;color:#aaa">05.13</td>
+              <td><span class="member-status status-active"><i class="ti ti-circle-filled" style="font-size:8px"></i> 활성</span></td>
+            </tr>
+            <tr>
+              <td><div class="member-name">한태양</div><div class="member-email">taeyang@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 3개</span></td>
+              <td style="font-size:12px;color:#aaa">05.12</td>
+              <td><span class="member-status status-active"><i class="ti ti-circle-filled" style="font-size:8px"></i> 활성</span></td>
+            </tr>
+            <tr>
+              <td><div class="member-name">오하늘</div><div class="member-email">haneul@example.com</div></td>
+              <td><span class="sub-count"><i class="ti ti-bell"></i> 2개</span></td>
+              <td style="font-size:12px;color:#aaa">05.12</td>
+              <td><span class="member-status status-inactive">비활성</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 알림 수동 발송 -->
+  <div class="card send-card">
+    <div class="card-header">
+      <div class="card-title"><i class="ti ti-send"></i> 알림 수동 발송</div>
+      <span class="card-badge">관리자 전용</span>
+    </div>
+    <div class="card-body">
+      <div class="send-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">카테고리</label>
+            <select class="form-select" id="send-category">
+              <option value="">카테고리 선택</option>
+              <option value="weather">🌩 기상특보</option>
+              <option value="quake">🌍 지진</option>
+              <option value="dust">💨 미세먼지</option>
+              <option value="civil">📢 재난문자</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">대상 지역</label>
+            <select class="form-select" id="send-region">
+              <option value="all">전국</option>
+              <option value="seoul">서울특별시</option>
+              <option value="busan">부산광역시</option>
+              <option value="daegu">대구광역시</option>
+              <option value="incheon">인천광역시</option>
+              <option value="gwangju">광주광역시</option>
+              <option value="daejeon">대전광역시</option>
+              <option value="ulsan">울산광역시</option>
+              <option value="gyeonggi">경기도</option>
+              <option value="gangwon">강원도</option>
+              <option value="chungbuk">충청북도</option>
+              <option value="chungnam">충청남도</option>
+              <option value="jeonbuk">전라북도</option>
+              <option value="jeonnam">전라남도</option>
+              <option value="gyeongbuk">경상북도</option>
+              <option value="gyeongnam">경상남도</option>
+              <option value="jeju">제주특별자치도</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group full">
+            <label class="form-label">알림 제목</label>
+            <input class="form-input" type="text" id="send-title" placeholder="예: [기상청] 서울 강풍 특보 발령">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group full">
+            <label class="form-label">알림 내용</label>
+            <textarea class="form-textarea" id="send-content" placeholder="알림 상세 내용을 입력하세요."></textarea>
+          </div>
+        </div>
+        <div class="form-footer">
+          <div class="send-info">
+            <i class="ti ti-info-circle"></i>
+            발송 전 미리보기를 확인하세요
+          </div>
+          <button class="btn-primary" onclick="openSendModal()">
+            <i class="ti ti-send"></i> 발송하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── 발송 확인 모달 ── -->
+<div class="modal-overlay" id="send-modal">
+  <div class="modal">
+    <div class="modal-icon"><i class="ti ti-alert-triangle"></i></div>
+    <h3>알림을 발송하시겠습니까?</h3>
+    <p>아래 내용으로 해당 지역 구독자에게 알림이 발송됩니다.</p>
+    <div class="modal-summary" id="modal-summary"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeSendModal()">취소</button>
+      <button class="btn-confirm" onclick="confirmSend()"><i class="ti ti-send"></i> 발송 확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 토스트 ── -->
+<div class="toast" id="toast">
+  <i class="ti ti-circle-check"></i>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+// ── 알림 피드 데이터 ──
+const alertData = [
+  { cat: 'weather', label: '기상특보', cls: 'cat-weather', dot: '#E24B4A', title: '[기상청] 서울·경기 강풍 특보 발령', region: '서울·경기', time: '방금', count: 1423 },
+  { cat: 'dust',    label: '미세먼지', cls: 'cat-dust',    dot: '#378ADD', title: '[환경부] 수도권 미세먼지 "나쁨" 예보', region: '수도권', time: '3분 전', count: 892 },
+  { cat: 'quake',   label: '지진',     cls: 'cat-quake',   dot: '#BA7517', title: '[기상청] 경북 포항시 북구 규모 2.8 지진', region: '경상북도', time: '11분 전', count: 247 },
+  { cat: 'civil',   label: '재난문자', cls: 'cat-civil',   dot: '#639922', title: '[행안부] 부산 해운대 해수욕장 태풍 대비 안내', region: '부산광역시', time: '18분 전', count: 634 },
+  { cat: 'weather', label: '기상특보', cls: 'cat-weather', dot: '#E24B4A', title: '[기상청] 강원 산간 대설 특보 발령', region: '강원도', time: '25분 전', count: 318 },
+  { cat: 'dust',    label: '미세먼지', cls: 'cat-dust',    dot: '#378ADD', title: '[환경부] 전국 초미세먼지 농도 상승 예보', region: '전국', time: '32분 전', count: 1104 },
+  { cat: 'civil',   label: '재난문자', cls: 'cat-civil',   dot: '#639922', title: '[행안부] 제주 산지 도로 결빙 주의 안내', region: '제주', time: '41분 전', count: 189 },
+];
+
+let feedStart = 0;
+const SHOW = 6;
+
+function renderFeed() {
+  const feed = document.getElementById('alert-feed');
+  feed.innerHTML = '';
+  for (let i = 0; i < SHOW; i++) {
+    const d = alertData[(feedStart + i) % alertData.length];
+    const el = document.createElement('div');
+    el.className = 'alert-item' + (i === 0 ? ' new-item' : '');
+    el.innerHTML = `
+      <div class="alert-dot" style="background:${d.dot}"></div>
+      <div class="alert-content">
+        <div class="alert-top">
+          <span class="cat-badge ${d.cls}">${d.label}</span>
+          <span class="alert-title">${d.title}</span>
+        </div>
+        <div class="alert-meta">
+          <span class="alert-region"><i class="ti ti-map-pin" style="font-size:10px"></i> ${d.region}</span>
+          <span>${d.time}</span>
+        </div>
+      </div>
+      <span class="alert-count"><i class="ti ti-users" style="font-size:10px"></i> ${d.count.toLocaleString()}</span>
+    `;
+    feed.appendChild(el);
+  }
+}
+
+renderFeed();
+
+setInterval(() => {
+  feedStart = (feedStart + 1) % alertData.length;
+  renderFeed();
+
+  // 스탯 오늘 발송 수 소폭 증가
+  const el = document.getElementById('stat-sent');
+  const cur = parseInt(el.textContent.replace(/,/g, ''));
+  el.textContent = (cur + Math.floor(Math.random() * 3 + 1)).toLocaleString();
+}, 3000);
+
+// ── 발송 모달 ──
+const catLabels = { weather: '🌩 기상특보', quake: '🌍 지진', dust: '💨 미세먼지', civil: '📢 재난문자', '': '(미선택)' };
+const regionLabels = { all:'전국', seoul:'서울특별시', busan:'부산광역시', daegu:'대구광역시', incheon:'인천광역시', gwangju:'광주광역시', daejeon:'대전광역시', ulsan:'울산광역시', gyeonggi:'경기도', gangwon:'강원도', chungbuk:'충청북도', chungnam:'충청남도', jeonbuk:'전라북도', jeonnam:'전라남도', gyeongbuk:'경상북도', gyeongnam:'경상남도', jeju:'제주특별자치도' };
+
+function openSendModal() {
+  const cat = document.getElementById('send-category').value;
+  const region = document.getElementById('send-region').value;
+  const title = document.getElementById('send-title').value.trim();
+  const content = document.getElementById('send-content').value.trim();
+
+  if (!cat) { showToast('카테고리를 선택해주세요.'); return; }
+  if (!title) { showToast('알림 제목을 입력해주세요.'); return; }
+  if (!content) { showToast('알림 내용을 입력해주세요.'); return; }
+
+  document.getElementById('modal-summary').innerHTML = `
+    <strong>카테고리:</strong> ${catLabels[cat]}<br>
+    <strong>대상 지역:</strong> ${regionLabels[region]}<br>
+    <strong>제목:</strong> ${title}<br>
+    <strong>내용:</strong> ${content}
+  `;
+  document.getElementById('send-modal').classList.add('show');
+}
+
+function closeSendModal() {
+  document.getElementById('send-modal').classList.remove('show');
+}
+
+function confirmSend() {
+  closeSendModal();
+  document.getElementById('send-category').value = '';
+  document.getElementById('send-title').value = '';
+  document.getElementById('send-content').value = '';
+  showToast('알림이 성공적으로 발송되었습니다.');
+
+  // 발송 수 증가
+  const el = document.getElementById('stat-sent');
+  const cur = parseInt(el.textContent.replace(/,/g, ''));
+  el.textContent = (cur + Math.floor(Math.random() * 200 + 100)).toLocaleString();
+}
+
+// ── 새로고침 ──
+function refreshStats() {
+  showToast('데이터가 업데이트되었습니다.');
+}
+
+// ── 토스트 ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── 모달 오버레이 클릭 닫기 ──
+document.getElementById('send-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSendModal();
+});
+</script>
+</body>
+</html>

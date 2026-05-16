@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeAlert — 알림 이력</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; min-height: 100vh; }
+
+  /* ── 네비게이션 ── */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: #fff; border-bottom: 0.5px solid #e5e5e5; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: #1a1a1a; text-decoration: none; flex-shrink: 0; }
+  .nav-logo i { font-size: 18px; color: #E24B4A; }
+  .nav-tabs { display: flex; align-items: center; height: 100%; gap: 4px; }
+  .nav-tab { display: flex; align-items: center; gap: 6px; height: 100%; padding: 0 16px; font-size: 14px; color: #888; text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.15s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; }
+  .nav-tab:hover { color: #1a1a1a; }
+  .nav-tab.active { color: #E24B4A; border-bottom-color: #E24B4A; font-weight: 500; }
+  .nav-tab i { font-size: 15px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-ws { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #639922; background: #EAF3DE; padding: 4px 10px; border-radius: 99px; }
+  .nav-ws .ws-dot { width: 6px; height: 6px; border-radius: 50%; background: #639922; animation: pulse 1.5s ease-in-out infinite; }
+  .nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: #FCEBEB; color: #E24B4A; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 0.5px solid #e5e5e5; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
+
+  /* ── 본문 ── */
+  .main { max-width: 800px; margin: 0 auto; padding: 32px 24px 64px; }
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .page-header h2 { font-size: 18px; font-weight: 500; }
+  .total-count { font-size: 13px; color: #888; }
+  .total-count span { font-weight: 500; color: #1a1a1a; }
+
+  /* ── 필터 카드 ── */
+  .filter-card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; }
+  .filter-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .filter-row + .filter-row { margin-top: 10px; padding-top: 10px; border-top: 0.5px solid #f0f0f0; }
+
+  /* 카테고리 필터 버튼 */
+  .cat-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .cat-btn { padding: 5px 12px; border-radius: 99px; border: 0.5px solid #e5e5e5; background: #fff; font-size: 12px; color: #666; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 4px; }
+  .cat-btn:hover { border-color: #ccc; color: #1a1a1a; }
+  .cat-btn.active-all   { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .cat-btn.active-red   { background: #FCEBEB; color: #A32D2D; border-color: #F5C6C6; }
+  .cat-btn.active-amber { background: #FAEEDA; color: #854F0B; border-color: #F0D9A0; }
+  .cat-btn.active-blue  { background: #E6F1FB; color: #185FA5; border-color: #B8D4F0; }
+  .cat-btn.active-green { background: #EAF3DE; color: #3B6D11; border-color: #B8DDA8; }
+
+  /* 날짜 + 검색 */
+  .date-wrap { display: flex; align-items: center; gap: 6px; }
+  .date-input { padding: 7px 10px; border: 0.5px solid #ddd; border-radius: 8px; font-size: 13px; color: #1a1a1a; outline: none; transition: border-color 0.15s; }
+  .date-input:focus { border-color: #E24B4A; }
+  .date-sep { font-size: 12px; color: #bbb; }
+
+  .search-wrap { flex: 1; position: relative; min-width: 160px; }
+  .search-wrap i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #bbb; font-size: 15px; }
+  .search-input { width: 100%; padding: 7px 10px 7px 32px; border: 0.5px solid #ddd; border-radius: 8px; font-size: 13px; color: #1a1a1a; outline: none; transition: border-color 0.15s; }
+  .search-input:focus { border-color: #E24B4A; }
+  .search-input::placeholder { color: #bbb; }
+
+  .btn-reset { padding: 7px 12px; border-radius: 8px; border: 0.5px solid #e5e5e5; background: #f8f8f6; font-size: 12px; color: #888; cursor: pointer; white-space: nowrap; transition: background 0.15s; display: flex; align-items: center; gap: 4px; }
+  .btn-reset:hover { background: #f0f0f0; color: #1a1a1a; }
+
+  /* ── 이력 리스트 ── */
+  .history-card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; overflow: hidden; }
+  .history-item { border-bottom: 0.5px solid #f5f5f5; cursor: pointer; transition: background 0.1s; }
+  .history-item:last-child { border-bottom: none; }
+  .history-item:hover { background: #fafafa; }
+
+  .history-row { display: flex; align-items: center; gap: 12px; padding: 14px 20px; }
+  .h-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .h-dot.red   { background: #E24B4A; }
+  .h-dot.amber { background: #BA7517; }
+  .h-dot.blue  { background: #378ADD; }
+  .h-dot.green { background: #639922; }
+
+  .h-content { flex: 1; min-width: 0; }
+  .h-title { font-size: 13px; font-weight: 500; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+  .h-meta  { font-size: 11px; color: #aaa; display: flex; align-items: center; gap: 6px; }
+
+  .h-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .h-badge { font-size: 10px; padding: 2px 8px; border-radius: 99px; }
+  .badge-red   { background: #FCEBEB; color: #A32D2D; }
+  .badge-amber { background: #FAEEDA; color: #854F0B; }
+  .badge-blue  { background: #E6F1FB; color: #185FA5; }
+  .badge-green { background: #EAF3DE; color: #3B6D11; }
+
+  .severity-badge { font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
+  .sev-critical { background: #E24B4A; color: #fff; }
+  .sev-high     { background: #FCEBEB; color: #A32D2D; }
+  .sev-medium   { background: #FAEEDA; color: #854F0B; }
+  .sev-low      { background: #f5f5f5;  color: #888; }
+
+  .h-time { font-size: 11px; color: #bbb; min-width: 56px; text-align: right; }
+  .h-chevron { font-size: 14px; color: #ccc; transition: transform 0.2s; }
+  .history-item.open .h-chevron { transform: rotate(90deg); }
+
+  /* 인라인 상세 펼치기 */
+  .history-detail { display: none; padding: 0 20px 16px 40px; }
+  .history-item.open .history-detail { display: block; }
+  .detail-box { background: #f8f8f6; border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #444; line-height: 1.7; border-left: 3px solid #e5e5e5; }
+  .detail-box.red   { border-left-color: #E24B4A; }
+  .detail-box.amber { border-left-color: #BA7517; }
+  .detail-box.blue  { border-left-color: #378ADD; }
+  .detail-box.green { border-left-color: #639922; }
+  .detail-meta { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+  .detail-meta-item { font-size: 11px; color: #aaa; display: flex; align-items: center; gap: 4px; }
+  .detail-meta-item i { font-size: 13px; }
+
+  /* 빈 상태 */
+  .empty-state { padding: 64px 20px; text-align: center; color: #ccc; }
+  .empty-state i { font-size: 36px; display: block; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── 페이지네이션 ── */
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 20px; }
+  .page-btn { width: 32px; height: 32px; border-radius: 8px; border: 0.5px solid #e5e5e5; background: #fff; font-size: 13px; color: #666; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .page-btn:hover { border-color: #E24B4A; color: #E24B4A; }
+  .page-btn.active { background: #E24B4A; color: #fff; border-color: #E24B4A; }
+  .page-btn:disabled { color: #ddd; cursor: not-allowed; border-color: #f0f0f0; }
+  .page-btn:disabled:hover { color: #ddd; border-color: #f0f0f0; }
+</style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <nav class="nav">
+    <a class="nav-logo" href="safealert_landing.html">
+      <i class="ti ti-alert-triangle"></i>
+      SafeAlert
+    </a>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="safealert_dashboard.html"><i class="ti ti-layout-dashboard"></i> 대시보드</a>
+      <a class="nav-tab" href="safealert_subscriptions.html"><i class="ti ti-bell"></i> 구독 설정</a>
+      <a class="nav-tab active" href="#"><i class="ti ti-history"></i> 알림 이력</a>
+      <a class="nav-tab" href="#"><i class="ti ti-user"></i> 내 계정</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-ws"><div class="ws-dot"></div> 실시간 연결됨</div>
+      <div class="nav-avatar"><i class="ti ti-user"></i></div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="page-header">
+      <h2>알림 이력</h2>
+      <div class="total-count">총 <span id="totalCount">0</span>건</div>
+    </div>
+
+    <!-- 필터 -->
+    <div class="filter-card">
+      <div class="filter-row">
+        <div class="cat-btns" id="catBtns">
+          <button class="cat-btn active-all" data-cat="ALL" onclick="setCat('ALL', this)">전체</button>
+          <button class="cat-btn" data-cat="WEATHER" onclick="setCat('WEATHER', this)"><i class="ti ti-cloud-storm"></i> 기상특보</button>
+          <button class="cat-btn" data-cat="EARTHQUAKE" onclick="setCat('EARTHQUAKE', this)"><i class="ti ti-wave-sine"></i> 지진</button>
+          <button class="cat-btn" data-cat="DUST" onclick="setCat('DUST', this)"><i class="ti ti-wind"></i> 미세먼지</button>
+          <button class="cat-btn" data-cat="DISASTER" onclick="setCat('DISASTER', this)"><i class="ti ti-message-dots"></i> 재난문자</button>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="date-wrap">
+          <input class="date-input" type="date" id="startDate" value="2026-05-01" onchange="applyFilter()">
+          <span class="date-sep">~</span>
+          <input class="date-input" type="date" id="endDate" value="2026-05-15" onchange="applyFilter()">
+        </div>
+        <div class="search-wrap">
+          <i class="ti ti-search"></i>
+          <input class="search-input" type="text" id="searchInput" placeholder="알림 제목 검색" oninput="applyFilter()">
+        </div>
+        <button class="btn-reset" onclick="resetFilter()"><i class="ti ti-refresh"></i> 초기화</button>
+      </div>
+    </div>
+
+    <!-- 이력 리스트 -->
+    <div class="history-card" id="historyList"></div>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+<script>
+  const allData = [
+    { id:1,  cat:'WEATHER',    dot:'red',   badge:'기상특보', sev:'critical', sevLabel:'긴급',  title:'서울특별시 전역 호우 경보 발령',         source:'기상청',    region:'서울특별시',    time:'2026-05-15 09:03', content:'서울특별시 전역에 시간당 70mm 이상의 집중호우가 예상됩니다. 침수 위험 지역 주민은 즉시 대피하시기 바랍니다.' },
+    { id:2,  cat:'EARTHQUAKE', dot:'amber', badge:'지진',    sev:'high',     sevLabel:'높음',  title:'경북 포항시 규모 3.2 지진 발생',          source:'기상청',    region:'경상북도 포항시',time:'2026-05-15 08:45', content:'2026년 5월 15일 08:45 경북 포항시 북구 북동쪽 8km 지역에서 규모 3.2 지진이 발생하였습니다.' },
+    { id:3,  cat:'DUST',       dot:'blue',  badge:'미세먼지', sev:'medium',   sevLabel:'보통',  title:'수도권 미세먼지 농도 매우나쁨 예보',       source:'환경부',    region:'수도권',        time:'2026-05-15 07:20', content:'오늘 수도권 지역의 미세먼지 농도가 매우나쁨(151㎍/m³ 이상) 수준으로 예상됩니다. 외출 시 마스크를 착용하세요.' },
+    { id:4,  cat:'DISASTER',   dot:'green', badge:'재난문자', sev:'medium',   sevLabel:'보통',  title:'부산 해운대구 산불 주의 재난문자',         source:'행정안전부', region:'부산 해운대구',  time:'2026-05-14 18:32', content:'[행정안전부] 부산 해운대구 인근 야산에서 산불이 발생하였습니다. 해당 지역 주민은 주의하시기 바랍니다.' },
+    { id:5,  cat:'WEATHER',    dot:'red',   badge:'기상특보', sev:'high',     sevLabel:'높음',  title:'경기도 전역 강풍 주의보 발령',            source:'기상청',    region:'경기도',        time:'2026-05-14 15:10', content:'경기도 전역에 순간풍속 20m/s 이상의 강풍이 예상됩니다. 시설물 관리에 주의하시기 바랍니다.' },
+    { id:6,  cat:'EARTHQUAKE', dot:'amber', badge:'지진',    sev:'low',      sevLabel:'낮음',  title:'전남 여수시 규모 2.8 지진 발생',          source:'기상청',    region:'전라남도 여수시', time:'2026-05-14 11:55', content:'2026년 5월 14일 11:55 전남 여수시 남쪽 22km 해역에서 규모 2.8 지진이 발생하였습니다.' },
+    { id:7,  cat:'DUST',       dot:'blue',  badge:'미세먼지', sev:'medium',   sevLabel:'보통',  title:'충청권 미세먼지 나쁨 지속',               source:'환경부',    region:'충청권',        time:'2026-05-14 09:00', content:'충청남·북도 지역의 미세먼지 농도가 나쁨(81㎍/m³ 이상) 수준으로 오후까지 지속될 예정입니다.' },
+    { id:8,  cat:'DISASTER',   dot:'green', badge:'재난문자', sev:'high',     sevLabel:'높음',  title:'강원 강릉시 폭설 재난문자 발송',          source:'행정안전부', region:'강원 강릉시',    time:'2026-05-13 22:15', content:'[행정안전부] 강원 강릉시에 대설경보가 발령되었습니다. 24시간 적설량 30cm 이상이 예상됩니다.' },
+    { id:9,  cat:'WEATHER',    dot:'red',   badge:'기상특보', sev:'critical', sevLabel:'긴급',  title:'제주도 태풍 경보 발령',                  source:'기상청',    region:'제주특별자치도', time:'2026-05-13 14:00', content:'태풍 카눈이 제주도에 근접하고 있습니다. 최대 풍속 55m/s 예상. 해안가 접근을 금지합니다.' },
+    { id:10, cat:'EARTHQUAKE', dot:'amber', badge:'지진',    sev:'medium',   sevLabel:'보통',  title:'경남 창원시 규모 3.0 지진 발생',          source:'기상청',    region:'경상남도 창원시', time:'2026-05-13 08:30', content:'2026년 5월 13일 08:30 경남 창원시 서쪽 5km 지역에서 규모 3.0 지진이 발생하였습니다.' },
+    { id:11, cat:'DUST',       dot:'blue',  badge:'미세먼지', sev:'low',      sevLabel:'낮음',  title:'서울 미세먼지 보통 수준 회복',            source:'환경부',    region:'서울특별시',    time:'2026-05-12 10:00', content:'서울 지역 미세먼지 농도가 보통(31~80㎍/m³) 수준으로 회복되었습니다.' },
+    { id:12, cat:'DISASTER',   dot:'green', badge:'재난문자', sev:'medium',   sevLabel:'보통',  title:'인천 연수구 침수 위험 재난문자',          source:'행정안전부', region:'인천 연수구',    time:'2026-05-12 07:45', content:'[행정안전부] 인천 연수구 일부 지역에 침수 위험이 있습니다. 지하 공간 이용에 주의하세요.' },
+  ];
+
+  const PAGE_SIZE = 7;
+  let currentCat = 'ALL';
+  let currentPage = 1;
+  let filtered = [...allData];
+
+  const catActiveClass = { ALL:'active-all', WEATHER:'active-red', EARTHQUAKE:'active-amber', DUST:'active-blue', DISASTER:'active-green' };
+  const sevClass = { critical:'sev-critical', high:'sev-high', medium:'sev-medium', low:'sev-low' };
+
+  function setCat(cat, btn) {
+    currentCat = cat;
+    currentPage = 1;
+    document.querySelectorAll('.cat-btn').forEach(b => b.className = 'cat-btn');
+    btn.classList.add(catActiveClass[cat]);
+    applyFilter();
+  }
+
+  function applyFilter() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const start  = document.getElementById('startDate').value;
+    const end    = document.getElementById('endDate').value;
+    filtered = allData.filter(d => {
+      if (currentCat !== 'ALL' && d.cat !== currentCat) return false;
+      if (search && !d.title.toLowerCase().includes(search)) return false;
+      const dateStr = d.time.slice(0, 10);
+      if (start && dateStr < start) return false;
+      if (end   && dateStr > end)   return false;
+      return true;
+    });
+    currentPage = 1;
+    render();
+  }
+
+  function resetFilter() {
+    currentCat = 'ALL';
+    document.querySelectorAll('.cat-btn').forEach(b => b.className = 'cat-btn');
+    document.querySelector('[data-cat="ALL"]').classList.add('active-all');
+    document.getElementById('searchInput').value = '';
+    document.getElementById('startDate').value = '2026-05-01';
+    document.getElementById('endDate').value   = '2026-05-15';
+    filtered = [...allData];
+    currentPage = 1;
+    render();
+  }
+
+  function toggleDetail(id) {
+    const el = document.getElementById('item-' + id);
+    el.classList.toggle('open');
+  }
+
+  function render() {
+    const list = document.getElementById('historyList');
+    const total = filtered.length;
+    document.getElementById('totalCount').textContent = total;
+
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageData = filtered.slice(start, start + PAGE_SIZE);
+
+    if (pageData.length === 0) {
+      list.innerHTML = `<div class="empty-state"><i class="ti ti-bell-off"></i><p>조건에 맞는 알림이 없습니다</p></div>`;
+      document.getElementById('pagination').innerHTML = '';
+      return;
+    }
+
+    list.innerHTML = pageData.map(d => `
+      <div class="history-item" id="item-${d.id}" onclick="toggleDetail(${d.id})">
+        <div class="history-row">
+          <div class="h-dot ${d.dot}"></div>
+          <div class="h-content">
+            <div class="h-title">${d.title}</div>
+            <div class="h-meta">
+              <span>${d.source}</span>
+              <span>·</span>
+              <span>${d.region}</span>
+            </div>
+          </div>
+          <div class="h-right">
+            <span class="h-badge badge-${d.dot}">${d.badge}</span>
+            <span class="severity-badge ${sevClass[d.sev]}">${d.sevLabel}</span>
+            <span class="h-time">${d.time.slice(5)}</span>
+            <i class="ti ti-chevron-right h-chevron"></i>
+          </div>
+        </div>
+        <div class="history-detail">
+          <div class="detail-box ${d.dot}">
+            ${d.content}
+            <div class="detail-meta">
+              <div class="detail-meta-item"><i class="ti ti-clock"></i> ${d.time}</div>
+              <div class="detail-meta-item"><i class="ti ti-map-pin"></i> ${d.region}</div>
+              <div class="detail-meta-item"><i class="ti ti-building"></i> ${d.source}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // 페이지네이션
+    const pg = document.getElementById('pagination');
+    let pgHtml = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="ti ti-chevron-left"></i></button>`;
+    for (let i = 1; i <= totalPages; i++) {
+      pgHtml += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    }
+    pgHtml += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><i class="ti ti-chevron-right"></i></button>`;
+    pg.innerHTML = pgHtml;
+  }
+
+  function goPage(p) {
+    const total = Math.ceil(filtered.length / PAGE_SIZE);
+    if (p < 1 || p > total) return;
+    currentPage = p;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  render();
+</script>
+</body>
+</html>
