@@ -16,7 +16,7 @@ public class AdminAlertResponse {
     public AdminAlertResponse(NotificationHistory n, long recipientCount) {
         this.category = n.getCategory();
         this.title = n.getTitle();
-        this.region = n.getRegion();
+        this.region = n.getRegionCode();
         this.createdAt = n.getCreatedAt();
         this.recipientCount = recipientCount;
     }
