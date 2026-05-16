@@ -17,6 +17,40 @@
 
 ---
 
+## 현재 진행 전략 (2026-05-16 기준)
+
+Phase 1-A~C, 1-B 완료 후 설계서 전체 검토 결과, 아래 순서로 진행한다.
+
+```
+[완료] Phase 0, 1-A(1~8), 1-B, 1-C
+         ↓
+[1단계] 1-A-9~12  auth-service 프로필 API 추가
+        → GET/PUT/DELETE /api/auth/me, GET /api/admin/users
+        → auth-service 완전 마무리
+         ↓
+[2단계] notification-service HTTP API 먼저 구현 (Kafka 없이)
+        → GET /api/notifications, GET /api/alerts/recent
+        → GET /api/admin/stats·alerts, POST /api/admin/alerts/manual
+        → DB + REST API만 완성 → 프론트엔드 전체 언블록
+         ↓
+[3단계] 1-D  React 프론트엔드 전체 (실제 API 연결)
+         ↓
+[4단계] Phase 2-A, 2-B  공공 API 수집 + Kafka 파이프라인
+         ↓
+[5단계] 2-C  WebSocket 실시간 알림 + Kafka Consumer 추가
+         ↓
+[6단계] 1-E  OAuth2 소셜 로그인
+         ↓
+[7단계] Phase 3~5  안정성·관측 가능성·부하 테스트
+```
+
+**2단계를 Kafka 없이 먼저 진행하는 이유:**
+notification-service를 Kafka까지 한 번에 완성하면 2~3주 동안 프론트엔드를 전혀 진행할 수 없다.
+HTTP API만 먼저 구현하면 1주일 안에 전체 화면이 실제 데이터로 동작하는 모습을 확인할 수 있다.
+Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면 된다.
+
+---
+
 ## Phase 0 — 환경 구성 (1주)
 
 ### 목표
