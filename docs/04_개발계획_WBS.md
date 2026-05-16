@@ -94,10 +94,10 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 | 1-A-6 | 토큰 갱신 / 로그아웃 API 구현 | 0.5일 | [O] |
 | 1-A-7 | Kubernetes Deployment, Service YAML 작성 | 0.5일 | [O] |
 | 1-A-8 | 단위 테스트 작성 | 0.5일 | [O] |
-| 1-A-9 | GET /api/auth/me — 내 정보 조회 API 구현 | 0.5일 | [ ] |
-| 1-A-10 | PUT /api/auth/me — 닉네임 수정 API 구현 | 0.5일 | [ ] |
-| 1-A-11 | DELETE /api/auth/me — 회원 탈퇴 API 구현 | 0.5일 | [ ] |
-| 1-A-12 | GET /api/admin/users — 최근 가입 회원 목록 API 구현 | 0.5일 | [ ] |
+| 1-A-9 | GET /api/auth/me — 내 정보 조회 API 구현 | 0.5일 | [O] |
+| 1-A-10 | PUT /api/auth/me — 닉네임 수정 API 구현 | 0.5일 | [O] |
+| 1-A-11 | DELETE /api/auth/me — 회원 탈퇴 API 구현 | 0.5일 | [O] |
+| 1-A-12 | GET /api/admin/users — 최근 가입 회원 목록 API 구현 | 0.5일 | [O] |
 
 ### 1-B. API Gateway (0.5주)
 

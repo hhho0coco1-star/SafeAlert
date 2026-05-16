@@ -8,7 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.safealert.auth.dto.LoginRequest;
+import com.safealert.auth.dto.MeResponse;
 import com.safealert.auth.dto.TokenResponse;
+import com.safealert.auth.dto.UpdateNicknameRequest;
 import com.safealert.auth.security.JwtProvider;
 import org.springframework.data.redis.core.RedisTemplate;
 import java.util.concurrent.TimeUnit;
@@ -71,5 +73,48 @@ public class AuthService {
     public void logout(String accessToken) {
         UUID userId = jwtProvider.getUserId(accessToken);
         redisTemplate.delete("token:refresh:" + userId);
+    }
+
+    @Transactional(readOnly = true)
+    public MeResponse getMe(String accessToken) {
+        UUID userId = jwtProvider.getUserId(accessToken);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        return new MeResponse(user.getUserId(), user.getEmail(), user.getNickname(),
+                user.getRole(), user.getCreatedAt());
+    }
+
+    @Transactional
+    public MeResponse updateNickname(String accessToken, UpdateNicknameRequest request) {
+        UUID userId = jwtProvider.getUserId(accessToken);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        user.updateNickname(request.getNickname());
+        return new MeResponse(user.getUserId(), user.getEmail(), user.getNickname(),
+                user.getRole(), user.getCreatedAt());
+    }
+
+    @Transactional
+    public void withdraw(String accessToken) {
+        UUID userId = jwtProvider.getUserId(accessToken);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+        user.delete();
+        redisTemplate.delete("token:refresh:" + userId);
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.List<MeResponse> getAdminUsers(String accessToken) {
+        UUID requesterId = jwtProvider.getUserId(accessToken);
+        User requester = userRepository.findById(requesterId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+        if (!"ADMIN".equals(requester.getRole())) {
+            throw new IllegalArgumentException("관리자 권한이 필요합니다");
+        }
+        return userRepository.findTop7ByIsDeletedFalseOrderByCreatedAtDesc()
+                .stream()
+                .map(u -> new MeResponse(u.getUserId(), u.getEmail(), u.getNickname(),
+                        u.getRole(), u.getCreatedAt()))
+                .toList();
     }
 }

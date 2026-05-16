@@ -41,4 +41,34 @@ public class AuthController {
         authService.logout(accessToken);
         return ResponseEntity.ok(ApiResponse.ok(null));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<MeResponse>> getMe(
+            @RequestHeader("Authorization") String authHeader) {
+        String accessToken = authHeader.replace("Bearer ", "");
+        return ResponseEntity.ok(ApiResponse.ok(authService.getMe(accessToken)));
+    }
+    
+    @PutMapping("/me")
+    public ResponseEntity<ApiResponse<MeResponse>> updateNickname(
+            @RequestHeader("Authorization") String authHeader,
+            @Valid @RequestBody UpdateNicknameRequest request) {
+        String accessToken = authHeader.replace("Bearer ", "");
+        return ResponseEntity.ok(ApiResponse.ok(authService.updateNickname(accessToken, request)));
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> withdraw(
+            @RequestHeader("Authorization") String authHeader) {
+        String accessToken = authHeader.replace("Bearer ", "");
+        authService.withdraw(accessToken);
+        return ResponseEntity.ok(ApiResponse.ok(null));
+    }
+
+    @GetMapping("/admin/users")
+    public ResponseEntity<ApiResponse<java.util.List<MeResponse>>> getAdminUsers(
+            @RequestHeader("Authorization") String authHeader) {
+        String accessToken = authHeader.replace("Bearer ", "");
+        return ResponseEntity.ok(ApiResponse.ok(authService.getAdminUsers(accessToken)));
+    }
 }
