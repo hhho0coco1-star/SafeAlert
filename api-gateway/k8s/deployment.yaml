@@ -23,10 +23,10 @@ spec:
             - name: AUTH_SERVICE_URL
               value: "http://auth-service.safealert-app.svc.cluster.local:8081"
             - name: SUBSCRIPTION_SERVICE_URL
-              value: "http://subscription-service.safealert-app.svc.cluster.local:8082"
+              value: "http://subscription-service.safealert-app.svc.cluster.local:8085"
             - name: NOTIFICATION_SERVICE_URL
               value: "http://notification-service.safealert-app.svc.cluster.local:8083"
-            - name: REDIS_HOST
+            - name: SPRING_DATA_REDIS_HOST
               value: "redis-master.safealert-infra.svc.cluster.local"
             - name: JWT_SECRET
               valueFrom:

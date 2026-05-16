@@ -16,8 +16,16 @@ spec:
       containers:
         - name: notification-service
           image: notification-service:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8083
+          resources:
+            requests:
+              cpu: 300m
+              memory: 256Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgresql.safealert-infra.svc.cluster.local:5432/notification_db
@@ -30,10 +38,3 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: secret
-          resources:
-            requests:
-              cpu: 300m
-              memory: 256Mi
-            limits:
-              cpu: 400m
-              memory: 512Mi

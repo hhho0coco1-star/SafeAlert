@@ -1,16 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: subscription-service
   namespace: safealert-app
-
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: subscription-service
-
   template:
     metadata:
       labels:
@@ -19,9 +16,9 @@ spec:
       containers:
         - name: subscription-service
           image: subscription-service:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8085
-
           resources:
             requests:
               cpu: 300m
@@ -29,19 +26,15 @@ spec:
             limits:
               cpu: 400m
               memory: 512Mi
-
           env:
             - name: DB_HOST
               value: postgresql.safealert-infra
-
-            - name: DB_USER
+            - name: DB_USERNAME
               value: safealert
-
-            - name: DB_PASS
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: subscription-secrets
                   key: db-password
-
-            - name: KAFKA_BOOTSTRAP
+            - name: KAFKA_BOOTSTRAP_SERVERS
               value: kafka.safealert-infra:9092
