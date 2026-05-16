@@ -111,6 +111,56 @@
 
 ---
 
+### GET /api/auth/me — 내 정보 조회
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "userId": "uuid",
+    "email": "user@example.com",
+    "nickname": "홍길동",
+    "role": "USER",
+    "oauthProvider": "google",
+    "createdAt": "2026-01-01T12:00:00Z"
+  }
+}
+```
+
+---
+
+### PUT /api/auth/me — 닉네임 수정
+
+**Request:**
+```json
+{
+  "nickname": "새닉네임"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "userId": "uuid",
+    "nickname": "새닉네임"
+  }
+}
+```
+
+---
+
+### DELETE /api/auth/me — 회원 탈퇴
+
+- 소프트 삭제 처리 (`is_deleted = true`)
+- Redis Refresh Token 즉시 삭제
+
+**Response:** `200 OK`
+
+---
+
 ### GET /api/auth/oauth2/google — Google 간편로그인 시작
 
 - 인증 불필요
@@ -209,10 +259,11 @@
 | 파라미터 | 타입 | 필수 | 설명 |
 |---------|------|------|------|
 | page | int | 선택 | 페이지 번호 (기본값: 0) |
-| size | int | 선택 | 페이지 크기 (기본값: 20) |
-| category | string | 선택 | 카테고리 필터 |
+| size | int | 선택 | 페이지 크기 (기본값: 7) |
+| category | string | 선택 | 카테고리 필터 (WEATHER / EARTHQUAKE / DUST / DISASTER) |
 | startDate | string | 선택 | 시작 날짜 (ISO 8601) |
 | endDate | string | 선택 | 종료 날짜 (ISO 8601) |
+| keyword | string | 선택 | 제목 검색어 |
 
 **Response:**
 ```json
@@ -221,20 +272,48 @@
   "data": {
     "content": [
       {
-        "notificationId": "uuid",
+        "id": "uuid",
         "category": "WEATHER",
         "severity": "HIGH",
         "title": "서울 폭설 경보",
         "content": "서울 전역에 폭설 경보가 발령되었습니다.",
         "region": "서울특별시",
-        "issuedAt": "2025-01-01T12:00:00Z",
-        "receivedAt": "2025-01-01T12:00:03Z"
+        "source": "기상청",
+        "createdAt": "2026-01-01T12:00:00Z"
       }
     ],
     "totalElements": 100,
     "totalPages": 5,
-    "currentPage": 0
+    "number": 0
   }
+}
+```
+
+---
+
+### GET /api/alerts/recent — 최근 알림 조회 (랜딩 페이지용)
+
+- 인증 불필요 (공개 API)
+- 가장 최근 발령된 알림 N건 반환
+
+**Query Parameters:**
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|------|------|
+| limit | int | 선택 | 반환 건수 (기본값: 8, 최대: 20) |
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "category": "WEATHER",
+      "title": "서울특별시 전역 호우 경보 발령",
+      "source": "기상청",
+      "createdAt": "2026-01-01T12:00:00Z"
+    }
+  ]
 }
 ```
 
@@ -283,6 +362,75 @@
 
 ## 5. Admin Service API
 
+### GET /api/admin/stats — 관리자 요약 통계
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "totalMembers": 1284,
+    "todaySent": 47,
+    "totalSent": 38920,
+    "activeSubscriptions": 3671
+  }
+}
+```
+
+---
+
+### GET /api/admin/alerts — 최근 발송 알림 목록
+
+**Query Parameters:**
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|------|------|
+| size | int | 선택 | 반환 건수 (기본값: 7) |
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "category": "WEATHER",
+      "title": "서울특별시 전역 호우 경보 발령",
+      "region": "서울특별시",
+      "createdAt": "2026-01-01T12:00:00Z",
+      "recipientCount": 412
+    }
+  ]
+}
+```
+
+---
+
+### GET /api/admin/users — 최근 가입 회원 목록
+
+**Query Parameters:**
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|------|------|
+| size | int | 선택 | 반환 건수 (기본값: 7) |
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "userId": "uuid",
+      "email": "user@example.com",
+      "nickname": "홍길동",
+      "role": "USER",
+      "createdAt": "2026-01-01T12:00:00Z"
+    }
+  ]
+}
+```
+
+---
+
 ### POST /api/admin/alerts/manual — 수동 알림 발송
 
 **Request:**
@@ -313,14 +461,14 @@
 
 | 페이지 | 경로 | 인증 | 사용 API |
 |--------|------|------|---------|
-| 랜딩 | `/` | 불필요 | 없음 |
+| 랜딩 | `/` | 불필요 | GET /api/alerts/recent |
 | 로그인 | `/login` | 불필요 | POST /api/auth/login |
 | 회원가입 | `/signup` | 불필요 | POST /api/auth/signup |
 | 메인 대시보드 | `/dashboard` | 필요 | GET /api/subscriptions, GET /api/notifications, WebSocket |
 | 구독 설정 | `/subscriptions` | 필요 | GET/POST/DELETE /api/subscriptions/regions, PUT /api/subscriptions/categories |
 | 알림 이력 | `/history` | 필요 | GET /api/notifications |
-| 내 계정 | `/profile` | 필요 | POST /api/auth/logout |
-| 관리자 대시보드 | `/admin` | 관리자 | GET /api/admin/stats/alerts, POST /api/admin/alerts/manual |
+| 내 계정 | `/profile` | 필요 | GET /api/auth/me, PUT /api/auth/me, DELETE /api/auth/me, POST /api/auth/logout |
+| 관리자 대시보드 | `/admin` | 관리자 | GET /api/admin/stats, GET /api/admin/alerts, GET /api/admin/users, POST /api/admin/alerts/manual |
 
 ### 공통 규칙
 - JWT Access Token → `localStorage`에 저장

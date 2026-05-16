@@ -60,6 +60,10 @@
 | 1-A-6 | 토큰 갱신 / 로그아웃 API 구현 | 0.5일 | [O] |
 | 1-A-7 | Kubernetes Deployment, Service YAML 작성 | 0.5일 | [O] |
 | 1-A-8 | 단위 테스트 작성 | 0.5일 | [O] |
+| 1-A-9 | GET /api/auth/me — 내 정보 조회 API 구현 | 0.5일 | [ ] |
+| 1-A-10 | PUT /api/auth/me — 닉네임 수정 API 구현 | 0.5일 | [ ] |
+| 1-A-11 | DELETE /api/auth/me — 회원 탈퇴 API 구현 | 0.5일 | [ ] |
+| 1-A-12 | GET /api/admin/users — 최근 가입 회원 목록 API 구현 | 0.5일 | [ ] |
 
 ### 1-B. API Gateway (0.5주)
 
@@ -159,8 +163,12 @@
 | 2-C-5 | WebSocket 세션으로 알림 Push | 1일 | [ ] |
 | 2-C-6 | 다중 인스턴스 세션 동기화 (Redis Pub/Sub) | 1일 | [ ] |
 | 2-C-7 | 알림 이력 저장 + Outbox 패턴 적용 | 1일 | [ ] |
-| 2-C-8 | Retry 로직 (Resilience4j Retry) | 0.5일 | [ ] |
-| 2-C-9 | K8s 배포 (Replica 3, HPA 설정) | 0.5일 | [ ] |
+| 2-C-8 | GET /api/notifications — 알림 이력 조회 HTTP API 구현 | 0.5일 | [ ] |
+| 2-C-9 | GET /api/alerts/recent — 랜딩용 최근 알림 HTTP API 구현 | 0.5일 | [ ] |
+| 2-C-10 | GET /api/admin/stats — 관리자 요약 통계 API 구현 | 0.5일 | [ ] |
+| 2-C-11 | GET /api/admin/alerts — 최근 발송 알림 목록 API 구현 | 0.5일 | [ ] |
+| 2-C-12 | Retry 로직 (Resilience4j Retry) | 0.5일 | [ ] |
+| 2-C-13 | K8s 배포 (Replica 3, HPA 설정) | 0.5일 | [ ] |
 
 **Phase 2 검증 기준:**
 - 브라우저에서 WebSocket 연결 후 실시간 알림 수신 확인
