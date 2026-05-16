@@ -1,0 +1,22 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:postgresql://postgresql.safealert-infra.svc.cluster.local:5432/notification_db
+    username: safealert
+    password: safealert123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+
+jwt:
+  secret: ${JWT_SECRET:safealert-jwt-secret-key-for-development-only}
+  access-expiration: 900000

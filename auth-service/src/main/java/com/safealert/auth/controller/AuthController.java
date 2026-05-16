@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -66,7 +67,7 @@ public class AuthController {
     }
 
     @GetMapping("/admin/users")
-    public ResponseEntity<ApiResponse<java.util.List<MeResponse>>> getAdminUsers(
+    public ResponseEntity<ApiResponse<List<MeResponse>>> getAdminUsers(
             @RequestHeader("Authorization") String authHeader) {
         String accessToken = authHeader.replace("Bearer ", "");
         return ResponseEntity.ok(ApiResponse.ok(authService.getAdminUsers(accessToken)));
