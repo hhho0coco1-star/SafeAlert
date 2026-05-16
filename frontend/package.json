@@ -31,9 +31,4 @@
     "tailwindcss": "^4.3.0",
     "vite": "^8.0.12"
   },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
-  }
 }
