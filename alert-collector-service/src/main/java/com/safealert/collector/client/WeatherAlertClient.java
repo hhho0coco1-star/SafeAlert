@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import com.safealert.collector.service.DuplicateFilterService;
+import lombok.RequiredArgsConstructor;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,12 +19,14 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class WeatherAlertClient {
 
     @Value("${api.weather.key}")
     private String apiKey;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final DuplicateFilterService duplicateFilter;
+    private final RestTemplate restTemplate;
 
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
@@ -43,7 +48,10 @@ public class WeatherAlertClient {
                     .rawData(response)
                     .build();
 
-            results.add(message);
+            if (!duplicateFilter.isDuplicate("WEATHER", "기상특보", message.getIssuedAt())) {
+                results.add(message);
+            }
+
         } catch (Exception e) {
             log.error("[기상청] API 호출 실패 - {}", e.getMessage());
         }

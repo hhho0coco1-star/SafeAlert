@@ -1,8 +1,8 @@
-// 환경부 API를 호출해서 미세먼지 데이터를 가져옴
-
 package com.safealert.collector.client;
 
 import com.safealert.collector.model.AlertRawMessage;
+import com.safealert.collector.service.DuplicateFilterService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,12 +15,14 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DustAlertClient {
-    
+
     @Value("${api.dust.key}")
     private String apiKey;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final DuplicateFilterService duplicateFilter;
+    private final RestTemplate restTemplate;
 
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
@@ -42,7 +44,9 @@ public class DustAlertClient {
                     .rawData(response)
                     .build();
 
-            results.add(message);
+            if (!duplicateFilter.isDuplicate("DUST", "미세먼지 현황", message.getIssuedAt())) {
+                results.add(message);
+            }
         } catch (Exception e) {
             log.error("[환경부] API 호출 실패 - {}", e.getMessage());
         }
