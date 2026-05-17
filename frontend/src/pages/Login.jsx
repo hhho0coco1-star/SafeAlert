@@ -58,7 +58,9 @@ export default function Login() {
         try {
             const res = await api.post('/api/auth/login', { email, password })
             const { accessToken, refreshToken } = res.data.data
-            login(accessToken, refreshToken, null)
+            localStorage.setItem('accessToken', accessToken)
+            const meRes = await api.get('/api/auth/me')
+            login(accessToken, refreshToken, meRes.data.data)
             navigate('/dashboard')
         } catch (err) {
             setError(err.response?.data?.message ?? '로그인에 실패했습니다.')
@@ -81,7 +83,9 @@ export default function Login() {
             })
             const res = await api.post('/api/auth/login', { email, password })
             const { accessToken, refreshToken } = res.data.data
-            login(accessToken, refreshToken, null)
+            localStorage.setItem('accessToken', accessToken)
+            const meRes = await api.get('/api/auth/me')
+            login(accessToken, refreshToken, meRes.data.data)
             navigate('/dashboard')
         } catch (err) {
             setError(err.response?.data?.message ?? '회원가입에 실패했습니다.')

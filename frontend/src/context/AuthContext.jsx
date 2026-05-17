@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import api from "../api/axios";
 
 const AuthContext = createContext(null) // createContext : 전역 저장소를 만드는 함수
 
@@ -7,6 +8,19 @@ export function AuthProvider({ children }) {
     const [ accessToken, setAccessToken ] = useState(
         localStorage.getItem('accessToken')
     )
+
+    // 새로고침 시 토큰이 있으면 /api/auth/me 로 user 복원
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken')
+        if (token && !user) {
+            api.get('/api/auth/me')
+                .then(res => setUser(res.data.data))
+                .catch(() => {
+                    localStorage.clear()
+                    setAccessToken(null)
+                })
+        }
+    }, [])
 
     const login = (accessToken, refreshToken, userData) => {
         localStorage.setItem('accessToken', accessToken)
