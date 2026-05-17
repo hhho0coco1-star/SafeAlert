@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 |
 |-------|------|------|-----------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK |
@@ -130,7 +130,7 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 | 1-D-2 | 랜딩 페이지 `/` (서비스 소개, 로그인/회원가입 진입) | 0.5일 | [O] |
 | 1-D-3 | 로그인 + 회원가입 페이지 `/login`, `/signup` | 0.5일 | [O] |
 | 1-D-4 | 메인 대시보드 `/dashboard` (구독 현황 + 최근 알림 + WebSocket 실시간 알림) | 1일 | [O] |
-| 1-D-5 | 구독 설정 페이지 `/subscriptions` (지역 추가/삭제, 카테고리 선택) | 0.5일 | [ ] |
+| 1-D-5 | 구독 설정 페이지 `/subscriptions` (지역 추가/삭제, 카테고리 선택) | 0.5일 | [O] |
 | 1-D-6 | 알림 이력 페이지 `/history` (과거 알림 목록, 페이지네이션) | 0.5일 | [ ] |
 | 1-D-7 | 내 계정 페이지 `/profile` (닉네임/이메일 표시, 로그아웃) | 0.5일 | [ ] |
 | 1-D-8 | 관리자 대시보드 `/admin` (통계 조회 + 수동 알림 발송 탭 형식) | 0.5일 | [ ] |
@@ -201,6 +201,7 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 | 2-C-9 | GET /api/alerts/recent — 랜딩용 최근 알림 HTTP API 구현 | 0.5일 | [O] |
 | 2-C-10 | GET /api/admin/stats — 관리자 요약 통계 API 구현 | 0.5일 | [O] |
 | 2-C-11 | GET /api/admin/alerts — 최근 발송 알림 목록 API 구현 | 0.5일 | [O] |
+| 2-C-14 | POST /api/admin/alerts/manual — 관리자 수동 알림 발송 API 구현 | 0.5일 | [O] |
 | 2-C-12 | Retry 로직 (Resilience4j Retry) | 0.5일 | [ ] |
 | 2-C-13 | K8s 배포 (Replica 3, HPA 설정) | 0.5일 | [ ] |
 
