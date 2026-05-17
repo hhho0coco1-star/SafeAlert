@@ -131,7 +131,7 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 | 1-D-3 | 로그인 + 회원가입 페이지 `/login`, `/signup` | 0.5일 | [O] |
 | 1-D-4 | 메인 대시보드 `/dashboard` (구독 현황 + 최근 알림 + WebSocket 실시간 알림) | 1일 | [O] |
 | 1-D-5 | 구독 설정 페이지 `/subscriptions` (지역 추가/삭제, 카테고리 선택) | 0.5일 | [O] |
-| 1-D-6 | 알림 이력 페이지 `/history` (과거 알림 목록, 페이지네이션) | 0.5일 | [ ] |
+| 1-D-6 | 알림 이력 페이지 `/history` (과거 알림 목록, 페이지네이션) | 0.5일 | [O] |
 | 1-D-7 | 내 계정 페이지 `/profile` (닉네임/이메일 표시, 로그아웃) | 0.5일 | [ ] |
 | 1-D-8 | 관리자 대시보드 `/admin` (통계 조회 + 수동 알림 발송 탭 형식) | 0.5일 | [ ] |
 | 1-D-9 | K8s 배포 (Dockerfile + NGINX + K8s YAML) | 0.5일 | [ ] |
