@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-collector-service
+  namespace: safealert-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-collector-service
+  template:
+    metadata:
+      labels:
+        app: alert-collector-service
+    spec:
+      containers:
+        - name: alert-collector-service
+          image: alert-collector-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8086
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka.safealert-infra.svc.cluster.local:9092
+            - name: SPRING_DATA_REDIS_HOST
+              value: redis-master.safealert-infra.svc.cluster.local
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"

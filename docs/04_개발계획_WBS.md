@@ -172,7 +172,7 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 | 2-A-5 | Redis 기반 중복 수집 방지 구현 | 0.5일 | [O] |
 | 2-A-6 | Kafka Producer 연동 (alert.raw 발행) | 0.5일 | [O] |
 | 2-A-7 | Circuit Breaker (Resilience4j) 적용 | 1일 | [O] |
-| 2-A-8 | K8s 배포 및 스케줄러 동작 확인 | 0.5일 | [ ] |
+| 2-A-8 | K8s 배포 및 스케줄러 동작 확인 | 0.5일 | [O] |
 
 ### 2-B. Alert Processor Service (1주)
 
