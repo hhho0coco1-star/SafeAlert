@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.safealert.collector.service.DuplicateFilterService;
 import lombok.RequiredArgsConstructor;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class WeatherAlertClient {
     private final DuplicateFilterService duplicateFilter;
     private final RestTemplate restTemplate;
 
+    @CircuitBreaker(name = "weatherApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
         String url = "http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrWrnMsg"
@@ -57,5 +59,10 @@ public class WeatherAlertClient {
         }
 
         return results;
+    }
+
+    public List<AlertRawMessage> fetchFallback(Exception e) {
+        log.warn("[기상청] Circuit Breaker 작동 - API 일시 차단: {}", e.getMessage());
+        return List.of();
     }
 } 

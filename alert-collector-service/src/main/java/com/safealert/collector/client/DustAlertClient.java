@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +26,7 @@ public class DustAlertClient {
     private final DuplicateFilterService duplicateFilter;
     private final RestTemplate restTemplate;
 
+    @CircuitBreaker(name = "dustApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"
@@ -52,5 +55,10 @@ public class DustAlertClient {
         }
 
         return results;
+    }
+
+    public List<AlertRawMessage> fetchFallback(Exception e) {
+        log.warn("[환경부] Circuit Breaker 작동 - API 일시 차단: {}", e.getMessage());
+        return List.of();
     }
 }

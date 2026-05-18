@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +25,7 @@ public class DisasterAlertClient {
     private final DuplicateFilterService duplicateFilter;
     private final RestTemplate restTemplate;
 
+    @CircuitBreaker(name = "disasterApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
         String url = "https://apis.data.go.kr/1741000/DisasterMsg4/getDisasterMsg4List"
@@ -52,5 +54,10 @@ public class DisasterAlertClient {
         }
 
         return results;
+    }
+
+    public List<AlertRawMessage> fetchFallback(Exception e) {
+        log.warn("[행정안전부] Circuit Breaker 작동 - API 일시 차단: {}", e.getMessage());
+        return List.of();
     }
 }
