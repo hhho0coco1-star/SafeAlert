@@ -50,40 +50,43 @@
 
 ```mermaid
 graph TB
-    Client["🌐 React 프론트엔드\n(Vite + Tailwind)"]
-    Gateway["API Gateway\n:8080\nJWT 필터 + Rate Limit"]
+    ExtAPI["공공 API\n기상청 · 행정안전부 · 환경부"]
+    Client["🌐 React 프론트엔드\nVite + Tailwind"]
+    Gateway["🔀 API Gateway :8080\nJWT 필터 · Rate Limit"]
 
-    subgraph Services["백엔드 서비스 (safealert-app)"]
-        Auth["Auth Service\n:8081\nJWT + Redis"]
-        Sub["Subscription Service\n:8085\nOutbox 패턴"]
-        Noti["Notification Service\n:8084\nWebSocket + STOMP"]
-        Collector["Alert Collector\n공공 API 수집"]
-        Processor["Alert Processor\n지역 매핑 + 분류"]
+    subgraph App["백엔드 서비스 (safealert-app)"]
+        subgraph UserServices["사용자 서비스"]
+            Auth["🔐 Auth Service :8081\nJWT · Redis"]
+            Sub["📋 Subscription :8085\nOutbox 패턴"]
+            Noti["🔔 Notification :8083\nWebSocket · STOMP"]
+        end
+        subgraph Pipeline["이벤트 파이프라인"]
+            Collector["📡 Alert Collector :8086\n5분 스케줄러 · Circuit Breaker"]
+            Processor["⚡ Alert Processor :8087\nReplica 3 · 분류 · 필터"]
+        end
     end
 
     subgraph Infra["인프라 (safealert-infra)"]
-        PG["PostgreSQL"]
-        Redis["Redis"]
-        Kafka["Kafka\n(KRaft)"]
-        Mongo["MongoDB"]
+        direction LR
+        Kafka{{"Kafka\nKRaft"}}
+        PG[("PostgreSQL")]
+        Mongo[("MongoDB")]
+        Redis[("Redis")]
     end
 
-    Client -->|"REST / WebSocket"| Gateway
-    Gateway --> Auth
-    Gateway --> Sub
-    Gateway --> Noti
+    ExtAPI -->|"HTTP 5분 주기"| Collector
+    Client <-->|"REST / WebSocket"| Gateway
+    Gateway --> Auth & Sub & Noti
 
-    Auth --> PG
-    Auth --> Redis
+    Auth --> PG & Redis
     Sub --> PG
-    Sub -->|"Outbox 이벤트"| Kafka
+    Sub -->|"alert.raw"| Kafka
     Collector -->|"alert.raw"| Kafka
-    Kafka --> Processor
+    Kafka -->|"alert.raw"| Processor
     Processor --> Mongo
     Processor -->|"alert.processed"| Kafka
-    Kafka --> Noti
+    Kafka -->|"alert.processed"| Noti
     Noti --> PG
-    Noti -->|"WebSocket Push"| Client
 ```
 
 ---
