@@ -172,7 +172,7 @@
 | # | 작업 | 완료 |
 |---|------|------|
 | 2-C-6 | build.gradle에 WebSocket + Kafka 의존성 추가 | [O] |
-| 2-C-7 | WebSocket + STOMP 설정 (WebSocketConfig) | [ ] |
+| 2-C-7 | WebSocket + STOMP 설정 (WebSocketConfig) | [O] |
 | 2-C-8 | JWT 기반 WebSocket 인증 인터셉터 | [ ] |
 | 2-C-9 | Kafka Consumer (alert.processed 구독) | [ ] |
 | 2-C-10 | WebSocket으로 사용자에게 알림 Push | [ ] |
