@@ -178,12 +178,12 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 
 | # | 작업 | 예상 소요 | 완료 |
 |---|------|---------|------|
-| 2-B-1 | Kafka Consumer 설정 (alert.raw 구독) | 0.5일 | [ ] |
-| 2-B-2 | 지역 코드 매핑 로직 구현 | 1일 | [ ] |
-| 2-B-3 | 카테고리 분류 및 심각도 판단 로직 | 0.5일 | [ ] |
-| 2-B-4 | 중복 알림 필터 (Redis TTL 24시간) | 0.5일 | [ ] |
-| 2-B-5 | MongoDB Event Store 저장 구현 | 0.5일 | [ ] |
-| 2-B-6 | Kafka Producer (alert.processed 발행) | 0.5일 | [ ] |
+| 2-B-1 | Kafka Consumer 설정 (alert.raw 구독) | 0.5일 | [O] |
+| 2-B-2 | 지역 코드 매핑 로직 구현 | 1일 | [O] |
+| 2-B-3 | 카테고리 분류 및 심각도 판단 로직 | 0.5일 | [O] |
+| 2-B-4 | 중복 알림 필터 (Redis TTL 24시간) | 0.5일 | [O] |
+| 2-B-5 | MongoDB Event Store 저장 구현 | 0.5일 | [O] |
+| 2-B-6 | Kafka Producer (alert.processed 발행) | 0.5일 | [O] |
 | 2-B-7 | K8s 배포 (Replica 3) | 0.5일 | [ ] |
 
 ### 2-C. Notification Service (1.5주)
