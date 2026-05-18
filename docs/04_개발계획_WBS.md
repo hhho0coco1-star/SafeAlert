@@ -184,7 +184,7 @@ Kafka Consumer는 Phase 2-A, 2-B 완료 후 notification-service에 추가하면
 | 2-B-4 | 중복 알림 필터 (Redis TTL 24시간) | 0.5일 | [O] |
 | 2-B-5 | MongoDB Event Store 저장 구현 | 0.5일 | [O] |
 | 2-B-6 | Kafka Producer (alert.processed 발행) | 0.5일 | [O] |
-| 2-B-7 | K8s 배포 (Replica 3) | 0.5일 | [ ] |
+| 2-B-7 | K8s 배포 (Replica 3) | 0.5일 | [O] |
 
 ### 2-C. Notification Service (1.5주)
 
