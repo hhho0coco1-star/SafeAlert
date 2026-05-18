@@ -39,6 +39,5 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
                                 WebSocketHandler wsHandler, Exception exception) {
-                                    // 작업 추가 예정
     }
 }
