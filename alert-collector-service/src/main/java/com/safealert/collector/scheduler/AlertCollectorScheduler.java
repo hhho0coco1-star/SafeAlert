@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import com.safealert.collector.client.DisasterAlertClient;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class AlertCollectorScheduler {
     private final WeatherAlertClient weatherAlertClient;
     private final DustAlertClient dustAlertClient;
     private final AlertKafkaProducer kafkaProducer;
+    private final DisasterAlertClient disasterAlertClient;
 
     @Scheduled(cron = "${scheduler.weather.cron}")
     public void collectWeather() {
@@ -36,4 +38,13 @@ public class AlertCollectorScheduler {
         messages.forEach(kafkaProducer::send);
         log.info("[스케줄러] 환경부 수집 완료 - {}건", messages.size());
     }
+
+    @Scheduled(cron = "${scheduler.disaster.cron}")
+    public void collectDisaster() {
+        log.info("[스케줄러] 행정안전부 수집 시작");
+        List<AlertRawMessage> messages = disasterAlertClient.fetch();
+        messages.forEach(kafkaProducer::send);
+        log.info("[스케줄러] 행정안전부 수집 완료 - {}건", messages.size());
+    }
+
 }
