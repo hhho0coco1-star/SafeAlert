@@ -269,6 +269,24 @@
 
 ## 3. Notification Service API
 
+### GET /api/notifications/summary — 오늘 알림 카테고리별 카운트
+
+**Response:**
+```json
+{
+  "total": 5,
+  "weather": 2,
+  "earthquake": 1,
+  "dust": 1,
+  "disaster": 1
+}
+```
+
+- 오늘 00:00 ~ 현재 기준, 로그인 사용자 본인 데이터만 집계
+- 대시보드 미니 스탯 4개 표시용
+
+---
+
 ### GET /api/notifications — 알림 이력 조회
 
 **Query Parameters:**

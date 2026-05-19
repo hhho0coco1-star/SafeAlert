@@ -47,6 +47,7 @@ export default function Dashboard() {
     const [userInfo, setUserInfo] = useState(null)
     const [notifications, setNotifications] = useState([])
     const [subscriptions, setSubscriptions] = useState([])
+    const [summary, setSummary] = useState({ total: 0, weather: 0, earthquake: 0, dust: 0, disaster: 0 })
     const [modal, setModal] = useState(null)
 
     useEffect(() => {
@@ -61,6 +62,10 @@ export default function Dashboard() {
         api.get('/api/subscriptions')
             .then(res => setSubscriptions(res.data.data ?? []))
             .catch(() => {})
+
+        api.get('/api/notifications/summary')
+            .then(res => setSummary(res.data.data))
+            .catch(() => {})
     }, [])
 
     const regionCodes = [...new Set(subscriptions.map(s => s.regionCode))]
@@ -70,10 +75,6 @@ export default function Dashboard() {
         setNotifications(prev => [alert, ...prev])
         setModal(alert)
     })
-
-    const today = new Date().toDateString()
-    const todayAlerts = notifications.filter(n => new Date(n.createdAt).toDateString() === today)
-    const countByCategory = (cat) => todayAlerts.filter(n => n.category === cat).length
 
     const regions = [...new Map(subscriptions.map(s => [s.regionCode, s])).keys()]
     const categories = [...new Set(subscriptions.map(s => s.category))]
@@ -100,10 +101,10 @@ export default function Dashboard() {
                 {/* 요약 스탯 4개 */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                     {[
-                        { label: '오늘 수신 알림', val: todayAlerts.length,          color: 'text-red-500',   icon: <IconBellRinging size={13} className="text-red-500"   /> },
-                        { label: '기상특보',        val: countByCategory('WEATHER'),    color: 'text-red-500',   icon: <IconCloudStorm  size={13} className="text-red-500"   /> },
-                        { label: '지진',            val: countByCategory('EARTHQUAKE'), color: 'text-amber-600', icon: <IconWaveSine    size={13} className="text-amber-600" /> },
-                        { label: '미세먼지',        val: countByCategory('DUST'),       color: 'text-blue-500',  icon: <IconWind        size={13} className="text-blue-500"  /> },
+                        { label: '오늘 수신 알림', val: summary.total,      color: 'text-red-500',   icon: <IconBellRinging size={13} className="text-red-500"   /> },
+                        { label: '기상특보',        val: summary.weather,    color: 'text-red-500',   icon: <IconCloudStorm  size={13} className="text-red-500"   /> },
+                        { label: '지진',            val: summary.earthquake, color: 'text-amber-600', icon: <IconWaveSine    size={13} className="text-amber-600" /> },
+                        { label: '미세먼지',        val: summary.dust,       color: 'text-blue-500',  icon: <IconWind        size={13} className="text-blue-500"  /> },
                     ].map(({ label, val, color, icon }) => (
                         <div key={label} className="bg-white border border-gray-200 rounded-xl px-4 py-3.5">
                             <div className="flex items-center gap-1 text-[11px] text-gray-400 mb-1">{icon} {label}</div>

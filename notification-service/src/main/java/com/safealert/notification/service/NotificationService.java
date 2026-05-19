@@ -56,6 +56,19 @@ public class NotificationService {
     }
 
     @Transactional(readOnly = true)
+    public NotificationSummaryResponse getSummary(String accessToken) {
+        UUID userId = jwtProvider.getUserId(accessToken);
+        LocalDateTime start = LocalDate.now().atStartOfDay();
+        LocalDateTime end = start.plusDays(1);
+        long total    = repository.countByUserIdAndCreatedAtBetween(userId, start, end);
+        long weather   = repository.countTodayByUserIdAndCategory(userId, "WEATHER",    start, end);
+        long earthquake = repository.countTodayByUserIdAndCategory(userId, "EARTHQUAKE", start, end);
+        long dust      = repository.countTodayByUserIdAndCategory(userId, "DUST",       start, end);
+        long disaster  = repository.countTodayByUserIdAndCategory(userId, "DISASTER",   start, end);
+        return new NotificationSummaryResponse(total, weather, earthquake, dust, disaster);
+    }
+
+    @Transactional(readOnly = true)
     public AdminStatsResponse getAdminStats(String accessToken) {
         validateAdmin(accessToken);
         long totalSent = repository.count();

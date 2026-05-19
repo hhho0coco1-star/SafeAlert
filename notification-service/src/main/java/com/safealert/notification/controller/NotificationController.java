@@ -29,6 +29,13 @@ public class NotificationController {
                 notificationService.getNotifications(token, category, page, size, startDate, endDate, keyword)));
     }
 
+    @GetMapping("/api/notifications/summary")
+    public ResponseEntity<ApiResponse<NotificationSummaryResponse>> getSummary(
+            @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        return ResponseEntity.ok(ApiResponse.ok(notificationService.getSummary(token)));
+    }
+
     @GetMapping("/api/alerts/recent")
     public ResponseEntity<ApiResponse<List<NotificationResponse>>> getRecentAlerts() {
         return ResponseEntity.ok(ApiResponse.ok(notificationService.getRecentAlerts()));
