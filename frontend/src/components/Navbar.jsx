@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
@@ -6,6 +7,18 @@ export default function Navbar() {
     const { isLoggedIn, user, logout } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const dropdownRef = useRef(null)
+
+    useEffect(() => {
+        const handleClick = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setDropdownOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClick)
+        return () => document.removeEventListener('mousedown', handleClick)
+    }, [])
 
     const isActive = (path) => location.pathname === path
 
@@ -83,12 +96,31 @@ export default function Navbar() {
                     <span className="w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
                     실시간 연결됨
                 </div>
-                <button
-                    onClick={handleLogout}
-                    className="w-8 h-8 rounded-full bg-red-50 text-red-500 text-sm font-medium border border-gray-200 hover:bg-red-100"
-                >
-                    {user?.nickname?.[0] ?? '?'}
-                </button>
+                <div className="relative" ref={dropdownRef}>
+                    <button
+                        onClick={() => setDropdownOpen(o => !o)}
+                        className="w-8 h-8 rounded-full bg-red-50 text-red-500 text-sm font-medium border border-gray-200 hover:bg-red-100"
+                    >
+                        {user?.nickname?.[0] ?? '?'}
+                    </button>
+                    {dropdownOpen && (
+                        <div className="absolute right-0 top-10 w-36 bg-white border border-gray-200 rounded-lg shadow-md z-50 py-1">
+                            <Link
+                                to="/profile"
+                                onClick={() => setDropdownOpen(false)}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                            >
+                                내 계정
+                            </Link>
+                            <button
+                                onClick={handleLogout}
+                                className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50"
+                            >
+                                로그아웃
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </nav>
     )

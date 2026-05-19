@@ -177,8 +177,8 @@
 | 2-C-9 | Kafka Consumer (alert.processed 구독) | [O] |
 | 2-C-10 | WebSocket으로 사용자에게 알림 Push | [O] |
 | 2-C-11 | 다중 인스턴스 세션 동기화 (Redis Pub/Sub) | [O] |
-| 2-C-12 | 프론트엔드 WebSocket 연결 (Landing + Dashboard) | [ ] |
-| 2-C-13 | K8s 재배포 (WebSocket + Kafka 반영) | [ ] |
+| 2-C-12 | 프론트엔드 WebSocket 연결 (Landing + Dashboard) | [O] |
+| 2-C-13 | K8s 재배포 (WebSocket + Kafka 반영) | [O] |
 
 **Phase 2 완료 기준:**
 - 브라우저 랜딩/대시보드에서 실시간 알림 수신 확인
@@ -290,7 +290,7 @@
 |---------|------|------|
 | M1: 인프라 완성 | K8s + Kafka + Redis + DB 모두 Running | ✅ 완료 |
 | M2: 인증/구독 완성 | 로그인 → JWT → 구독 등록 플로우 동작 | ✅ 완료 |
-| M3: 알림 파이프라인 완성 | 공공 API → WebSocket 알림 E2E 동작 | 🔄 진행 중 |
+| M3: 알림 파이프라인 완성 | 공공 API → WebSocket 알림 E2E 동작 | ✅ 완료 |
 | M4: 장애 복원력 완성 | Circuit Breaker / Saga / Chaos Test 통과 | ⬜ 대기 |
 | M5: 관측 가능성 완성 | Grafana / Jaeger / ELK 모두 동작 | ⬜ 대기 |
 | M6: 프로젝트 완료 | 부하 테스트 통과 + 문서 완성 | ⬜ 대기 |

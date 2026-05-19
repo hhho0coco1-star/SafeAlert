@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Client } from '@stomp/stompjs'
-import SockJS from 'sockjs-client'
+import useWebSocket from '../hooks/useWebSocket'
+
 import {
     IconBolt, IconMapPin, IconAdjustments, IconBellRinging,
     IconCloudStorm, IconWaveSine, IconWind, IconMessageDots,
@@ -48,7 +48,6 @@ export default function Dashboard() {
     const [notifications, setNotifications] = useState([])
     const [subscriptions, setSubscriptions] = useState([])
     const [modal, setModal] = useState(null)
-    const stompRef = useRef(null)
 
     useEffect(() => {
         api.get('/api/auth/me')
@@ -64,27 +63,13 @@ export default function Dashboard() {
             .catch(() => {})
     }, [])
 
-    useEffect(() => {
-        if (!accessToken) return
+    const regionCodes = [...new Set(subscriptions.map(s => s.regionCode))]
+    const wsTopics = regionCodes.map(r => `/topic/alerts/${r}`)
 
-        const client = new Client({
-            webSocketFactory: () => new SockJS('/ws'),
-            connectHeaders: { Authorization: `Bearer ${accessToken}` },
-            reconnectDelay: 5000,
-            onConnect: () => {
-                client.subscribe('/user/queue/alerts', (msg) => {
-                    const alert = JSON.parse(msg.body)
-                    setNotifications(prev => [alert, ...prev])
-                    setModal(alert)
-                })
-            },
-        })
-
-        client.activate()
-        stompRef.current = client
-
-        return () => client.deactivate()
-    }, [accessToken])
+    useWebSocket(wsTopics, (alert) => {
+        setNotifications(prev => [alert, ...prev])
+        setModal(alert)
+    })
 
     const today = new Date().toDateString()
     const todayAlerts = notifications.filter(n => new Date(n.createdAt).toDateString() === today)

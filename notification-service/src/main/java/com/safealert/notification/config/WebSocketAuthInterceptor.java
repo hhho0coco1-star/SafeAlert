@@ -23,8 +23,8 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
         String authHeader = request.getHeaders().getFirst("Authorization");
         // header -> Authorization -> first 값
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-            log.warn("WebSocket 연결 거부 : Authorization 헤더 없음");
-            return false;
+            log.info("WebSocket 익명 연결 허용");
+            return true;
         }
         try {
             String token = authHeader.substring(7);

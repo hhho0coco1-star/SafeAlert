@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { IconAlertTriangle, IconEye, IconEyeOff } from '@tabler/icons-react'
 import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
@@ -309,10 +309,10 @@ export default function Login() {
             </main>
 
             <footer className="px-12 py-5 bg-white border-t border-gray-200 flex justify-between items-center">
-                <div className="flex items-center gap-1.5">
+                <Link to="/" className="flex items-center gap-1.5">
                     <IconAlertTriangle size={16} className="text-red-500" />
                     <span className="text-sm font-medium text-gray-900">SafeAlert</span>
-                </div>
+                </Link>
                 <span className="text-sm text-gray-400">공공데이터 기반 실시간 재난 알림 플랫폼</span>
                 <div className="flex gap-4">
                     <a href="#" className="text-sm text-gray-400 hover:text-gray-900">이용약관</a>

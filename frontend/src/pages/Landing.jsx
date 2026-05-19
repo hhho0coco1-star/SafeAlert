@@ -7,6 +7,7 @@ import {
     IconUserPlus, IconBellRinging, IconChevronRight,
 } from '@tabler/icons-react'
 import api from '../api/axios'
+import useWebSocket from '../hooks/useWebSocket'
 
 const CAT_CONFIG = {
     WEATHER:    { label: '기상특보', dot: 'bg-red-500',    badge: 'bg-red-50 text-red-800'   },
@@ -14,6 +15,25 @@ const CAT_CONFIG = {
     DUST:       { label: '미세먼지', dot: 'bg-blue-500',   badge: 'bg-blue-50 text-blue-800'  },
     DISASTER:   { label: '재난문자', dot: 'bg-green-600',  badge: 'bg-green-50 text-green-800' },
     CIVIL:      { label: '민방위',   dot: 'bg-green-600',  badge: 'bg-green-50 text-green-800' },
+}
+
+const ALL_REGION_TOPICS = [
+    '11','26','27','28','29','30','31','36',
+    '41','42','43','44','45','46','47','48','50',
+].map(r => `/topic/alerts/${r}`)
+
+function createEl(item) {
+    const cat = CAT_CONFIG[item.category] ?? { label: item.category, dot: 'bg-gray-400', badge: 'bg-gray-100 text-gray-700' }
+    const el = document.createElement('div')
+    el.className = 'flex items-center gap-2.5 px-4 py-2.5 border-b border-gray-100 bg-white opacity-0 translate-y-4 transition-all duration-500'
+    el.innerHTML = `
+        <span class="w-2 h-2 rounded-full flex-shrink-0 ${cat.dot}"></span>
+        <div class="flex-1 min-w-0">
+            <div class="text-xs font-medium text-gray-900 truncate">${item.title}</div>
+            <div class="text-[11px] text-gray-400 mt-0.5">${item.region ?? ''}</div>
+        </div>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${cat.badge}">${cat.label}</span>`
+    return el
 }
 
 export default function Landing() {
@@ -63,20 +83,6 @@ export default function Landing() {
         const VISIBLE = 4
         const data = alerts.length >= VISIBLE ? alerts : [...alerts, ...alerts, ...alerts].slice(0, 8)
 
-        const createEl = (item) => {
-            const cat = CAT_CONFIG[item.category] ?? { label: item.category, dot: 'bg-gray-400', badge: 'bg-gray-100 text-gray-700' }
-            const el = document.createElement('div')
-            el.className = 'flex items-center gap-2.5 px-4 py-2.5 border-b border-gray-100 bg-white opacity-0 translate-y-4 transition-all duration-500'
-            el.innerHTML = `
-                <span class="w-2 h-2 rounded-full flex-shrink-0 ${cat.dot}"></span>
-                <div class="flex-1 min-w-0">
-                    <div class="text-xs font-medium text-gray-900 truncate">${item.title}</div>
-                    <div class="text-[11px] text-gray-400 mt-0.5">${item.region ?? ''}</div>
-                </div>
-                <span class="text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${cat.badge}">${cat.label}</span>`
-            return el
-        }
-
         list.innerHTML = ''
         feedItemsRef.current = []
         feedIndexRef.current = VISIBLE
@@ -102,6 +108,19 @@ export default function Landing() {
 
         return () => clearInterval(interval)
     }, [alerts])
+
+    useWebSocket(ALL_REGION_TOPICS, (alert) => {
+        if (!feedRef.current || feedItemsRef.current.length === 0) return
+        const newEl = createEl(alert)
+        feedRef.current.insertBefore(newEl, feedRef.current.firstChild)
+        feedItemsRef.current.unshift(newEl)
+        setTimeout(() => { newEl.classList.remove('opacity-0', 'translate-y-4') }, 50)
+        if (feedItemsRef.current.length > 4) {
+            const last = feedItemsRef.current.pop()
+            last.classList.add('opacity-0', '-translate-y-4')
+            setTimeout(() => last.remove(), 400)
+        }
+    })
 
     return (
         <div className="min-h-screen bg-white text-gray-900">

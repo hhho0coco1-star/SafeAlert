@@ -19,11 +19,18 @@ api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const original = error.config
-        if(error.response?.status === 401 && !original._retry) {
+        const isAuthPath = original.url?.includes('/api/auth/login') ||
+                           original.url?.includes('/api/auth/signup') ||
+                           original.url?.includes('/api/auth/refresh')
+        if(error.response?.status === 401 && !original._retry && !isAuthPath) {
             original._retry = true
             const refreshToken = localStorage.getItem('refreshToken')
             if (!refreshToken) {
-                window.location.href = '/login'
+                const hadToken = localStorage.getItem('accessToken')
+                if (hadToken) {
+                    localStorage.clear()
+                    window.location.href = '/login'
+                }
                 return Promise.reject(error)
             }
 
