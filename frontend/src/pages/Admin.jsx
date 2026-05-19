@@ -108,7 +108,7 @@ export default function Admin() {
       await api.post('/api/admin/alerts/manual', {
         category: form.category,
         severity: form.severity,
-        title: form.content.trim(),
+        title: form.title.trim(),
         content: form.content.trim(),
         targetRegions,
       })

@@ -1,9 +1,11 @@
 package com.safealert.notification.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 // 수동 알림 발송 요청 DTO
 @Getter
@@ -20,7 +22,9 @@ public class ManualAlertRequest {
     @NotBlank(message = "내용을 입력해 주세요")
     private String content;
 
-    private String region;
+    @NotEmpty(message = "대상 지역을 하나 이상 선택해 주세요")
+    private List<String> targetRegions;
+
     private String source;
     private String severity;
 }
