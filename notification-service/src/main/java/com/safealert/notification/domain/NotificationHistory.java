@@ -18,7 +18,7 @@ public class NotificationHistory {
     @Column(name = "notification_id")
     private UUID notificationId;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private UUID userId;
 
     @Column(name = "alert_id")

@@ -29,8 +29,9 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
 
     // 인증 없이 통과시켜줄 화이트리스트 경로 설정
     private static final List<String> PUBLIC_PATHS = List.of(
-            "/api/auth/",  // auth-service가 자체 JWT 검증 처리
-            "/ws"          // WebSocket 핸드셰이크 (JWT는 인터셉터에서 검증)
+            "/api/auth/",         // auth-service가 자체 JWT 검증 처리
+            "/api/alerts/recent", // 랜딩 페이지 공개 알림 조회
+            "/ws"                 // WebSocket 핸드셰이크 (JWT는 인터셉터에서 검증)
     );
 
     @Override
