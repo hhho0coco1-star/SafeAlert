@@ -323,7 +323,7 @@
 
 - 프로토콜: WebSocket (STOMP)
 - 연결 URL: `ws://localhost:8080/api/notifications/ws`
-- 구독 경로: `/topic/alerts/{userId}`
+- 구독 경로: `/topic/alerts/{regionCode}` (구독한 지역 코드별 수신)
 - 인증: 연결 시 STOMP CONNECT 헤더에 JWT 포함
 
 ---
