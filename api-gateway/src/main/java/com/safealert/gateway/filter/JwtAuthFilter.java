@@ -31,7 +31,8 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     private static final List<String> PUBLIC_PATHS = List.of(
             "/api/auth/signup",  // 회원가입
             "/api/auth/login",   // 로그인
-            "/api/auth/refresh"  // 토큰 갱신
+            "/api/auth/refresh", // 토큰 갱신
+            "/ws"                // WebSocket 핸드셰이크 (JWT는 인터셉터에서 검증)
     );
 
     @Override
