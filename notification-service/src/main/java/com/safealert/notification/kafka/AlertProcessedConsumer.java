@@ -6,8 +6,8 @@ import com.safealert.notification.domain.NotificationHistory;
 import com.safealert.notification.repository.NotificationHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AlertProcessedConsumer {
 
-    private final SimpMessagingTemplate messagingTemplate;
+    private final StringRedisTemplate redisTemplate;
     private final NotificationHistoryRepository historyRepository;
     private final ObjectMapper objectMapper;
 
@@ -34,8 +34,7 @@ public class AlertProcessedConsumer {
             String severity = root.path("severity").asText();
             String source = root.path("source").asText();
 
-            messagingTemplate.convertAndSend("/topic/alerts/" + region, message);
-            // 구독 사용자에게 실시간 알림 전송
+            redisTemplate.convertAndSend("alert:broadcast:" + region, message);
 
             NotificationHistory history = NotificationHistory.create(
                     null, source, title, content, region, source, severity);

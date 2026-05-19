@@ -17,6 +17,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
 
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:redis-master.safealert-infra.svc.cluster.local}
+      port: 6379
   kafka:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:kafka.safealert-infra.svc.cluster.local:9092}
     consumer:
