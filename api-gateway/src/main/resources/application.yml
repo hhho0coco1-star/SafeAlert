@@ -12,19 +12,6 @@ spring:
 
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins:
-              - "http://localhost:5173"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders: "*"
-            allowCredentials: true
       routes:
         - id: auth-service
           uri: ${AUTH_SERVICE_URL:http://localhost:8081}
@@ -37,17 +24,17 @@ spring:
             - Path=/api/subscriptions/**
 
         - id: notification-service
-          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8083}
           predicates:
-            - Path=/api/notifications/**
+            - Path=/api/notifications/**,/api/alerts/**
 
         - id: notification-ws
-          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          uri: ${NOTIFICATION_WS_URL:ws://localhost:8083}
           predicates:
-            - Path=/api/notifications/ws/**
+            - Path=/ws/**
 
         - id: admin-service
-          uri: ${ADMIN_SERVICE_URL:http://localhost:8087}
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8083}
           predicates:
             - Path=/api/admin/**
 
