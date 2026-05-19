@@ -58,6 +58,15 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.ok(authService.updateNickname(accessToken, request)));
     }
 
+    @PutMapping("/me/password")
+    public ResponseEntity<ApiResponse<Void>> changePassword(
+            @RequestHeader("Authorization") String authHeader,
+            @Valid @RequestBody ChangePasswordRequest request) {
+        String accessToken = authHeader.replace("Bearer ", "");
+        authService.changePassword(accessToken, request);
+        return ResponseEntity.ok(ApiResponse.ok(null));
+    }
+
     @DeleteMapping("/me")
     public ResponseEntity<ApiResponse<Void>> withdraw(
             @RequestHeader("Authorization") String authHeader) {

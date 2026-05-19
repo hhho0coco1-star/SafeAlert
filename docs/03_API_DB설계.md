@@ -152,6 +152,23 @@
 
 ---
 
+### PUT /api/auth/me/password — 비밀번호 변경
+
+**Request Body:**
+```json
+{
+  "currentPassword": "현재비밀번호",
+  "newPassword": "새비밀번호8자이상"
+}
+```
+
+- 현재 비밀번호 불일치 시 `400 Bad Request`
+- 소셜 로그인 계정(`password_hash = NULL`)에서는 호출 불가
+
+**Response:** `200 OK`
+
+---
+
 ### DELETE /api/auth/me — 회원 탈퇴
 
 - 소프트 삭제 처리 (`is_deleted = true`)

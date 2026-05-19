@@ -61,4 +61,9 @@ public class User {
         this.nickname = nickname;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updatePasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

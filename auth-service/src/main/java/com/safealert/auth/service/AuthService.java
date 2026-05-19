@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.safealert.auth.dto.LoginRequest;
 import com.safealert.auth.dto.MeResponse;
 import com.safealert.auth.dto.TokenResponse;
+import com.safealert.auth.dto.ChangePasswordRequest;
 import com.safealert.auth.dto.UpdateNicknameRequest;
 import com.safealert.auth.security.JwtProvider;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -92,6 +93,17 @@ public class AuthService {
         user.updateNickname(request.getNickname());
         return new MeResponse(user.getUserId(), user.getEmail(), user.getNickname(),
                 user.getRole(), user.getCreatedAt());
+    }
+
+    @Transactional
+    public void changePassword(String accessToken, ChangePasswordRequest request) {
+        UUID userId = jwtProvider.getUserId(accessToken);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("현재 비밀번호가 올바르지 않습니다");
+        }
+        user.updatePasswordHash(passwordEncoder.encode(request.getNewPassword()));
     }
 
     @Transactional
