@@ -34,6 +34,39 @@
 
 ## 1. Auth Service API
 
+### POST /api/auth/email/send-code — 이메일 인증 코드 발송
+
+**Request:**
+```json
+{
+  "email": "user@example.com"
+}
+```
+
+**Response:** `200 OK`
+
+**에러:**
+- `400 Bad Request` — 이미 가입된 이메일
+
+---
+
+### POST /api/auth/email/verify-code — 이메일 인증 코드 확인
+
+**Request:**
+```json
+{
+  "email": "user@example.com",
+  "code": "123456"
+}
+```
+
+**Response:** `200 OK`
+
+**에러:**
+- `400 Bad Request` — 코드 불일치 또는 만료
+
+---
+
 ### POST /api/auth/signup — 회원가입
 
 **Request:**
@@ -690,6 +723,8 @@
 | 용도 | Key 패턴 | 타입 | TTL | 예시 |
 |------|----------|------|-----|------|
 | Refresh Token | `token:refresh:{userId}` | String | 7일 | `token:refresh:abc123` |
+| 이메일 인증 코드 | `email:verify:code:{email}` | String | 5분 | `email:verify:code:user@gmail.com` |
+| 이메일 인증 완료 | `email:verify:done:{email}` | String | 30분 | `email:verify:done:user@gmail.com` |
 | Rate Limit | `ratelimit:{ip}` | String | 1분 | `ratelimit:192.168.1.1` |
 | 알림 중복 방지 | `alert:dedup:{alertId}` | String | 24시간 | `alert:dedup:uuid` |
 | 알림 캐시 | `alert:recent:{regionCode}` | List | 5분 | `alert:recent:11010` |

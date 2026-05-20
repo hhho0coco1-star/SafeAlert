@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드 | ✅ 완료 (1-E 제외) |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증 | 🔄 진행 중 (1-E, 이메일 인증 제외) |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | 🔄 진행 중 (2-C 남음) |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -70,6 +70,10 @@
 | 1-A-10 | PUT /api/auth/me — 닉네임 수정 | [O] |
 | 1-A-11 | DELETE /api/auth/me — 회원 탈퇴 | [O] |
 | 1-A-12 | GET /api/admin/users — 최근 가입 회원 목록 | [O] |
+| 1-A-13 | 이메일 인증 코드 발송 API (POST /api/auth/email/send-code) | [O] |
+| 1-A-14 | 이메일 인증 코드 확인 API (POST /api/auth/email/verify-code) | [O] |
+| 1-A-15 | signup() 이메일 인증 완료 여부 검증 추가 | [O] |
+| 1-A-16 | 프론트엔드 회원가입 이메일 인증 UI 및 API 연동 | [ ] |
 
 ### 1-B. API Gateway ✅
 

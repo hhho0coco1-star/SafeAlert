@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+import com.safealert.auth.dto.SendCodeRequest;
+import com.safealert.auth.dto.VerifyCodeRequest;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -80,5 +82,18 @@ public class AuthController {
             @RequestHeader("Authorization") String authHeader) {
         String accessToken = authHeader.replace("Bearer ", "");
         return ResponseEntity.ok(ApiResponse.ok(authService.getAdminUsers(accessToken)));
+    }
+
+    @PostMapping("/email/send-code")
+    public ResponseEntity<ApiResponse<Void>> sendCode(@Valid @RequestBody SendCodeRequest request) {
+        // @Valid -> 유효성 검사 규칙 -> 컨트롤러 진입하기 전에 자동 검증
+        authService.sendVerificationCode(request.getEmail());
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    @PostMapping("/email/verify-code")
+    public ResponseEntity<ApiResponse<Void>> verifyCode(@Valid @RequestBody VerifyCodeRequest request) {
+        authService.verifyCode(request.getEmail(), request.getCode());
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 }
