@@ -73,7 +73,7 @@
 | 1-A-13 | 이메일 인증 코드 발송 API (POST /api/auth/email/send-code) | [O] |
 | 1-A-14 | 이메일 인증 코드 확인 API (POST /api/auth/email/verify-code) | [O] |
 | 1-A-15 | signup() 이메일 인증 완료 여부 검증 추가 | [O] |
-| 1-A-16 | 프론트엔드 회원가입 이메일 인증 UI 및 API 연동 | [ ] |
+| 1-A-16 | 프론트엔드 회원가입 이메일 인증 UI 및 API 연동 | [O] |
 
 ### 1-B. API Gateway ✅
 

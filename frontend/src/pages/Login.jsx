@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { IconAlertTriangle, IconEye, IconEyeOff } from '@tabler/icons-react'
 import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
+import { useEffect, useRef, useState } from 'react'
 
 const GoogleIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -28,8 +28,12 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showPw, setShowPw] = useState(false)
-    const [lastName, setLastName] = useState('')
-    const [firstName, setFirstName] = useState('')
+    const [nickname, setNickname] = useState('')
+    const [codeSent, setCodeSent] = useState(false)
+    const [code, setCode] = useState('')
+    const [codeVerified, setCodeVerified] = useState(false)
+    const [timer, setTimer] = useState(300)
+    const timerRef = useRef(null)
     const [confirmPw, setConfirmPw] = useState('')
     const [showConfirmPw, setShowConfirmPw] = useState(false)
     const [pwStrength, setPwStrength] = useState(0)
@@ -41,6 +45,37 @@ export default function Login() {
     useEffect(() => {
         if (searchParams.get('mode') === 'signup') setMode('signup')
     }, [searchParams])
+
+    const handleSendCode = async () => { // async : 비동기 작업
+        setError('') // error 초기화    
+        try {
+            await api.post('/api/auth/email/send-code', { email }) // await : 이 작업이 끝날때까지 대기
+            setCodeSent(true)
+            setTimer(300)
+            clearInterval(timerRef.current) // 기존 타이머 제거
+            timerRef.current = setInterval(() => {
+                setTimer(prev => {
+                    if (prev <= 1) {clearInterval(timerRef.current); return 0}
+                    return prev -1
+                })
+            }, 1000) 
+        } catch (err) {
+            setError(err.response?.data?.message ?? '코드 발송에 실패했습니다.')
+        }
+    }
+
+    const handleVerifyCode = async () => {
+        setError('')
+        try {
+            await api.post('/api/auth/email/verify-code', { email, code })
+            setCodeVerified(true)
+            clearInterval(timerRef.current)
+        } catch (err) {
+            setError(err.response?.data?.message ?? '인증 코드가 올바르지 않습니다.')
+            // ?. -> 이 값이 null or undefined : 조회하지 말고 멈춤
+            // ??(널 병합 연산자) -> 왼 쪽 값이 있으면 null or undefined 반환
+        }
+    }
 
     const calcStrength = (val) => {
         if (!val) return 0
@@ -72,6 +107,7 @@ export default function Login() {
     const handleSignup = async (e) => {
         e.preventDefault()
         setError('')
+        if (!codeVerified) { setError('이메일 인증을 완료해주세요.'); return }
         if (!agreeTerms) { setError('이용약관에 동의해주세요.'); return }
         if (password !== confirmPw) { setError('비밀번호가 일치하지 않습니다.'); return }
         setLoading(true)
@@ -79,7 +115,7 @@ export default function Login() {
             await api.post('/api/auth/signup', {
                 email,
                 password,
-                nickname: lastName + firstName,
+                nickname,
             })
             const res = await api.post('/api/auth/login', { email, password })
             const { accessToken, refreshToken } = res.data.data
@@ -100,6 +136,12 @@ export default function Login() {
         setPassword('')
         setConfirmPw('')
         setPwStrength(0)
+        setNickname('')
+        setCodeSent(false)
+        setCode('')
+        setCodeVerified(false)
+        setTimer(300)
+        clearInterval(timerRef.current)
     }
 
     const strengthColor = pwStrength === 1 ? 'bg-red-500' : pwStrength === 2 ? 'bg-amber-500' : 'bg-green-600'
@@ -201,26 +243,45 @@ export default function Login() {
 
                             {error && <p className="text-xs text-red-500 mb-4">{error}</p>}
 
-                            <div className="grid grid-cols-2 gap-3 mb-4">
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1.5">성</label>
-                                    <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required
-                                        placeholder="김"
-                                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-red-400 placeholder-gray-300" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1.5">이름</label>
-                                    <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required
-                                        placeholder="민준"
-                                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-red-400 placeholder-gray-300" />
-                                </div>
+                            <div className="mb-4">
+                                <label className="block text-xs font-medium text-gray-600 mb-1.5">닉네임</label>
+                                <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} required
+                                    placeholder="사용할 닉네임을 입력하세요"
+                                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-red-400 placeholder-gray-300" />
                             </div>
 
                             <div className="mb-4">
                                 <label className="block text-xs font-medium text-gray-600 mb-1.5">이메일</label>
-                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                                    placeholder="hello@example.com"
-                                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-red-400 placeholder-gray-300" />
+                                <div className="flex gap-2">
+                                    <input type="email" value={email} onChange={e => { setEmail(e.target.value); setCodeSent(false); setCodeVerified(false) }} required
+                                        placeholder="hello@example.com"
+                                        className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-red-400 placeholder-gray-300" />
+                                    <button type="button" onClick={handleSendCode} disabled={!email || codeVerified}
+                                        className="px-3 py-2 text-xs font-medium bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-40 whitespace-nowrap">
+                                        {codeSent && !codeVerified ? '재발송' : '인증코드 발송'}
+                                    </button>
+                                </div>
+                                {codeVerified && (
+                                    <p className="text-xs text-green-600 mt-1.5 font-medium">✓ 이메일 인증 완료</p>
+                                )}
+                                {codeSent && !codeVerified && (
+                                    <div className="mt-2 flex gap-2">
+                                        <input type="text" value={code} onChange={e => setCode(e.target.value)}
+                                            placeholder="인증코드 6자리"
+                                            className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-red-400 placeholder-gray-300" />
+                                        <button type="button" onClick={handleVerifyCode} disabled={!code}
+                                            className="px-3 py-2 text-xs font-medium bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-40 whitespace-nowrap">
+                                            확인
+                                        </button>
+                                    </div>
+                                )}
+                                {codeSent && !codeVerified && (
+                                    <p className="text-xs text-gray-400 mt-1">
+                                        {timer > 0
+                                            ? `${String(Math.floor(timer / 60)).padStart(2, '0')}:${String(timer % 60).padStart(2, '0')} 후 만료`
+                                            : '인증 시간이 만료됐습니다. 재발송해주세요.'}
+                                    </p>
+                                )}
                             </div>
 
                             <div className="mb-4">
@@ -275,7 +336,7 @@ export default function Login() {
                                 </label>
                             </div>
 
-                            <button type="submit" disabled={loading}
+                            <button type="submit" disabled={loading || !codeVerified}
                                 className="w-full py-2.5 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 disabled:opacity-60 mb-3">
                                 {loading ? '가입 중...' : '회원가입'}
                             </button>

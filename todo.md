@@ -50,24 +50,24 @@
 ## 프론트엔드 (Login.jsx)
 
 ### 상태(state) 변경
-- [ ] `lastName`, `firstName` 제거 → `nickname` 단일 state로 교체
-- [ ] `codeSent` (boolean) state 추가 — 코드 발송 여부
-- [ ] `code` (string) state 추가 — 사용자 입력 코드
-- [ ] `codeVerified` (boolean) state 추가 — 인증 완료 여부
-- [ ] `timer` (number) state 추가 — 카운트다운 초 (300 = 5분)
+- [x] `lastName`, `firstName` 제거 → `nickname` 단일 state로 교체
+- [x] `codeSent` (boolean) state 추가 — 코드 발송 여부
+- [x] `code` (string) state 추가 — 사용자 입력 코드
+- [x] `codeVerified` (boolean) state 추가 — 인증 완료 여부
+- [x] `timer` (number) state 추가 — 카운트다운 초 (300 = 5분)
 
 ### UI 변경
-- [ ] 이름 입력: 성+이름 2칸 → 닉네임 1칸으로 교체
-- [ ] 이메일 필드 아래 [인증코드 발송] 버튼 추가
-- [ ] `codeSent === true`일 때 코드 입력 필드 + 카운트다운 타이머 + [확인] 버튼 표시
-- [ ] `codeVerified === true`일 때 ✓ 이메일 인증 완료 배지 표시
-- [ ] 타이머 만료 시 [재발송] 버튼 활성화
-- [ ] 회원가입 버튼: `codeVerified === false`이면 `disabled`
+- [x] 이름 입력: 성+이름 2칸 → 닉네임 1칸으로 교체
+- [x] 이메일 필드 아래 [인증코드 발송] 버튼 추가
+- [x] `codeSent === true`일 때 코드 입력 필드 + 카운트다운 타이머 + [확인] 버튼 표시
+- [x] `codeVerified === true`일 때 ✓ 이메일 인증 완료 배지 표시
+- [x] 타이머 만료 시 [재발송] 버튼 활성화
+- [x] 회원가입 버튼: `codeVerified === false`이면 `disabled`
 
 ### API 연동
-- [ ] `POST /api/auth/email/send-code` 호출 연동 (이메일 발송)
-- [ ] `POST /api/auth/email/verify-code` 호출 연동 (코드 확인)
-- [ ] API 요청 payload에서 `nickname: lastName + firstName` → `nickname` 단일 필드로 수정
+- [x] `POST /api/auth/email/send-code` 호출 연동 (이메일 발송)
+- [x] `POST /api/auth/email/verify-code` 호출 연동 (코드 확인)
+- [x] API 요청 payload에서 `nickname: lastName + firstName` → `nickname` 단일 필드로 수정
 
 ---
 
