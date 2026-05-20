@@ -16,7 +16,7 @@ const useWebSocket = (topics = [], onMessage) => {
         const connectHeaders = token ? { Authorization: `Bearer ${token}` } : {};
 
         const client = new Client({
-            webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+            webSocketFactory: () => new SockJS('http://localhost:30080/ws'),
             connectHeaders,
             reconnectDelay: 5000,
             onConnect: () => {

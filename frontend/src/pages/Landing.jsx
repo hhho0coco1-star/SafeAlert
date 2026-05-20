@@ -215,32 +215,32 @@ export default function Landing() {
                 className="snap-start flex flex-col items-center justify-center px-12 bg-gray-50"
                 style={{ height: SECTION_H }}
             >
-                <div className="max-w-3xl w-full">
+                <div className="max-w-5xl w-full">
                     <p className="text-xl font-medium text-gray-900 mb-2 text-center">핵심 기능</p>
                     <p className="text-sm text-gray-500 text-center mb-8">내 지역, 내가 원하는 알림만 선택하세요</p>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="border border-gray-200 rounded-xl p-5 bg-white">
+                    <div className="grid grid-cols-2 gap-6">
+                        <div className="border border-gray-200 rounded-xl p-7 bg-white transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-0.5 hover:border-gray-300 flex flex-col min-h-[190px]">
                             <div className="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center mb-3">
                                 <IconBolt size={18} className="text-red-800" />
                             </div>
                             <h3 className="text-sm font-medium text-gray-900 mb-1.5">실시간 WebSocket 알림</h3>
                             <p className="text-xs text-gray-500 leading-relaxed">페이지를 새로고침하지 않아도 재난 발생 즉시 브라우저로 알림을 수신합니다.</p>
                         </div>
-                        <div className="border border-gray-200 rounded-xl p-5 bg-white">
+                        <div className="border border-gray-200 rounded-xl p-7 bg-white transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-0.5 hover:border-gray-300 flex flex-col min-h-[190px]">
                             <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
                                 <IconMapPin size={18} className="text-blue-800" />
                             </div>
                             <h3 className="text-sm font-medium text-gray-900 mb-1.5">지역별 구독 설정</h3>
                             <p className="text-xs text-gray-500 leading-relaxed">시·도·군·구 단위로 관심 지역을 등록하고 해당 지역 알림만 선택적으로 받습니다.</p>
                         </div>
-                        <div className="border border-gray-200 rounded-xl p-5 bg-white">
+                        <div className="border border-gray-200 rounded-xl p-7 bg-white transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-0.5 hover:border-gray-300 flex flex-col min-h-[190px]">
                             <div className="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center mb-3">
                                 <IconAdjustments size={18} className="text-green-800" />
                             </div>
                             <h3 className="text-sm font-medium text-gray-900 mb-1.5">알림 카테고리 선택</h3>
                             <p className="text-xs text-gray-500 leading-relaxed">기상특보, 지진, 미세먼지, 재난문자 중 원하는 유형만 골라 구독할 수 있습니다.</p>
                         </div>
-                        <div className="border border-gray-200 rounded-xl p-5 bg-white">
+                        <div className="border border-gray-200 rounded-xl p-7 bg-white transition-all duration-200 cursor-pointer hover:shadow-md hover:-translate-y-0.5 hover:border-gray-300 flex flex-col min-h-[190px]">
                             <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
                                 <IconHistory size={18} className="text-amber-800" />
                             </div>
@@ -251,58 +251,58 @@ export default function Landing() {
                 </div>
             </section>
 
-            {/* ── Section 3: CTA + 푸터 (다크 배경) ── */}
+            {/* ── Section 3: CTA + 푸터 ── */}
             <section
-                className="snap-start flex flex-col bg-gray-900"
+                className="snap-start flex flex-col bg-white"
                 style={{ height: SECTION_H }}
             >
                 {/* CTA */}
                 <div className="flex-1 flex items-center justify-center px-12">
-                    <div className="bg-gray-800 rounded-xl px-12 py-10 max-w-3xl w-full text-center">
-                        <h2 className="text-xl font-medium text-white mb-2">지금 바로 시작하세요</h2>
-                        <p className="text-sm text-gray-400 mb-7">회원가입 후 내 지역과 알림 유형을 설정하면 즉시 수신됩니다.</p>
+                    <div className="bg-gray-50 rounded-xl px-12 py-10 max-w-3xl w-full text-center">
+                        <h2 className="text-xl font-medium text-gray-900 mb-2">지금 바로 시작하세요</h2>
+                        <p className="text-sm text-gray-500 mb-7">회원가입 후 내 지역과 알림 유형을 설정하면 즉시 수신됩니다.</p>
 
                         <div className="flex justify-center gap-2.5 flex-wrap mb-9">
-                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-red-900/50 text-red-300">
+                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-red-50 text-red-700">
                                 <IconCloudStorm size={15} /> 기상특보
                             </span>
-                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-amber-900/50 text-amber-300">
+                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-amber-50 text-amber-700">
                                 <IconWaveSine size={15} /> 지진
                             </span>
-                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-blue-900/50 text-blue-300">
+                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-blue-50 text-blue-700">
                                 <IconWind size={15} /> 미세먼지
                             </span>
-                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-green-900/50 text-green-300">
+                            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium bg-green-50 text-green-700">
                                 <IconMessageDots size={15} /> 재난문자
                             </span>
                         </div>
 
                         <div className="flex items-center justify-center gap-0 mb-8">
                             <div className="flex flex-col items-center gap-2 w-36">
-                                <div className="w-11 h-11 rounded-xl bg-gray-700 border border-gray-600 flex items-center justify-center text-red-400">
+                                <div className="w-11 h-11 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center text-red-500">
                                     <IconUserPlus size={20} />
                                 </div>
-                                <span className="text-[11px] font-semibold text-red-400 tracking-wide">STEP 1</span>
-                                <span className="text-sm font-medium text-white">회원가입</span>
-                                <span className="text-[11px] text-gray-500 -mt-1">이메일 또는 소셜</span>
+                                <span className="text-[11px] font-semibold text-red-500 tracking-wide">STEP 1</span>
+                                <span className="text-sm font-medium text-gray-900">회원가입</span>
+                                <span className="text-[11px] text-gray-400 -mt-1">이메일 또는 소셜</span>
                             </div>
-                            <IconChevronRight size={18} className="text-gray-600 mb-6" />
+                            <IconChevronRight size={18} className="text-gray-300 mb-6" />
                             <div className="flex flex-col items-center gap-2 w-36">
-                                <div className="w-11 h-11 rounded-xl bg-gray-700 border border-gray-600 flex items-center justify-center text-red-400">
+                                <div className="w-11 h-11 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center text-red-500">
                                     <IconMapPin size={20} />
                                 </div>
-                                <span className="text-[11px] font-semibold text-red-400 tracking-wide">STEP 2</span>
-                                <span className="text-sm font-medium text-white">지역·카테고리 설정</span>
-                                <span className="text-[11px] text-gray-500 -mt-1">내 관심 지역 선택</span>
+                                <span className="text-[11px] font-semibold text-red-500 tracking-wide">STEP 2</span>
+                                <span className="text-sm font-medium text-gray-900">지역·카테고리 설정</span>
+                                <span className="text-[11px] text-gray-400 -mt-1">내 관심 지역 선택</span>
                             </div>
-                            <IconChevronRight size={18} className="text-gray-600 mb-6" />
+                            <IconChevronRight size={18} className="text-gray-300 mb-6" />
                             <div className="flex flex-col items-center gap-2 w-36">
-                                <div className="w-11 h-11 rounded-xl bg-gray-700 border border-gray-600 flex items-center justify-center text-red-400">
+                                <div className="w-11 h-11 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center text-red-500">
                                     <IconBellRinging size={20} />
                                 </div>
-                                <span className="text-[11px] font-semibold text-red-400 tracking-wide">STEP 3</span>
-                                <span className="text-sm font-medium text-white">실시간 알림 수신</span>
-                                <span className="text-[11px] text-gray-500 -mt-1">5초 이내 즉시 전달</span>
+                                <span className="text-[11px] font-semibold text-red-500 tracking-wide">STEP 3</span>
+                                <span className="text-sm font-medium text-gray-900">실시간 알림 수신</span>
+                                <span className="text-[11px] text-gray-400 -mt-1">5초 이내 즉시 전달</span>
                             </div>
                         </div>
 
@@ -312,7 +312,7 @@ export default function Landing() {
                                 무료 회원가입
                             </Link>
                             <Link to="/login"
-                                className="px-7 py-2.5 border border-gray-600 text-gray-300 text-sm rounded-lg hover:bg-gray-700">
+                                className="px-7 py-2.5 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50">
                                 로그인
                             </Link>
                         </div>
@@ -320,15 +320,15 @@ export default function Landing() {
                 </div>
 
                 {/* 푸터 */}
-                <footer className="px-12 py-5 border-t border-gray-700 flex justify-between items-center flex-shrink-0">
+                <footer className="px-12 py-5 border-t border-gray-200 flex justify-between items-center flex-shrink-0">
                     <div className="flex items-center gap-1.5">
                         <IconAlertTriangle size={16} className="text-red-500" />
-                        <span className="text-sm font-medium text-white">SafeAlert</span>
+                        <span className="text-sm font-medium text-gray-900">SafeAlert</span>
                     </div>
-                    <span className="text-sm text-gray-500">공공데이터 기반 실시간 재난 알림 플랫폼</span>
+                    <span className="text-sm text-gray-400">공공데이터 기반 실시간 재난 알림 플랫폼</span>
                     <div className="flex gap-4">
-                        <a href="#" className="text-sm text-gray-500 hover:text-white">이용약관</a>
-                        <a href="#" className="text-sm text-gray-500 hover:text-white">개인정보처리방침</a>
+                        <Link to="/terms" className="text-sm text-gray-400 hover:text-gray-700">이용약관</Link>
+                        <Link to="/privacy" className="text-sm text-gray-400 hover:text-gray-700">개인정보처리방침</Link>
                     </div>
                 </footer>
             </section>

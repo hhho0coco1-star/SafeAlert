@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -64,16 +67,21 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
                     .getPayload();
 
             // 7. [중요] 원본 요청에 사용자 정보를 추가하여 다음 단계로 전달
-            // 내부 서비스(Auth, Order 등)가 토큰을 또 해석하지 않도록 헤더에 사용자 ID를 심어줌
-            ServerWebExchange mutatedExchange = exchange.mutate()
-                    .request(r -> r.header("X-User-Id", claims.getSubject()))
-                    .build();
-
-            return chain.filter(mutatedExchange);
+            // ReadOnlyHttpHeaders 제약을 피하기 위해 ServerHttpRequestDecorator 사용
+            final String userId = claims.getSubject();
+            ServerHttpRequest mutatedRequest = new ServerHttpRequestDecorator(exchange.getRequest()) {
+                @Override
+                public HttpHeaders getHeaders() {
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.addAll(super.getHeaders());
+                    headers.set("X-User-Id", userId);
+                    return headers;
+                }
+            };
+            return chain.filter(exchange.mutate().request(mutatedRequest).build());
 
         } catch (Exception e) {
-            // 토큰 만료, 변조 등 검증 실패 시 로그 남기고 차단
-            log.warn("JWT 검증 실패: {}", e.getMessage());
+            log.warn("JWT 검증 실패 [{}]: {}", e.getClass().getSimpleName(), e.getMessage(), e);
             return handleUnAuthorized(exchange);
         }
     }

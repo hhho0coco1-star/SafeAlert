@@ -22,8 +22,9 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String ip = exchange.getRequest().getRemoteAddress().getAddress().getHostAddress();
-        String key = "ratelimit:" + ip; 
+        var remoteAddress = exchange.getRequest().getRemoteAddress();
+        String ip = remoteAddress != null ? remoteAddress.getAddress().getHostAddress() : "unknown";
+        String key = "ratelimit:" + ip;
 
         return redisTemplate.opsForValue().increment(key)
             .flatMap(count -> {

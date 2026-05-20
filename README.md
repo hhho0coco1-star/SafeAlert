@@ -1,6 +1,6 @@
 # SafeAlert 🚨
 
-> 재난·기상 알림 구독 서비스 — MSA + Kafka + Kubernetes 기반 백엔드 프로젝트
+> 재난·기상 알림 구독 서비스 — MSA + Kafka + Kubernetes 기반 프로젝트
 
 ![Java](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.5-green?style=flat-square&logo=springboot)
