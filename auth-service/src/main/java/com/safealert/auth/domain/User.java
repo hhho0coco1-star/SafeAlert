@@ -86,4 +86,10 @@ public class User {
         this.passwordHash = passwordHash;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updateOauth(String oauthProvider, String oauthId) {
+        this.oauthProvider = oauthProvider;
+        this.oauthId = oauthId;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

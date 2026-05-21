@@ -214,11 +214,11 @@ export default function Login() {
                                 <span className="flex-1 h-px bg-gray-100"></span>
                             </div>
 
-                            <button type="button" onClick={() => alert('소셜 로그인은 준비 중입니다.')}
+                            <button type="button" onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/oauth2/google`}
                                 className="w-full flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-2">
                                 <GoogleIcon /> Google로 계속하기
                             </button>
-                            <button type="button" onClick={() => alert('소셜 로그인은 준비 중입니다.')}
+                            <button type="button" onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/oauth2/kakao`}
                                 className="w-full flex items-center justify-center gap-2 py-2 bg-yellow-300 border border-yellow-300 rounded-lg text-sm text-gray-800 hover:bg-yellow-400">
                                 <KakaoIcon /> Kakao로 계속하기
                             </button>
@@ -347,11 +347,11 @@ export default function Login() {
                                 <span className="flex-1 h-px bg-gray-100"></span>
                             </div>
 
-                            <button type="button" onClick={() => alert('소셜 로그인은 준비 중입니다.')}
+                            <button type="button" onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/oauth2/google`}
                                 className="w-full flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-2">
                                 <GoogleIcon /> Google로 계속하기
                             </button>
-                            <button type="button" onClick={() => alert('소셜 로그인은 준비 중입니다.')}
+                            <button type="button" onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/oauth2/kakao`}
                                 className="w-full flex items-center justify-center gap-2 py-2 bg-yellow-300 border border-yellow-300 rounded-lg text-sm text-gray-800 hover:bg-yellow-400">
                                 <KakaoIcon /> Kakao로 계속하기
                             </button>
