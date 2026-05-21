@@ -88,12 +88,12 @@ public class AuthController {
     public ResponseEntity<ApiResponse<Void>> sendCode(@Valid @RequestBody SendCodeRequest request) {
         // @Valid -> 유효성 검사 규칙 -> 컨트롤러 진입하기 전에 자동 검증
         authService.sendVerificationCode(request.getEmail());
-        return ResponseEntity.ok(ApiResponse.success(null));
+        return ResponseEntity.ok(ApiResponse.ok(null));
     }
 
     @PostMapping("/email/verify-code")
     public ResponseEntity<ApiResponse<Void>> verifyCode(@Valid @RequestBody VerifyCodeRequest request) {
         authService.verifyCode(request.getEmail(), request.getCode());
-        return ResponseEntity.ok(ApiResponse.success(null));
+        return ResponseEntity.ok(ApiResponse.ok(null));
     }
 }

@@ -156,7 +156,7 @@ public class AuthService {
             helper.setText("인증 코드 : <b>" + code + "</b><br>5분 내에 입력해주세요.", true);
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException("메일 발송에 실패했습니다.");
+            throw new RuntimeException("메일 발송에 실패했습니다: " + e.getMessage());
         }
     }
 
