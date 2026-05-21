@@ -7,8 +7,8 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증 | 🔄 진행 중 (1-E 남음) |
-| Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | 🔄 진행 중 (2-C 남음) |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인 | ✅ 완료 |
+| Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
 | Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | ⬜ 대기 |
@@ -17,7 +17,7 @@
 
 ---
 
-## 현재 진행 전략 (2026-05-18 기준)
+## 현재 진행 전략 (2026-05-22 기준)
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
@@ -25,14 +25,14 @@
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
 ✅ Phase 1-D   — React 프론트엔드 완료 (전 페이지 배포)
+✅ Phase 1-E   — OAuth2 소셜 로그인 완료 (Google, Kakao)
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
-🔄 Phase 2-C   — Notification Service WebSocket 구현 중
-🔄 Phase 1-E   — OAuth2 소셜 로그인 (진행 중)
+✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-E — OAuth2 소셜 로그인 (Google, Kakao)
+**현재 작업:** Phase 3 — 안정성 / 복원력 (Saga 패턴, 장애 주입 테스트)
 
 ---
 
@@ -113,20 +113,23 @@
 
 > **버그 수정 이력:** 만료된 JWT 토큰이 로그인 요청에 포함되는 버그 수정 (axios 인터셉터 isAuthPath 체크 추가)
 
-### 1-E. OAuth2 소셜 로그인 ⬜ (2-C 완료 후 진행)
+### 1-E. OAuth2 소셜 로그인 ✅
 
 | # | 작업 | 완료 |
 |---|------|------|
 | 1-E-1 | Google OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | [O] |
 | 1-E-2 | Kakao OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | [O] |
 | 1-E-3 | users 테이블 oauth_provider / oauth_id 컬럼 추가 | [O] |
-| 1-E-4 | OAuth2 로그인 성공 핸들러 구현 (JWT 발급 + 리다이렉트) | [ ] |
-| 1-E-5 | 프론트엔드 소셜 로그인 버튼 + 콜백 페이지 추가 | [ ] |
-| 1-E-6 | API Gateway 화이트리스트에 OAuth2 경로 추가 | [ ] |
+| 1-E-4 | OAuth2 로그인 성공 핸들러 구현 (JWT 발급 + 리다이렉트) | [O] |
+| 1-E-5 | 프론트엔드 소셜 로그인 버튼 + 콜백 페이지 추가 | [O] |
+| 1-E-6 | API Gateway 화이트리스트에 OAuth2 경로 추가 | [O] |
+| 1-E-7 | Redis 기반 OAuth2 state 저장소 구현 (API Gateway 환경 대응) | [O] |
+| 1-E-8 | 이메일 우선 조회 + 기존 계정 OAuth 연동 처리 | [O] |
+| 1-E-9 | 환경변수 분리 (application-local.yml, gitignore 적용) | [O] |
 
 ---
 
-## Phase 2 — 이벤트 파이프라인 🔄
+## Phase 2 — 이벤트 파이프라인 ✅
 
 ### 2-A. Alert Collector Service ✅
 
@@ -157,7 +160,7 @@
 | 2-B-6 | Kafka Producer (alert.processed 토픽 발행) | [O] |
 | 2-B-7 | K8s 배포 (Replica 3, Consumer Group 파티션 분배 확인) | [O] |
 
-### 2-C. Notification Service 🔄
+### 2-C. Notification Service ✅
 
 > 기존 notification-service에 WebSocket + Kafka Consumer 추가
 

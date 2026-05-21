@@ -22,7 +22,7 @@ docker compose -f c:/study/SafeAlert/docker-compose.yml up -d postgresql redis k
 
 ```powershell
 Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location c:\study\SafeAlert\api-gateway; ./gradlew bootRun'
-Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location c:\study\SafeAlert\auth-service; ./gradlew bootRun'
+Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location c:\study\SafeAlert\auth-service; ./gradlew bootRun --args=''--spring.profiles.active=local'''
 Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location c:\study\SafeAlert\notification-service; ./gradlew bootRun'
 Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location c:\study\SafeAlert\subscription-service; ./gradlew bootRun'
 ```

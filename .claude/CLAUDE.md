@@ -145,7 +145,11 @@ WBS 항목 하나가 완료될 때마다 다음 순서를 즉시 수행한다:
 코드 수정할 때마다 Docker 재빌드하지 않는다. 아래 구조를 기본으로 사용한다:
 
 - **인프라**: `docker compose up -d postgresql redis kafka mongodb`
-- **백엔드**: 각 서비스를 `./gradlew bootRun`으로 직접 실행 (Spring DevTools로 코드 저장 시 자동 재시작)
+- **백엔드**: 각 서비스를 직접 실행 (Spring DevTools로 코드 저장 시 자동 재시작)
+  - api-gateway: `./gradlew bootRun`
+  - auth-service: `./gradlew bootRun --args='--spring.profiles.active=local'` (OAuth2 시크릿 로컬 프로파일 필요)
+  - notification-service: `./gradlew bootRun`
+  - subscription-service: `./gradlew bootRun`
   - 포트: api-gateway=8080, auth-service=8081, notification-service=8083, subscription-service=8085
 - **프론트엔드**: `cd frontend && npm run dev` → localhost:5173
 
