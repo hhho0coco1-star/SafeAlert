@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증 | 🔄 진행 중 (1-E, 이메일 인증 제외) |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증 | 🔄 진행 중 (1-E 남음) |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | 🔄 진행 중 (2-C 남음) |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -28,11 +28,11 @@
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 🔄 Phase 2-C   — Notification Service WebSocket 구현 중
-⬜ Phase 1-E   — OAuth2 소셜 로그인 (2-C 완료 후)
+🔄 Phase 1-E   — OAuth2 소셜 로그인 (진행 중)
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 2-C — notification-service에 WebSocket + Kafka Consumer 추가
+**현재 작업:** Phase 1-E — OAuth2 소셜 로그인 (Google, Kakao)
 
 ---
 
@@ -117,9 +117,9 @@
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 1-E-1 | Google OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | [ ] |
-| 1-E-2 | Kakao OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | [ ] |
-| 1-E-3 | users 테이블 oauth_provider / oauth_id 컬럼 추가 | [ ] |
+| 1-E-1 | Google OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | [O] |
+| 1-E-2 | Kakao OAuth2 앱 등록 + Spring Security OAuth2 Client 설정 | [O] |
+| 1-E-3 | users 테이블 oauth_provider / oauth_id 컬럼 추가 | [O] |
 | 1-E-4 | OAuth2 로그인 성공 핸들러 구현 (JWT 발급 + 리다이렉트) | [ ] |
 | 1-E-5 | 프론트엔드 소셜 로그인 버튼 + 콜백 페이지 추가 | [ ] |
 | 1-E-6 | API Gateway 화이트리스트에 OAuth2 경로 추가 | [ ] |

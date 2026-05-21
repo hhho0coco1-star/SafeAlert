@@ -22,7 +22,7 @@ public class User {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash", nullable = true)
     private String passwordHash;
 
     @Column(nullable = false, length = 50)
@@ -40,11 +40,31 @@ public class User {
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
 
+    @Column(name = "oauth_provider", length = 20)
+    private String oauthProvider;
+
+    @Column(name = "oauth_id", length = 100)
+    private String oauthId;
+
     public static User create(String email, String passwordHash, String nickname) {
         User user = new User();
         user.email = email;
         user.passwordHash = passwordHash;
         user.nickname = nickname;
+        user.role = "USER";
+        user.createdAt = LocalDateTime.now();
+        user.updatedAt = LocalDateTime.now();
+        user.isDeleted = false;
+        return user;
+    }
+
+    public static User createOAuth(String email, String nickname, String oauthProvider, String oauthId) {
+
+        User user = new User();
+        user.email = email;
+        user.nickname = nickname;
+        user.oauthProvider = oauthProvider;
+        user.oauthId = oauthId;
         user.role = "USER";
         user.createdAt = LocalDateTime.now();
         user.updatedAt = LocalDateTime.now();
