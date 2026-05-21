@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인 | ✅ 완료 |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -21,10 +21,10 @@
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
-✅ Phase 1-A   — Auth Service 완료 (JWT, 프로필 API 포함)
+🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 찾기 추가 중)
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
-✅ Phase 1-D   — React 프론트엔드 완료 (전 페이지 배포)
+🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 추가 중)
 ✅ Phase 1-E   — OAuth2 소셜 로그인 완료 (Google, Kakao)
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
@@ -32,7 +32,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 3 — 안정성 / 복원력 (Saga 패턴, 장애 주입 테스트)
+**현재 작업:** Phase 1-F — 버그 수정 (대시보드 401, axios 재시도 루프)
 
 ---
 
@@ -74,6 +74,9 @@
 | 1-A-14 | 이메일 인증 코드 확인 API (POST /api/auth/email/verify-code) | [O] |
 | 1-A-15 | signup() 이메일 인증 완료 여부 검증 추가 | [O] |
 | 1-A-16 | 프론트엔드 회원가입 이메일 인증 UI 및 API 연동 | [O] |
+| 1-A-17 | 비밀번호 재설정 이메일 발송 API (POST /api/auth/password/send-reset) | [ ] |
+| 1-A-18 | 비밀번호 재설정 토큰 검증 + 새 비밀번호 저장 API (POST /api/auth/password/reset) | [ ] |
+| 1-A-19 | 단위 테스트 (비밀번호 재설정 플로우) | [ ] |
 
 ### 1-B. API Gateway ✅
 
@@ -110,8 +113,20 @@
 | 1-D-7 | 내 계정 페이지 `/profile` | [O] |
 | 1-D-8 | 관리자 대시보드 `/admin` | [O] |
 | 1-D-9 | K8s 배포 (Dockerfile + NGINX + K8s YAML) | [O] |
+| 1-D-10 | 비밀번호 찾기 페이지 `/find-password` (이메일 입력 → 재설정 메일 발송) | [ ] |
+| 1-D-11 | 비밀번호 재설정 페이지 `/reset-password` (URL 토큰 파라미터 → 새 비밀번호 입력) | [ ] |
 
 > **버그 수정 이력:** 만료된 JWT 토큰이 로그인 요청에 포함되는 버그 수정 (axios 인터셉터 isAuthPath 체크 추가)
+
+### 1-F. 버그 수정 🔄
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-F-1 | API Gateway JWT 시크릿 불일치 수정 (대시보드 전체 401 원인) | [ ] |
+| 1-F-2 | axios 응답 인터셉터 재시도 루프 방지 로직 개선 | [ ] |
+| 1-F-3 | Dashboard useEffect React StrictMode 이중 호출 대응 | [ ] |
+
+---
 
 ### 1-E. OAuth2 소셜 로그인 ✅
 
