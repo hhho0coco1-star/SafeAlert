@@ -131,7 +131,20 @@
 | 1-F-7 | 신규 사용자 구독 없음 → orElse(null) + NPE 방어 처리 | [O] |
 | 1-F-8 | Dashboard.jsx 구독 응답 형식 불일치 → flatMap 변환 처리 | [O] |
 
-### 1-G. 실시간 테스트 페이지 🔄
+### 1-H. 공공 API 수집 파이프라인 버그 수정 🔄
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-H-1 | alert-collector application.properties Kafka/Redis 기본값 localhost 수정 | [O] |
+| 1-H-2 | alert-processor application.properties Kafka/Redis/MongoDB 기본값 localhost 수정 | [O] |
+| 1-H-3 | WeatherAlertClient getWthrWrnList 엔드포인트로 교체 + JSON 파싱 | [O] |
+| 1-H-4 | DustAlertClient URL 한글 인코딩 수정 (UriComponentsBuilder) | [O] |
+| 1-H-5 | DisasterAlertClient URL 인코딩 수정 + 5xx 응답 처리 (API 키 서버 오류) | [O] |
+| 1-H-6 | 서비스 재기동 + Kafka alert.raw 토픽 수집 검증 | [ ] |
+
+---
+
+### 1-G. 실시간 테스트 페이지 ✅
 
 | # | 작업 | 완료 |
 |---|------|------|

@@ -5,9 +5,13 @@ import com.safealert.collector.service.DuplicateFilterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
+import java.net.URI;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,12 +32,22 @@ public class DisasterAlertClient {
     @CircuitBreaker(name = "disasterApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
-        String url = "https://apis.data.go.kr/1741000/DisasterMsg4/getDisasterMsg4List"
-                + "?serviceKey=" + apiKey
-                + "&numOfRows=10&pageNo=1&type=json";
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl("https://apis.data.go.kr/1741000/DisasterMsg4/getDisasterMsg4List")
+                .queryParam("serviceKey", apiKey)
+                .queryParam("numOfRows", 10)
+                .queryParam("pageNo", 1)
+                .queryParam("type", "json")
+                .build(true)
+                .toUri();
 
         try {
-            String response = restTemplate.getForObject(url, String.class);
+            ResponseEntity<String> resp = restTemplate.getForEntity(uri, String.class);
+            if (!resp.getStatusCode().is2xxSuccessful()) {
+                log.warn("[행정안전부] API 응답 오류 - status: {}", resp.getStatusCode());
+                return results;
+            }
+            String response = resp.getBody();
             log.info("[행정안전부] API 응답 수신 완료");
 
             AlertRawMessage message = AlertRawMessage.builder()

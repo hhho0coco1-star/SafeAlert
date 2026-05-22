@@ -2,18 +2,9 @@
 
 ---
 
-## [진행중] Phase 1-G — 실시간 테스트 페이지
+## [완료] Phase 1-G — 실시간 테스트 페이지
 
 **목적:** 전국 실시간 알림 수신 현황을 UI에서 직접 확인 (공공데이터 파이프라인 검증용)
-
-**분석 결과 (2026-05-22):**
-- 기존 수집기 3종 모두 `region="전국"` 으로 고정 발송
-- Redis 채널 `alert:broadcast:전국` 하나만 발행 → 17개 지역 코드 토픽 수신 불가
-- `AlertProcessedConsumer` 수정으로 "전국" 수신 시 17개 지역 코드 전체에 분배 broadcast 필요
-
-**사용 API:**
-- `GET /api/alerts/recent` — 초기 알림 목록 로드 (공개 API, 인증 불필요)
-- WebSocket `/topic/alerts/{regionCode}` × 17개 지역 — 실시간 수신
 
 **작업 목록:**
 - [x] 분석 및 계획 수립
@@ -22,3 +13,21 @@
 - [x] `frontend/src/App.jsx` — `/test` 라우트 추가
 - [x] `frontend/src/components/Navbar.jsx` — 로그인 후 첫 번째 탭으로 "실시간 테스트" 추가
 - [x] notification-service 재기동 후 동작 검증 ✅
+
+---
+
+## [진행중] Phase 1-H — 공공 API 수집 파이프라인 버그 수정
+
+**분석 결과 (2026-05-22):**
+- 기상청 API: `tmFc` 필수 파라미터 누락 → 매번 `NO_MANDATORY_REQUEST_PARAMETERS_ERROR`
+- 환경부 API: URL에 한글(`서울`) 인코딩 안 됨 → `400 Bad Request`
+- 행정안전부 API: 키 `43K1J1M92B0J4S30` 유효성 불명확 → `500 Unexpected errors`
+- alert-collector / alert-processor: Kafka 기본값 `kafka:9092` → 호스트 실행 시 연결 불가
+
+**작업 목록:**
+- [ ] alert-collector `application.properties` — Kafka/Redis 기본값 `localhost` 수정
+- [ ] alert-processor `application.properties` — Kafka/Redis/MongoDB 기본값 `localhost` 수정
+- [ ] `WeatherAlertClient.java` — `tmFc` 동적 생성 추가 (최근 6시간 단위 발표시각)
+- [ ] `DustAlertClient.java` — URL 한글 인코딩 수정 (`UriComponentsBuilder` 사용)
+- [ ] `DisasterAlertClient.java` — API 키 유효성 확인 및 URL 인코딩 수정
+- [ ] 서비스 재기동 후 실제 데이터 수집 검증

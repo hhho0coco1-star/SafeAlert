@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
-
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,12 +30,19 @@ public class DustAlertClient {
     @CircuitBreaker(name = "dustApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
-        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"
-                + "?serviceKey=" + apiKey
-                + "&numOfRows=10&pageNo=1&sidoName=서울&ver=1.0&returnType=json";
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty")
+                .queryParam("serviceKey", apiKey)
+                .queryParam("numOfRows", 10)
+                .queryParam("pageNo", 1)
+                .queryParam("sidoName", "서울")
+                .queryParam("ver", "1.0")
+                .queryParam("returnType", "json")
+                .build(true)
+                .toUri();
 
         try {
-            String response = restTemplate.getForObject(url, String.class);
+            String response = restTemplate.getForObject(uri, String.class);
             log.info("[환경부] API 응답 수신 완료");
 
             AlertRawMessage message = AlertRawMessage.builder()
