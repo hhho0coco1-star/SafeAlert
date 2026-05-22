@@ -135,9 +135,12 @@
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 1-G-1 | TestPage.jsx 생성 (전국 17개 지역 WebSocket 구독 + 알림 목록 UI) | [ ] |
-| 1-G-2 | App.jsx 라우트 추가 (/test → TestPage) | [ ] |
-| 1-G-3 | Navbar.jsx 탭 메뉴 추가 (실시간 테스트) | [ ] |
+| 1-G-0 | 분석: 수집기 region="전국" 고정 → 17개 지역 분배 broadcast 필요 확인 | [O] |
+| 1-G-1 | notification-service AlertProcessedConsumer 수정 (전국 → 17개 지역 코드 분배) | [O] |
+| 1-G-2 | TestPage.jsx 생성 (17개 지역 WebSocket 구독 + 카테고리별 피드 UI) | [O] |
+| 1-G-3 | App.jsx 라우트 추가 (/test → TestPage, 인증 불필요) | [O] |
+| 1-G-4 | Navbar.jsx 첫 번째 탭으로 "실시간 테스트" 추가 (로그인 상태) | [O] |
+| 1-G-5 | notification-service 재기동 + 동작 검증 | [ ] |
 
 ---
 

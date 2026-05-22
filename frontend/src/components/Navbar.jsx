@@ -53,6 +53,7 @@ export default function Navbar() {
 
     // 로그인 상태 Navbar
     const tabs = [
+        { path: '/test', label: '실시간 테스트' },
         { path: '/dashboard', label: '대시보드' },
         { path: '/subscriptions', label: '구독 설정' },
         { path: '/history', label: '알림 이력' },

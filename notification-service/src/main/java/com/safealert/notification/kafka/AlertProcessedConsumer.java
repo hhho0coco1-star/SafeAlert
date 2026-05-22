@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -29,6 +30,10 @@ public class AlertProcessedConsumer {
     @Value("${subscription.service.url}")
     private String subscriptionServiceUrl;
 
+    private static final List<String> ALL_REGION_CODES = List.of(
+        "11","26","27","28","29","30","31","36","41","42","43","44","45","46","47","48","50"
+    );
+
     @KafkaListener(topics = "alert.processed", groupId = "notification-group")
     public void consume(String message) {
         try {
@@ -40,24 +45,30 @@ public class AlertProcessedConsumer {
             String severity = root.path("severity").asText();
             String source   = root.path("source").asText();
 
-            // Redis Pub/Sub으로 WebSocket push (AlertRedisSubscriber가 수신)
-            redisTemplate.convertAndSend("alert:broadcast:" + region, message);
+            // "전국" 알림은 17개 지역 코드 전체로 분배 broadcast
+            List<String> broadcastTargets = "전국".equals(region) ? ALL_REGION_CODES : List.of(region);
+            for (String code : broadcastTargets) {
+                redisTemplate.convertAndSend("alert:broadcast:" + code, message);
+            }
 
             // 해당 지역+카테고리 구독자 조회 후 이력 저장
-            List<UUID> subscribers = fetchSubscribers(region, category);
-            if (subscribers.isEmpty()) {
-                // 구독자 없으면 로그만 남기고 종료
+            Set<UUID> subscriberSet = new java.util.HashSet<>();
+            for (String code : broadcastTargets) {
+                subscriberSet.addAll(fetchSubscribers(code, category));
+            }
+
+            if (subscriberSet.isEmpty()) {
                 log.info("알림 Push 완료 (구독자 없음) - region: {}, category: {}", region, category);
                 return;
             }
 
-            for (UUID userId : subscribers) {
+            for (UUID userId : subscriberSet) {
                 NotificationHistory history = NotificationHistory.create(
                         userId, category, title, content, region, source, severity);
                 historyRepository.save(history);
             }
 
-            log.info("알림 Push 완료 - region: {}, category: {}, 수신자: {}명", region, category, subscribers.size());
+            log.info("알림 Push 완료 - region: {}, category: {}, 수신자: {}명", region, category, subscriberSet.size());
         } catch (Exception e) {
             log.error("알림 처리 실패: {}", e.getMessage());
         }
