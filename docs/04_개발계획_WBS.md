@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시 | 🔄 진행 중 |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -32,7 +32,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-J — TestPage 알림 상세 내용(content) 표시
+**현재 작업:** Phase 1-K — 알림 content 필드 정상화 (DUST · WEATHER)
 
 ---
 
@@ -160,6 +160,16 @@
 | 1-I-6 | RedisConfig.java — alert:public ChannelTopic 리스너 등록 | [O] |
 | 1-I-7 | TestPage.jsx — 구독 토픽 17개 → /topic/public/alerts 단일 채널 교체 | [O] |
 | 1-I-8 | 검증: 전국 알림 1건 수신 + WebSocket STOMP 연결됨 확인 | [O] |
+
+---
+
+### 1-K. 알림 content 필드 정상화 (DUST · WEATHER) 🔄
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-K-1 | DustAlertClient — response JSON 파싱 후 요약 텍스트로 content 생성 | [O] |
+| 1-K-2 | WeatherAlertClient — response JSON 파싱 후 기상특보 요약 텍스트로 content 생성 | [O] |
+| 1-K-3 | alert-collector-service 재기동 + TestPage content 정상 표시 검증 | [ ] |
 
 ---
 

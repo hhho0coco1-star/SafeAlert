@@ -62,7 +62,7 @@ public class WeatherAlertClient {
                             .source("WEATHER")
                             .category("WEATHER")
                             .title(title)
-                            .content(response)
+                            .content(parseWeatherContent(item))
                             .region("전국")
                             .issuedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                             .rawData(response)
@@ -82,5 +82,31 @@ public class WeatherAlertClient {
     public List<AlertRawMessage> fetchFallback(Exception e) {
         log.warn("[기상청] Circuit Breaker 작동 - API 일시 차단: {}", e.getMessage());
         return List.of();
+    }
+
+    private String parseWeatherContent(JsonNode item) {
+        try {
+            String warnVar    = item.path("warnVar").asText("");
+            String warnStress = item.path("warnStress").asText("");
+            String area       = item.path("area").asText("");
+            String t1         = item.path("t1").asText("");
+
+            StringBuilder sb = new StringBuilder();
+            if (!warnVar.isBlank() && !warnStress.isBlank()) {
+                sb.append(warnVar).append(" ").append(warnStress);
+            }
+            if (!area.isBlank()) {
+                if (!sb.isEmpty()) sb.append(" | ");
+                sb.append("대상지역: ").append(area);
+            }
+            if (!t1.isBlank()) {
+                if (!sb.isEmpty()) sb.append(" | ");
+                sb.append(t1.length() > 80 ? t1.substring(0, 80) + "..." : t1);
+            }
+            return sb.isEmpty() ? "기상특보 발효" : sb.toString();
+        } catch (Exception e) {
+            log.warn("[기상청] content 파싱 실패: {}", e.getMessage());
+            return "기상특보 발효";
+        }
     }
 }
