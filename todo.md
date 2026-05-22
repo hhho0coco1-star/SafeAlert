@@ -21,4 +21,4 @@
 - [x] `frontend/src/pages/TestPage.jsx` 생성
 - [x] `frontend/src/App.jsx` — `/test` 라우트 추가
 - [x] `frontend/src/components/Navbar.jsx` — 로그인 후 첫 번째 탭으로 "실시간 테스트" 추가
-- [ ] notification-service 재기동 후 동작 검증 ← Docker Desktop 기동 필요
+- [x] notification-service 재기동 후 동작 검증 ✅

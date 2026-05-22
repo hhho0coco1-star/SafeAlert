@@ -140,7 +140,7 @@
 | 1-G-2 | TestPage.jsx 생성 (17개 지역 WebSocket 구독 + 카테고리별 피드 UI) | [O] |
 | 1-G-3 | App.jsx 라우트 추가 (/test → TestPage, 인증 불필요) | [O] |
 | 1-G-4 | Navbar.jsx 첫 번째 탭으로 "실시간 테스트" 추가 (로그인 상태) | [O] |
-| 1-G-5 | notification-service 재기동 + 동작 검증 | [ ] |
+| 1-G-5 | notification-service 재기동 + 동작 검증 | [O] |
 
 ---
 
