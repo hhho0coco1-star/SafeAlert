@@ -31,7 +31,7 @@ public class SubscriptionService {
     @Transactional(readOnly = true) // 읽기 전용 모드 -> 조회만 하겠다
     public SubscriptionResponse getMySubscription(UUID userId) {
         Subscription subscription = subscriptionRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
+                .orElse(null);
         return new SubscriptionResponse(subscription);
     }
 

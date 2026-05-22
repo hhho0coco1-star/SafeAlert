@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기 | 🔄 진행 중 |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -118,13 +118,26 @@
 
 > **버그 수정 이력:** 만료된 JWT 토큰이 로그인 요청에 포함되는 버그 수정 (axios 인터셉터 isAuthPath 체크 추가)
 
-### 1-F. 버그 수정 🔄
+### 1-F. 버그 수정 ✅
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 1-F-1 | API Gateway JWT 시크릿 불일치 수정 (대시보드 전체 401 원인) | [ ] |
-| 1-F-2 | axios 응답 인터셉터 재시도 루프 방지 로직 개선 | [ ] |
-| 1-F-3 | Dashboard useEffect React StrictMode 이중 호출 대응 | [ ] |
+| 1-F-1 | API Gateway JWT 시크릿 불일치 수정 (대시보드 전체 401 원인) | [O] |
+| 1-F-2 | axios 응답 인터셉터 재시도 루프 방지 로직 개선 | [O] |
+| 1-F-3 | Dashboard useEffect React StrictMode 이중 호출 대응 | [O] |
+| 1-F-4 | notification-service JWT 시크릿 불일치 수정 (500 원인) | [O] |
+| 1-F-5 | subscription-service GlobalExceptionHandler 누락 추가 | [O] |
+| 1-F-6 | NotificationHistoryRepository JPQL LIKE CONCAT 수정 (Hibernate 6) | [O] |
+| 1-F-7 | 신규 사용자 구독 없음 → orElse(null) + NPE 방어 처리 | [O] |
+| 1-F-8 | Dashboard.jsx 구독 응답 형식 불일치 → flatMap 변환 처리 | [O] |
+
+### 1-G. 실시간 테스트 페이지 🔄
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-G-1 | TestPage.jsx 생성 (전국 17개 지역 WebSocket 구독 + 알림 목록 UI) | [ ] |
+| 1-G-2 | App.jsx 라우트 추가 (/test → TestPage) | [ ] |
+| 1-G-3 | Navbar.jsx 탭 메뉴 추가 (실시간 테스트) | [ ] |
 
 ---
 

@@ -29,6 +29,7 @@ public class SubscriptionResponse {
     }
 
     public SubscriptionResponse(Subscription subscription) {
+        if(subscription == null) return;
         this.subscriptionId = subscription.getSubscriptionId();
         this.userId = subscription.getUserId();
         this.status = subscription.getStatus();

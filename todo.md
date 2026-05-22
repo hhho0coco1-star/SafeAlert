@@ -1,85 +1,98 @@
-# 버그 수정 TODO (Phase 1-F)
-
-## 버그 1 — API Gateway JWT 시크릿 불일치 (1-F-1)
-
-**증상:** 로그인(일반/OAuth2) 후 대시보드의 모든 API가 401 Unauthorized
-
-**원인:**
-- auth-service 토큰 발급 시크릿: `safealert-auth-service-jwt-secret-key-must-be-at-least-256-bits-long`
-- api-gateway 토큰 검증 시크릿: `default-secret-key-for-development-minimum-32-chars` ← 잘못된 값
-
-**수정 내용:**
-- [x] `api-gateway/src/main/resources/application.yml` 54번 줄 시크릿 값 수정 (완료)
-
-**검증:**
-- [ ] api-gateway 재시작 (Ctrl+C → `./gradlew bootRun`)
-- [ ] 로그인 → 대시보드 진입 → Network 탭 `/api/notifications`, `/api/subscriptions`, `/api/notifications/summary` 200 확인
+# SafeAlert 버그 수정 TODO
 
 ---
 
-## 버그 2 — axios 응답 인터셉터 재시도 루프 (1-F-2)
+## [완료] 버그 1 — API Gateway JWT 시크릿 불일치
 
-**증상:** 401 발생 시 같은 요청이 콘솔에 여러 번 반복 출력 (Dashboard.jsx → axios.js → axios.js → ...)
+**증상:** 로그인 후 대시보드의 모든 API가 401 Unauthorized
 
-**원인:**
-- 401 발생 → refresh 시도 → 새 토큰으로 재시도(axios.js:41) → 또 401 → `_retry=true`라 더 이상 refresh 안 함 → 에러 반환
-- 단, 여러 API가 동시에 401을 받으면 각각 독립적으로 refresh를 시도 → refresh 요청이 여러 번 중복 발생
+**원인:** api-gateway의 JWT 검증 시크릿이 auth-service 발급 시크릿과 달랐음
 
-**수정 내용:**
-- [ ] `frontend/src/api/axios.js` — refresh 요청을 단 1번만 실행하도록 중복 방지 처리
-
-**수정 방법 (isRefreshing 플래그 + 대기 큐):**
-```javascript
-let isRefreshing = false
-let failedQueue = []
-
-const processQueue = (error, token = null) => {
-    failedQueue.forEach(prom => {
-        if (error) prom.reject(error)
-        else prom.resolve(token)
-    })
-    failedQueue = []
-}
-
-// response 인터셉터 내 401 처리:
-if (error.response?.status === 401 && !original._retry && !isAuthPath) {
-    if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-            failedQueue.push({ resolve, reject })
-        }).then(token => {
-            original.headers.Authorization = `Bearer ${token}`
-            return api(original)
-        }).catch(err => Promise.reject(err))
-    }
-    original._retry = true
-    isRefreshing = true
-    // ... refresh 로직 ...
-    // 성공 시: processQueue(null, newToken); isRefreshing = false
-    // 실패 시: processQueue(err); isRefreshing = false
-}
-```
-
-**검증:**
-- [ ] 개발자 도구 콘솔에서 401 발생 시 refresh 요청이 1번만 발생하는지 확인
+**수정:** `api-gateway/src/main/resources/application.yml` 54번 줄 시크릿 값 수정
 
 ---
 
-## 버그 3 — Dashboard useEffect React StrictMode 이중 호출 (1-F-3)
+## [완료] 버그 2 — notification-service JWT 시크릿 불일치
 
-**증상:** Dashboard 진입 시 같은 API가 두 번씩 호출됨 (콘솔에 Dashboard.jsx:58, 62, 66 패턴이 2번 반복)
+**증상:** `/api/notifications/summary`, `/api/notifications?page=0&size=20` → 500
 
-**원인:**
-- React 18 개발 모드 StrictMode: useEffect를 의도적으로 2번 실행해서 부작용(side effect)을 감지함
-- 운영 빌드(`npm run build`)에서는 1번만 실행됨 → 실제 배포 환경에서는 문제 없음
+**원인:** notification-service의 JwtProvider가 auth-service와 다른 시크릿으로 JWT 검증 시도 → SignatureException
 
-**수정 여부:**
-- 개발 환경에서만 발생하는 정상 동작이므로 코드 수정 불필요
-- [x] StrictMode 이중 호출임을 확인, 별도 수정 없음
+**수정:** `notification-service/src/main/resources/application.yml` 33번 줄 시크릿 통일
+
+---
+
+## [완료] 버그 3 — subscription-service GlobalExceptionHandler 누락
+
+**증상:** `/api/subscriptions` → 500 (구독 정보 없는 신규 사용자)
+
+**원인:** `findByUserId()` 결과 없음 → IllegalArgumentException 발생 → 핸들러 없어서 500 반환
+
+**수정:** `subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java` 신규 생성
+
+---
+
+## [완료] 버그 4 — React StrictMode 이중 호출
+
+**증상:** 같은 API가 콘솔에 2번씩 표시됨
+
+**원인:** React 18 개발 모드 StrictMode의 정상 동작 (운영 빌드에서는 1번만 실행)
+
+**수정:** 수정 불필요
+
+---
+
+## [완료] 버그 5 — axios.js refresh 토큰 중복 요청
+
+**증상:** 401 발생 시 refresh 요청이 여러 번 동시 발생
+
+**원인:** 여러 API가 동시에 401을 받으면 각각 독립적으로 refresh를 시도함. `_retry` 플래그는 각 요청별로 독립적이라 중복 방지 불가
+
+**수정 예정:** `frontend/src/api/axios.js` — `isRefreshing` 플래그 + `failedQueue` 패턴 적용
+
+- [x] axios.js 수정
+- [x] 브라우저에서 401 발생 시 refresh 요청 1번만 발생하는지 확인
+
+## [완료] 버그 6 — notifications JPQL LIKE 문법 오류
+
+**증상:** `/api/notifications?page=0&size=20` → 500
+
+**원인:** Hibernate 6에서 `LIKE %:keyword%` 문법 미지원
+
+**수정:** `NotificationHistoryRepository.java` 19번 줄 → `LIKE CONCAT('%',:keyword,'%')` 로 변경
+
+## [완료] 버그 7 — 신규 사용자 구독 없음 NPE
+
+**증상:** `/api/subscriptions` → 400 Bad Request
+
+**원인:** 구독 없는 사용자 → orElseThrow → GlobalExceptionHandler → 400 반환
+
+**수정:**
+- `SubscriptionService.java` 34번 줄 → `orElse(null)` 로 변경
+- `SubscriptionResponse.java` 32번 줄 → `if (subscription == null) return;` 추가
 
 ---
 
 ## 진행 순서
 
-1. **버그 1 검증** — api-gateway 재시작 후 Network 탭 200 확인
-2. **버그 2 수정** — axios.js 인터셉터 개선 (버그 1 해결 후 진행)
-3. **버그 3** — 수정 불필요 (StrictMode 정상 동작)
+1. ~~버그 1 — API Gateway JWT~~ ✅
+2. ~~버그 2 — notification-service JWT~~ ✅
+3. ~~버그 3 — subscription GlobalExceptionHandler~~ ✅
+4. ~~버그 4 — StrictMode~~ ✅ (수정 불필요)
+5. ~~버그 5 — axios.js refresh 중복~~ ✅
+6. ~~버그 6 — notifications JPQL LIKE 문법~~ ✅
+7. ~~버그 7 — 신규 사용자 구독 NPE~~ ✅
+
+---
+
+## [진행중] Phase 1-G — 실시간 테스트 페이지
+
+**목적:** 전국 실시간 알림 수신 현황을 UI에서 직접 확인 (공공데이터 파이프라인 검증용)
+
+**사용 API:**
+- `GET /api/alerts/recent` — 초기 알림 목록 로드 (공개 API, 인증 불필요)
+- WebSocket `/topic/alerts/{regionCode}` × 17개 지역 — 실시간 수신
+
+- [ ] `frontend/src/pages/TestPage.jsx` 생성
+- [ ] `frontend/src/App.jsx` — `/test` 라우트 추가
+- [ ] `frontend/src/components/Navbar.jsx` — "실시간 테스트" 탭 추가

@@ -12,12 +12,17 @@ import java.util.UUID;
 
 public interface NotificationHistoryRepository extends JpaRepository<NotificationHistory, UUID> {
 
-    @Query("SELECT n FROM NotificationHistory n WHERE n.userId = :userId " +
-           "AND (:category IS NULL OR n.category = :category) " +
-           "AND (:startDate IS NULL OR n.createdAt >= :startDate) " +
-           "AND (:endDate IS NULL OR n.createdAt <= :endDate) " +
-           "AND (:keyword IS NULL OR n.title LIKE %:keyword% OR n.content LIKE %:keyword%) " +
-           "ORDER BY n.createdAt DESC")
+    @Query(value = "SELECT n FROM NotificationHistory n WHERE n.userId = :userId " +
+                  "AND (:category = '' OR n.category = :category) " +
+                  "AND (n.createdAt >= :startDate) " +
+                  "AND (n.createdAt <= :endDate) " +
+                  "AND (:keyword = '' OR n.title LIKE CONCAT('%',:keyword,'%') OR n.content LIKE CONCAT('%',:keyword,'%')) " +
+                  "ORDER BY n.createdAt DESC",
+           countQuery = "SELECT COUNT(n) FROM NotificationHistory n WHERE n.userId = :userId " +
+                       "AND (:category = '' OR n.category = :category) " +
+                       "AND (n.createdAt >= :startDate) " +
+                       "AND (n.createdAt <= :endDate) " +
+                       "AND (:keyword = '' OR n.title LIKE CONCAT('%',:keyword,'%') OR n.content LIKE CONCAT('%',:keyword,'%'))")
     Page<NotificationHistory> findByFilters(
             @Param("userId") UUID userId,
             @Param("category") String category,

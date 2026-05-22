@@ -37,11 +37,11 @@ public class NotificationService {
         UUID userId = jwtProvider.getUserId(accessToken);
 
         LocalDateTime start = (startDate != null && !startDate.isBlank())
-                ? LocalDate.parse(startDate).atStartOfDay() : null;
+                ? LocalDate.parse(startDate).atStartOfDay() : LocalDateTime.of(1970, 1, 1, 0, 0);
         LocalDateTime end = (endDate != null && !endDate.isBlank())
-                ? LocalDate.parse(endDate).atTime(23, 59, 59) : null;
-        String cat = (category != null && !category.isBlank()) ? category : null;
-        String kw = (keyword != null && !keyword.isBlank()) ? keyword : null;
+                ? LocalDate.parse(endDate).atTime(23, 59, 59) : LocalDateTime.of(9999, 12, 31, 23, 59, 59);
+        String cat = (category != null && !category.isBlank()) ? category : "";
+        String kw = (keyword != null && !keyword.isBlank()) ? keyword : "";
 
         return repository.findByFilters(userId, cat, start, end, kw, PageRequest.of(page, size))
                 .map(NotificationResponse::new);

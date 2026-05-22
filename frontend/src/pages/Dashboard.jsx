@@ -60,7 +60,14 @@ export default function Dashboard() {
             .catch(() => {})
 
         api.get('/api/subscriptions')
-            .then(res => setSubscriptions(res.data.data ?? []))
+            .then(res => {
+                const sub = res.data.data
+                if (!sub || !sub.regions) { setSubscriptions([]); return }
+                const flat = sub.regions.flatMap(r =>
+                    (sub.categories ?? []).map(c => ({ regionCode: r.code, regionName: r.name, category: c }))
+                )
+                setSubscriptions(flat)
+            })
             .catch(() => {})
 
         api.get('/api/notifications/summary')
