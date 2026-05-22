@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지 | 🔄 진행 중 |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -32,7 +32,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-F — 버그 수정 (대시보드 401, axios 재시도 루프)
+**현재 작업:** Phase 1-I 후속 — TestPage 알림 상세 내용(content) 표시
 
 ---
 
@@ -131,7 +131,7 @@
 | 1-F-7 | 신규 사용자 구독 없음 → orElse(null) + NPE 방어 처리 | [O] |
 | 1-F-8 | Dashboard.jsx 구독 응답 형식 불일치 → flatMap 변환 처리 | [O] |
 
-### 1-H. 공공 API 수집 파이프라인 버그 수정 🔄
+### 1-H. 공공 API 수집 파이프라인 버그 수정 ✅
 
 | # | 작업 | 완료 |
 |---|------|------|
@@ -139,8 +139,27 @@
 | 1-H-2 | alert-processor application.properties Kafka/Redis/MongoDB 기본값 localhost 수정 | [O] |
 | 1-H-3 | WeatherAlertClient getWthrWrnList 엔드포인트로 교체 + JSON 파싱 | [O] |
 | 1-H-4 | DustAlertClient URL 한글 인코딩 수정 (UriComponentsBuilder) | [O] |
-| 1-H-5 | DisasterAlertClient URL 인코딩 수정 + 5xx 응답 처리 (API 키 서버 오류) | [O] |
-| 1-H-6 | 서비스 재기동 + Kafka alert.raw 토픽 수집 검증 | [ ] |
+| 1-H-5 | DisasterAlertClient API 엔드포인트 교체 (apis.data.go.kr → safetydata.go.kr/V2/api/DSSP-IF-00247) | [O] |
+| 1-H-6 | DisasterAlertClient body 배열 파싱 (MSG_CN/SN/CRT_DT/RCPTN_RGN_NM 개별 처리) | [O] |
+| 1-H-7 | DisasterAlertClient 중복 필터 SN 기반으로 수정 | [O] |
+| 1-H-8 | DisasterAlertClient issuedAt → CRT_DT 사용, region → RCPTN_RGN_NM 사용 | [O] |
+| 1-H-9 | DustAlertClient .build(false).encode() + http→https 수정 (한글 인코딩 버그 제거) | [O] |
+| 1-H-10 | 서비스 재기동 + 3개 API 실제 수집 검증 (기상청✅ 환경부✅ 행안부✅ 간헐적 오류 Circuit Breaker 방어) | [O] |
+
+---
+
+### 1-I. WebSocket 알림 파이프라인 버그 수정 + 채널 분리 ✅
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-I-1 | alert-processor-service MongoDB 인증 정보 추가 (username/password/auth-db) | [O] |
+| 1-I-2 | useWebSocket.js — setTimeout connected=true 제거, onConnect 콜백 추가 | [O] |
+| 1-I-3 | TestPage.jsx — 가짜 connected 타이머 제거, onConnect 연결 | [O] |
+| 1-I-4 | AlertProcessedConsumer.java — alert:public Redis 채널 추가 발행 | [O] |
+| 1-I-5 | AlertPublicSubscriber.java 신규 생성 (/topic/public/alerts WebSocket 발행) | [O] |
+| 1-I-6 | RedisConfig.java — alert:public ChannelTopic 리스너 등록 | [O] |
+| 1-I-7 | TestPage.jsx — 구독 토픽 17개 → /topic/public/alerts 단일 채널 교체 | [O] |
+| 1-I-8 | 검증: 전국 알림 1건 수신 + WebSocket STOMP 연결됨 확인 | [O] |
 
 ---
 

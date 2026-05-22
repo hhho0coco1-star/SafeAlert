@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useWebSocket from '../hooks/useWebSocket'
 import api from '../api/axios'
 
@@ -10,7 +10,7 @@ const REGION_NAMES = {
 }
 
 const ALL_REGION_CODES = Object.keys(REGION_NAMES)
-const ALL_TOPICS = ALL_REGION_CODES.map(r => `/topic/alerts/${r}`)
+const ALL_TOPICS = ['/topic/public/alerts']
 
 const CAT_CONFIG = {
     WEATHER:    { label: '기상특보', dot: 'bg-red-500',    badge: 'bg-red-50 text-red-700'    },
@@ -35,7 +35,6 @@ export default function TestPage() {
     const [regionCounts, setRegionCounts] = useState({})
     const [categoryCounts, setCategoryCounts] = useState({})
     const [connected, setConnected] = useState(false)
-    const connectedRef = useRef(false)
 
     useEffect(() => {
         api.get('/api/alerts/recent')
@@ -55,23 +54,16 @@ export default function TestPage() {
             })
             .catch(() => {})
 
-        const timer = setTimeout(() => {
-            if (!connectedRef.current) setConnected(true)
-        }, 1500)
-        return () => clearTimeout(timer)
+        return () => {}
     }, [])
 
     useWebSocket(ALL_TOPICS, (alert) => {
-        if (!connectedRef.current) {
-            connectedRef.current = true
-            setConnected(true)
-        }
         setAlerts(prev => [alert, ...prev].slice(0, 100))
         const r = alert.region ?? '전국'
         setRegionCounts(prev => ({ ...prev, [r]: (prev[r] ?? 0) + 1 }))
         const c = alert.category ?? ''
         if (c) setCategoryCounts(prev => ({ ...prev, [c]: (prev[c] ?? 0) + 1 }))
-    })
+    }, () => setConnected(true))
 
     const totalReceived = Object.values(regionCounts).reduce((a, b) => a + b, 0)
 

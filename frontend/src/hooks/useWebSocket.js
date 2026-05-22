@@ -2,11 +2,13 @@ import { useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const useWebSocket = (topics = [], onMessage) => {
+const useWebSocket = (topics = [], onMessage, onConnect) => {
     const onMessageRef = useRef(onMessage);
+    const onConnectRef = useRef(onConnect);
 
     useEffect(() => {
         onMessageRef.current = onMessage;
+        onConnectRef.current = onConnect;
     });
 
     useEffect(() => {
@@ -20,6 +22,7 @@ const useWebSocket = (topics = [], onMessage) => {
             connectHeaders,
             reconnectDelay: 5000,
             onConnect: () => {
+                if (onConnectRef.current) onConnectRef.current();
                 topics.forEach(topic => {
                     client.subscribe(topic, (msg) => {
                         try { onMessageRef.current(JSON.parse(msg.body)); } catch {}

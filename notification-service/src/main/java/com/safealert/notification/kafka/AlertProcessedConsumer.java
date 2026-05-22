@@ -51,6 +51,9 @@ public class AlertProcessedConsumer {
                 redisTemplate.convertAndSend("alert:broadcast:" + code, message);
             }
 
+            // 전체 공개 피드 단일 발행 (TestPage용 — 중복 없이 1건)
+            redisTemplate.convertAndSend("alert:public", message);
+
             // 해당 지역+카테고리 구독자 조회 후 이력 저장
             Set<UUID> subscriberSet = new java.util.HashSet<>();
             for (String code : broadcastTargets) {
