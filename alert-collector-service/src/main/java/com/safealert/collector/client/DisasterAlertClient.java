@@ -1,5 +1,7 @@
 package com.safealert.collector.client;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safealert.collector.model.AlertRawMessage;
 import com.safealert.collector.service.DuplicateFilterService;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 import java.net.URI;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +27,13 @@ public class DisasterAlertClient {
 
     private final DuplicateFilterService duplicateFilter;
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
     @CircuitBreaker(name = "disasterApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
         URI uri = UriComponentsBuilder
-                .fromHttpUrl("https://apis.data.go.kr/1741000/DisasterMsg4/getDisasterMsg4List")
+                .fromHttpUrl("https://www.safetydata.go.kr/V2/api/DSSP-IF-00247")
                 .queryParam("serviceKey", apiKey)
                 .queryParam("numOfRows", 10)
                 .queryParam("pageNo", 1)
@@ -47,22 +47,39 @@ public class DisasterAlertClient {
                 log.warn("[행정안전부] API 응답 오류 - status: {}", resp.getStatusCode());
                 return results;
             }
-            String response = resp.getBody();
-            log.info("[행정안전부] API 응답 수신 완료");
 
-            AlertRawMessage message = AlertRawMessage.builder()
-                    .source("DISASTER")
-                    .category("DISASTER")
-                    .title("긴급재난문자")
-                    .content(response)
-                    .region("전국")
-                    .issuedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-                    .rawData(response)
-                    .build();
+            JsonNode root = objectMapper.readTree(resp.getBody());
+            JsonNode body = root.path("body");
 
-            if (!duplicateFilter.isDuplicate("DISASTER", "긴급재난문자", message.getIssuedAt())) {
-                results.add(message);
+            if (!body.isArray()) {
+                log.warn("[행정안전부] body 배열 없음 - resultCode: {}",
+                        root.path("header").path("resultCode").asText());
+                return results;
             }
+
+            for (JsonNode item : body) {
+                String sn = item.path("SN").asText();
+                String msgCn = item.path("MSG_CN").asText();
+                String region = item.path("RCPTN_RGN_NM").asText().trim();
+                String crtDt = item.path("CRT_DT").asText();
+                String dstSeNm = item.path("DST_SE_NM").asText();
+
+                if (duplicateFilter.isDuplicate("DISASTER", dstSeNm, sn)) {
+                    continue;
+                }
+
+                results.add(AlertRawMessage.builder()
+                        .source("DISASTER")
+                        .category("DISASTER")
+                        .title(dstSeNm)
+                        .content(msgCn)
+                        .region(region)
+                        .issuedAt(crtDt)
+                        .rawData(item.toString())
+                        .build());
+            }
+
+            log.info("[행정안전부] 수집 완료 - {}건 신규", results.size());
         } catch (Exception e) {
             log.error("[행정안전부] API 호출 실패 - {}", e.getMessage());
         }

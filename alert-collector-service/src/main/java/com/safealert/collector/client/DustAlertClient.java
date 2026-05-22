@@ -31,14 +31,15 @@ public class DustAlertClient {
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
         URI uri = UriComponentsBuilder
-                .fromHttpUrl("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty")
+                .fromHttpUrl("https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty")
                 .queryParam("serviceKey", apiKey)
                 .queryParam("numOfRows", 10)
                 .queryParam("pageNo", 1)
                 .queryParam("sidoName", "서울")
                 .queryParam("ver", "1.0")
                 .queryParam("returnType", "json")
-                .build(true)
+                .build(false)
+                .encode()
                 .toUri();
 
         try {
