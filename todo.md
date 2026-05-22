@@ -8,9 +8,10 @@
 
 ---
 
-## [다음 작업] Phase 1-J — TestPage 알림 상세 내용 표시
+## [완료] Phase 1-J — TestPage 알림 상세 내용 표시
 
-**목적:** 제목만으로는 알림 내용을 파악하기 어려움 → content 필드 1줄 미리보기 추가
+**목적:** 제목만으로는 알림 내용을 파악하기 어려움 → content 전체 표시 (TestPage는 검증 목적이므로 truncate 미적용)
 
 **작업 목록:**
-- [ ] `TestPage.jsx` — 피드 아이템 제목 아래 `content` 1줄 미리보기 표시 (회색 텍스트, truncate)
+- [O] `AlertProcessedConsumer.java` — 구독자 없을 때도 공개 이력 DB 저장 (recent API 빈 배열 버그 수정)
+- [O] `TestPage.jsx` — 피드 아이템 title truncate 제거 + content 전체 표시

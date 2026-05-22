@@ -153,7 +153,10 @@ export default function TestPage() {
                                             className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors">
                                             <span className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${cat.dot}`}></span>
                                             <div className="flex-1 min-w-0">
-                                                <div className="text-sm font-medium text-gray-900 truncate">{alert.title}</div>
+                                                <div className="text-sm font-medium text-gray-900">{alert.title}</div>
+                                                {alert.content && (
+                                                    <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">{alert.content}</div>
+                                                )}
                                                 <div className="flex items-center gap-2 mt-0.5">
                                                     <span className="text-[11px] text-gray-400">{regionLabel}</span>
                                                     {alert.source && <span className="text-[11px] text-gray-300">·</span>}
