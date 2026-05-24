@@ -75,7 +75,7 @@ export default function TestPage() {
                 <div className="flex items-center justify-between mb-6">
                     <div>
                         <h2 className="text-lg font-medium text-gray-900">실시간 알림 수신 테스트</h2>
-                        <p className="text-xs text-gray-400 mt-1">전국 17개 지역 WebSocket 구독 · 공공데이터 파이프라인 검증</p>
+                        <p className="text-xs text-gray-400 mt-1">전국 지역 WebSocket 구독 · 공공데이터 파이프라인 검증</p>
                     </div>
                     <div className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium ${
                         connected ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'

@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화 | 🔄 진행 중 |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화, DUST 전국 수집 범위 확장, 지역 코드 불일치 + Recent API 버그 수정, DUST 시/군/구 단위 수집 확장, DISASTER 지역 코드 매핑 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -32,7 +32,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-K — 알림 content 필드 정상화 (DUST · WEATHER)
+**현재 작업:** Phase 1-N — DUST 시/군/구 단위 수집 확장
 
 ---
 
@@ -163,13 +163,63 @@
 
 ---
 
-### 1-K. 알림 content 필드 정상화 (DUST · WEATHER) 🔄
+### 1-K. 알림 content 필드 정상화 (DUST · WEATHER) ✅
 
 | # | 작업 | 완료 |
 |---|------|------|
 | 1-K-1 | DustAlertClient — response JSON 파싱 후 요약 텍스트로 content 생성 | [O] |
 | 1-K-2 | WeatherAlertClient — response JSON 파싱 후 기상특보 요약 텍스트로 content 생성 | [O] |
-| 1-K-3 | alert-collector-service 재기동 + TestPage content 정상 표시 검증 | [ ] |
+| 1-K-3 | alert-collector-service 재기동 + TestPage content 정상 표시 검증 | [O] |
+
+---
+
+### 1-L. DUST 전국 수집 범위 확장 ✅
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-L-1 | DustAlertClient — 17개 시도 리스트 루프, 시도별 API 호출 후 대표 측정소 1건씩 AlertRawMessage 생성 | [O] |
+| 1-L-2 | DustAlertClient — region 필드를 실제 시도명으로 교체, 중복 필터 키를 "DUST+시도명+날짜" 기준으로 수정 | [O] |
+| 1-L-3 | alert-collector-service 재기동 + 15개 시도 수집 확인 (15/17, 광주·제주 API 간헐 오류) | [O] |
+
+---
+
+### 1-M. DUST 지역 코드 불일치 + Recent API 버그 수정 ✅
+
+**배경:** 1-L 검증 중 발견. region 필드를 한글 시도명으로 설정하여 downstream 2개 버그 유발
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-M-1 | DustAlertClient — region 필드를 숫자 지역코드(서울→"11", 경기→"41" 등)로 교체 (카운터·broadcast 동시 수정) | [O] |
+| 1-M-2 | NotificationHistoryRepository + Service — recent API를 userId=null 공개 이력만 조회 + 조회 수 확대(30건) | [O] |
+| 1-M-3 | alert-collector-service + notification-service 재기동 + DB 검증 (DUST 36건·DISASTER 13건, region 숫자 코드 확인) | [O] |
+
+---
+
+### 1-N. DUST 시/군/구 단위 수집 확장 🔄
+
+**배경:** 1-M에서 sido 단위 17건/사이클로 확장했지만 사용자는 시/군/구 단위(수원시·천안시·강남구 등) 데이터를 원함. getMsrstnList API 403 오류(API 키 미등록)로 인해 stationName 끝글자(시/군/구) heuristic으로 대체.
+
+**영향 범위:** alert-collector-service + notification-service 수정. 다른 서비스(processor, subscription, frontend) 무변경.
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-N-1 | MeasureStationCacheService 재작업 — getMsrstnList API 호출 제거, stationName 끝글자(시/군/구) heuristic으로 교체 (임시, 약 49건/사이클) | [O] |
+| 1-N-2 | DustAlertClient — parseDustContent(JsonNode) 변경 + content 포맷 `{sigungu} \| PM10...` 으로 교체 | [O] |
+| 1-N-3 | DustAlertClient — items 전체 순회 + 시군구 단위 중복 제거(HashSet) + 중복필터 키 `"DUST:{sigungu}:{date}"` 로 변경 + numOfRows 10→100 | [O] |
+| 1-N-4 | NotificationHistoryRepository + Service — findTop30 → findTop300 으로 변경 (200건 수집 대응) | [O] |
+| 1-N-5 | data.go.kr 측정소정보 API 활용신청 완료 → 승인 후 MeasureStationCacheService getMsrstnList 방식 복원 + Redis 초기화 + 재기동 + DB·TestPage 검증 (200~250건) | [ ] |
+
+---
+
+### 1-O. DISASTER 지역 코드 매핑 ⬜ (대기)
+
+**배경:** DISASTER region이 RCPTN_RGN_NM 원문("충청남도 천안시")으로 저장 → 17개 숫자 코드와 불일치 → TestPage 지역별 카운터 미반영.
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-O-1 | DisasterAlertClient — FULL_TO_ABBREV 매핑(충청남도→충남 등 17개) 적용해 region을 "충남 천안시" 형태로 단축 | [ ] |
+| 1-O-2 | TestPage.jsx — 카운터용 키워드 매핑 추가 (region 텍스트 → 숫자 코드 역변환) | [ ] |
+| 1-O-3 | 재검증 (DISASTER 알림이 지역별 카운터에 반영되는지) | [ ] |
 
 ---
 

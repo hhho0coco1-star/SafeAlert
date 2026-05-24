@@ -49,7 +49,7 @@ public class NotificationService {
 
     @Transactional(readOnly = true)
     public List<NotificationResponse> getRecentAlerts() {
-        return repository.findTop8ByOrderByCreatedAtDesc()
+        return repository.findTop300ByUserIdIsNullOrderByCreatedAtDesc()
                 .stream()
                 .map(NotificationResponse::new)
                 .toList();

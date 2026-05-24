@@ -33,6 +33,8 @@ public interface NotificationHistoryRepository extends JpaRepository<Notificatio
 
     List<NotificationHistory> findTop8ByOrderByCreatedAtDesc();
 
+    List<NotificationHistory> findTop300ByUserIdIsNullOrderByCreatedAtDesc();
+
     long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 
     List<NotificationHistory> findTop7ByOrderByCreatedAtDesc();
