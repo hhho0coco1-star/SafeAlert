@@ -52,7 +52,7 @@ public class SubscriptionService {
     @Transactional
     public SubscriptionResponse addRegion(UUID userId, SubscriptionRequest.AddRegion request) {
         Subscription subscription = subscriptionRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("구독 정보가 없습니다."));
+                .orElseGet(() -> subscriptionRepository.save(Subscription.create(userId)));
         String regionName = regionCodeRepository.findById(request.getRegionCode())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 지역 코드입니다."))
                 .getName();

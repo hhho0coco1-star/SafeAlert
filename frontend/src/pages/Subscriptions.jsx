@@ -26,6 +26,7 @@ export default function Subscriptions() {
   const [availableRegions, setAvailableRegions] = useState([])
   const [regions, setRegions] = useState([])
   const [categories, setCategories] = useState([])
+  const [selectedSido, setSelectedSido] = useState('')
   const [selectedCode, setSelectedCode] = useState('')
   const [regionMsg, setRegionMsg] = useState(null)
   const [saveMsg, setSaveMsg] = useState(null)
@@ -50,6 +51,14 @@ export default function Subscriptions() {
     }
     init()
   }, [])
+
+  const sigunguList = availableRegions.find(r => r.code === selectedSido)?.children ?? []
+
+  const handleSidoChange = (e) => {
+    setSelectedSido(e.target.value)
+    setSelectedCode('')
+    setRegionMsg(null)
+  }
 
   const handleAddRegion = async () => {
     if (!selectedCode) return
@@ -137,12 +146,29 @@ export default function Subscriptions() {
           <div className="flex gap-2 mb-3">
             <div className="relative flex-1">
               <select
-                value={selectedCode}
-                onChange={e => { setSelectedCode(e.target.value); setRegionMsg(null) }}
+                value={selectedSido}
+                onChange={handleSidoChange}
                 className="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white appearance-none outline-none focus:border-red-400 cursor-pointer"
               >
-                <option value="">지역 선택</option>
+                <option value="">시도 선택</option>
                 {availableRegions.map(r => (
+                  <option key={r.code} value={r.code}>{r.name}</option>
+                ))}
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">▾</span>
+            </div>
+            <div className="relative flex-1">
+              <select
+                value={selectedCode}
+                onChange={e => { setSelectedCode(e.target.value); setRegionMsg(null) }}
+                disabled={!selectedSido}
+                className="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white appearance-none outline-none focus:border-red-400 cursor-pointer disabled:bg-gray-50 disabled:text-gray-300"
+              >
+                <option value="">시군구 선택</option>
+                {selectedSido && (
+                  <option value={selectedSido}>전체 ({availableRegions.find(r => r.code === selectedSido)?.name})</option>
+                )}
+                {sigunguList.map(r => (
                   <option key={r.code} value={r.code}>{r.name}</option>
                 ))}
               </select>
