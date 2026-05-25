@@ -136,7 +136,7 @@ public class MeasureStationCacheService {
 
     private void loadRegionCodes() {
         try {
-            String url = subscriptionServiceUrl + "/api/regions/available";
+            String url = subscriptionServiceUrl + "/api/subscriptions/regions/available";
             JsonNode body = restTemplate.getForObject(url, JsonNode.class);
             if (body == null) return;
             JsonNode data = body.path("data");
