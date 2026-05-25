@@ -33,7 +33,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 3 진행 중 (1-R-8 DustAlertClient region 시군구 코드로 교체)
+**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 4 진행 중 (1-R-9 Subscriptions.jsx 2단계 드롭다운)
 
 ---
 
@@ -257,7 +257,7 @@
 | # | 작업 | 영향 서비스 | 완료 |
 |---|------|------------|------|
 | 1-R-7 | MeasureStationCacheService — addr(주소) 파싱 → 시군구 행정코드(5자리) 반환 메서드 추가 | alert-collector-service | [O] |
-| 1-R-8 | DustAlertClient — region을 시도 코드("11") → 시군구 코드("11680")로 교체 | alert-collector-service | [ ] |
+| 1-R-8 | DustAlertClient — region을 시도 코드("11") → 시군구 코드("11680")로 교체 | alert-collector-service | [O] |
 
 **단계 4 — 프론트엔드 UI 업그레이드**
 

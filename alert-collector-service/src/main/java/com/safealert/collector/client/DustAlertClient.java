@@ -77,7 +77,8 @@ public class DustAlertClient {
                 for (JsonNode item : items) {
                     String stationName = item.path("stationName").asText("").trim();
                     String sigungu = stationCache.getSigungu(stationName);
-                    if (sigungu == null) continue;
+                    String sigunguName = stationCache.getSigunguName(stationName);
+                    if (sigungu == null || sigunguName == null) continue;
                     if (!seenSigungu.add(sigungu)) continue;
                     if (duplicateFilter.isDuplicate("DUST", sigungu, today)) continue;
 
@@ -85,8 +86,8 @@ public class DustAlertClient {
                             .source("DUST")
                             .category("DUST")
                             .title("미세먼지 현황")
-                            .content(parseDustContent(item, sigungu))
-                            .region(code)
+                            .content(parseDustContent(item, sigunguName))
+                            .region(sigungu)
                             .issuedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                             .rawData(response)
                             .build());

@@ -29,6 +29,7 @@ public class MeasureStationCacheService {
     private final ObjectMapper objectMapper;
 
     private final Map<String, String> stationToSigungu = new HashMap<>();
+    private final Map<String, String> stationToSigunguName = new HashMap<>();
 
     private static final Map<String, String> SIDO_NAME_TO_CODE = Map.ofEntries(
         Map.entry("서울특별시", "11"), Map.entry("부산광역시", "26"),
@@ -79,6 +80,7 @@ public class MeasureStationCacheService {
                     String sigungu = parseSigungu(addr);
                     if (stationName.isBlank() || sigungu == null) continue;
                     stationToSigungu.put(stationName, sigungu);
+                    stationToSigunguName.put(stationName, parseSigunguName(addr));
                 }
 
                 totalLoaded += items.size();
@@ -108,9 +110,28 @@ public class MeasureStationCacheService {
         return null;
     }
 
+    private String parseSigunguName(String addr) {
+        if (addr == null || addr.isBlank()) return null;
+        String[] parts = addr.split(" ");
+        if (parts.length < 2) return null;
+        if (parts[1].endsWith("시") || parts[1].endsWith("군") || parts[1].endsWith("구")) {
+            return parts[1];
+        }
+        if (parts.length >= 3 &&
+            (parts[2].endsWith("시") || parts[2].endsWith("군") || parts[2].endsWith("구"))) {
+            return parts[2];
+        }
+        return null;
+    }
+
     public String getSigungu(String stationName) {
         if (stationName == null || stationName.isBlank()) return null;
         return stationToSigungu.get(stationName);
+    }
+
+    public String getSigunguName(String stationName) {
+        if (stationName == null || stationName.isBlank()) return null;
+        return stationToSigunguName.get(stationName);
     }
 
     private void loadRegionCodes() {
