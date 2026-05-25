@@ -17,7 +17,8 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
     @Query("SELECT DISTINCT s.userId FROM Subscription s " +
            "JOIN s.regions r " +
            "JOIN s.categories c " +
-           "WHERE r.regionCode = :regionCode " +
+           "WHERE (r.regionCode = :regionCode " +
+           "  OR r.regionCode = SUBSTRING(:regionCode, 1, 2)) " +
            "AND c.category = :category " +
            "AND s.status = 'ACTIVE'")
     List<UUID> findUserIdsByRegionCodeAndCategory(

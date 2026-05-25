@@ -10,6 +10,7 @@
 - [x] 1-R-2b: subscription-service 재기동 + DB 245개 확인 ✅
 - [x] 1-R-3: `/regions/available` 트리 구조 응답 구현 (시도 17 + children 시군구) ✅
 - [x] 1-R-2c: RegionCodeSyncService 신설 — 법정동코드 API @PostConstruct 자동 동기화 ✅
+- [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 (시군구 OR 부모 시도 동시 조회) ✅
 
 ---
 
@@ -33,8 +34,8 @@
 - [x] 1-R-2c: RegionCodeSyncService 신설 ✅
 
 **단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지)**
-- [ ] 🔄 1-R-4: SubscriptionRepository 상향 매칭 쿼리 (시군구 OR 부모 시도 구독자 동시 조회)
-- [ ] 1-R-5: 최대 구독 5개 → 10개 (Subscription 도메인 + 프론트 메시지)
+- [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 ✅
+- [ ] 🔄 1-R-5: 최대 구독 5개 → 10개 (Subscription 도메인 + 프론트 메시지)
 - [ ] 1-R-6: AlertProcessedConsumer — 코드 길이로 시도/시군구 판별 후 상향 매칭 호출
 
 **단계 3 — DUST region 시군구 코드로 교체**
