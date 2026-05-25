@@ -30,6 +30,7 @@ public class AlertProcessedConsumer {
     @Value("${subscription.service.url}")
     private String subscriptionServiceUrl;
 
+    // List.of -> 읽기 전용(수정 불가능) 
     private static final List<String> ALL_REGION_CODES = List.of(
         "11","26","27","28","29","30","31","36","41","42","43","44","45","46","47","48","50"
     );
@@ -57,7 +58,7 @@ public class AlertProcessedConsumer {
             for (String code : broadcastTargets) {
                 redisTemplate.convertAndSend("alert:broadcast:" + code, message);
             }
-            
+
             // 전체 공개 피드 단일 발행 (TestPage용 — 중복 없이 1건)
             redisTemplate.convertAndSend("alert:public", message);
 

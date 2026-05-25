@@ -22,13 +22,32 @@ public class MeasureStationCacheService {
     @Value("${api.dust.key}")
     private String apiKey;
 
+    @Value("${subscription.service.url}")
+    private String subscriptionServiceUrl;
+
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
     private final Map<String, String> stationToSigungu = new HashMap<>();
 
+    private static final Map<String, String> SIDO_NAME_TO_CODE = Map.ofEntries(
+        Map.entry("서울특별시", "11"), Map.entry("부산광역시", "26"),
+        Map.entry("대구광역시", "27"), Map.entry("인천광역시", "28"),
+        Map.entry("광주광역시", "29"), Map.entry("대전광역시", "30"),
+        Map.entry("울산광역시", "31"), Map.entry("세종특별자치시", "36"),
+        Map.entry("경기도", "41"),    Map.entry("강원도", "42"),
+        Map.entry("강원특별자치도", "42"), Map.entry("충청북도", "43"),
+        Map.entry("충청남도", "44"),  Map.entry("전라북도", "45"),
+        Map.entry("전북특별자치도", "45"), Map.entry("전라남도", "46"),
+        Map.entry("경상북도", "47"),  Map.entry("경상남도", "48"),
+        Map.entry("제주특별자치도", "50")
+    );
+
+    private final Map<String, String> sigunguKeyToCode = new HashMap<>();
+
     @PostConstruct
     public void init() {
+        loadRegionCodes();
         loadAllStations();
     }
 
@@ -78,22 +97,39 @@ public class MeasureStationCacheService {
         if (addr == null || addr.isBlank()) return null;
         String[] parts = addr.split(" ");
         if (parts.length < 2) return null;
-        String candidate = parts[1];
-        if (candidate.endsWith("시") || candidate.endsWith("군") || candidate.endsWith("구")) {
-            return candidate;
+        String sidoCode = SIDO_NAME_TO_CODE.get(parts[0]);
+        if (sidoCode == null) return null;
+        String code = sigunguKeyToCode.get(sidoCode + ":" + parts[1]);
+        if (code != null) return code;
+        if (parts.length >= 3) {
+            code = sigunguKeyToCode.get(sidoCode + ":" + parts[2]);
+            if (code != null) return code;
         }
         return null;
     }
 
     public String getSigungu(String stationName) {
         if (stationName == null || stationName.isBlank()) return null;
-        String cached = stationToSigungu.get(stationName);
-        if (cached != null) return cached;
+        return stationToSigungu.get(stationName);
+    }
 
-        // fallback: heuristic (API 실패 시 대비)
-        if (stationName.endsWith("시") || stationName.endsWith("군") || stationName.endsWith("구")) {
-            return stationName;
+    private void loadRegionCodes() {
+        try {
+            String url = subscriptionServiceUrl + "/api/regions/available";
+            JsonNode body = restTemplate.getForObject(url, JsonNode.class);
+            if (body == null) return;
+            JsonNode data = body.path("data");
+            for (JsonNode sido : data) {
+                String sidoCode = sido.path("code").asText();
+                for (JsonNode sigungu : sido.path("children")) {
+                    String name = sigungu.path("name").asText();
+                    String code = sigungu.path("code").asText();
+                    sigunguKeyToCode.put(sidoCode + ":" + name, code);
+                }
+            }
+            log.info("[시군구 코드 캐시] {}개 로딩 완료", sigunguKeyToCode.size());
+        } catch (Exception e) {
+            log.warn("[시군구 코드 캐시] 로딩 실패: {}", e.getMessage());
         }
-        return null;
     }
 }
