@@ -12,6 +12,11 @@
 - [x] 1-R-2c: RegionCodeSyncService 신설 — 법정동코드 API @PostConstruct 자동 동기화 ✅
 - [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 (시군구 OR 부모 시도 동시 조회) ✅
 - [x] 1-R-5: 최대 구독 5개 → 10개 (백엔드 검증 + 프론트 메시지) ✅
+- [x] 1-R-6: AlertProcessedConsumer 상향 매칭 — 시군구 5자리 시 시도 채널 동시 broadcast ✅
+- [x] 1-R-7: MeasureStationCacheService — subscription-service에서 시군구 코드 맵 로딩 ✅
+- [x] 1-R-8: DustAlertClient.region 시군구 5자리 코드로 교체 ✅
+- [x] 1-R-9: Subscriptions.jsx 2단계 드롭다운 + addRegion 자동 구독 생성 버그 수정 ✅
+- [x] 1-R-10: TestPage.jsx 5자리 코드 → 앞 2자리 시도로 카운터 집계 ✅
 
 ---
 
@@ -34,26 +39,21 @@
 - [x] 1-R-3: `/regions/available` 트리 구조 응답
 - [x] 1-R-2c: RegionCodeSyncService 신설 ✅
 
-**단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지)**
+**단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지) ✅**
 - [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 ✅
 - [x] 1-R-5: 최대 구독 5개 → 10개 ✅
-- [x] 1-R-6: AlertProcessedConsumer — 코드 길이 판별 + Redis broadcast 상향 매칭 + subscriberTargets 분리 ✅
+- [x] 1-R-6: AlertProcessedConsumer — 코드 길이 판별 + Redis broadcast 상향 매칭 ✅
+
+**단계 3 — DUST region 시군구 코드로 교체 ✅**
 - [x] 1-R-7: MeasureStationCacheService addr 파싱 → 시군구 행정코드(5자리) 반환 ✅
 - [x] 1-R-8: DustAlertClient.region "11" → "11680" (시군구 코드로 교체) ✅
+
+**단계 4 — 프론트 UI 업그레이드 ✅**
 - [x] 1-R-9: Subscriptions.jsx 2단계 드롭다운 + addRegion 자동 구독 생성 버그 수정 ✅
 - [x] 1-R-10: TestPage.jsx — 5자리 코드 → 앞 2자리 시도로 카운터 집계 + 피드 표시 개선 ✅
-- [ ] 1-R-6: AlertProcessedConsumer — 코드 길이로 시도/시군구 판별 후 상향 매칭 호출
-
-**단계 3 — DUST region 시군구 코드로 교체**
-- [ ] 1-R-7: MeasureStationCacheService addr 파싱 → 시군구 행정코드(5자리) 반환
-- [ ] 1-R-8: DustAlertClient.region "11" → "11680"
-
-**단계 4 — 프론트 UI 업그레이드**
-- [ ] 1-R-9: Subscriptions.jsx 2단계 드롭다운 (시도→시군구, 최대 10개)
-- [ ] 1-R-10: TestPage.jsx — 5자리 코드 → 앞 2자리 시도로 카운터 집계
 
 **단계 5 — 검증**
-- [ ] 1-R-11: E2E 검증 (강남구↔서울 상향 매칭 확인)
+- [ ] 🔄 1-R-11: E2E 검증 — DB 쿼리 검증 완료, 5분 스케줄러 실행 후 신규 수집 데이터 확인 대기
 
 ---
 
