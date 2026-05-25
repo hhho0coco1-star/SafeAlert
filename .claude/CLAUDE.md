@@ -131,7 +131,9 @@ WBS 항목 하나가 완료될 때마다 다음 순서를 즉시 수행한다:
   - auth-service: `./gradlew bootRun --args='--spring.profiles.active=local'` (OAuth2 시크릿 로컬 프로파일 필요)
   - notification-service: `./gradlew bootRun`
   - subscription-service: `./gradlew bootRun`
-  - 포트: api-gateway=8080, auth-service=8081, notification-service=8083, subscription-service=8085
+  - alert-collector-service: `./gradlew bootRun`
+  - alert-processor-service: `./gradlew bootRun`
+  - 포트: api-gateway=8080, auth-service=8081, notification-service=8083, subscription-service=8085, alert-collector=8086, alert-processor=8087
 - **프론트엔드**: `cd frontend && npm run dev` → localhost:5173
 
 Docker 재빌드 / K8s 재배포는 최종 배포 검증 목적으로만 사용한다.

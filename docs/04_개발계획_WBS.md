@@ -7,7 +7,7 @@
 | Phase | 내용 | 기간 | 주요 산출물 | 상태 |
 |-------|------|------|-----------|------|
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
-| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화, DUST 전국 수집 범위 확장, 지역 코드 불일치 + Recent API 버그 수정, DUST 시/군/구 단위 수집 확장, DISASTER 지역 코드 매핑 | 🔄 진행 중 |
+| Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화, DUST 전국 수집 범위 확장, 지역 코드 불일치 + Recent API 버그 수정, DUST 시/군/구 단위 수집 확장, WEATHER 지역 코드 매핑, 시/군/구 단위 구독 시스템(계층 매칭), 프론트엔드 페이지 전체 검증, DISASTER 지역 코드 매핑, 비밀번호 찾기/재설정 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
@@ -17,22 +17,23 @@
 
 ---
 
-## 현재 진행 전략 (2026-05-22 기준)
+## 현재 진행 전략 (2026-05-25 기준)
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
-🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 찾기 추가 중)
+🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 찾기 미완료)
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
-🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 추가 중)
+🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 미완료)
 ✅ Phase 1-E   — OAuth2 소셜 로그인 완료 (Google, Kakao)
+✅ Phase 1-H~P — 공공 API 파이프라인 버그 수정 + DUST 시군구 수집 확장 + WEATHER 지역코드 매핑 완료
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-N — DUST 시/군/구 단위 수집 확장
+**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 1 완료, 1-R-2c 진행 중
 
 ---
 
@@ -207,7 +208,87 @@
 | 1-N-2 | DustAlertClient — parseDustContent(JsonNode) 변경 + content 포맷 `{sigungu} \| PM10...` 으로 교체 | [O] |
 | 1-N-3 | DustAlertClient — items 전체 순회 + 시군구 단위 중복 제거(HashSet) + 중복필터 키 `"DUST:{sigungu}:{date}"` 로 변경 + numOfRows 10→100 | [O] |
 | 1-N-4 | NotificationHistoryRepository + Service — findTop30 → findTop300 으로 변경 (200건 수집 대응) | [O] |
-| 1-N-5 | data.go.kr 측정소정보 API 활용신청 완료 → 승인 후 MeasureStationCacheService getMsrstnList 방식 복원 + Redis 초기화 + 재기동 + DB·TestPage 검증 (200~250건) | [ ] |
+| 1-N-5 | data.go.kr 측정소정보 API 활용신청 완료 → 승인 후 MeasureStationCacheService getMsrstnList 방식 복원 + Redis 초기화 + 재기동 + DB·TestPage 검증 (200~250건) | [O] |
+
+---
+
+### 1-P. WEATHER 지역 코드 매핑 + content 정상화 ✅
+
+**배경:** WeatherAlertClient가 region="전국" 하드코딩, content는 실제로 없는 필드(warnVar 등) 참조해 항상 "기상특보 발효" 반환.
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 1-P-1 | WeatherAlertClient — STN_TO_REGION 맵 추가 (stnId → 숫자 시도 코드 17개) | [O] |
+| 1-P-2 | WeatherAlertClient — region("전국") → STN_TO_REGION.getOrDefault(stnId, "전국") | [O] |
+| 1-P-3 | WeatherAlertClient — parseWeatherContent(String title) 재작성 (title에서 " / " 이후 경보명 추출) | [O] |
+
+---
+
+### 1-R. 시/군/구 단위 구독 시스템 (계층 매칭) 🔄
+
+**배경:** DUST는 시/군/구 단위로 수집되지만 region이 시도 코드("11")로 저장되어 강남구만 구독해도 서울 전체 알림이 옴. 구독 단위를 시/군/구로 확장하고 알림 매칭을 계층 구조로 업그레이드.
+
+**설계 결정사항:**
+- 코드 체계: 행정구역 표준 5자리 (예: "11680" 강남구)
+- 시드 방식: data.sql 정적 시드(245개) + RegionCodeSyncService로 자동 동기화 (대체)
+- 매칭 방향: **상향만** — 시군구 알림은 시도 구독자에게도 발송, 시도 알림은 시군구 구독자에게 전파하지 않음
+- 최대 구독 지역: 5개 → **10개**로 확대
+
+**단계 1 — 데이터 모델 확장 ✅**
+
+| # | 작업 | 영향 서비스 | 완료 |
+|---|------|------------|------|
+| 1-R-1 | 행정구역 표준코드 API 신청 (행정안전부_행정표준코드_법정동코드) | 외부 | [O] |
+| 1-R-2a | 임시 시드 SQL 작성 — data.sql에 시군구 228개 추가 (ON CONFLICT DO NOTHING) | subscription-service | [O] |
+| 1-R-2b | subscription-service 재기동 + DB 검증 (시도 17 + 시군구 228 = 245개 확인) | subscription-service | [O] |
+| 1-R-3 | `/regions/available` API — 트리 구조 응답 (시도 17개 + children: 시군구) 구현 및 검증 | subscription-service | [O] |
+| 1-R-2c | RegionCodeSyncService 신설 — @PostConstruct에서 법정동코드 API 호출 → 시도+시군구 자동 동기화 (data.sql 대체) | subscription-service | 🔄 진행 중 |
+
+**단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지)**
+
+| # | 작업 | 영향 서비스 | 완료 |
+|---|------|------------|------|
+| 1-R-4 | SubscriptionRepository — 상향 매칭 쿼리 (알림 region이 시군구 코드이면 시군구+부모 시도 구독자 동시 조회) | subscription-service | [ ] |
+| 1-R-5 | 최대 구독 지역 5개 → 10개 (Subscription 도메인 검증 수정 + 프론트 메시지 수정) | subscription-service + frontend | [ ] |
+| 1-R-6 | AlertProcessedConsumer — region 코드 길이(2자리=시도, 5자리=시군구)로 판별 후 상향 매칭 구독자 조회 | notification-service | [ ] |
+
+**단계 3 — DUST region 시군구 코드로 교체**
+
+| # | 작업 | 영향 서비스 | 완료 |
+|---|------|------------|------|
+| 1-R-7 | MeasureStationCacheService — addr(주소) 파싱 → 시군구 행정코드(5자리) 반환 메서드 추가 | alert-collector-service | [ ] |
+| 1-R-8 | DustAlertClient — region을 시도 코드("11") → 시군구 코드("11680")로 교체 | alert-collector-service | [ ] |
+
+**단계 4 — 프론트엔드 UI 업그레이드**
+
+| # | 작업 | 영향 서비스 | 완료 |
+|---|------|------------|------|
+| 1-R-9 | Subscriptions.jsx — 2단계 드롭다운 (시도 선택 → 시군구 선택), "시도 전체" 옵션 유지, 최대 10개 | frontend | [ ] |
+| 1-R-10 | TestPage.jsx — 5자리 시군구 코드일 때 앞 2자리 시도로 집계 처리 | frontend | [ ] |
+
+**단계 5 — E2E 검증**
+
+| # | 작업 | 영향 서비스 | 완료 |
+|---|------|------------|------|
+| 1-R-11 | E2E 검증 — 강남구 구독 → 강남구 알림 수신 ✓ / 서울 구독자도 강남구 알림 수신 ✓ / 강남구 구독자는 서울 시도 알림 미수신 ✓ | 전체 | [ ] |
+
+---
+
+### 1-Q. 프론트엔드 페이지 전체 검증 및 수정 🔄
+
+**배경:** 공공데이터 파이프라인 구축 집중 기간 중 프론트엔드 페이지 동작 미검증. 구독 설정 페이지부터 정상 작동 여부 불확실.
+
+| # | 페이지 | 경로 | 검증 항목 | 완료 |
+|---|--------|------|-----------|------|
+| 1-Q-1 | 랜딩 | `/` | 최근 알림 표시, 로그인/회원가입 버튼, 실시간 알림 수신 | [ ] |
+| 1-Q-2 | 로그인 | `/login` | 이메일/비밀번호 로그인, 소셜 로그인(Google/Kakao), 에러 처리 | [ ] |
+| 1-Q-3 | 회원가입 | `/signup` | 이메일 인증 코드 발송/확인, 가입 완료 | [ ] |
+| 1-Q-4 | 대시보드 | `/dashboard` | 구독 지역 알림 표시, WebSocket 실시간 수신 | [ ] |
+| 1-Q-5 | 구독 설정 | `/subscriptions` | 지역/카테고리 구독 추가·삭제, 저장 반영 | [ ] |
+| 1-Q-6 | 알림 이력 | `/history` | 이력 목록 조회, 카테고리 필터, 페이지네이션 | [ ] |
+| 1-Q-7 | 내 계정 | `/profile` | 닉네임 수정, 회원 탈퇴 | [ ] |
+| 1-Q-8 | 관리자 | `/admin` | 통계 카드, 최근 알림 목록, 수동 발송 | [ ] |
+| 1-Q-9 | 실시간 테스트 | `/test` | WebSocket 연결, 지역별 카운터, 피드 표시 | [ ] |
 
 ---
 

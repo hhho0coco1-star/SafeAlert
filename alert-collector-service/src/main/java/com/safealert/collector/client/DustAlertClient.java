@@ -62,7 +62,8 @@ public class DustAlertClient {
                         .queryParam("sidoName", sido)
                         .queryParam("ver", "1.0")
                         .queryParam("returnType", "json")
-                        .build(true)
+                        .encode()
+                        .build()
                         .toUri();
 
                 String response = restTemplate.getForObject(uri, String.class);

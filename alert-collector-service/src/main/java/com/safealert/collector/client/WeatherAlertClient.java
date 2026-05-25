@@ -15,11 +15,32 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class WeatherAlertClient {
+
+    private static final Map<String, String> STN_TO_REGION = Map.ofEntries(
+            Map.entry("108", "11"),  // 서울
+            Map.entry("232", "28"),  // 인천
+            Map.entry("119", "41"),  // 수원(경기)
+            Map.entry("101", "42"),  // 춘천(강원)
+            Map.entry("133", "43"),  // 청주(충북)
+            Map.entry("131", "30"),  // 대전
+            Map.entry("140", "44"),  // 서산(충남)
+            Map.entry("146", "45"),  // 전주(전북)
+            Map.entry("156", "29"),  // 광주
+            Map.entry("165", "46"),  // 목포(전남)
+            Map.entry("143", "27"),  // 대구
+            Map.entry("115", "47"),  // 울진(경북)
+            Map.entry("159", "26"),  // 부산
+            Map.entry("152", "31"),  // 울산
+            Map.entry("192", "48"),  // 진주(경남)
+            Map.entry("184", "50"),  // 제주
+            Map.entry("136", "36")   // 세종
+    );
 
     @Value("${api.weather.key}")
     private String apiKey;
@@ -58,12 +79,13 @@ public class WeatherAlertClient {
                 String dedupeKey = stnId + "_" + tmFc;
 
                 if (!duplicateFilter.isDuplicate("WEATHER", dedupeKey, tmFc)) {
+                    String region = STN_TO_REGION.getOrDefault(stnId, "전국");
                     results.add(AlertRawMessage.builder()
                             .source("WEATHER")
                             .category("WEATHER")
-                            .title(title)
-                            .content(parseWeatherContent(item))
-                            .region("전국")
+                            .title("기상특보")
+                            .content(parseWeatherContent(title))
+                            .region(region)
                             .issuedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                             .rawData(response)
                             .build());
@@ -84,26 +106,14 @@ public class WeatherAlertClient {
         return List.of();
     }
 
-    private String parseWeatherContent(JsonNode item) {
+    // title 예시: "[특보] 제05-28호 : 2026.05.25.16:00 / 강풍주의보·풍랑주의보 발표 (*)"
+    private String parseWeatherContent(String title) {
         try {
-            String warnVar    = item.path("warnVar").asText("");
-            String warnStress = item.path("warnStress").asText("");
-            String area       = item.path("area").asText("");
-            String t1         = item.path("t1").asText("");
-
-            StringBuilder sb = new StringBuilder();
-            if (!warnVar.isBlank() && !warnStress.isBlank()) {
-                sb.append(warnVar).append(" ").append(warnStress);
-            }
-            if (!area.isBlank()) {
-                if (!sb.isEmpty()) sb.append(" | ");
-                sb.append("대상지역: ").append(area);
-            }
-            if (!t1.isBlank()) {
-                if (!sb.isEmpty()) sb.append(" | ");
-                sb.append(t1.length() > 80 ? t1.substring(0, 80) + "..." : t1);
-            }
-            return sb.isEmpty() ? "기상특보 발효" : sb.toString();
+            int slashIdx = title.indexOf(" / ");
+            if (slashIdx < 0) return title;
+            String after = title.substring(slashIdx + 3);
+            int parenIdx = after.lastIndexOf(" (*)");
+            return parenIdx >= 0 ? after.substring(0, parenIdx).trim() : after.trim();
         } catch (Exception e) {
             log.warn("[기상청] content 파싱 실패: {}", e.getMessage());
             return "기상특보 발효";

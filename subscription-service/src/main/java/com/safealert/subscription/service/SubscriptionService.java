@@ -16,6 +16,9 @@ import com.safealert.subscription.repository.OutboxEventRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.UUID;
+import com.safealert.subscription.domain.RegionCode;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -78,8 +81,21 @@ public class SubscriptionService {
 
     @Transactional(readOnly = true)
     public List<RegionCodeResponse> getAvailableRegions() {
-        return regionCodeRepository.findAll().stream()
-                .map(RegionCodeResponse::new)
+        List<RegionCode> all = regionCodeRepository.findAll();
+        
+        Map<String, List<RegionCodeResponse>> childrenByParent = all.stream()
+                .filter(r -> r.getParentCode() != null)
+                .collect(Collectors.groupingBy(
+                        RegionCode::getParentCode,
+                        Collectors.mapping(RegionCodeResponse::new, Collectors.toList())
+                ));
+
+        return all.stream()
+                .filter(r -> r.getParentCode() == null)
+                .map(sido -> new RegionCodeResponse(
+                        sido,
+                        childrenByParent.getOrDefault(sido.getCode(), List.of())
+                ))
                 .toList();
     }
 
