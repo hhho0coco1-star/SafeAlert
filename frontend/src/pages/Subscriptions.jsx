@@ -53,8 +53,8 @@ export default function Subscriptions() {
 
   const handleAddRegion = async () => {
     if (!selectedCode) return
-    if (regions.length >= 5) {
-      setRegionMsg({ type: 'error', text: '최대 5개 지역까지 등록할 수 있습니다.' })
+    if (regions.length >= 10) {
+      setRegionMsg({ type: 'error', text: '최대 10개 지역까지 등록할 수 있습니다.' })
       return
     }
     if (regions.find(r => r.code === selectedCode)) {
@@ -130,7 +130,7 @@ export default function Subscriptions() {
             <IconMapPin size={16} className="text-gray-400" />
             구독 지역 설정
           </div>
-          <p className="text-xs text-gray-400 mt-1">최대 5개 지역까지 등록할 수 있습니다.</p>
+          <p className="text-xs text-gray-400 mt-1">최대 10개 지역까지 등록할 수 있습니다.</p>
         </div>
         <div className="px-6 py-5">
           {/* 드롭다운 + 추가 버튼 */}
@@ -150,7 +150,7 @@ export default function Subscriptions() {
             </div>
             <button
               onClick={handleAddRegion}
-              disabled={!selectedCode || regions.length >= 5}
+              disabled={!selectedCode || regions.length >= 10}
               className="flex items-center gap-1 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 disabled:bg-red-200 disabled:cursor-not-allowed whitespace-nowrap transition-colors"
             >
               <IconPlus size={15} /> 추가
@@ -189,7 +189,7 @@ export default function Subscriptions() {
               ))
             )}
           </div>
-          <p className="text-xs text-gray-300 mt-2.5 text-right">{regions.length} / 5</p>
+          <p className="text-xs text-gray-300 mt-2.5 text-right">{regions.length} / 10</p>
         </div>
       </div>
 

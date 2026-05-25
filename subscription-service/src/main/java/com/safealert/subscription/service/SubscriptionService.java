@@ -56,6 +56,9 @@ public class SubscriptionService {
         String regionName = regionCodeRepository.findById(request.getRegionCode())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 지역 코드입니다."))
                 .getName();
+        if (subscription.getRegions().size() >= 10) {
+            throw new IllegalArgumentException("최대 10개 지역까지 등록할 수 있습니다.");
+        }
         subscription.addRegion(request.getRegionCode(), regionName);
         saveOutboxEvent(subscription, "REGION_ADDED");
         return new SubscriptionResponse(subscription);
