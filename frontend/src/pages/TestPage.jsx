@@ -44,7 +44,7 @@ export default function TestPage() {
                 const rc = {}
                 const cc = {}
                 data.forEach(a => {
-                    const r = a.region ?? '전국'
+                    const r = a.region?.length === 5 ? a.region.substring(0, 2) : (a.region ?? '전국')
                     rc[r] = (rc[r] ?? 0) + 1
                     const c = a.category ?? ''
                     if (c) cc[c] = (cc[c] ?? 0) + 1
@@ -59,7 +59,7 @@ export default function TestPage() {
 
     useWebSocket(ALL_TOPICS, (alert) => {
         setAlerts(prev => [alert, ...prev].slice(0, 100))
-        const r = alert.region ?? '전국'
+        const r = alert.region?.length === 5 ? alert.region.substring(0, 2) : (alert.region ?? '전국')
         setRegionCounts(prev => ({ ...prev, [r]: (prev[r] ?? 0) + 1 }))
         const c = alert.category ?? ''
         if (c) setCategoryCounts(prev => ({ ...prev, [c]: (prev[c] ?? 0) + 1 }))
@@ -147,7 +147,7 @@ export default function TestPage() {
                             <div className="max-h-[600px] overflow-y-auto divide-y divide-gray-50">
                                 {alerts.map((alert, i) => {
                                     const cat = CAT_CONFIG[alert.category] ?? { label: alert.category ?? '기타', dot: 'bg-gray-400', badge: 'bg-gray-100 text-gray-600' }
-                                    const regionLabel = REGION_NAMES[alert.region] ?? alert.region ?? '전국'
+                                    const regionLabel = REGION_NAMES[alert.region] ?? REGION_NAMES[alert.region?.substring(0, 2)] ?? alert.region ?? '전국'
                                     return (
                                         <div key={alert.id ?? alert.notificationId ?? i}
                                             className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors">

@@ -41,7 +41,7 @@
 - [x] 1-R-7: MeasureStationCacheService addr 파싱 → 시군구 행정코드(5자리) 반환 ✅
 - [x] 1-R-8: DustAlertClient.region "11" → "11680" (시군구 코드로 교체) ✅
 - [x] 1-R-9: Subscriptions.jsx 2단계 드롭다운 + addRegion 자동 구독 생성 버그 수정 ✅
-- [ ] 🔄 1-R-10: TestPage.jsx — 5자리 코드 → 앞 2자리 시도로 카운터 집계
+- [x] 1-R-10: TestPage.jsx — 5자리 코드 → 앞 2자리 시도로 카운터 집계 + 피드 표시 개선 ✅
 - [ ] 1-R-6: AlertProcessedConsumer — 코드 길이로 시도/시군구 판별 후 상향 매칭 호출
 
 **단계 3 — DUST region 시군구 코드로 교체**
