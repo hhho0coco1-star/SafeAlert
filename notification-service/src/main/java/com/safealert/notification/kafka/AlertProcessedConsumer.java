@@ -45,21 +45,28 @@ public class AlertProcessedConsumer {
             String severity = root.path("severity").asText();
             String source   = root.path("source").asText();
 
-            // "전국" 알림은 17개 지역 코드 전체로 분배 broadcast
-            List<String> broadcastTargets = "전국".equals(region) ? ALL_REGION_CODES : List.of(region);
+            List<String> broadcastTargets;
+            if ("전국".equals(region)) {
+                broadcastTargets = ALL_REGION_CODES;
+            } else if (region.length() == 5) {
+                broadcastTargets = List.of(region, region.substring(0, 2));
+            } else {
+                broadcastTargets = List.of(region);
+            }
+
             for (String code : broadcastTargets) {
                 redisTemplate.convertAndSend("alert:broadcast:" + code, message);
             }
-
+            
             // 전체 공개 피드 단일 발행 (TestPage용 — 중복 없이 1건)
             redisTemplate.convertAndSend("alert:public", message);
 
             // 공개 이력 저장 (recent API용, 구독자 유무 무관)
             historyRepository.save(NotificationHistory.create(null, category, title, content, region, source, severity));
 
-            // 해당 지역+카테고리 구독자 조회 후 이력 저장
+            List<String> subscriberTargets = "전국".equals(region) ? ALL_REGION_CODES : List.of(region);
             Set<UUID> subscriberSet = new java.util.HashSet<>();
-            for (String code : broadcastTargets) {
+            for (String code : subscriberTargets) {
                 subscriberSet.addAll(fetchSubscribers(code, category));
             }
 

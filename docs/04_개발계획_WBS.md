@@ -33,7 +33,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 2 진행 중 (1-R-6 AlertProcessedConsumer 상향 매칭)
+**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 3 진행 중 (1-R-7 MeasureStationCacheService 시군구 코드 반환)
 
 ---
 
@@ -250,7 +250,7 @@
 |---|------|------------|------|
 | 1-R-4 | SubscriptionRepository — 상향 매칭 쿼리 (알림 region이 시군구 코드이면 시군구+부모 시도 구독자 동시 조회) | subscription-service | [O] |
 | 1-R-5 | 최대 구독 지역 5개 → 10개 (Subscription 도메인 검증 수정 + 프론트 메시지 수정) | subscription-service + frontend | [O] |
-| 1-R-6 | AlertProcessedConsumer — region 코드 길이(2자리=시도, 5자리=시군구)로 판별 후 상향 매칭 구독자 조회 | notification-service | [ ] |
+| 1-R-6 | AlertProcessedConsumer — region 코드 길이(2자리=시도, 5자리=시군구)로 판별 후 상향 매칭 구독자 조회 | notification-service | [O] |
 
 **단계 3 — DUST region 시군구 코드로 교체**
 

@@ -37,7 +37,8 @@
 **단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지)**
 - [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 ✅
 - [x] 1-R-5: 최대 구독 5개 → 10개 ✅
-- [ ] 🔄 1-R-6: AlertProcessedConsumer — 코드 길이로 시도/시군구 판별 후 상향 매칭 호출
+- [x] 1-R-6: AlertProcessedConsumer — 코드 길이 판별 + Redis broadcast 상향 매칭 + subscriberTargets 분리 ✅
+- [ ] 🔄 1-R-7: MeasureStationCacheService addr 파싱 → 시군구 행정코드(5자리) 반환
 - [ ] 1-R-6: AlertProcessedConsumer — 코드 길이로 시도/시군구 판별 후 상향 매칭 호출
 
 **단계 3 — DUST region 시군구 코드로 교체**
