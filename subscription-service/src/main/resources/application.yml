@@ -37,3 +37,7 @@ logging:
 kafka:
   topic:
     subscription-events: subscription-events
+
+api:
+  region:
+    key: ${REGION_API_KEY:1186d19de4548e147be22418d96063008714c638acd20e82b09d6070ac4cebae}

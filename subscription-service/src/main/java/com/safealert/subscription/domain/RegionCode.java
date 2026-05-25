@@ -19,4 +19,12 @@ public class RegionCode {
 
     @Column(name = "parent_code", length = 10)
     private String parentCode;
+
+    public static RegionCode of(String code, String name, String parentCode) {
+        RegionCode r = new RegionCode();
+        r.code = code;
+        r.name = name;
+        r.parentCode = parentCode;
+        return r;
+    }
 }
