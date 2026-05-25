@@ -33,7 +33,7 @@
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 1 완료, 1-R-2c 진행 중
+**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 1 완료, 단계 2 진행 중 (1-R-4 상향 매칭 쿼리)
 
 ---
 
@@ -242,7 +242,7 @@
 | 1-R-2a | 임시 시드 SQL 작성 — data.sql에 시군구 228개 추가 (ON CONFLICT DO NOTHING) | subscription-service | [O] |
 | 1-R-2b | subscription-service 재기동 + DB 검증 (시도 17 + 시군구 228 = 245개 확인) | subscription-service | [O] |
 | 1-R-3 | `/regions/available` API — 트리 구조 응답 (시도 17개 + children: 시군구) 구현 및 검증 | subscription-service | [O] |
-| 1-R-2c | RegionCodeSyncService 신설 — @PostConstruct에서 법정동코드 API 호출 → 시도+시군구 자동 동기화 (data.sql 대체) | subscription-service | 🔄 진행 중 |
+| 1-R-2c | RegionCodeSyncService 신설 — @PostConstruct에서 법정동코드 API 호출 → 시도+시군구 자동 동기화 (data.sql 대체) | subscription-service | [O] |
 
 **단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지)**
 
