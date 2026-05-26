@@ -1,79 +1,88 @@
-## ✅ 완료된 작업 (2026-05-25 기준)
+# SafeAlert Todo (2026-05-26 기준)
 
-- [x] getMsrstnList API 승인 + MeasureStationCacheService 복원 (시/군/구 230+개 캐싱)
-- [x] Redis alert:seen:DUST:* 초기화 + 전체 재기동
-- [x] DB 검증 — DUST 230+ 시/군/구 단위 수집 확인
-- [x] WeatherAlertClient Method A — stnId→시도 매핑 + title 파싱으로 content 정상화
-- [x] /run 스킬 — alert-collector(8086), alert-processor(8087) 추가
-- [x] 1-R-1: 행정구역 표준코드 API 신청 (행정안전부_행정표준코드_법정동코드) ✅
-- [x] 1-R-2a: data.sql에 시군구 228개 추가 (ON CONFLICT DO NOTHING) ✅
-- [x] 1-R-2b: subscription-service 재기동 + DB 245개 확인 ✅
-- [x] 1-R-3: `/regions/available` 트리 구조 응답 구현 (시도 17 + children 시군구) ✅
-- [x] 1-R-2c: RegionCodeSyncService 신설 — 법정동코드 API @PostConstruct 자동 동기화 ✅
-- [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 (시군구 OR 부모 시도 동시 조회) ✅
-- [x] 1-R-5: 최대 구독 5개 → 10개 (백엔드 검증 + 프론트 메시지) ✅
-- [x] 1-R-6: AlertProcessedConsumer 상향 매칭 — 시군구 5자리 시 시도 채널 동시 broadcast ✅
-- [x] 1-R-7: MeasureStationCacheService — subscription-service에서 시군구 코드 맵 로딩 ✅
-- [x] 1-R-8: DustAlertClient.region 시군구 5자리 코드로 교체 ✅
-- [x] 1-R-9: Subscriptions.jsx 2단계 드롭다운 + addRegion 자동 구독 생성 버그 수정 ✅
-- [x] 1-R-10: TestPage.jsx 5자리 코드 → 앞 2자리 시도로 카운터 집계 ✅
+## ✅ Phase 1-R 완료 — 시/군/구 단위 구독 시스템 (상향 매칭)
+
+모든 1-R 작업 완료. 5자리 시군구 코드 수집 → Redis 중복 필터 → 상향 매칭 → WebSocket 발송 E2E 검증됨.
 
 ---
 
-## 🔄 진행 중 — Phase 1-R: 시/군/구 단위 구독 시스템 (상향 매칭)
-
-**현재 문제:** DUST는 시/군/구 단위로 수집되지만 region은 시도 코드("11")라 강남구만 구독 불가.
-
-**설계 결정:**
-- 코드: 행정구역 표준 5자리 ("11680" 강남구)
-- 시드: data.sql 정적 시드(245개) → RegionCodeSyncService 자동 동기화로 대체
-- 매칭: 상향만 (시군구 알림 → 시도 구독자에게도 발송)
-- 최대 구독: 10개
-
-### 작업 순서 (파이프라인 안전성 보장)
-
-**단계 1 — 데이터 모델 확장 ✅ 완료 (1-R-2c 진행 중)**
-- [x] 1-R-1: 행정구역 표준코드 API 신청
-- [x] 1-R-2a: 임시 시드 SQL 작성 (data.sql 시군구 228개)
-- [x] 1-R-2b: subscription-service 재기동 + DB 검증 (245개 확인)
-- [x] 1-R-3: `/regions/available` 트리 구조 응답
-- [x] 1-R-2c: RegionCodeSyncService 신설 ✅
-
-**단계 2 — 매칭 로직 상향 호환 (기존 시도 구독 유지) ✅**
-- [x] 1-R-4: SubscriptionRepository 상향 매칭 쿼리 ✅
-- [x] 1-R-5: 최대 구독 5개 → 10개 ✅
-- [x] 1-R-6: AlertProcessedConsumer — 코드 길이 판별 + Redis broadcast 상향 매칭 ✅
-
-**단계 3 — DUST region 시군구 코드로 교체 ✅**
-- [x] 1-R-7: MeasureStationCacheService addr 파싱 → 시군구 행정코드(5자리) 반환 ✅
-- [x] 1-R-8: DustAlertClient.region "11" → "11680" (시군구 코드로 교체) ✅
-
-**단계 4 — 프론트 UI 업그레이드 ✅**
-- [x] 1-R-9: Subscriptions.jsx 2단계 드롭다운 + addRegion 자동 구독 생성 버그 수정 ✅
-- [x] 1-R-10: TestPage.jsx — 5자리 코드 → 앞 2자리 시도로 카운터 집계 + 피드 표시 개선 ✅
-
-**단계 5 — 검증**
-- [ ] 🔄 1-R-11: E2E 검증 — DB 쿼리 검증 완료, 5분 스케줄러 실행 후 신규 수집 데이터 확인 대기
-
----
-
-## ⏸ 대기 중
-
-### 1-Q: 프론트엔드 페이지 전체 검증 (9개 페이지)
-시/군/구 구독 작업 후 통합 검증으로 함께 진행 권장.
+## 🔜 다음 작업 — 우선순위 순
 
 ### 1-O: DISASTER 지역 코드 매핑
-행정안전부 API 불안정 → 1-R 완료 후 동일한 시군구 코드 체계로 작업.
 
-### 1-A-17~19, 1-D-10~11: 비밀번호 찾기/재설정
-Phase 1 마무리 항목. 우선순위 낮음.
+✅ 코드 수정 완료 (`DisasterAlertClient.java`) — 1-O-1~3 완료
+⏳ **1-O-4 검증 대기** — 전체 서버 기동 후 아래 순서로 검증 필요:
+1. `/run` 으로 전체 서버 기동
+2. 5분 스케줄러 실행 대기
+3. `notification_history` 에서 DISASTER `region_code` 가 숫자 코드(`"44"` 등)인지 확인
+4. TestPage 지역별 카운터 합산이 총 수신 건수와 일치하는지 확인
 
 ---
 
-## ⬜ 다음 Phase
+### 1-Q: 프론트엔드 9개 페이지 전체 검증
 
-| Phase | 내용 |
-|-------|------|
-| Phase 3 | 안정성/복원력 — Saga, 장애 주입 |
-| Phase 4 | 관측 가능성 — Prometheus, Grafana, Jaeger, ELK |
-| Phase 5 | 부하 테스트 + 문서 마무리 |
+1-R 이후 드롭다운·카운터 변경 사항이 다른 페이지에 영향 없는지 확인.
+
+| # | 페이지 | 확인 항목 |
+|---|--------|-----------|
+| 1-Q-1 | `/` 랜딩 | CTA 버튼, 소개 텍스트 표시 |
+| 1-Q-2 | `/login` | 로그인 성공 → 대시보드 이동, 에러 메시지 |
+| 1-Q-3 | `/signup` | 이메일 인증 → 회원가입 완료 흐름 |
+| 1-Q-4 | `/dashboard` | 구독 지역·카테고리 표시, 최근 알림 목록 |
+| 1-Q-5 | `/subscriptions` | 2단계 드롭다운(시도→시군구), 추가/삭제, 저장 |
+| 1-Q-6 | `/history` | 알림 이력 목록, 날짜 필터 |
+| 1-Q-7 | `/profile` | 닉네임 수정, 회원 탈퇴 |
+| 1-Q-8 | `/admin` | 최근 가입 회원 목록 |
+| 1-Q-9 | `/test` | WebSocket 연결, 지역별 카운터 합산, 실시간 피드 |
+
+---
+
+### 1-A-17~19 + 1-D-10~11: 비밀번호 찾기 / 재설정
+
+Phase 1 미완료 항목. 이메일로 재설정 링크 발송 → 토큰 검증 → 새 비밀번호 저장 흐름.
+
+**백엔드 (auth-service)**
+
+| # | 내용 | 파일 |
+|---|------|------|
+| 1-A-17 | `POST /api/auth/password/send-reset` — 이메일 입력 → UUID 토큰 생성 → Redis 저장(TTL 10분) → 재설정 링크 메일 발송 | `AuthController`, `PasswordResetService` |
+| 1-A-18 | `POST /api/auth/password/reset` — 토큰 검증 → 새 비밀번호 bcrypt 해싱 → DB 저장 → Redis 토큰 삭제 | `PasswordResetService` |
+| 1-A-19 | 단위 테스트 — 토큰 만료, 존재하지 않는 이메일, 이미 사용된 토큰 케이스 | `PasswordResetServiceTest` |
+
+**프론트엔드 (React)**
+
+| # | 내용 | 파일 |
+|---|------|------|
+| 1-D-10 | `/find-password` — 이메일 입력 폼 → send-reset API 호출 → 발송 완료 안내 | `FindPassword.jsx` |
+| 1-D-11 | `/reset-password?token=xxx` — URL 토큰 파라미터 읽기 → 새 비밀번호 입력 폼 → reset API 호출 → 로그인 페이지 이동 | `ResetPassword.jsx` |
+
+---
+
+## ⬜ 이후 Phase
+
+### Phase 3 — 안정성 / 복원력
+
+| # | 내용 |
+|---|------|
+| 3-1 | Saga 패턴 — 구독 생성 실패 시 보상 트랜잭션 (Outbox 이미 일부 구현됨) |
+| 3-2 | Outbox 폴링 스케줄러 완성 — 미발행 이벤트 재처리 |
+| 3-3 | Circuit Breaker 임계값 조정 + Fallback 응답 검증 |
+| 3-4 | 장애 주입 테스트 — Kafka 중단, Redis 중단 시 서비스 동작 확인 |
+
+### Phase 4 — 관측 가능성
+
+| # | 내용 |
+|---|------|
+| 4-1 | Prometheus + Micrometer — 각 서비스 `/actuator/prometheus` 노출 |
+| 4-2 | Grafana 대시보드 — JVM, Kafka lag, API 응답시간 |
+| 4-3 | Jaeger — 분산 트레이싱 (OpenTelemetry 연동) |
+| 4-4 | ELK 스택 — Logstash + Elasticsearch + Kibana 로그 수집 |
+
+### Phase 5 — 부하 테스트 + 문서 마무리
+
+| # | 내용 |
+|---|------|
+| 5-1 | k6 부하 스크립트 — 로그인 + 알림 수신 동시 1000 VU |
+| 5-2 | 병목 지점 분석 + 튜닝 |
+| 5-3 | README 최종 정리 (아키텍처 다이어그램, 실행 방법) |
+| 5-4 | API 명세 문서 (Swagger 또는 Notion) |

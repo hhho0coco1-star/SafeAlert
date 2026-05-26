@@ -16,6 +16,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -28,6 +29,20 @@ public class DisasterAlertClient {
     private final DuplicateFilterService duplicateFilter;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+
+    private static final Map<String, String> SIDO_NAME_TO_CODE = Map.ofEntries(
+        Map.entry("서울특별시", "11"), Map.entry("부산광역시", "26"),
+        Map.entry("대구광역시", "27"), Map.entry("인천광역시", "28"),
+        Map.entry("광주광역시", "29"), Map.entry("대전광역시", "30"),
+        Map.entry("울산광역시", "31"), Map.entry("세종특별자치시", "36"),
+        Map.entry("경기도", "41"),    Map.entry("강원도", "42"),
+        Map.entry("강원특별자치도", "42"), Map.entry("충청북도", "43"),
+        Map.entry("충청남도", "44"),  Map.entry("전라북도", "45"),
+        Map.entry("전북특별자치도", "45"), Map.entry("전라남도", "46"),
+        Map.entry("경상북도", "47"),  Map.entry("경상남도", "48"),
+        Map.entry("제주특별자치도", "50")
+    );
+
 
     @CircuitBreaker(name = "disasterApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
@@ -60,7 +75,7 @@ public class DisasterAlertClient {
             for (JsonNode item : body) {
                 String sn = item.path("SN").asText();
                 String msgCn = item.path("MSG_CN").asText();
-                String region = item.path("RCPTN_RGN_NM").asText().trim();
+                String regionRaw = item.path("RCPTN_RGN_NM").asText().trim();
                 String crtDt = item.path("CRT_DT").asText();
                 String dstSeNm = item.path("DST_SE_NM").asText();
 
@@ -73,7 +88,7 @@ public class DisasterAlertClient {
                         .category("DISASTER")
                         .title(dstSeNm)
                         .content(msgCn)
-                        .region(region)
+                        .region(parseRegionCode(regionRaw))
                         .issuedAt(crtDt)
                         .rawData(item.toString())
                         .build());
@@ -90,5 +105,11 @@ public class DisasterAlertClient {
     public List<AlertRawMessage> fetchFallback(Exception e) {
         log.warn("[행정안전부] Circuit Breaker 작동 - API 일시 차단: {}", e.getMessage());
         return List.of();
+    }
+
+    private String parseRegionCode(String rcptnRgnNm) {
+        if (rcptnRgnNm == null || rcptnRgnNm.isBlank()) return "전국";
+        String sido = rcptnRgnNm.split(" ")[0];
+        return SIDO_NAME_TO_CODE.getOrDefault(sido, "전국");
     }
 }
