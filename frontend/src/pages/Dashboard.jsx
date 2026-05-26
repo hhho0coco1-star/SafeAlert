@@ -49,6 +49,7 @@ export default function Dashboard() {
     const [subscriptions, setSubscriptions] = useState([])
     const [summary, setSummary] = useState({ total: 0, weather: 0, earthquake: 0, dust: 0, disaster: 0 })
     const [modal, setModal] = useState(null)
+    const [filter, setFilter] = useState(null)
 
     useEffect(() => {
         api.get('/api/auth/me')
@@ -86,7 +87,10 @@ export default function Dashboard() {
     const regions = [...new Map(subscriptions.map(s => [s.regionCode, s])).keys()]
     const categories = [...new Set(subscriptions.map(s => s.category))]
     const lastAlert = notifications[0]
-    const feedAlerts = notifications.slice(0, 7)
+    const feedAlerts = (filter
+        ? notifications.filter(a => a.category === filter)
+        : notifications
+    ).slice(0, 20)
 
     return (
         <div className="min-h-[calc(100vh-56px)] bg-gray-50">
@@ -108,16 +112,25 @@ export default function Dashboard() {
                 {/* 요약 스탯 4개 */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                     {[
-                        { label: '오늘 수신 알림', val: summary.total,      color: 'text-red-500',   icon: <IconBellRinging size={13} className="text-red-500"   /> },
-                        { label: '기상특보',        val: summary.weather,    color: 'text-red-500',   icon: <IconCloudStorm  size={13} className="text-red-500"   /> },
-                        { label: '지진',            val: summary.earthquake, color: 'text-amber-600', icon: <IconWaveSine    size={13} className="text-amber-600" /> },
-                        { label: '미세먼지',        val: summary.dust,       color: 'text-blue-500',  icon: <IconWind        size={13} className="text-blue-500"  /> },
-                    ].map(({ label, val, color, icon }) => (
-                        <div key={label} className="bg-white border border-gray-200 rounded-xl px-4 py-3.5">
-                            <div className="flex items-center gap-1 text-[11px] text-gray-400 mb-1">{icon} {label}</div>
-                            <div className={`text-xl font-medium ${color}`}>{val}</div>
-                        </div>
-                    ))}
+                        { label: '오늘 수신 알림', val: summary.total,      color: 'text-red-500',   icon: <IconBellRinging size={13} className="text-red-500"   />, key: null         },
+                        { label: '기상특보',        val: summary.weather,    color: 'text-red-500',   icon: <IconCloudStorm  size={13} className="text-red-500"   />, key: 'WEATHER'    },
+                        { label: '지진',            val: summary.earthquake, color: 'text-amber-600', icon: <IconWaveSine    size={13} className="text-amber-600" />, key: 'EARTHQUAKE' },
+                        { label: '미세먼지',        val: summary.dust,       color: 'text-blue-500',  icon: <IconWind        size={13} className="text-blue-500"  />, key: 'DUST'       },
+                    ].map(({ label, val, color, icon, key }) => {
+                        const isActive = filter === key
+                        return (
+                            <div key={label}
+                                onClick={() => setFilter(isActive ? null : key)}
+                                className={`border rounded-xl px-4 py-3.5 cursor-pointer transition-all ${
+                                    isActive
+                                        ? 'bg-gray-900 border-gray-900'
+                                        : 'bg-white border-gray-200 hover:border-gray-300'
+                                }`}>
+                                <div className={`flex items-center gap-1 text-[11px] mb-1 ${isActive ? 'text-gray-400' : 'text-gray-400'}`}>{icon} {label}</div>
+                                <div className={`text-xl font-medium ${isActive ? 'text-white' : color}`}>{val}</div>
+                            </div>
+                        )
+                    })}
                 </div>
 
                 {/* 2단 그리드 */}
@@ -126,9 +139,14 @@ export default function Dashboard() {
                     {/* 실시간 알림 피드 */}
                     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-                            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900">
+                            <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
                                 <IconBolt size={15} className="text-gray-400" />
                                 실시간 알림
+                                {filter && (
+                                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-900 text-white">
+                                        {CAT_CONFIG[filter]?.label}
+                                    </span>
+                                )}
                             </div>
                             <div className="flex items-center gap-1.5 text-[11px] text-green-700">
                                 <span className="w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
@@ -144,14 +162,23 @@ export default function Dashboard() {
                         ) : (
                             feedAlerts.map((alert, i) => {
                                 const cat = CAT_CONFIG[alert.category] ?? { label: alert.category, dot: 'bg-gray-400', badge: 'bg-gray-100 text-gray-600' }
+                                const rc = alert.regionCode ?? alert.region ?? ''
+                                const regionLabel = REGION_NAMES[rc] ?? REGION_NAMES[rc?.substring(0, 2)] ?? rc ?? '전국'
                                 return (
                                     <div key={alert.notificationId ?? i}
-                                        className="flex items-center gap-3 px-5 py-3.5 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${cat.dot}`}></span>
+                                        onClick={() => setModal(alert)}
+                                        className="flex items-start gap-3 px-5 py-3.5 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer">
+                                        <span className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${cat.dot}`}></span>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-sm font-medium text-gray-900 truncate">{alert.title}</div>
-                                            <div className="text-[11px] text-gray-400 mt-0.5">
-                                                {alert.source ?? ''}{alert.source ? ' · ' : ''}{timeAgo(alert.createdAt)}
+                                            <div className="text-sm font-medium text-gray-900">{alert.title}</div>
+                                            {alert.content && (
+                                                <div className="text-xs text-gray-500 mt-0.5 leading-relaxed line-clamp-2">{alert.content}</div>
+                                            )}
+                                            <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                                                <span className="text-[11px] text-gray-400">{regionLabel}</span>
+                                                {alert.source && <><span className="text-[11px] text-gray-300">·</span><span className="text-[11px] text-gray-400">{alert.source}</span></>}
+                                                <span className="text-[11px] text-gray-300">·</span>
+                                                <span className="text-[11px] text-gray-400">{timeAgo(alert.createdAt)}</span>
                                             </div>
                                         </div>
                                         <span className={`text-[11px] px-2 py-0.5 rounded-full flex-shrink-0 ${cat.badge}`}>{cat.label}</span>
@@ -261,7 +288,13 @@ export default function Dashboard() {
                             </div>
                             <div className="px-7 pb-6 pt-5 text-center">
                                 <h3 className="text-base font-semibold text-gray-900 leading-snug mb-1.5">{modal.title}</h3>
-                                <p className="text-xs text-gray-400 mb-4">{modal.source}</p>
+                                {modal.content && (
+                                    <p className="text-xs text-gray-600 leading-relaxed mb-3 text-left bg-gray-50 rounded-lg px-3 py-2">{modal.content}</p>
+                                )}
+                                <p className="text-xs text-gray-400 mb-2">
+                                    {(() => { const rc = modal.regionCode ?? modal.region ?? ''; return REGION_NAMES[rc] ?? REGION_NAMES[rc?.substring(0, 2)] ?? (rc || '전국') })()}
+                                    {modal.source ? ` · ${modal.source}` : ''}
+                                </p>
                                 <div className="inline-flex items-center gap-1 text-[11px] text-gray-400 bg-gray-100 px-3 py-1 rounded-full mb-5">
                                     <IconClock size={11} /> {timeAgo(modal.createdAt)}
                                 </div>

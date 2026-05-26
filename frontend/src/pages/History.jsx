@@ -23,6 +23,18 @@ const SEV_CONFIG = {
 
 const PAGE_SIZE = 7
 
+const REGION_NAMES = {
+  '11': '서울특별시', '26': '부산광역시', '27': '대구광역시', '28': '인천광역시',
+  '29': '광주광역시', '30': '대전광역시', '31': '울산광역시', '36': '세종특별자치시',
+  '41': '경기도',    '42': '강원도',    '43': '충청북도',  '44': '충청남도',
+  '45': '전라북도',  '46': '전라남도',  '47': '경상북도',  '48': '경상남도', '50': '제주특별자치도',
+}
+
+function regionLabel(code) {
+  if (!code || code === '전국') return '전국'
+  return REGION_NAMES[code] ?? REGION_NAMES[code?.substring(0, 2)] ?? code
+}
+
 function formatTime(iso) {
   if (!iso) return ''
   const d = new Date(iso)
@@ -208,10 +220,13 @@ export default function History() {
                   <div className={`w-2 h-2 rounded-full flex-shrink-0 ${cat.dot}`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate mb-0.5">{item.title}</p>
+                    {item.content && (
+                      <p className="text-xs text-gray-500 leading-relaxed line-clamp-1 mb-0.5">{item.content}</p>
+                    )}
                     <div className="flex items-center gap-1.5 text-[11px] text-gray-400">
                       <span>{item.source}</span>
                       <span>·</span>
-                      <span>{item.region}</span>
+                      <span>{regionLabel(item.region)}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
@@ -239,7 +254,7 @@ export default function History() {
                           <IconClock size={13} /> {formatFull(item.createdAt)}
                         </span>
                         <span className="flex items-center gap-1 text-[11px] text-gray-400">
-                          <IconMapPin size={13} /> {item.region}
+                          <IconMapPin size={13} /> {regionLabel(item.region)}
                         </span>
                         <span className="flex items-center gap-1 text-[11px] text-gray-400">
                           <IconBuilding size={13} /> {item.source}

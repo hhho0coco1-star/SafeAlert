@@ -35,6 +35,8 @@ export default function TestPage() {
     const [regionCounts, setRegionCounts] = useState({})
     const [categoryCounts, setCategoryCounts] = useState({})
     const [connected, setConnected] = useState(false)
+    const [catFilter, setCatFilter] = useState(null)
+    const [regionFilter, setRegionFilter] = useState(null)
 
     useEffect(() => {
         api.get('/api/alerts/recent')
@@ -67,6 +69,14 @@ export default function TestPage() {
 
     const totalReceived = Object.values(regionCounts).reduce((a, b) => a + b, 0)
 
+    const filteredAlerts = alerts
+        .filter(a => catFilter ? a.category === catFilter : true)
+        .filter(a => {
+            if (!regionFilter) return true
+            const r = a.region?.length === 5 ? a.region.substring(0, 2) : (a.region ?? '')
+            return r === regionFilter
+        })
+
     return (
         <div className="min-h-[calc(100vh-56px)] bg-gray-50">
             <main className="max-w-5xl mx-auto px-6 py-7 pb-12">
@@ -87,19 +97,24 @@ export default function TestPage() {
 
                 {/* 요약 카드 */}
                 <div className="grid grid-cols-4 gap-3 mb-5">
-                    <div className="bg-white border border-gray-200 rounded-xl px-4 py-3.5">
-                        <div className="text-[11px] text-gray-400 mb-1">총 수신 알림</div>
-                        <div className="text-xl font-semibold text-gray-900">{totalReceived}</div>
-                    </div>
-                    {['WEATHER', 'DUST', 'DISASTER'].map(cat => {
-                        const c = CAT_CONFIG[cat]
+                    {[
+                        { key: null,        label: '총 수신 알림', count: totalReceived,             dot: null },
+                        { key: 'WEATHER',   label: '기상특보',     count: categoryCounts['WEATHER']  ?? 0, dot: 'bg-red-500'   },
+                        { key: 'DUST',      label: '미세먼지',     count: categoryCounts['DUST']     ?? 0, dot: 'bg-blue-500'  },
+                        { key: 'DISASTER',  label: '재난문자',     count: categoryCounts['DISASTER'] ?? 0, dot: 'bg-green-600' },
+                    ].map(({ key, label, count, dot }) => {
+                        const isActive = catFilter === key
                         return (
-                            <div key={cat} className="bg-white border border-gray-200 rounded-xl px-4 py-3.5">
-                                <div className="flex items-center gap-1.5 text-[11px] text-gray-400 mb-1">
-                                    <span className={`w-2 h-2 rounded-full ${c.dot}`}></span>
-                                    {c.label}
+                            <div key={label}
+                                onClick={() => setCatFilter(isActive ? null : key)}
+                                className={`border rounded-xl px-4 py-3.5 cursor-pointer transition-all ${
+                                    isActive ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-200 hover:border-gray-300'
+                                }`}>
+                                <div className={`flex items-center gap-1.5 text-[11px] mb-1 ${isActive ? 'text-gray-400' : 'text-gray-400'}`}>
+                                    {dot && <span className={`w-2 h-2 rounded-full ${dot}`}></span>}
+                                    {label}
                                 </div>
-                                <div className="text-xl font-semibold text-gray-900">{categoryCounts[cat] ?? 0}</div>
+                                <div className={`text-xl font-semibold ${isActive ? 'text-white' : 'text-gray-900'}`}>{count}</div>
                             </div>
                         )
                     })}
@@ -114,13 +129,29 @@ export default function TestPage() {
                             📍 지역별 수신
                         </div>
                         <div className="divide-y divide-gray-50">
+                            {/* 전국 행 */}
+                            <div
+                                onClick={() => setRegionFilter(null)}
+                                className={`flex items-center justify-between px-4 py-2 cursor-pointer transition-colors ${
+                                    regionFilter === null ? 'bg-gray-900' : 'hover:bg-gray-50'
+                                }`}>
+                                <span className={`text-xs font-medium ${regionFilter === null ? 'text-white' : 'text-gray-700'}`}>전국</span>
+                                <span className={`text-xs font-medium min-w-[20px] text-right ${regionFilter === null ? 'text-gray-300' : 'text-gray-400'}`}>
+                                    {totalReceived}
+                                </span>
+                            </div>
                             {ALL_REGION_CODES.map(code => {
                                 const count = regionCounts[code] ?? 0
+                                const isActive = regionFilter === code
                                 return (
-                                    <div key={code} className="flex items-center justify-between px-4 py-2">
-                                        <span className="text-xs text-gray-600">{REGION_NAMES[code]}</span>
+                                    <div key={code}
+                                        onClick={() => setRegionFilter(isActive ? null : code)}
+                                        className={`flex items-center justify-between px-4 py-2 cursor-pointer transition-colors ${
+                                            isActive ? 'bg-gray-900' : 'hover:bg-gray-50'
+                                        }`}>
+                                        <span className={`text-xs ${isActive ? 'text-white font-medium' : 'text-gray-600'}`}>{REGION_NAMES[code]}</span>
                                         <span className={`text-xs font-medium min-w-[20px] text-right ${
-                                            count > 0 ? 'text-red-500' : 'text-gray-300'
+                                            isActive ? 'text-gray-300' : count > 0 ? 'text-red-500' : 'text-gray-300'
                                         }`}>
                                             {count}
                                         </span>
@@ -133,23 +164,35 @@ export default function TestPage() {
                     {/* 실시간 피드 */}
                     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
-                            <span className="text-sm font-medium text-gray-900">📡 실시간 피드</span>
-                            <span className="text-[11px] text-gray-400">{alerts.length}건 수신됨</span>
+                            <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                                📡 실시간 피드
+                                {catFilter && (
+                                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-900 text-white">
+                                        {CAT_CONFIG[catFilter]?.label}
+                                    </span>
+                                )}
+                                {regionFilter && (
+                                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-700 text-white">
+                                        {REGION_NAMES[regionFilter]}
+                                    </span>
+                                )}
+                            </div>
+                            <span className="text-[11px] text-gray-400">{filteredAlerts.length}건</span>
                         </div>
 
-                        {alerts.length === 0 ? (
+                        {filteredAlerts.length === 0 ? (
                             <div className="py-16 text-center">
                                 <div className="text-3xl mb-2">📭</div>
-                                <p className="text-sm text-gray-300">대기 중 — 알림 수신 시 자동 표시됩니다</p>
+                                <p className="text-sm text-gray-300">{alerts.length === 0 ? '대기 중 — 알림 수신 시 자동 표시됩니다' : '해당 조건의 알림이 없습니다'}</p>
                                 <p className="text-xs text-gray-200 mt-1">공공데이터 수집 주기: 5분</p>
                             </div>
                         ) : (
                             <div className="max-h-[600px] overflow-y-auto divide-y divide-gray-50">
-                                {alerts.map((alert, i) => {
+                                {filteredAlerts.map((alert, i) => {
                                     const cat = CAT_CONFIG[alert.category] ?? { label: alert.category ?? '기타', dot: 'bg-gray-400', badge: 'bg-gray-100 text-gray-600' }
                                     const regionLabel = REGION_NAMES[alert.region] ?? REGION_NAMES[alert.region?.substring(0, 2)] ?? alert.region ?? '전국'
                                     return (
-                                        <div key={alert.id ?? alert.notificationId ?? i}
+                                        <div key={alert.id ?? alert.notificationId ?? `${i}`}
                                             className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors">
                                             <span className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${cat.dot}`}></span>
                                             <div className="flex-1 min-w-0">
