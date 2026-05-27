@@ -21,19 +21,23 @@
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
-🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 찾기 미완료)
+🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 변경 API, 비밀번호 찾기/재설정 미완료)
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
-🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 미완료)
+🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 미완료, 5개 페이지 검증 대기)
 ✅ Phase 1-E   — OAuth2 소셜 로그인 완료 (Google, Kakao)
 ✅ Phase 1-H~P — 공공 API 파이프라인 버그 수정 + DUST 시군구 수집 확장 + WEATHER 지역코드 매핑 완료
+✅ Phase 1-R   — 시/군/구 단위 구독 시스템 (계층 매칭) 완료
+🔄 Phase 1-O   — DISASTER 지역 코드 매핑 (검증 대기)
+🔄 Phase 1-Q   — 프론트엔드 페이지 전체 검증 (5개 페이지 미검증)
+⬜ Phase 1-S   — 기획문서 설계서 업데이트 (실제 구현 기준 동기화)
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-R — 시/군/구 단위 구독 시스템 (계층 매칭) — 단계 5 (1-R-11 E2E 검증)
+**현재 작업:** Phase 1-O-3 — DISASTER region_code 숫자 코드 DB 검증
 
 ---
 
@@ -78,6 +82,7 @@
 | 1-A-17 | 비밀번호 재설정 이메일 발송 API (POST /api/auth/password/send-reset) | [ ] |
 | 1-A-18 | 비밀번호 재설정 토큰 검증 + 새 비밀번호 저장 API (POST /api/auth/password/reset) | [ ] |
 | 1-A-19 | 단위 테스트 (비밀번호 재설정 플로우) | [ ] |
+| 1-A-20 | 비밀번호 변경 API (PUT /api/auth/me/password) — 현재 비밀번호 확인 후 새 비밀번호 저장, 소셜 로그인 계정 호출 불가 처리 | [ ] |
 
 ### 1-B. API Gateway ✅
 
@@ -270,7 +275,7 @@
 
 | # | 작업 | 영향 서비스 | 완료 |
 |---|------|------------|------|
-| 1-R-11 | E2E 검증 — 강남구 구독 → 강남구 알림 수신 ✓ / 서울 구독자도 강남구 알림 수신 ✓ / 강남구 구독자는 서울 시도 알림 미수신 ✓ | 전체 | [ ] |
+| 1-R-11 | E2E 검증 — Redis 5자리 코드 키 생성 ✓ / 서울("11") 구독자가 "11680"(강남구) DUST 알림 수신 ✓ / notification_history 5자리 region_code 저장 ✓ | 전체 | [O] |
 
 ---
 
@@ -280,27 +285,27 @@
 
 | # | 페이지 | 경로 | 검증 항목 | 완료 |
 |---|--------|------|-----------|------|
-| 1-Q-1 | 랜딩 | `/` | 최근 알림 표시, 로그인/회원가입 버튼, 실시간 알림 수신 | [ ] |
-| 1-Q-2 | 로그인 | `/login` | 이메일/비밀번호 로그인, 소셜 로그인(Google/Kakao), 에러 처리 | [ ] |
+| 1-Q-1 | 랜딩 | `/` | 최근 알림 표시, 로그인/회원가입 버튼, 실시간 알림 수신 | [O] |
+| 1-Q-2 | 로그인 | `/login` | 이메일/비밀번호 로그인, 소셜 로그인(Google/Kakao), 에러 처리 | [O] |
 | 1-Q-3 | 회원가입 | `/signup` | 이메일 인증 코드 발송/확인, 가입 완료 | [ ] |
-| 1-Q-4 | 대시보드 | `/dashboard` | 구독 지역 알림 표시, WebSocket 실시간 수신 | [ ] |
-| 1-Q-5 | 구독 설정 | `/subscriptions` | 지역/카테고리 구독 추가·삭제, 저장 반영 | [ ] |
-| 1-Q-6 | 알림 이력 | `/history` | 이력 목록 조회, 카테고리 필터, 페이지네이션 | [ ] |
+| 1-Q-4 | 대시보드 | `/dashboard` | 실시간 알림 지역·내용 표시, 카테고리 필터 클릭, WebSocket 수신 | [O] |
+| 1-Q-5 | 구독 설정 | `/subscriptions` | 2단계 드롭다운(시도→시군구), 추가·삭제, 저장, 토글 버튼 정상 | [O] |
+| 1-Q-6 | 알림 이력 | `/history` | 지역명 변환, content 미리보기, 카테고리 필터, 페이지네이션 | [O] |
 | 1-Q-7 | 내 계정 | `/profile` | 닉네임 수정, 회원 탈퇴 | [ ] |
 | 1-Q-8 | 관리자 | `/admin` | 통계 카드, 최근 알림 목록, 수동 발송 | [ ] |
-| 1-Q-9 | 실시간 테스트 | `/test` | WebSocket 연결, 지역별 카운터, 피드 표시 | [ ] |
+| 1-Q-9 | 실시간 테스트 | `/test` | 카테고리·지역 AND 필터, 전국 기본값, WebSocket 연결 | [O] |
 
 ---
 
-### 1-O. DISASTER 지역 코드 매핑 ⬜ (대기)
+### 1-O. DISASTER 지역 코드 매핑 🔄
 
-**배경:** DISASTER region이 RCPTN_RGN_NM 원문("충청남도 천안시")으로 저장 → 17개 숫자 코드와 불일치 → TestPage 지역별 카운터 미반영.
+**배경:** DISASTER region이 RCPTN_RGN_NM 원문("충청남도 홍성군")으로 저장 → 17개 숫자 코드와 불일치 → TestPage 지역별 카운터 미반영.
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 1-O-1 | DisasterAlertClient — FULL_TO_ABBREV 매핑(충청남도→충남 등 17개) 적용해 region을 "충남 천안시" 형태로 단축 | [ ] |
-| 1-O-2 | TestPage.jsx — 카운터용 키워드 매핑 추가 (region 텍스트 → 숫자 코드 역변환) | [ ] |
-| 1-O-3 | 재검증 (DISASTER 알림이 지역별 카운터에 반영되는지) | [ ] |
+| 1-O-1 | DisasterAlertClient — SIDO_NAME_TO_CODE 맵 추가 + parseRegionCode() 메서드로 RCPTN_RGN_NM → 2자리 시도 코드 변환 | [O] |
+| 1-O-2 | DisasterAlertClient — region 필드를 parseRegionCode(regionRaw) 결과로 교체, 매핑 실패 시 "전국" 폴백 | [O] |
+| 1-O-3 | 검증 — 전체 서버 기동 후 5분 스케줄러 실행 → notification_history DISASTER region_code 숫자 코드 확인 | [O] |
 
 ---
 
@@ -339,6 +344,21 @@
 | 1-E-7 | Redis 기반 OAuth2 state 저장소 구현 (API Gateway 환경 대응) | [O] |
 | 1-E-8 | 이메일 우선 조회 + 기존 계정 OAuth 연동 처리 | [O] |
 | 1-E-9 | 환경변수 분리 (application-local.yml, gitignore 적용) | [O] |
+
+---
+
+### 1-S. 기획문서 설계서 업데이트 ⬜
+
+**배경:** 구현 과정에서 설계서와 달라진 스펙 6개 발견. 코드 변경 없이 문서만 수정.
+
+| # | 대상 문서 | 수정 내용 | 완료 |
+|---|----------|----------|------|
+| 1-S-1 | `05_프론트엔드_화면설계.md` p.198 | 구독 최대 지역 수 `5개` → `10개` (1-R-5에서 변경) | [ ] |
+| 1-S-2 | `03_API_DB설계.md` p.649 | `notification_history.user_id` NOT NULL → NULL 허용 (공개 이력 저장, 1-M-2에서 변경) | [ ] |
+| 1-S-3 | `05_프론트엔드_화면설계.md` p.322 | 관리자 통계 API URL `GET /api/admin/stats/alerts` → `GET /api/admin/stats` | [ ] |
+| 1-S-4 | `03_API_DB설계.md` p.390~395 | WebSocket 구독 토픽 `/topic/alerts/{regionCode}` → `/topic/public/alerts` (전국 단일 채널, 1-I에서 변경) | [ ] |
+| 1-S-5 | `05_프론트엔드_화면설계.md` p.405~417 | 컴포넌트 구조 실제 구현 기준으로 업데이트 (WebSocketContext.jsx, AlertModal.jsx 등 존재 여부 반영) | [ ] |
+| 1-S-6 | `05_프론트엔드_화면설계.md` p.473~507 | Mock Fallback 현황 업데이트 — notification-service 구현 완료 후 제거된 항목 반영 | [ ] |
 
 ---
 

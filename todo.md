@@ -1,45 +1,30 @@
 # SafeAlert Todo (2026-05-26 기준)
 
-## ✅ Phase 1-R 완료 — 시/군/구 단위 구독 시스템 (상향 매칭)
+## ✅ 완료
 
-모든 1-R 작업 완료. 5자리 시군구 코드 수집 → Redis 중복 필터 → 상향 매칭 → WebSocket 발송 E2E 검증됨.
+- **Phase 1-R** — 시/군/구 단위 구독 시스템 (상향 매칭) 전체 완료
+- **1-O-1~3** — DisasterAlertClient RCPTN_RGN_NM → 2자리 시도 코드 변환 + DB 검증 완료
+- **1-Q-4,5,6,9** — Dashboard·Subscriptions·History·TestPage UI 개선 완료
 
 ---
 
 ## 🔜 다음 작업 — 우선순위 순
 
-### 1-O: DISASTER 지역 코드 매핑
-
-✅ 코드 수정 완료 (`DisasterAlertClient.java`) — 1-O-1~3 완료
-⏳ **1-O-4 검증 대기** — 전체 서버 기동 후 아래 순서로 검증 필요:
-1. `/run` 으로 전체 서버 기동
-2. 5분 스케줄러 실행 대기
-3. `notification_history` 에서 DISASTER `region_code` 가 숫자 코드(`"44"` 등)인지 확인
-4. TestPage 지역별 카운터 합산이 총 수신 건수와 일치하는지 확인
-
----
-
-### 1-Q: 프론트엔드 9개 페이지 전체 검증
-
-1-R 이후 드롭다운·카운터 변경 사항이 다른 페이지에 영향 없는지 확인.
+### 1-Q 잔여: 미검증 페이지 5개
 
 | # | 페이지 | 확인 항목 |
 |---|--------|-----------|
-| 1-Q-1 | `/` 랜딩 | CTA 버튼, 소개 텍스트 표시 |
-| 1-Q-2 | `/login` | 로그인 성공 → 대시보드 이동, 에러 메시지 |
+| 1-Q-1 | `/` 랜딩 | CTA 버튼, 최근 알림 표시 |
+| 1-Q-2 | `/login` | 로그인 성공 흐름, 소셜 로그인, 에러 메시지 |
 | 1-Q-3 | `/signup` | 이메일 인증 → 회원가입 완료 흐름 |
-| 1-Q-4 | `/dashboard` | 구독 지역·카테고리 표시, 최근 알림 목록 |
-| 1-Q-5 | `/subscriptions` | 2단계 드롭다운(시도→시군구), 추가/삭제, 저장 |
-| 1-Q-6 | `/history` | 알림 이력 목록, 날짜 필터 |
 | 1-Q-7 | `/profile` | 닉네임 수정, 회원 탈퇴 |
-| 1-Q-8 | `/admin` | 최근 가입 회원 목록 |
-| 1-Q-9 | `/test` | WebSocket 연결, 지역별 카운터 합산, 실시간 피드 |
+| 1-Q-8 | `/admin` | 최근 가입 회원 목록 표시 |
 
 ---
 
-### 1-A-17~19 + 1-D-10~11: 비밀번호 찾기 / 재설정
+### 1-A-17~20 + 1-D-10~11: 비밀번호 관련 미구현 항목
 
-Phase 1 미완료 항목. 이메일로 재설정 링크 발송 → 토큰 검증 → 새 비밀번호 저장 흐름.
+Phase 1 미완료 구현 항목.
 
 **백엔드 (auth-service)**
 
@@ -48,6 +33,7 @@ Phase 1 미완료 항목. 이메일로 재설정 링크 발송 → 토큰 검증
 | 1-A-17 | `POST /api/auth/password/send-reset` — 이메일 입력 → UUID 토큰 생성 → Redis 저장(TTL 10분) → 재설정 링크 메일 발송 | `AuthController`, `PasswordResetService` |
 | 1-A-18 | `POST /api/auth/password/reset` — 토큰 검증 → 새 비밀번호 bcrypt 해싱 → DB 저장 → Redis 토큰 삭제 | `PasswordResetService` |
 | 1-A-19 | 단위 테스트 — 토큰 만료, 존재하지 않는 이메일, 이미 사용된 토큰 케이스 | `PasswordResetServiceTest` |
+| 1-A-20 | `PUT /api/auth/me/password` — 현재 비밀번호 확인 후 새 비밀번호 저장. 소셜 로그인 계정 호출 시 400 반환 (`password_hash = NULL` 체크) | `AuthController`, `AuthService` |
 
 **프론트엔드 (React)**
 
@@ -55,6 +41,25 @@ Phase 1 미완료 항목. 이메일로 재설정 링크 발송 → 토큰 검증
 |---|------|------|
 | 1-D-10 | `/find-password` — 이메일 입력 폼 → send-reset API 호출 → 발송 완료 안내 | `FindPassword.jsx` |
 | 1-D-11 | `/reset-password?token=xxx` — URL 토큰 파라미터 읽기 → 새 비밀번호 입력 폼 → reset API 호출 → 로그인 페이지 이동 | `ResetPassword.jsx` |
+
+> **참고:** 1-A-20 (비밀번호 변경)은 `/profile` 페이지의 비밀번호 변경 카드와 연동. `03_API_DB설계.md` p.188에 설계 명세 있음.
+
+---
+
+---
+
+### 1-S: 기획문서 설계서 업데이트 (문서 작업, 코드 변경 없음)
+
+구현 과정에서 달라진 스펙을 설계서에 반영.
+
+| # | 대상 | 수정 내용 |
+|---|------|----------|
+| 1-S-1 | `05_프론트엔드_화면설계.md` | 구독 최대 지역 수 5개 → 10개 |
+| 1-S-2 | `03_API_DB설계.md` | `notification_history.user_id` NOT NULL → NULL 허용 |
+| 1-S-3 | `05_프론트엔드_화면설계.md` | 관리자 통계 API URL `/api/admin/stats/alerts` → `/api/admin/stats` |
+| 1-S-4 | `03_API_DB설계.md` | WebSocket 토픽 `/topic/alerts/{regionCode}` → `/topic/public/alerts` |
+| 1-S-5 | `05_프론트엔드_화면설계.md` | 컴포넌트 구조 실제 구현 기준으로 업데이트 |
+| 1-S-6 | `05_프론트엔드_화면설계.md` | Mock Fallback 현황 업데이트 (제거된 항목 반영) |
 
 ---
 
