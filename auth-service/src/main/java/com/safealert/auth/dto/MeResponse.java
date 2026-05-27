@@ -8,11 +8,12 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 public class MeResponse {
-    
+
     private UUID userId;
     private String email;
     private String nickname;
     private String role;
+    private String oauthProvider;
     private LocalDateTime createdAt;
-    
+
 }

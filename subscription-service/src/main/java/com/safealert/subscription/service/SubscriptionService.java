@@ -109,6 +109,10 @@ public class SubscriptionService {
         return new SubscriberResponse(regionCode, category, userIds);
     }
 
+    public long getActiveSubscriptionCount() {
+        return subscriptionRepository.countByStatus("ACTIVE");
+    }
+
     private void saveOutboxEvent(Subscription subscription, String eventType) {
         try {
             String payload = objectMapper.writeValueAsString(new java.util.HashMap<>() {{

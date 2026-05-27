@@ -8,10 +8,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.safealert.auth.dto.LoginRequest;
+import com.safealert.auth.dto.AdminUsersResponse;
 import com.safealert.auth.dto.MeResponse;
 import com.safealert.auth.dto.TokenResponse;
 import com.safealert.auth.dto.ChangePasswordRequest;
 import com.safealert.auth.dto.UpdateNicknameRequest;
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import com.safealert.auth.security.JwtProvider;
 import org.springframework.data.redis.core.RedisTemplate;
 import java.util.concurrent.TimeUnit;
@@ -92,7 +96,7 @@ public class AuthService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         return new MeResponse(user.getUserId(), user.getEmail(), user.getNickname(),
-                user.getRole(), user.getCreatedAt());
+                user.getRole(), user.getOauthProvider(), user.getCreatedAt());
     }
 
     @Transactional
@@ -102,7 +106,7 @@ public class AuthService {
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         user.updateNickname(request.getNickname());
         return new MeResponse(user.getUserId(), user.getEmail(), user.getNickname(),
-                user.getRole(), user.getCreatedAt());
+                user.getRole(), user.getOauthProvider(), user.getCreatedAt());
     }
 
     @Transactional
@@ -126,18 +130,38 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public java.util.List<MeResponse> getAdminUsers(String accessToken) {
+    public AdminUsersResponse getAdminUsers(String accessToken, int page, int size, String keyword) {
         UUID requesterId = jwtProvider.getUserId(accessToken);
         User requester = userRepository.findById(requesterId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
         if (!"ADMIN".equals(requester.getRole())) {
             throw new IllegalArgumentException("관리자 권한이 필요합니다");
         }
-        return userRepository.findTop7ByIsDeletedFalseOrderByCreatedAtDesc()
-                .stream()
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<User> userPage = (keyword != null && !keyword.isBlank())
+                ? userRepository.searchByKeyword(keyword, pageRequest)
+                : userRepository.findByIsDeletedFalseOrderByCreatedAtDesc(pageRequest);
+        List<MeResponse> users = userPage.getContent().stream()
                 .map(u -> new MeResponse(u.getUserId(), u.getEmail(), u.getNickname(),
-                        u.getRole(), u.getCreatedAt()))
+                        u.getRole(), u.getOauthProvider(), u.getCreatedAt()))
                 .toList();
+        return new AdminUsersResponse(userPage.getTotalElements(), users, page, userPage.getTotalPages());
+    }
+
+    @Transactional
+    public void updateUserRole(String accessToken, UUID targetUserId, String role) {
+        UUID requesterId = jwtProvider.getUserId(accessToken);
+        User requester = userRepository.findById(requesterId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+        if (!"ADMIN".equals(requester.getRole())) {
+            throw new IllegalArgumentException("관리자 권한이 필요합니다");
+        }
+        if (requesterId.equals(targetUserId)) {
+            throw new IllegalArgumentException("자신의 권한은 변경할 수 없습니다");
+        }
+        User target = userRepository.findById(targetUserId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+        target.updateRole(role);
     }
 
     public void sendVerificationCode(String email) {

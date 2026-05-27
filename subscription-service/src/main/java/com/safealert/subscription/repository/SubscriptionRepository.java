@@ -12,6 +12,8 @@ import java.util.UUID;
 public interface SubscriptionRepository extends JpaRepository<Subscription, UUID> {
 
     Optional<Subscription> findByUserId(UUID userId);
+
+    long countByStatus(String status);
     // Optional -> 결과가 있거나/없거나
 
     @Query("SELECT DISTINCT s.userId FROM Subscription s " +

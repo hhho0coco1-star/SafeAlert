@@ -92,4 +92,9 @@ public class User {
         this.oauthId = oauthId;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updateRole(String role) {
+        this.role = role;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

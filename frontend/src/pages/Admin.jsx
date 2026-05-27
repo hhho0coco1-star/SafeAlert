@@ -50,10 +50,12 @@ function timeAgo(iso) {
 }
 
 export default function Admin() {
-  const [stats, setStats]   = useState(null)
-  const [alerts, setAlerts] = useState([])
-  const [users, setUsers]   = useState([])
-  const [loading, setLoading] = useState(true)
+  const [stats, setStats]                         = useState(null)
+  const [alerts, setAlerts]                       = useState([])
+  const [users, setUsers]                         = useState([])
+  const [totalMembers, setTotalMembers]           = useState(null)
+  const [activeSubscriptions, setActiveSubscriptions] = useState(null)
+  const [loading, setLoading]                     = useState(true)
 
   const [form, setForm] = useState({
     category: 'WEATHER',
@@ -62,8 +64,15 @@ export default function Admin() {
     title: '',
     content: '',
   })
-  const [sendModal, setSendModal] = useState(false)
-  const [toast, setToast]         = useState(null)
+  const [sendModal, setSendModal]   = useState(false)
+  const [userModal, setUserModal]   = useState(false)
+  const [modalUsers, setModalUsers] = useState([])
+  const [modalPage, setModalPage]   = useState(0)
+  const [modalTotal, setModalTotal] = useState(0)
+  const [modalTotalPages, setModalTotalPages] = useState(0)
+  const [modalLoading, setModalLoading] = useState(false)
+  const [modalKeyword, setModalKeyword] = useState('')
+  const [toast, setToast]           = useState(null)
   const toastTimer = useRef(null)
 
   const showToast = (msg, success = true) => {
@@ -74,23 +83,62 @@ export default function Admin() {
 
   const fetchAll = async () => {
     setLoading(true)
-    try {
-      const [sRes, aRes, uRes] = await Promise.all([
-        api.get('/api/admin/stats'),
-        api.get('/api/admin/alerts', { params: { size: 6 } }),
-        api.get('/api/admin/users',  { params: { size: 7 } }),
-      ])
-      setStats(sRes.data.data)
-      setAlerts(aRes.data.data ?? [])
-      setUsers(uRes.data.data  ?? [])
-    } catch {
-      // admin API 미구현 시 빈 상태 유지
-    } finally {
-      setLoading(false)
+    const [sRes, aRes, uRes, cRes] = await Promise.allSettled([
+      api.get('/api/admin/stats'),
+      api.get('/api/admin/alerts', { params: { size: 6 } }),
+      api.get('/api/auth/admin/users', { params: { size: 7 } }),
+      api.get('/api/subscriptions/admin/count'),
+    ])
+    if (sRes.status === 'fulfilled') setStats(sRes.value.data.data)
+    if (aRes.status === 'fulfilled') setAlerts(aRes.value.data.data ?? [])
+    if (uRes.status === 'fulfilled') {
+      const d = uRes.value.data.data
+      setUsers(d?.users ?? [])
+      setTotalMembers(d?.totalCount ?? null)
     }
+    if (cRes.status === 'fulfilled') setActiveSubscriptions(cRes.value.data.data ?? null)
+    setLoading(false)
   }
 
   useEffect(() => { fetchAll() }, [])
+
+  const fetchModalUsers = async (page = 0, keyword = modalKeyword) => {
+    setModalLoading(true)
+    try {
+      const params = { page, size: 10 }
+      if (keyword.trim()) params.keyword = keyword.trim()
+      const res = await api.get('/api/auth/admin/users', { params })
+      const d = res.data.data
+      setModalUsers(d?.users ?? [])
+      setModalTotal(d?.totalCount ?? 0)
+      setModalTotalPages(d?.totalPages ?? 0)
+      setModalPage(page)
+    } catch {
+      showToast('회원 목록을 불러오지 못했습니다.', false)
+    } finally {
+      setModalLoading(false)
+    }
+  }
+
+  const openUserModal = () => {
+    setModalKeyword('')
+    setUserModal(true)
+    fetchModalUsers(0, '')
+  }
+
+  const changeRole = async (userId, currentRole) => {
+    const newRole = currentRole === 'ADMIN' ? 'USER' : 'ADMIN'
+    const label = newRole === 'ADMIN' ? '관리자로 승격' : '일반 회원으로 변경'
+    if (!window.confirm(`${label}하시겠습니까?`)) return
+    try {
+      await api.put(`/api/auth/admin/users/${userId}/role`, { role: newRole })
+      showToast(`권한이 변경되었습니다.`)
+      fetchModalUsers(modalPage, modalKeyword)
+      fetchAll()
+    } catch (e) {
+      showToast(e.response?.data?.message ?? '권한 변경에 실패했습니다.', false)
+    }
+  }
 
   const openModal = () => {
     if (!form.category) return showToast('카테고리를 선택하세요.', false)
@@ -124,7 +172,7 @@ export default function Admin() {
     {
       label: '전체 회원',
       icon: <IconUsers size={14} className="text-blue-400" />,
-      value: stats?.totalMembers?.toLocaleString() ?? '—',
+      value: totalMembers?.toLocaleString() ?? '—',
       sub: loading ? '' : '최근 가입 회원 포함',
     },
     {
@@ -134,9 +182,9 @@ export default function Admin() {
       sub: `총 ${stats?.totalSent?.toLocaleString() ?? '—'}건 누적`,
     },
     {
-      label: '활성 구독',
+      label: '활성 구독자',
       icon: <IconBellRinging size={14} className="text-green-500" />,
-      value: stats?.activeSubscriptions?.toLocaleString() ?? '—',
+      value: activeSubscriptions?.toLocaleString() ?? '—',
       sub: '전체 구독 기준',
     },
     {
@@ -236,13 +284,21 @@ export default function Admin() {
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
             <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
-              <IconUsers size={15} className="text-gray-400" /> 최근 가입 회원
+              <IconUsers size={15} className="text-gray-400" />최근 가입 회원
             </div>
-            {stats?.totalMembers && (
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
-                총 {stats.totalMembers.toLocaleString()}명
-              </span>
-            )}
+            <div className="flex items-center gap-2">
+              {totalMembers !== null && (
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                  총 {totalMembers.toLocaleString()}명
+                </span>
+              )}
+              <button
+                onClick={openUserModal}
+                className="text-[11px] px-2.5 py-1 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors"
+              >
+                전체보기
+              </button>
+            </div>
           </div>
           <table className="w-full border-collapse">
             <thead>
@@ -395,6 +451,106 @@ export default function Admin() {
                 <IconSend size={14} /> 발송 확인
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 전체 회원 모달 */}
+      {userModal && (
+        <div
+          className="fixed inset-0 bg-black/45 z-[999] flex items-center justify-center"
+          onClick={e => e.target === e.currentTarget && setUserModal(false)}
+        >
+          <div className="bg-white rounded-2xl w-full max-w-[680px] max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                <IconUsers size={16} className="text-gray-400" /> 전체 회원 목록
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                  총 {modalTotal.toLocaleString()}명
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={modalKeyword}
+                  onChange={e => setModalKeyword(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && fetchModalUsers(0, modalKeyword)}
+                  placeholder="이메일 또는 닉네임 검색"
+                  className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg outline-none focus:border-blue-400 w-[200px] transition-colors"
+                />
+                <button
+                  onClick={() => fetchModalUsers(0, modalKeyword)}
+                  className="text-xs px-3 py-1.5 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  검색
+                </button>
+                <button onClick={() => setUserModal(false)} className="text-gray-300 hover:text-gray-500 text-lg leading-none ml-1">✕</button>
+              </div>
+            </div>
+            <div className="overflow-y-auto flex-1">
+              {modalLoading ? (
+                <div className="text-center text-sm text-gray-300 py-12">불러오는 중...</div>
+              ) : (
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50 sticky top-0">
+                      {['회원', '가입일', '권한', '변경'].map(h => (
+                        <th key={h} className="text-[11px] text-gray-400 font-medium text-left px-5 py-2.5 border-b border-gray-100">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {modalUsers.map((u) => (
+                      <tr key={u.userId} className="hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0">
+                        <td className="px-5 py-3">
+                          <p className="text-sm font-medium text-gray-900">{u.nickname}</p>
+                          <p className="text-[11px] text-gray-400">{u.email}</p>
+                        </td>
+                        <td className="px-5 py-3 text-xs text-gray-400">{formatDate(u.createdAt)}</td>
+                        <td className="px-5 py-3">
+                          <span className={`inline-flex items-center text-[11px] px-2 py-0.5 rounded-full ${
+                            u.role === 'ADMIN' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-50 text-green-700'
+                          }`}>
+                            {u.role === 'ADMIN' ? '관리자' : '일반'}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3">
+                          <button
+                            onClick={() => changeRole(u.userId, u.role)}
+                            className={`text-[11px] px-2.5 py-1 rounded-lg border transition-colors ${
+                              u.role === 'ADMIN'
+                                ? 'border-gray-200 text-gray-400 hover:bg-gray-50'
+                                : 'border-amber-200 text-amber-600 hover:bg-amber-50'
+                            }`}
+                          >
+                            {u.role === 'ADMIN' ? '권한 해제' : '관리자 승격'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            {modalTotalPages > 1 && (
+              <div className="flex items-center justify-center gap-1 px-6 py-3 border-t border-gray-100">
+                <button
+                  onClick={() => fetchModalUsers(modalPage - 1)}
+                  disabled={modalPage === 0}
+                  className="px-3 py-1 text-xs border border-gray-200 rounded-lg disabled:text-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                  이전
+                </button>
+                <span className="text-xs text-gray-400 px-2">{modalPage + 1} / {modalTotalPages}</span>
+                <button
+                  onClick={() => fetchModalUsers(modalPage + 1)}
+                  disabled={modalPage >= modalTotalPages - 1}
+                  className="px-3 py-1 text-xs border border-gray-200 rounded-lg disabled:text-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                  다음
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

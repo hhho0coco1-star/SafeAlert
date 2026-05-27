@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import com.safealert.auth.dto.SendCodeRequest;
 import com.safealert.auth.dto.VerifyCodeRequest;
 
@@ -78,10 +79,23 @@ public class AuthController {
     }
 
     @GetMapping("/admin/users")
-    public ResponseEntity<ApiResponse<List<MeResponse>>> getAdminUsers(
-            @RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<ApiResponse<AdminUsersResponse>> getAdminUsers(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "7") int size,
+            @RequestParam(defaultValue = "") String keyword) {
         String accessToken = authHeader.replace("Bearer ", "");
-        return ResponseEntity.ok(ApiResponse.ok(authService.getAdminUsers(accessToken)));
+        return ResponseEntity.ok(ApiResponse.ok(authService.getAdminUsers(accessToken, page, size, keyword)));
+    }
+
+    @PutMapping("/admin/users/{userId}/role")
+    public ResponseEntity<ApiResponse<Void>> updateUserRole(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable UUID userId,
+            @RequestBody Map<String, String> body) {
+        String accessToken = authHeader.replace("Bearer ", "");
+        authService.updateUserRole(accessToken, userId, body.get("role"));
+        return ResponseEntity.ok(ApiResponse.ok(null));
     }
 
     @PostMapping("/email/send-code")
