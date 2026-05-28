@@ -40,6 +40,10 @@ public class OutboxEvent {
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
+    // Kafka 발행 실패 횟수 (3회 초과 시 DEAD로 전환)
+    @Column(name = "retry_count", nullable = false)
+    private int retryCount = 0;
+
     public static OutboxEvent create(String aggregateType, UUID aggregateId,
                                      String eventType, String payload) {
         OutboxEvent event = new OutboxEvent();
@@ -58,7 +62,13 @@ public class OutboxEvent {
     }
 
     public void markFailed() {
-        this.status = "FAILED";
+        this.retryCount++;
+        // 3회 이상 실패하면 DEAD 로 전환 -> 무한 재시도 방지
+        if (this.retryCount >= 3) {
+            this.status = "DEAD";
+        } else {
+            this.status = "FAILED";
+        }
     }
 }
 

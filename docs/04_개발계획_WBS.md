@@ -34,7 +34,8 @@
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
-⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
+🔄 Phase 3     — 안정성 · 복원력 진행 중 (Outbox 재시도 완료)
+⬜ Phase 4~5   — 관측 가능성 · 부하 테스트
 ```
 
 **현재 작업:** Phase 1-S — 기획문서 설계서 동기화
@@ -429,7 +430,7 @@
 
 ---
 
-## Phase 3 — 안정성 / 복원력 ⬜
+## Phase 3 — 안정성 / 복원력 🔄
 
 ### 3-A. Saga 패턴 구현
 
@@ -440,6 +441,7 @@
 | 3-A-3 | Notification Service Saga 소비/응답 구현 | [ ] |
 | 3-A-4 | 실패 시 보상 트랜잭션 구현 | [ ] |
 | 3-A-5 | Saga 흐름 통합 테스트 | [ ] |
+| 3-A-6 | Outbox 폴링 스케줄러 완성 — FAILED 재시도(3회 제한) + DEAD 상태 전환 | [O] |
 
 ### 3-B. 장애 주입 테스트
 
