@@ -10,19 +10,6 @@
 
 #### ~~3-1: Saga 패턴~~ — 스킵 (현재 @Transactional + Outbox 조합으로 원자성 이미 보장됨)
 
-#### 3-2: Outbox 폴링 스케줄러 완성 (schema.sql 1건 잔여)
-> Java 코드(OutboxEvent, Repository, Scheduler) 구현 완료. DB 스키마 누락만 남음.
-
-- [ ] `schema.sql` — `outbox_events` 테이블에 `retry_count INT NOT NULL DEFAULT 0` 컬럼 추가
-
----
-
-#### 3-3: Circuit Breaker 임계값 검증 (수동 테스트만 잔여)
-> 3개 Client 모두 @CircuitBreaker + fallback(빈 리스트 반환 + 경고 로그) 구현 완료. application.properties 설정값 완료.
-
-- [ ] 수동 테스트: 공공 API URL을 잘못된 주소로 임시 변경 → CB OPEN 전환 확인 후 원복
-
----
 
 #### 3-4: 장애 주입 테스트
 > Kafka·Redis를 강제로 내리고 각 서비스가 정상 복구되는지 확인.

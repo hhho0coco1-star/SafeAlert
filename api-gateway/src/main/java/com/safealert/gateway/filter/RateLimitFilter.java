@@ -1,6 +1,7 @@
 package com.safealert.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -11,6 +12,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import java.time.Duration;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RateLimitFilter implements GlobalFilter, Ordered {
@@ -33,12 +35,15 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
                 }
                 return Mono.just(count);
             })
-
             .flatMap(count -> {
-                if(count > MAX_REQUESTS) {
+                if (count > MAX_REQUESTS) {
                     exchange.getResponse().setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
                     return exchange.getResponse().setComplete();
                 }
+                return chain.filter(exchange);
+            })
+            .onErrorResume(e -> {
+                log.warn("[RateLimit] Redis 연결 실패 — Rate Limiting 비활성화: {}", e.getMessage());
                 return chain.filter(exchange);
             });
     }

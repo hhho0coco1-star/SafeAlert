@@ -21,6 +21,8 @@ spring:
     redis:
       host: ${SPRING_DATA_REDIS_HOST:localhost}
       port: 6379
+      connect-timeout: 2s
+      timeout: 2s
 
   mail:
     host: smtp.gmail.com
