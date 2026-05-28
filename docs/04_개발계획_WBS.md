@@ -17,27 +17,27 @@
 
 ---
 
-## 현재 진행 전략 (2026-05-25 기준)
+## 현재 진행 전략 (2026-05-28 기준)
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
-🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 변경 API, 비밀번호 찾기/재설정 미완료)
+🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 찾기/재설정 API 미구현: 1-A-17~19)
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
-🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 미완료, 5개 페이지 검증 대기)
+🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 미구현: 1-D-10~11)
 ✅ Phase 1-E   — OAuth2 소셜 로그인 완료 (Google, Kakao)
 ✅ Phase 1-H~P — 공공 API 파이프라인 버그 수정 + DUST 시군구 수집 확장 + WEATHER 지역코드 매핑 완료
 ✅ Phase 1-R   — 시/군/구 단위 구독 시스템 (계층 매칭) 완료
-🔄 Phase 1-O   — DISASTER 지역 코드 매핑 (검증 대기)
-🔄 Phase 1-Q   — 프론트엔드 페이지 전체 검증 (5개 페이지 미검증)
-⬜ Phase 1-S   — 기획문서 설계서 업데이트 (실제 구현 기준 동기화)
+✅ Phase 1-O   — DISASTER 지역 코드 매핑 완료
+✅ Phase 1-Q   — 프론트엔드 페이지 전체 검증 완료 (관리자 페이지 포함)
+🔄 Phase 1-S   — 기획문서 설계서 업데이트 진행 중 (03_API_DB설계.md 반영 완료, 05_화면설계.md 미완료)
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ⬜ Phase 3~5   — 안정성 · 관측 가능성 · 부하 테스트
 ```
 
-**현재 작업:** Phase 1-O-3 — DISASTER region_code 숫자 코드 DB 검증
+**현재 작업:** Phase 1-S — 기획문서 설계서 동기화
 
 ---
 
@@ -82,7 +82,7 @@
 | 1-A-17 | 비밀번호 재설정 이메일 발송 API (POST /api/auth/password/send-reset) | [ ] |
 | 1-A-18 | 비밀번호 재설정 토큰 검증 + 새 비밀번호 저장 API (POST /api/auth/password/reset) | [ ] |
 | 1-A-19 | 단위 테스트 (비밀번호 재설정 플로우) | [ ] |
-| 1-A-20 | 비밀번호 변경 API (PUT /api/auth/me/password) — 현재 비밀번호 확인 후 새 비밀번호 저장, 소셜 로그인 계정 호출 불가 처리 | [ ] |
+| 1-A-20 | 비밀번호 변경 API (PUT /api/auth/me/password) — 현재 비밀번호 확인 후 새 비밀번호 저장, 소셜 로그인 계정 호출 불가 처리 | [O] |
 
 ### 1-B. API Gateway ✅
 
@@ -292,7 +292,7 @@
 | 1-Q-5 | 구독 설정 | `/subscriptions` | 2단계 드롭다운(시도→시군구), 추가·삭제, 저장, 토글 버튼 정상 | [O] |
 | 1-Q-6 | 알림 이력 | `/history` | 지역명 변환, content 미리보기, 카테고리 필터, 페이지네이션 | [O] |
 | 1-Q-7 | 내 계정 | `/profile` | 닉네임 수정, 회원 탈퇴 | [O] |
-| 1-Q-8 | 관리자 | `/admin` | 통계 카드, 최근 알림 목록, 수동 발송 | [ ] |
+| 1-Q-8 | 관리자 | `/admin` | 통계 카드, 최근 알림 목록, 수동 발송, 전체 회원 목록·페이지네이션·권한 관리·키워드 검색, 수동 알림 구독자 전달 | [O] |
 | 1-Q-9 | 실시간 테스트 | `/test` | 카테고리·지역 AND 필터, 전국 기본값, WebSocket 연결 | [O] |
 
 ---
@@ -353,12 +353,14 @@
 
 | # | 대상 문서 | 수정 내용 | 완료 |
 |---|----------|----------|------|
-| 1-S-1 | `05_프론트엔드_화면설계.md` p.198 | 구독 최대 지역 수 `5개` → `10개` (1-R-5에서 변경) | [ ] |
-| 1-S-2 | `03_API_DB설계.md` p.649 | `notification_history.user_id` NOT NULL → NULL 허용 (공개 이력 저장, 1-M-2에서 변경) | [ ] |
-| 1-S-3 | `05_프론트엔드_화면설계.md` p.322 | 관리자 통계 API URL `GET /api/admin/stats/alerts` → `GET /api/admin/stats` | [ ] |
-| 1-S-4 | `03_API_DB설계.md` p.390~395 | WebSocket 구독 토픽 `/topic/alerts/{regionCode}` → `/topic/public/alerts` (전국 단일 채널, 1-I에서 변경) | [ ] |
-| 1-S-5 | `05_프론트엔드_화면설계.md` p.405~417 | 컴포넌트 구조 실제 구현 기준으로 업데이트 (WebSocketContext.jsx, AlertModal.jsx 등 존재 여부 반영) | [ ] |
-| 1-S-6 | `05_프론트엔드_화면설계.md` p.473~507 | Mock Fallback 현황 업데이트 — notification-service 구현 완료 후 제거된 항목 반영 | [ ] |
+| 1-S-1 | `05_프론트엔드_화면설계.md` | 구독 최대 지역 수 `5개` → `10개` (1-R-5에서 변경) | [ ] |
+| 1-S-2 | `03_API_DB설계.md` | `notification_history.user_id` NOT NULL → NULL 허용 (공개 이력 저장, 1-M-2에서 변경) | [O] |
+| 1-S-3 | `03_API_DB설계.md` | 관리자 통계 API 섹션 정리 — `GET /api/admin/stats/alerts` 미구현 항목 제거 | [O] |
+| 1-S-4 | `03_API_DB설계.md` | WebSocket 구독 토픽 `/topic/alerts/{regionCode}` → `/topic/public/alerts` (전국 단일 채널) | [O] |
+| 1-S-5 | `03_API_DB설계.md` | 프론트엔드 페이지 목록 실제 구현 기준 업데이트 (11개 페이지 + 미구현 2개 명시) | [O] |
+| 1-S-6 | `03_API_DB설계.md` | Subscription Service 추가 API 5개 문서화 (by-region, admin/count 등) | [O] |
+| 1-S-7 | `03_API_DB설계.md` | Auth Admin API 추가 — GET /api/auth/admin/users(페이지네이션+키워드), PUT /api/auth/admin/users/{userId}/role | [O] |
+| 1-S-8 | `03_API_DB설계.md` | notification_history 테이블 source 컬럼 추가, alert_id·region_code NULL 허용으로 수정 | [O] |
 
 ---
 

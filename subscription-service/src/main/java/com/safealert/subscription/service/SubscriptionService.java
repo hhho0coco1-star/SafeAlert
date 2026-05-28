@@ -109,6 +109,12 @@ public class SubscriptionService {
         return new SubscriberResponse(regionCode, category, userIds);
     }
 
+    @Transactional(readOnly = true)
+    public SubscriberResponse getSubscribersByRegion(String regionCode) {
+        List<UUID> userIds = subscriptionRepository.findUserIdsByRegionCode(regionCode);
+        return new SubscriberResponse(regionCode, null, userIds);
+    }
+
     public long getActiveSubscriptionCount() {
         return subscriptionRepository.countByStatus("ACTIVE");
     }

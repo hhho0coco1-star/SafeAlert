@@ -74,6 +74,13 @@ public class SubscriptionController {
                 subscriptionService.getSubscribers(regionCode, category)));
     }
 
+    @GetMapping("/subscribers/by-region")
+    public ResponseEntity<ApiResponse<SubscriberResponse>> getSubscribersByRegion(
+            @RequestParam String regionCode) {
+        return ResponseEntity.ok(ApiResponse.ok(
+                subscriptionService.getSubscribersByRegion(regionCode)));
+    }
+
     @GetMapping("/admin/count")
     public ResponseEntity<ApiResponse<Long>> getActiveSubscriptionCount() {
         return ResponseEntity.ok(ApiResponse.ok(

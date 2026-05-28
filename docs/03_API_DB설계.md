@@ -251,6 +251,15 @@
 
 ## 2. Subscription Service API
 
+### POST /api/subscriptions — 구독 생성
+
+- 최초 1회 구독 레코드 생성 (ACTIVE 상태)
+- 이미 구독이 존재하면 `400 Bad Request`
+
+**Response:** `200 OK`
+
+---
+
 ### GET /api/subscriptions — 내 구독 목록 조회
 
 **Response:**
@@ -297,6 +306,88 @@
 ```
 
 **Response:** `200 OK`
+
+---
+
+### GET /api/subscriptions/regions/available — 사용 가능한 지역 목록
+
+- 인증 불필요
+- 시도(17개) + 시군구(228개) 트리 구조로 반환
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "code": "11",
+      "name": "서울특별시",
+      "children": [
+        { "code": "11010", "name": "종로구" }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### GET /api/subscriptions/subscribers — 지역·카테고리별 구독자 조회 (내부 서비스용)
+
+**Query Parameters:**
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|------|------|
+| regionCode | string | 필수 | 지역 코드 (2자리 시도 또는 5자리 시군구) |
+| category | string | 필수 | 카테고리 (WEATHER / EARTHQUAKE / DUST / DISASTER) |
+
+**Response:**
+```json
+{
+  "data": {
+    "regionCode": "11",
+    "category": "WEATHER",
+    "userIds": ["uuid1", "uuid2"]
+  }
+}
+```
+
+---
+
+### GET /api/subscriptions/subscribers/by-region — 지역별 구독자 조회 (카테고리 무관, 내부 서비스용)
+
+**Query Parameters:**
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|------|------|
+| regionCode | string | 필수 | 지역 코드 (2자리 시도) |
+
+- 지역 코드만으로 구독자 조회 (카테고리 필터 없음)
+- 관리자 수동 발송 시 사용 — 구독 지역이 일치하면 카테고리 무관하게 수신
+- 2자리 시도 코드로 쿼리 시 5자리 시군구 구독자도 포함
+
+**Response:**
+```json
+{
+  "data": {
+    "regionCode": "11",
+    "category": null,
+    "userIds": ["uuid1", "uuid2"]
+  }
+}
+```
+
+---
+
+### GET /api/subscriptions/admin/count — 활성 구독자 수 조회 (관리자용)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": 152
+}
+```
 
 ---
 
@@ -391,44 +482,12 @@
 
 - 프로토콜: WebSocket (STOMP)
 - 연결 URL: `ws://localhost:8080/api/notifications/ws`
-- 구독 경로: `/topic/alerts/{regionCode}` (구독한 지역 코드별 수신)
+- 구독 경로: `/topic/public/alerts` (전국 단일 채널 — 모든 알림 수신 후 프론트엔드에서 필터링)
 - 인증: 연결 시 STOMP CONNECT 헤더에 JWT 포함
 
 ---
 
-## 4. Statistics Service API (관리자 전용)
-
-### GET /api/admin/stats/alerts — 알림 통계 조회
-
-**Query Parameters:**
-
-| 파라미터 | 타입 | 필수 | 설명 |
-|---------|------|------|------|
-| from | string | 필수 | 시작 시간 |
-| to | string | 필수 | 종료 시간 |
-| groupBy | string | 선택 | `hour` / `day` / `region` / `category` |
-
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "total": 1523,
-    "byCategory": {
-      "WEATHER": 800,
-      "EARTHQUAKE": 23,
-      "DUST": 700
-    },
-    "byHour": [
-      { "hour": "2025-01-01T12:00:00Z", "count": 120 }
-    ]
-  }
-}
-```
-
----
-
-## 5. Admin Service API
+## 4. Admin Service API
 
 ### GET /api/admin/stats — 관리자 요약 통계
 
@@ -473,29 +532,55 @@
 
 ---
 
-### GET /api/admin/users — 최근 가입 회원 목록
+### GET /api/auth/admin/users — 전체 회원 목록 (페이지네이션 + 키워드 검색)
 
 **Query Parameters:**
 
 | 파라미터 | 타입 | 필수 | 설명 |
 |---------|------|------|------|
-| size | int | 선택 | 반환 건수 (기본값: 7) |
+| page | int | 선택 | 페이지 번호 (기본값: 0) |
+| size | int | 선택 | 페이지 크기 (기본값: 7) |
+| keyword | string | 선택 | 이메일 또는 닉네임 검색어 (빈 값이면 전체 조회) |
 
 **Response:**
 ```json
 {
   "success": true,
-  "data": [
-    {
-      "userId": "uuid",
-      "email": "user@example.com",
-      "nickname": "홍길동",
-      "role": "USER",
-      "createdAt": "2026-01-01T12:00:00Z"
-    }
-  ]
+  "data": {
+    "totalCount": 152,
+    "users": [
+      {
+        "userId": "uuid",
+        "email": "user@example.com",
+        "nickname": "홍길동",
+        "role": "USER",
+        "oauthProvider": null,
+        "createdAt": "2026-01-01T12:00:00Z"
+      }
+    ],
+    "page": 0,
+    "totalPages": 22
+  }
 }
 ```
+
+---
+
+### PUT /api/auth/admin/users/{userId}/role — 회원 권한 변경
+
+**Path Parameters:** `userId` — 대상 사용자 UUID
+
+**Request:**
+```json
+{
+  "role": "ADMIN"
+}
+```
+
+- `ADMIN` ↔ `USER` 전환 가능
+- 자기 자신의 권한은 변경 불가
+
+**Response:** `200 OK`
 
 ---
 
@@ -527,16 +612,21 @@
 
 ### 페이지 목록
 
-| 페이지 | 경로 | 인증 | 사용 API |
-|--------|------|------|---------|
-| 랜딩 | `/` | 불필요 | GET /api/alerts/recent |
-| 로그인 | `/login` | 불필요 | POST /api/auth/login |
-| 회원가입 | `/signup` | 불필요 | POST /api/auth/signup |
-| 메인 대시보드 | `/dashboard` | 필요 | GET /api/subscriptions, GET /api/notifications, WebSocket |
-| 구독 설정 | `/subscriptions` | 필요 | GET/POST/DELETE /api/subscriptions/regions, PUT /api/subscriptions/categories |
-| 알림 이력 | `/history` | 필요 | GET /api/notifications |
-| 내 계정 | `/profile` | 필요 | GET /api/auth/me, PUT /api/auth/me, DELETE /api/auth/me, POST /api/auth/logout |
-| 관리자 대시보드 | `/admin` | 관리자 | GET /api/admin/stats, GET /api/admin/alerts, GET /api/admin/users, POST /api/admin/alerts/manual |
+| 페이지 | 경로 | 인증 | 사용 API | 상태 |
+|--------|------|------|---------|------|
+| 랜딩 | `/` | 불필요 | GET /api/alerts/recent | ✅ |
+| 로그인 + 회원가입 | `/login` | 불필요 | POST /api/auth/login, POST /api/auth/signup, POST /api/auth/email/send-code, POST /api/auth/email/verify-code | ✅ (회원가입 탭 통합) |
+| 메인 대시보드 | `/dashboard` | 필요 | GET /api/subscriptions, GET /api/notifications/summary, WebSocket(/topic/public/alerts) | ✅ |
+| 구독 설정 | `/subscriptions` | 필요 | GET /api/subscriptions, POST /api/subscriptions/regions, DELETE /api/subscriptions/regions/{code}, PUT /api/subscriptions/categories, GET /api/subscriptions/regions/available | ✅ |
+| 알림 이력 | `/history` | 필요 | GET /api/notifications | ✅ |
+| 내 계정 | `/profile` | 필요 | GET /api/auth/me, PUT /api/auth/me, PUT /api/auth/me/password, DELETE /api/auth/me, POST /api/auth/logout | ✅ |
+| 관리자 대시보드 | `/admin` | 관리자 | GET /api/admin/stats, GET /api/admin/alerts, GET /api/auth/admin/users, GET /api/subscriptions/admin/count, POST /api/admin/alerts/manual, PUT /api/auth/admin/users/{userId}/role | ✅ |
+| 실시간 테스트 | `/test` | 불필요 | WebSocket(/topic/public/alerts) | ✅ |
+| Google OAuth 콜백 | `/oauth2/success` | 불필요 | — | ✅ |
+| 이용약관 | `/terms` | 불필요 | — | ✅ |
+| 개인정보처리방침 | `/privacy` | 불필요 | — | ✅ |
+| 비밀번호 찾기 | `/find-password` | 불필요 | POST /api/auth/password/send-reset | ⬜ 미구현 |
+| 비밀번호 재설정 | `/reset-password` | 불필요 | POST /api/auth/password/reset | ⬜ 미구현 |
 
 ### 공통 규칙
 - JWT Access Token → `localStorage`에 저장
@@ -646,17 +736,20 @@
 | 컬럼명 | 타입 | 제약 | 설명 |
 |--------|------|------|------|
 | notification_id | UUID | PK | 알림 ID |
-| user_id | UUID | NOT NULL, INDEX | 수신 사용자 ID |
-| alert_id | UUID | NOT NULL | 원본 알림 ID |
+| user_id | UUID | NULL, INDEX | 수신 사용자 ID (NULL = 공개 브로드캐스트 이력) |
+| alert_id | UUID | NULL | 원본 알림 ID |
 | category | VARCHAR(30) | NOT NULL | 알림 카테고리 |
 | severity | VARCHAR(20) | NOT NULL | LOW / MEDIUM / HIGH / CRITICAL |
 | title | VARCHAR(200) | NOT NULL | 알림 제목 |
 | content | TEXT | NOT NULL | 알림 내용 |
-| region_code | VARCHAR(10) | NOT NULL | 발령 지역 코드 |
+| region_code | VARCHAR(10) | NULL | 발령 지역 코드 (숫자 시도 코드 또는 "전국") |
+| source | VARCHAR(100) | NULL | 알림 출처 (기상청 / 환경부 / 행안부 / 관리자) |
 | status | VARCHAR(20) | NOT NULL | SENT / FAILED / PENDING |
-| issued_at | TIMESTAMP | NOT NULL | 재난 발생 시각 |
-| sent_at | TIMESTAMP | | 발송 시각 |
+| issued_at | TIMESTAMP | NULL | 재난 발생 시각 |
+| sent_at | TIMESTAMP | NULL | 발송 시각 |
 | created_at | TIMESTAMP | NOT NULL | 생성일시 |
+
+> **설계 변경 이유:** `user_id = NULL` 레코드는 공개 브로드캐스트 이력(랜딩 페이지 recent API, 관리자 발송 이력용)으로 사용됨. 사용자별 알림 이력은 `user_id IS NOT NULL` 레코드로 구분.
 
 **인덱스:**
 - `(user_id, created_at DESC)` — 사용자별 이력 조회

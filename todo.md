@@ -1,35 +1,28 @@
-# SafeAlert Todo (2026-05-26 기준)
+# SafeAlert Todo (2026-05-28 기준)
 
 ## ✅ 완료
 
 - **Phase 1-R** — 시/군/구 단위 구독 시스템 (상향 매칭) 전체 완료
 - **1-O-1~3** — DisasterAlertClient RCPTN_RGN_NM → 2자리 시도 코드 변환 + DB 검증 완료
 - **1-Q-4,5,6,9** — Dashboard·Subscriptions·History·TestPage UI 개선 완료
+- **1-Q-7** — Profile 소셜 로그인 계정 비밀번호 카드 비활성화 (oauthProvider 필드 추가)
+- **1-Q-8** — Admin 대시보드 전체 검증 완료 (통계 카드, 회원 목록·페이지네이션·권한 관리·키워드 검색, 수동 발송 구독자 전달)
+- **1-A-20** — 비밀번호 변경 API (PUT /api/auth/me/password) 구현 완료
+- **1-S-2,3,4,5,6,7,8** — 03_API_DB설계.md 실제 구현 기준 동기화 완료
 
 ---
 
 ## 🔜 다음 작업 — 우선순위 순
 
-### 1-Q 잔여: 미검증 페이지 5개
-
-| # | 페이지 | 확인 항목 |
-|---|--------|-----------|
-| 1-Q-8 | `/admin` | 최근 가입 회원 목록 표시 |
-
----
-
-### 1-A-17~20 + 1-D-10~11: 비밀번호 관련 미구현 항목
-
-Phase 1 미완료 구현 항목.
+### 1-A-17~19 + 1-D-10~11: 비밀번호 찾기/재설정 미구현 항목
 
 **백엔드 (auth-service)**
 
 | # | 내용 | 파일 |
 |---|------|------|
-| 1-A-17 | `POST /api/auth/password/send-reset` — 이메일 입력 → UUID 토큰 생성 → Redis 저장(TTL 10분) → 재설정 링크 메일 발송 | `AuthController`, `PasswordResetService` |
-| 1-A-18 | `POST /api/auth/password/reset` — 토큰 검증 → 새 비밀번호 bcrypt 해싱 → DB 저장 → Redis 토큰 삭제 | `PasswordResetService` |
-| 1-A-19 | 단위 테스트 — 토큰 만료, 존재하지 않는 이메일, 이미 사용된 토큰 케이스 | `PasswordResetServiceTest` |
-| 1-A-20 | `PUT /api/auth/me/password` — 현재 비밀번호 확인 후 새 비밀번호 저장. 소셜 로그인 계정 호출 시 400 반환 (`password_hash = NULL` 체크) | `AuthController`, `AuthService` |
+| 1-A-17 | `POST /api/auth/password/send-reset` — 이메일 입력 → UUID 토큰 생성 → Redis 저장(TTL 10분) → 재설정 링크 메일 발송 | `AuthController`, `AuthService` |
+| 1-A-18 | `POST /api/auth/password/reset` — 토큰 검증 → 새 비밀번호 bcrypt 해싱 → DB 저장 → Redis 토큰 삭제 | `AuthController`, `AuthService` |
+| 1-A-19 | 단위 테스트 — 토큰 만료, 존재하지 않는 이메일, 이미 사용된 토큰 케이스 | `AuthServiceTest` |
 
 **프론트엔드 (React)**
 
@@ -38,24 +31,13 @@ Phase 1 미완료 구현 항목.
 | 1-D-10 | `/find-password` — 이메일 입력 폼 → send-reset API 호출 → 발송 완료 안내 | `FindPassword.jsx` |
 | 1-D-11 | `/reset-password?token=xxx` — URL 토큰 파라미터 읽기 → 새 비밀번호 입력 폼 → reset API 호출 → 로그인 페이지 이동 | `ResetPassword.jsx` |
 
-> **참고:** 1-A-20 (비밀번호 변경)은 `/profile` 페이지의 비밀번호 변경 카드와 연동. `03_API_DB설계.md` p.188에 설계 명세 있음.
-
 ---
 
----
-
-### 1-S: 기획문서 설계서 업데이트 (문서 작업, 코드 변경 없음)
-
-구현 과정에서 달라진 스펙을 설계서에 반영.
+### 1-S-1: 기획문서 잔여 업데이트
 
 | # | 대상 | 수정 내용 |
 |---|------|----------|
-| 1-S-1 | `05_프론트엔드_화면설계.md` | 구독 최대 지역 수 5개 → 10개 |
-| 1-S-2 | `03_API_DB설계.md` | `notification_history.user_id` NOT NULL → NULL 허용 |
-| 1-S-3 | `05_프론트엔드_화면설계.md` | 관리자 통계 API URL `/api/admin/stats/alerts` → `/api/admin/stats` |
-| 1-S-4 | `03_API_DB설계.md` | WebSocket 토픽 `/topic/alerts/{regionCode}` → `/topic/public/alerts` |
-| 1-S-5 | `05_프론트엔드_화면설계.md` | 컴포넌트 구조 실제 구현 기준으로 업데이트 |
-| 1-S-6 | `05_프론트엔드_화면설계.md` | Mock Fallback 현황 업데이트 (제거된 항목 반영) |
+| 1-S-1 | `05_프론트엔드_화면설계.md` | 구독 최대 지역 수 5개 → 10개, WebSocket 토픽 변경, 실제 구현된 페이지 목록 반영 |
 
 ---
 

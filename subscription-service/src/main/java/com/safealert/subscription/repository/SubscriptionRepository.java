@@ -27,4 +27,11 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
             @Param("regionCode") String regionCode,
             @Param("category") String category);
 
+    @Query("SELECT DISTINCT s.userId FROM Subscription s " +
+           "JOIN s.regions r " +
+           "WHERE (r.regionCode = :regionCode " +
+           "  OR SUBSTRING(r.regionCode, 1, 2) = :regionCode) " +
+           "AND s.status = 'ACTIVE'")
+    List<UUID> findUserIdsByRegionCode(@Param("regionCode") String regionCode);
+
 }
