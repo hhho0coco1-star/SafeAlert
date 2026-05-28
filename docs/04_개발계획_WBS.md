@@ -353,7 +353,7 @@
 
 | # | 대상 문서 | 수정 내용 | 완료 |
 |---|----------|----------|------|
-| 1-S-1 | `05_프론트엔드_화면설계.md` | 구독 최대 지역 수 `5개` → `10개` (1-R-5에서 변경) | [ ] |
+| 1-S-1 | `05_프론트엔드_화면설계.md` | 구독 최대 지역 수 `5개` → `10개` (1-R-5에서 변경) | [O] |
 | 1-S-2 | `03_API_DB설계.md` | `notification_history.user_id` NOT NULL → NULL 허용 (공개 이력 저장, 1-M-2에서 변경) | [O] |
 | 1-S-3 | `03_API_DB설계.md` | 관리자 통계 API 섹션 정리 — `GET /api/admin/stats/alerts` 미구현 항목 제거 | [O] |
 | 1-S-4 | `03_API_DB설계.md` | WebSocket 구독 토픽 `/topic/alerts/{regionCode}` → `/topic/public/alerts` (전국 단일 채널) | [O] |
