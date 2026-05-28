@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -50,6 +51,20 @@ public class MeasureStationCacheService {
     public void init() {
         loadRegionCodes();
         loadAllStations();
+    }
+
+    @Scheduled(fixedDelay = 21_600_000)
+    public void refreshCache() {
+        log.info("[측정소 캐시] 정기 갱신 시작");
+        sigunguKeyToCode.clear();
+        stationToSigungu.clear();
+        stationToSigunguName.clear();
+        loadRegionCodes();
+        loadAllStations();
+    }
+
+    public boolean isCacheEmpty() {
+        return stationToSigungu.isEmpty();
     }
 
     private void loadAllStations() {

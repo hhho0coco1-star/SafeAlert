@@ -47,6 +47,11 @@ public class DustAlertClient {
 
     @CircuitBreaker(name = "dustApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
+        if (stationCache.isCacheEmpty()) {
+            log.warn("[환경부] 측정소 캐시 미초기화 — API 호출 스킵");
+            return List.of();
+        }
+
         List<AlertRawMessage> results = new ArrayList<>();
         String today = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
 
