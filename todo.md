@@ -1,30 +1,8 @@
-# SafeAlert Todo (2026-05-28 기준)
+# SafeAlert Todo (2026-05-29 기준)
 
 ---
 
 ## 🔜 다음 작업 — 우선순위 순
-
----
-
-### Phase 3 — 안정성 / 복원력
-
-#### ~~3-1: Saga 패턴~~ — 스킵 (현재 @Transactional + Outbox 조합으로 원자성 이미 보장됨)
-
-
-#### 3-4: 장애 주입 테스트
-> Kafka·Redis를 강제로 내리고 각 서비스가 정상 복구되는지 확인.
-
-- [ ] **Kafka 중단 테스트**
-  - `docker stop safealert-kafka-1` 실행
-  - alert-processor-service, notification-service Consumer lag 발생 확인
-  - `docker start safealert-kafka-1` 후 밀린 메시지 재처리 확인
-  - OutboxScheduler가 PENDING 이벤트 재발행하는지 확인
-- [ ] **Redis 중단 테스트**
-  - `docker stop safealert-redis-1` 실행
-  - auth-service 토큰 갱신 실패 응답 확인 (500 → 적절한 에러 메시지)
-  - api-gateway Rate Limiting 비활성화 여부 확인
-  - Redis 재시작 후 서비스 자동 복구 확인
-- [ ] 테스트 결과 `docs/장애주입_테스트결과.md` 에 기록
 
 ---
 

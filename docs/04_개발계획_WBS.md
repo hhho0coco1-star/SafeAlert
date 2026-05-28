@@ -9,7 +9,7 @@
 | Phase 0 | 환경 구성 | 1주 | K8s 클러스터, 인프라 배포 | ✅ 완료 |
 | Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화, DUST 전국 수집 범위 확장, 지역 코드 불일치 + Recent API 버그 수정, DUST 시/군/구 단위 수집 확장, WEATHER 지역 코드 매핑, 시/군/구 단위 구독 시스템(계층 매칭), 프론트엔드 페이지 전체 검증, DISASTER 지역 코드 매핑, 비밀번호 찾기/재설정 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
-| Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ⬜ 대기 |
+| Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ✅ 완료 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
 | Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | ⬜ 대기 |
 
@@ -34,7 +34,7 @@
 ✅ Phase 2-A   — Alert Collector Service 완료 (공공 API 3종 + Kafka + Circuit Breaker + K8s)
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
-🔄 Phase 3     — 안정성 · 복원력 진행 중 (Outbox 재시도 완료)
+✅ Phase 3     — 안정성 · 복원력 완료 (Outbox·Kafka·Redis 장애 대응·DUST 버그 수정)
 ⬜ Phase 4~5   — 관측 가능성 · 부하 테스트
 ```
 
@@ -444,17 +444,19 @@
 | 3-A-4 | ~~실패 시 보상 트랜잭션 구현~~ | 스킵 |
 | 3-A-5 | ~~Saga 흐름 통합 테스트~~ | 스킵 |
 | 3-A-6 | Outbox 폴링 스케줄러 완성 — FAILED 재시도(3회 제한) + DEAD 상태 전환 | [O] |
-| 3-A-7 | schema.sql — outbox_events 테이블 retry_count 컬럼 추가 | [ ] |
+| 3-A-7 | schema.sql — outbox_events 테이블 retry_count 컬럼 추가 | [O] |
+| 3-A-8 | DUST 수집 중단 버그 수정 — MeasureStationCacheService 6시간 자동 갱신 + 캐시 없을 시 API 스킵 | [O] |
+| 3-A-9 | DUST 수집 주기 5분 → 1시간 변경 (API quota 초과 방지) | [O] |
 
 ### 3-B. 장애 주입 테스트
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 3-B-1 | Notification Pod 강제 종료 → 자동 복구 확인 | [ ] |
-| 3-B-2 | Kafka 브로커 중단 → 메시지 유실 없음 확인 | [ ] |
-| 3-B-3 | Redis 장애 → Fallback 동작 확인 | [ ] |
-| 3-B-4 | 공공 API 응답 지연 → Circuit Breaker OPEN 확인 | [ ] |
-| 3-B-5 | Network Partition 시뮬레이션 | [ ] |
+| 3-B-1 | ~~Notification Pod 강제 종료 → 자동 복구 확인~~ | 스킵 |
+| 3-B-2 | Kafka 브로커 중단 → Outbox PENDING 이벤트 쌓임 + 재시작 후 PUBLISHED 전환 확인 | [O] |
+| 3-B-3 | Redis 장애 → 503 응답 + Rate Limiting onErrorResume + Lettuce 빠른 실패 설정 | [O] |
+| 3-B-4 | 공공 API quota 초과 → Circuit Breaker 미작동 버그 발견 및 근본 원인 수정 | [O] |
+| 3-B-5 | ~~Network Partition 시뮬레이션~~ | 스킵 |
 | 3-B-6 | 장애 상황별 복구 과정 문서화 | [ ] |
 
 ---
