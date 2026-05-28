@@ -434,14 +434,17 @@
 
 ### 3-A. Saga 패턴 구현
 
+> **스킵 결정:** @Transactional + Outbox 조합으로 분산 트랜잭션 원자성 이미 보장됨
+
 | # | 작업 | 완료 |
 |---|------|------|
-| 3-A-1 | 구독 등록 Saga 설계 (Choreography) | [ ] |
-| 3-A-2 | Subscription Service Saga 발행 구현 | [ ] |
-| 3-A-3 | Notification Service Saga 소비/응답 구현 | [ ] |
-| 3-A-4 | 실패 시 보상 트랜잭션 구현 | [ ] |
-| 3-A-5 | Saga 흐름 통합 테스트 | [ ] |
+| 3-A-1 | ~~구독 등록 Saga 설계 (Choreography)~~ | 스킵 |
+| 3-A-2 | ~~Subscription Service Saga 발행 구현~~ | 스킵 |
+| 3-A-3 | ~~Notification Service Saga 소비/응답 구현~~ | 스킵 |
+| 3-A-4 | ~~실패 시 보상 트랜잭션 구현~~ | 스킵 |
+| 3-A-5 | ~~Saga 흐름 통합 테스트~~ | 스킵 |
 | 3-A-6 | Outbox 폴링 스케줄러 완성 — FAILED 재시도(3회 제한) + DEAD 상태 전환 | [O] |
+| 3-A-7 | schema.sql — outbox_events 테이블 retry_count 컬럼 추가 | [ ] |
 
 ### 3-B. 장애 주입 테스트
 

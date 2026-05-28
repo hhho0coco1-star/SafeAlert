@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS outbox_events (
     payload         TEXT NOT NULL,
     status          VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     created_at      TIMESTAMP NOT NULL DEFAULT now(),
-    published_at    TIMESTAMP
+    published_at    TIMESTAMP,
+    retry_count     INT NOT NULL DEFAULT 0
 );
 
 CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_events (status, created_at);

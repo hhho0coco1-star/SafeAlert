@@ -10,34 +10,17 @@
 
 #### ~~3-1: Saga 패턴~~ — 스킵 (현재 @Transactional + Outbox 조합으로 원자성 이미 보장됨)
 
-#### ✅ 3-2: Outbox 폴링 스케줄러 완성
-- `OutboxEvent.java` — `retryCount` 필드 추가, `markFailed()` 3회 초과 시 DEAD 전환
-- `OutboxEventRepository.java` — FAILED 재시도 쿼리 추가
-- `OutboxScheduler.java` — PENDING + FAILED 합산 처리, retryCount 로그 추가
+#### 3-2: Outbox 폴링 스케줄러 완성 (schema.sql 1건 잔여)
+> Java 코드(OutboxEvent, Repository, Scheduler) 구현 완료. DB 스키마 누락만 남음.
+
+- [ ] `schema.sql` — `outbox_events` 테이블에 `retry_count INT NOT NULL DEFAULT 0` 컬럼 추가
 
 ---
 
-#### 3-2: Outbox 폴링 스케줄러 완성
-> 현재 상태: `OutboxScheduler.java` 구현됨. FAILED 상태 재시도 로직 미구현.
+#### 3-3: Circuit Breaker 임계값 검증 (수동 테스트만 잔여)
+> 3개 Client 모두 @CircuitBreaker + fallback(빈 리스트 반환 + 경고 로그) 구현 완료. application.properties 설정값 완료.
 
-- [ ] `OutboxScheduler.java`
-  - FAILED 이벤트 재시도 횟수(`retryCount`) 필드 추가
-  - 3회 이상 실패 시 `DEAD` 상태로 전환 (무한 재시도 방지)
-- [ ] `OutboxEvent.java` — `retryCount`, `status=DEAD` 필드 추가
-- [ ] DB 마이그레이션 — `outbox_events` 테이블에 `retry_count` 컬럼 추가
-
----
-
-#### 3-3: Circuit Breaker 임계값 검증
-> 현재 상태: weatherApi·dustApi·disasterApi 3개 CB 설정 완료 (slidingWindow=5, threshold=60%).
-
-- [ ] `application.properties` 임계값 재검토
-  - 현재 slidingWindowSize=5 → 실제 수집 주기(5분)에 맞게 적절한지 확인
-  - waitDurationInOpenState=30s → 공공 API 특성상 더 길게 조정 필요 여부 확인
-- [ ] `WeatherAlertClient`, `DustAlertClient`, `DisasterAlertClient`
-  - fallback 메서드가 실제로 빈 리스트를 반환하는지, 로그를 남기는지 확인
-  - CB OPEN 상태 전환 시 Slack/로그 알림 추가 (선택)
-- [ ] 수동 테스트: 공공 API URL을 잘못된 주소로 임시 변경 → CB OPEN 전환 확인
+- [ ] 수동 테스트: 공공 API URL을 잘못된 주소로 임시 변경 → CB OPEN 전환 확인 후 원복
 
 ---
 
