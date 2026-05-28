@@ -21,7 +21,7 @@
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
-🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 재설정 단위 테스트 미구현: 1-A-19)
+✅ Phase 1-A   — Auth Service 완료
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
 ✅ Phase 1-D   — React 프론트엔드 완료 (비밀번호 찾기/재설정 페이지 포함)
@@ -81,7 +81,7 @@
 | 1-A-16 | 프론트엔드 회원가입 이메일 인증 UI 및 API 연동 | [O] |
 | 1-A-17 | 비밀번호 재설정 이메일 발송 API (POST /api/auth/password/send-reset) | [O] |
 | 1-A-18 | 비밀번호 재설정 토큰 검증 + 새 비밀번호 저장 API (POST /api/auth/password/reset) | [O] |
-| 1-A-19 | 단위 테스트 (비밀번호 재설정 플로우) | [ ] |
+| 1-A-19 | 단위 테스트 (비밀번호 재설정 플로우) | [O] |
 | 1-A-20 | 비밀번호 변경 API (PUT /api/auth/me/password) — 현재 비밀번호 확인 후 새 비밀번호 저장, 소셜 로그인 계정 호출 불가 처리 | [O] |
 
 ### 1-B. API Gateway ✅

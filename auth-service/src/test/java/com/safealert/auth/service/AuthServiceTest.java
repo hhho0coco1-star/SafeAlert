@@ -51,13 +51,16 @@ class AuthServiceTest {
     void 회원가입_중복이메일_예외() {
         // given (준비)
         SignupRequest request = mock(SignupRequest.class);
-        when(request.getEmail()).thenReturn("test@example.com");
-        when(userRepository.existsByEmail("test@example.com")).thenReturn(true); // 중복상황 인위적으로 만듬
+when(request.getEmail()).thenReturn("test@example.com");
+// 이메일 인증 완료 상태로 설정 (signup 내부에서 Redis 먼저 확인)
+when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+when(valueOperations.get("email:verify:done:test@example.com")).thenReturn("true");
+when(userRepository.existsByEmail("test@example.com")).thenReturn(true);
 
         // when & then (실행 & 검증)
         assertThatThrownBy(() -> authService.signup(request))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이미 가입된 이메일입니다");
+                .hasMessage("이미 가입된 이메일입니다.");
     }
 
     @Test
@@ -98,4 +101,60 @@ class AuthServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이메일 또는 비밀번호가 올바르지 않습니다");
     }
+
+    @Test
+    void 비밀번호재설정_토큰만료_예외() {
+        // given - Redis 에 해당 토큰 없음
+        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        when(valueOperations.get("password:reset:expired-token")).thenReturn(null);
+
+        // when & then
+        assertThatThrownBy(() -> authService.resetPassword("expired-token", "newPw123!"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("토큰이 유효하지 않거나 만료되었습니다.");
+    }
+
+    @Test
+    void 비밀번호재설정_토큰재사용_예외() {
+    // given - 첫 번째 호출: 토큰 유효, 두 번째 호출: 토큰 없음(이미 삭제됨)
+    UUID userId = UUID.randomUUID();
+    when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+    when(valueOperations.get("password:reset:used-token"))
+            .thenReturn(userId.toString())  // 첫 번째 호출
+            .thenReturn(null);              // 두 번째 호출
+
+    User user = User.create("test@example.com", "hashedPassword", "닉네임");
+    when(userRepository.findById(any())).thenReturn(Optional.of(user));
+    when(passwordEncoder.encode(any())).thenReturn("newHashedPassword");
+
+    // when - 첫 번째는 성공
+    authService.resetPassword("used-token", "newPw123!");
+
+    // then - 두 번째는 예외
+    assertThatThrownBy(() -> authService.resetPassword("used-token", "newPw123!"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("토큰이 유효하지 않거나 만료되었습니다.");
+    }
+
+    @Test
+    void 비밀번호재설정_존재하지않는이메일_조용히무시() {
+    // given - 해당 이메일의 사용자 없음
+    when(userRepository.findByEmail("nobody@example.com")).thenReturn(Optional.empty());
+
+    // when & then - 예외 없이 정상 종료되어야 함
+    assertThatCode(() -> authService.sendPasswordReset("nobody@example.com"))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 비밀번호재설정_OAuth계정_조용히무시() {
+        // given - oauthProvider가 설정된 소셜 로그인 계정
+        User oauthUser = User.createOAuth("kakao@example.com", "카카오유저", "KAKAO", "kakao-id-123");
+        when(userRepository.findByEmail("kakao@example.com")).thenReturn(Optional.of(oauthUser));
+
+        // when & then - 예외 없이 정상 종료, 메일 미발송
+        assertThatCode(() -> authService.sendPasswordReset("kakao@example.com"))
+                .doesNotThrowAnyException();
+    }
+
 }
