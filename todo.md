@@ -8,15 +8,12 @@
 
 ### Phase 3 — 안정성 / 복원력
 
-#### 3-1: Saga 패턴 — 구독 생성 보상 트랜잭션
-> 현재 상태: `OutboxEvent`, `OutboxEventRepository`, `OutboxScheduler` 구현 완료.
-> SubscriptionService 내 구독 생성 로직에 Saga 보상 트랜잭션 미구현.
+#### ~~3-1: Saga 패턴~~ — 스킵 (현재 @Transactional + Outbox 조합으로 원자성 이미 보장됨)
 
-- [ ] `subscription-service/src/.../service/SubscriptionService.java`
-  - 구독 생성 흐름: ① DB 저장 → ② Outbox 이벤트 저장 → ③ Kafka 발행
-  - ②번 단계 실패 시 ①번 DB 저장 롤백되는지 `@Transactional` 범위 확인
-  - 실패 케이스별 보상 로직 추가 (예: 구독 삭제 이벤트 발행)
-- [ ] `SubscriptionServiceTest.java` — 구독 생성 실패 시 보상 트랜잭션 동작 검증
+#### ✅ 3-2: Outbox 폴링 스케줄러 완성
+- `OutboxEvent.java` — `retryCount` 필드 추가, `markFailed()` 3회 초과 시 DEAD 전환
+- `OutboxEventRepository.java` — FAILED 재시도 쿼리 추가
+- `OutboxScheduler.java` — PENDING + FAILED 합산 처리, retryCount 로그 추가
 
 ---
 
