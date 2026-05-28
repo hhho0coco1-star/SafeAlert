@@ -21,10 +21,10 @@
 
 ```
 ✅ Phase 0     — 인프라 구성 완료
-🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 찾기/재설정 API 미구현: 1-A-17~19)
+🔄 Phase 1-A   — Auth Service 진행 중 (비밀번호 재설정 단위 테스트 미구현: 1-A-19)
 ✅ Phase 1-B   — API Gateway 완료 (JWT 필터, Rate Limiting)
 ✅ Phase 1-C   — Subscription Service 완료
-🔄 Phase 1-D   — React 프론트엔드 진행 중 (비밀번호 찾기 페이지 미구현: 1-D-10~11)
+✅ Phase 1-D   — React 프론트엔드 완료 (비밀번호 찾기/재설정 페이지 포함)
 ✅ Phase 1-E   — OAuth2 소셜 로그인 완료 (Google, Kakao)
 ✅ Phase 1-H~P — 공공 API 파이프라인 버그 수정 + DUST 시군구 수집 확장 + WEATHER 지역코드 매핑 완료
 ✅ Phase 1-R   — 시/군/구 단위 구독 시스템 (계층 매칭) 완료
@@ -79,8 +79,8 @@
 | 1-A-14 | 이메일 인증 코드 확인 API (POST /api/auth/email/verify-code) | [O] |
 | 1-A-15 | signup() 이메일 인증 완료 여부 검증 추가 | [O] |
 | 1-A-16 | 프론트엔드 회원가입 이메일 인증 UI 및 API 연동 | [O] |
-| 1-A-17 | 비밀번호 재설정 이메일 발송 API (POST /api/auth/password/send-reset) | [ ] |
-| 1-A-18 | 비밀번호 재설정 토큰 검증 + 새 비밀번호 저장 API (POST /api/auth/password/reset) | [ ] |
+| 1-A-17 | 비밀번호 재설정 이메일 발송 API (POST /api/auth/password/send-reset) | [O] |
+| 1-A-18 | 비밀번호 재설정 토큰 검증 + 새 비밀번호 저장 API (POST /api/auth/password/reset) | [O] |
 | 1-A-19 | 단위 테스트 (비밀번호 재설정 플로우) | [ ] |
 | 1-A-20 | 비밀번호 변경 API (PUT /api/auth/me/password) — 현재 비밀번호 확인 후 새 비밀번호 저장, 소셜 로그인 계정 호출 불가 처리 | [O] |
 
@@ -119,8 +119,8 @@
 | 1-D-7 | 내 계정 페이지 `/profile` | [O] |
 | 1-D-8 | 관리자 대시보드 `/admin` | [O] |
 | 1-D-9 | K8s 배포 (Dockerfile + NGINX + K8s YAML) | [O] |
-| 1-D-10 | 비밀번호 찾기 페이지 `/find-password` (이메일 입력 → 재설정 메일 발송) | [ ] |
-| 1-D-11 | 비밀번호 재설정 페이지 `/reset-password` (URL 토큰 파라미터 → 새 비밀번호 입력) | [ ] |
+| 1-D-10 | 비밀번호 찾기 페이지 `/find-password` (이메일 입력 → 재설정 메일 발송) | [O] |
+| 1-D-11 | 비밀번호 재설정 페이지 `/reset-password` (URL 토큰 파라미터 → 새 비밀번호 입력) | [O] |
 
 > **버그 수정 이력:** 만료된 JWT 토큰이 로그인 요청에 포함되는 버그 수정 (axios 인터셉터 isAuthPath 체크 추가)
 
@@ -292,7 +292,7 @@
 | 1-Q-5 | 구독 설정 | `/subscriptions` | 2단계 드롭다운(시도→시군구), 추가·삭제, 저장, 토글 버튼 정상 | [O] |
 | 1-Q-6 | 알림 이력 | `/history` | 지역명 변환, content 미리보기, 카테고리 필터, 페이지네이션 | [O] |
 | 1-Q-7 | 내 계정 | `/profile` | 닉네임 수정, 회원 탈퇴 | [O] |
-| 1-Q-8 | 관리자 | `/admin` | 통계 카드, 최근 알림 목록, 수동 발송, 전체 회원 목록·페이지네이션·권한 관리·키워드 검색, 수동 알림 구독자 전달 | [O] |
+| 1-Q-8 | 관리자 | `/admin` | 통계 카드, 최근 알림 목록(지역코드→한글·메시지 미리보기·중복 제거·수신자 수 실집계), 수동 발송, 전체 회원 목록·페이지네이션·권한 관리·키워드 검색, 수동 알림 구독자 전달 | [O] |
 | 1-Q-9 | 실시간 테스트 | `/test` | 카테고리·지역 AND 필터, 전국 기본값, WebSocket 연결 | [O] |
 
 ---

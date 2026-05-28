@@ -7,31 +7,17 @@
 - **1-Q-4,5,6,9** — Dashboard·Subscriptions·History·TestPage UI 개선 완료
 - **1-Q-7** — Profile 소셜 로그인 계정 비밀번호 카드 비활성화 (oauthProvider 필드 추가)
 - **1-Q-8** — Admin 대시보드 전체 검증 완료 (통계 카드, 회원 목록·페이지네이션·권한 관리·키워드 검색, 수동 발송 구독자 전달)
+- **1-Q-8 개선** — 최근 발송 알림 UI 개선 (지역코드→한글 변환, 메시지 미리보기, 중복 제거, 수신자 수 실집계, 목록 스크롤)
 - **1-A-20** — 비밀번호 변경 API (PUT /api/auth/me/password) 구현 완료
 - **1-S-2,3,4,5,6,7,8** — 03_API_DB설계.md 실제 구현 기준 동기화 완료
+- **1-A-17** — POST /api/auth/password/send-reset 구현 완료 (소셜 로그인 계정 무시 처리 포함)
+- **1-A-18** — POST /api/auth/password/reset 구현 완료
+- **1-D-10** — /find-password 페이지 구현 완료
+- **1-D-11** — /reset-password 페이지 구현 완료
 
 ---
 
 ## 🔜 다음 작업 — 우선순위 순
-
-### 1-A-17~19 + 1-D-10~11: 비밀번호 찾기/재설정 미구현 항목
-
-**백엔드 (auth-service)**
-
-| # | 내용 | 파일 |
-|---|------|------|
-| 1-A-17 | `POST /api/auth/password/send-reset` — 이메일 입력 → UUID 토큰 생성 → Redis 저장(TTL 10분) → 재설정 링크 메일 발송 | `AuthController`, `AuthService` |
-| 1-A-18 | `POST /api/auth/password/reset` — 토큰 검증 → 새 비밀번호 bcrypt 해싱 → DB 저장 → Redis 토큰 삭제 | `AuthController`, `AuthService` |
-| 1-A-19 | 단위 테스트 — 토큰 만료, 존재하지 않는 이메일, 이미 사용된 토큰 케이스 | `AuthServiceTest` |
-
-**프론트엔드 (React)**
-
-| # | 내용 | 파일 |
-|---|------|------|
-| 1-D-10 | `/find-password` — 이메일 입력 폼 → send-reset API 호출 → 발송 완료 안내 | `FindPassword.jsx` |
-| 1-D-11 | `/reset-password?token=xxx` — URL 토큰 파라미터 읽기 → 새 비밀번호 입력 폼 → reset API 호출 → 로그인 페이지 이동 | `ResetPassword.jsx` |
-
----
 
 ### 1-S-1: 기획문서 잔여 업데이트
 

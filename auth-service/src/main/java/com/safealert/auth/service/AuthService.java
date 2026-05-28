@@ -24,6 +24,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Random;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,9 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RedisTemplate<String, String> redisTemplate;
     private final JavaMailSender mailSender;
+
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
 
     @Transactional // All or Nothing
     public User signup(SignupRequest request) {
@@ -193,5 +197,64 @@ public class AuthService {
         redisTemplate.delete("email:verify:code:" + email);
         redisTemplate.opsForValue().set(
             "email:verify:done:" + email, "true", 30, TimeUnit.MINUTES);
+    }
+
+    // 비밀번호 재설정 이메일 발송
+    public void sendPasswordReset(String email) {
+        userRepository.findByEmail(email).ifPresent(user -> {
+            // ifPresent : Optional 객체가 비어있지 않고 데이터(User)가
+            // 실제로 존재할 때만 내부 코드를 실행
+
+            // 소셜 로그인 계정은 비밀번호가 없으므로 재설정 불가 → 조용히 무시
+            if (user.getOauthProvider() != null) return;
+
+            String token = UUID.randomUUID().toString();
+            // randomUUID() 메서드는 무작위(Random) 숫자를 기반으로 하는 UUID 버전 4 객체를 생성
+
+            // redisTemplate : "Spring 애플리케이션에서 복잡한 연결 관리나 데이터 변환 신경 쓸 필요 없이, Java 코드로 
+            // Redis 데이터베이스를 쉽게 조작할 수 있도록 도와주는 스프링 전용 만능 도구(Helper)"
+            redisTemplate.opsForValue().set(
+                "password:reset:" + token, // key
+                user.getUserId().toString(), // value
+                10, TimeUnit.MINUTES // 만료시간, 시간단위
+            );
+
+            try {
+                MimeMessage message = mailSender.createMimeMessage();
+                // Spring의 JavaMailSender를 사용하여 첨부 파일이나 HTML 서식이 
+                // 포함된 복잡한 이메일을 보내기 위해 빈 메일 객체(MimeMessage)를 생성하는 코드
+                MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+                helper.setTo(email);
+                helper.setSubject("[SafeAlert] 비밀번호 재설정 안내");
+                String link = frontendUrl + "/reset-password?token=" + token;
+                helper.setText(
+                    "<p>아래 링크를 클릭하여 비밀번호를 재설정하세요. (10분 내 유효)</p>"
+                    + "<a href='" + link + "'>" + link + "</a>", true
+                );
+                mailSender.send(message);
+            } catch (Exception e) {
+                throw new RuntimeException("메일 발송에 실패했습니다.");
+            }
+
+        });
+    }
+
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+        // 1. Redis에서 토큰으로 userId 조회
+        String userIdStr = redisTemplate.opsForValue().get("password:reset:" + token);
+        if (userIdStr == null)
+            throw new IllegalArgumentException("토큰이 유효하지 않거나 만료되었습니다.");
+
+        // 2. userId 로 사용자 조회
+        UUID userId = UUID.fromString(userIdStr);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        // 3. 새 비밀번호 해싱 후 저장
+        user.updatePasswordHash(passwordEncoder.encode(newPassword));
+
+        // 4. 토큰 삭제 (재사용 방지)
+        redisTemplate.delete("password:reset:" + token);
     }
 }

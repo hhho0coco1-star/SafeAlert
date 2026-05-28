@@ -15,6 +15,8 @@ import Privacy from './pages/Privacy'
 import Navbar from './components/Navbar'
 import OAuthSuccess from './pages/OAuthSuccess'
 import TestPage from './pages/TestPage'
+import FindPassword from './pages/FindPassword'
+import ResetPassword from './pages/ResetPassword'
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<GuestRoute><Landing /></GuestRoute>} />
           <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+          <Route path="/find-password" element={<FindPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/subscriptions" element={<ProtectedRoute><Subscriptions /></ProtectedRoute>} />
           <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />

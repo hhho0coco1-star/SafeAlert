@@ -201,7 +201,8 @@ export default function Login() {
                                 </div>
                             </div>
 
-                            <a href="#" className="block text-right text-xs text-gray-400 hover:text-red-500 mb-4">비밀번호를 잊으셨나요?</a>
+                            <Link to="/find-password" className="block text-right text-xs text-gray-400 hover:text-red-500 mb-4">비밀번호를 잊으셨나요?</Link>
+
 
                             <button type="submit" disabled={loading}
                                 className="w-full py-2.5 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 disabled:opacity-60 mb-3">

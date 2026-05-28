@@ -110,4 +110,23 @@ public class AuthController {
         authService.verifyCode(request.getEmail(), request.getCode());
         return ResponseEntity.ok(ApiResponse.ok(null));
     }
+
+    // 비밀번호 재설정 메일 발송 - 이메일만 받아서 재설정 링크 메일 전송
+    @PostMapping("/password/send-reset")
+    public ResponseEntity<ApiResponse<Void>> sendPasswordReset(
+            @RequestBody Map<String, String> body) {
+        // body.get("email") : 요청 JSON 에서 "email" 키 값 꺼냄
+        authService.sendPasswordReset(body.get("email"));
+        return ResponseEntity.ok(ApiResponse.ok(null));
+    }
+    
+    // 비밀번호 재설정 실행 - 토큰 검증 후 새 비밀번호로 변경
+    @PostMapping("/password/reset")
+    public ResponseEntity<ApiResponse<Void>> resetPassword(
+            @RequestBody Map<String, String> body) {
+    // body.get("token") : 이메일 링크에서 넘어온 UUID 토큰
+    // body.get("newPassword") : 사용자가 입력한 새 비밀번호
+        authService.resetPassword(body.get("token"), body.get("newPassword"));
+        return ResponseEntity.ok(ApiResponse.ok(null));
+    }
 }
