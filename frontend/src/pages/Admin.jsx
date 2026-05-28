@@ -249,6 +249,7 @@ export default function Admin() {
             </div>
             <span className="text-[11px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">실시간</span>
           </div>
+          <div className="overflow-y-auto max-h-[460px]">
           {alerts.length === 0 ? (
             <div className="py-10 text-center text-gray-300 text-sm">발송 이력이 없습니다</div>
           ) : (
@@ -256,16 +257,20 @@ export default function Admin() {
               const cat = CAT_CONFIG[item.category] ?? CAT_CONFIG.CUSTOM
               return (
                 <div key={i} className="flex items-start gap-3 px-5 py-3.5 border-b border-gray-50 last:border-b-0 hover:bg-gray-50 transition-colors">
-                  <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${cat.dot}`} />
+                  <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${cat.dot}`} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                       <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${cat.cls}`}>{cat.label}</span>
                       <span className="text-[13px] font-medium text-gray-900 truncate">{item.title}</span>
                     </div>
+                    {item.content && (
+                      <p className="text-[12px] text-gray-600 truncate mb-1">{item.content}</p>
+                    )}
                     <div className="flex items-center gap-2 text-[11px] text-gray-400">
                       <span className="flex items-center gap-0.5">
                         <IconMapPin size={10} /> {item.region}
                       </span>
+                      <span>·</span>
                       <span>{timeAgo(item.createdAt)}</span>
                     </div>
                   </div>
@@ -278,13 +283,14 @@ export default function Admin() {
               )
             })
           )}
+          </div>
         </div>
 
         {/* 최근 가입 회원 */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
             <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
-              <IconUsers size={15} className="text-gray-400" />최근 가입 회원
+              <IconUsers size={15} className="text-gray-400" />가입 회원
             </div>
             <div className="flex items-center gap-2">
               {totalMembers !== null && (

@@ -91,9 +91,15 @@ public class NotificationService {
     @Transactional(readOnly = true)
     public List<AdminAlertResponse> getAdminAlerts(String accessToken) {
         validateAdmin(accessToken);
-        return repository.findTop7ByOrderByCreatedAtDesc()
+        return repository.findTop7ByUserIdIsNullOrderByCreatedAtDesc()
                 .stream()
-                .map(n -> new AdminAlertResponse(n, 1L))
+                .map(n -> {
+                    long count = repository.countByUserIdIsNotNullAndTitleAndCreatedAtBetween(
+                            n.getTitle(),
+                            n.getCreatedAt().minusSeconds(5),
+                            n.getCreatedAt().plusSeconds(30));
+                    return new AdminAlertResponse(n, count);
+                })
                 .toList();
     }
 

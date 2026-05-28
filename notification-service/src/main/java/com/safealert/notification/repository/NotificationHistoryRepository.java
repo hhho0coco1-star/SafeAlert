@@ -37,7 +37,10 @@ public interface NotificationHistoryRepository extends JpaRepository<Notificatio
 
     long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 
-    List<NotificationHistory> findTop7ByOrderByCreatedAtDesc();
+    List<NotificationHistory> findTop7ByUserIdIsNullOrderByCreatedAtDesc();
+
+    long countByUserIdIsNotNullAndTitleAndCreatedAtBetween(
+            String title, LocalDateTime start, LocalDateTime end);
 
     long countByUserIdAndCreatedAtBetween(UUID userId, LocalDateTime start, LocalDateTime end);
 
