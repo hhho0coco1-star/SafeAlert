@@ -52,6 +52,10 @@ dependencyManagement {
     }
 }
 
+bootRun {
+    jvmArgs = ["-javaagent:${rootProject.projectDir}/../opentelemetry-javaagent.jar"]
+}
+
 tasks.named('test') {
     useJUnitPlatform()
     jvmArgs '-XX:+EnableDynamicAgentLoading', '-Xshare:off'

@@ -16,9 +16,6 @@
 ---
 
 #### 4-3: Jaeger 분산 트레이싱
-- [ ] `docker-compose.yml` — Jaeger all-in-one 컨테이너 추가 (16686 포트)
-- [ ] 각 서비스 `build.gradle` — OpenTelemetry 의존성 추가
-- [ ] 각 서비스 실행 시 `-javaagent:opentelemetry-agent.jar` 옵션 추가
 - [ ] Jaeger UI(`http://localhost:16686`)에서 auth → subscription 흐름 trace 확인
 
 ---

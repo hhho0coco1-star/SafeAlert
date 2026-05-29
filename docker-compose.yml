@@ -165,6 +165,14 @@ services:
       redis:
         condition: service_healthy
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+
   prometheus:
     image: prom/prometheus:latest
     volumes:

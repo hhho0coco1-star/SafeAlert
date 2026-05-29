@@ -33,6 +33,10 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
+bootRun {
+    jvmArgs = ["-javaagent:${rootProject.projectDir}/../opentelemetry-javaagent.jar"]
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

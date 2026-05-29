@@ -54,6 +54,10 @@ dependencies {
     testImplementation 'net.bytebuddy:byte-buddy-agent:1.15.10'
 }
 
+bootRun {
+    jvmArgs = ["-javaagent:${rootProject.projectDir}/../opentelemetry-javaagent.jar"]
+}
+
 tasks.named('test') {
     useJUnitPlatform()
     jvmArgs '-XX:+EnableDynamicAgentLoading', '-Xshare:off'

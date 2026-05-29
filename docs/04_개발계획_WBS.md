@@ -482,10 +482,11 @@
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 4-B-1 | Jaeger Helm 배포 | [ ] |
-| 4-B-2 | 각 서비스 OpenTelemetry 설정 | [ ] |
+| 4-B-1 | docker-compose.yml — Jaeger all-in-one 컨테이너 추가 (16686, 4317 포트) | [O] |
+| 4-B-2 | 각 서비스 build.gradle — bootRun javaagent 설정 + application.yml otel 설정 | [O] |
 | 4-B-3 | Kafka 메시지에 TraceId 전파 | [ ] |
 | 4-B-4 | Jaeger UI에서 E2E 추적 확인 | [ ] |
+| 4-B-5 | K8s 전환 대비 — otel.exporter.otlp.endpoint, prometheus.yml scrape 주소를 환경변수로 교체 (6개 서비스) | [ ] |
 
 ### 4-C. ELK Stack
 
