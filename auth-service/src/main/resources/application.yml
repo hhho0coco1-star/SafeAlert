@@ -75,3 +75,13 @@ logging:
     com.safealert: DEBUG
   file:
     name: c:/study/SafeAlert/auth-service/logs/auth.log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+

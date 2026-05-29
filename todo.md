@@ -9,14 +9,11 @@
 ### Phase 4 — 관측 가능성
 
 #### 4-1 ~ 4-2: Prometheus + Grafana
-> `docker-compose.yml`에 Prometheus, Grafana 컨테이너 없음. 각 서비스에 actuator 미노출.
+> 인프라 완료 (docker-compose + prometheus.yml + 6개 서비스 actuator 모두 설정됨). 대시보드 구성만 남음.
 
-- [ ] 각 서비스 `build.gradle` — `micrometer-registry-prometheus` 의존성 추가 (6개 서비스)
-- [ ] 각 서비스 `application.yml` — actuator prometheus 엔드포인트 노출 설정 추가
-- [ ] `prometheus.yml` 파일 생성 — 6개 서비스 scrape_config 작성
-- [ ] `docker-compose.yml` — Prometheus(9090), Grafana(3000) 컨테이너 추가
-- [ ] Grafana 접속 후 JVM 대시보드(ID: 4701) import
+- [ ] Grafana 접속(`http://localhost:3000`) → JVM 대시보드(ID: 4701) import
 - [ ] Kafka consumer lag 패널 추가
+- [ ] 서비스별 HTTP 메트릭 대시보드 구성
 
 ---
 

@@ -10,7 +10,7 @@
 | Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화, DUST 전국 수집 범위 확장, 지역 코드 불일치 + Recent API 버그 수정, DUST 시/군/구 단위 수집 확장, WEATHER 지역 코드 매핑, 시/군/구 단위 구독 시스템(계층 매칭), 프론트엔드 페이지 전체 검증, DISASTER 지역 코드 매핑, 비밀번호 찾기/재설정 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ✅ 완료 |
-| Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | ⬜ 대기 |
+| Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | 🔄 진행 중 |
 | Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | ⬜ 대기 |
 
 **총 예상 기간: 12~14주**
@@ -35,10 +35,11 @@
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ✅ Phase 3     — 안정성 · 복원력 완료 (Outbox·Kafka·Redis 장애 대응·DUST 버그 수정)
-⬜ Phase 4~5   — 관측 가능성 · 부하 테스트
+🔄 Phase 4     — 관측 가능성 진행 중 (Prometheus+Grafana 인프라 완료, 대시보드·Jaeger·ELK 잔여)
+⬜ Phase 5     — 부하 테스트 및 마무리
 ```
 
-**현재 작업:** Phase 1-S — 기획문서 설계서 동기화
+**현재 작업:** Phase 4-A — Grafana 대시보드 구성
 
 ---
 
@@ -465,15 +466,17 @@
 
 ### 4-A. Prometheus + Grafana
 
+> 구현 방식: docker-compose (K8s Helm 아님)
+
 | # | 작업 | 완료 |
 |---|------|------|
-| 4-A-1 | Prometheus Operator Helm 배포 | [ ] |
-| 4-A-2 | 각 서비스 Micrometer + Actuator 설정 | [ ] |
-| 4-A-3 | ServiceMonitor 리소스 생성 | [ ] |
-| 4-A-4 | Grafana 배포 및 Prometheus 데이터소스 연결 | [ ] |
-| 4-A-5 | 서비스별 HTTP 메트릭 대시보드 구성 | [ ] |
-| 4-A-6 | Kafka Consumer Lag 대시보드 구성 | [ ] |
-| 4-A-7 | JVM 메트릭 대시보드 구성 | [ ] |
+| 4-A-1 | docker-compose.yml — Prometheus(9090) 컨테이너 추가 | [O] |
+| 4-A-2 | 6개 서비스 build.gradle — micrometer-registry-prometheus + actuator 의존성 추가 | [O] |
+| 4-A-3 | prometheus.yml 생성 — 6개 서비스 scrape_config 작성 | [O] |
+| 4-A-4 | docker-compose.yml — Grafana(3000) 컨테이너 추가 | [O] |
+| 4-A-5 | Grafana 접속 → JVM 대시보드(ID: 4701) import | [ ] |
+| 4-A-6 | Kafka Consumer Lag 패널 추가 | [ ] |
+| 4-A-7 | 서비스별 HTTP 메트릭 대시보드 구성 | [ ] |
 
 ### 4-B. Jaeger 분산 트레이싱
 
