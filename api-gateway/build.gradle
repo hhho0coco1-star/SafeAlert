@@ -53,7 +53,12 @@ dependencyManagement {
 }
 
 bootRun {
-    jvmArgs = ["-javaagent:${rootProject.projectDir}/../opentelemetry-javaagent.jar"]
+    jvmArgs = [
+        "-javaagent:${rootProject.projectDir}/../opentelemetry-javaagent.jar",
+        "-Dotel.exporter.otlp.endpoint=http://localhost:4318",
+        "-Dotel.exporter.otlp.protocol=http/protobuf",
+        "-Dotel.service.name=api-gateway"
+    ]
 }
 
 tasks.named('test') {

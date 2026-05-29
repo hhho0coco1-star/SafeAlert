@@ -15,8 +15,7 @@
 
 ---
 
-#### 4-3: Jaeger 분산 트레이싱
-- [ ] Jaeger UI(`http://localhost:16686`)에서 auth → subscription 흐름 trace 확인
+#### ~~4-3: Jaeger 분산 트레이싱~~ ✅ 완료
 
 ---
 
