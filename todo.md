@@ -9,10 +9,8 @@
 ### Phase 4 — 관측 가능성
 
 #### 4-1 ~ 4-2: Prometheus + Grafana
-> 인프라 완료 (docker-compose + prometheus.yml + 6개 서비스 actuator 모두 설정됨). 대시보드 구성만 남음.
+> Prometheus + Grafana 구성 완료. JVM 대시보드 + Kafka Consumer Lag 패널 운영 중.
 
-- [ ] Grafana 접속(`http://localhost:3000`) → JVM 대시보드(ID: 4701) import
-- [ ] Kafka consumer lag 패널 추가
 - [ ] 서비스별 HTTP 메트릭 대시보드 구성
 
 ---

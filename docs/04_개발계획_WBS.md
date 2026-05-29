@@ -462,7 +462,7 @@
 
 ---
 
-## Phase 4 — 관측 가능성 ⬜
+## Phase 4 — 관측 가능성 🔄
 
 ### 4-A. Prometheus + Grafana
 
@@ -474,8 +474,8 @@
 | 4-A-2 | 6개 서비스 build.gradle — micrometer-registry-prometheus + actuator 의존성 추가 | [O] |
 | 4-A-3 | prometheus.yml 생성 — 6개 서비스 scrape_config 작성 | [O] |
 | 4-A-4 | docker-compose.yml — Grafana(3000) 컨테이너 추가 | [O] |
-| 4-A-5 | Grafana 접속 → JVM 대시보드(ID: 4701) import | [ ] |
-| 4-A-6 | Kafka Consumer Lag 패널 추가 | [ ] |
+| 4-A-5 | Grafana 접속 → JVM 대시보드(ID: 4701) import | [O] |
+| 4-A-6 | Kafka Consumer Lag 패널 추가 | [O] |
 | 4-A-7 | 서비스별 HTTP 메트릭 대시보드 구성 | [ ] |
 
 ### 4-B. Jaeger 분산 트레이싱
