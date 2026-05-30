@@ -33,6 +33,10 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: secret
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger.safealert-monitor.svc.cluster.local:4318"
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: "http/protobuf"
           resources:
             requests:
               cpu: "300m"

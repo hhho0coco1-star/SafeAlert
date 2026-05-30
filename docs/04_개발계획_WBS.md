@@ -511,8 +511,8 @@
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 4-D-1 | Prometheus + Grafana → safealert-monitor 네임스페이스 Helm 배포 (kube-prometheus-stack) | [ ] |
-| 4-D-2 | Jaeger → safealert-monitor Helm 배포 + otel.exporter.otlp.endpoint 환경변수 적용 (6개 서비스) | [ ] |
+| 4-D-1 | Prometheus + Grafana → safealert-monitor 네임스페이스 Helm 배포 (kube-prometheus-stack) | [O] |
+| 4-D-2 | Jaeger → safealert-monitor Helm 배포 + otel.exporter.otlp.endpoint 환경변수 적용 (6개 서비스) | [O] |
 | 4-D-3 | ELK → safealert-monitor Helm 배포 + logstash TCP 주소 환경변수 적용 (6개 서비스 logback-spring.xml) | [ ] |
 | 4-D-4 | docker-compose.yml 모니터링 스택 제거 + 전체 동작 검증 (Grafana 대시보드 + Jaeger UI + Kibana 접속 확인) | [ ] |
 
