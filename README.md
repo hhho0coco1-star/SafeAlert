@@ -193,7 +193,7 @@ cd frontend && npm run dev
 | Phase 1 | Auth·Subscription·Notification·Alert 서비스, React 프론트엔드, OAuth2, 이메일 인증, 공공 API 파이프라인, 시/군/구 구독 시스템 | ✅ 완료 |
 | Phase 2 | 이벤트 파이프라인 (Alert Collector → Kafka → Processor → Notification → WebSocket) | ✅ 완료 |
 | Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅ 완료 |
-| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 완료) | 🔄 진행 중 |
+| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | 🔄 진행 중 |
 | Phase 5 | 부하 테스트 (k6) 및 문서 마무리 | ⬜ 예정 |
 
 ---
@@ -229,9 +229,11 @@ SafeAlert/
 ├── alert-collector-service/    # 공공 API 수집 (기상청·행안부·환경부)
 ├── alert-processor-service/    # 알림 처리 (분류·중복 필터·MongoDB)
 ├── frontend/                   # React 18 + Vite + Tailwind CSS
+├── k8s/
+│   └── monitoring/             # ELK K8s YAML (Elasticsearch·Logstash·Kibana)
 ├── prometheus.yml              # Prometheus 스크레이프 설정 (6개 서비스)
 ├── logstash.conf               # Logstash 파이프라인 (TCP→Elasticsearch)
-├── docker-compose.yml          # 로컬 개발 인프라 (DB·Kafka·ELK·모니터링)
+├── docker-compose.yml          # 로컬 개발 인프라 (DB·Kafka·ELK)
 ├── opentelemetry-javaagent.jar # OpenTelemetry 자동 계측 에이전트
 └── docs/
     ├── 01_기획서.md

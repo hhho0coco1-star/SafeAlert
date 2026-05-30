@@ -35,7 +35,7 @@
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ✅ Phase 3     — 안정성 · 복원력 완료 (Outbox·Kafka·Redis 장애 대응·DUST 버그 수정)
-🔄 Phase 4     — 관측 가능성 진행 중 (Prometheus+Grafana·Jaeger·ELK 완료, K8s 이전 잔여)
+🔄 Phase 4     — 관측 가능성 진행 중 (Prometheus+Grafana·Jaeger·ELK 완료, K8s 이전 4-D-3 완료 / 4-D-4 잔여)
 ⬜ Phase 5     — 부하 테스트 및 마무리
 ```
 
@@ -513,7 +513,7 @@
 |---|------|------|
 | 4-D-1 | Prometheus + Grafana → safealert-monitor 네임스페이스 Helm 배포 (kube-prometheus-stack) | [O] |
 | 4-D-2 | Jaeger → safealert-monitor Helm 배포 + otel.exporter.otlp.endpoint 환경변수 적용 (6개 서비스) | [O] |
-| 4-D-3 | ELK → safealert-monitor Helm 배포 + logstash TCP 주소 환경변수 적용 (6개 서비스 logback-spring.xml) | [ ] |
+| 4-D-3 | ELK → safealert-monitor 경량 YAML 배포 (k8s/monitoring/ Elasticsearch·Logstash·Kibana Deployment+Service+ConfigMap) + logback-spring.xml LOGSTASH_HOST 환경변수 적용 (6개 서비스) | [O] |
 | 4-D-4 | docker-compose.yml 모니터링 스택 제거 + 전체 동작 검증 (Grafana 대시보드 + Jaeger UI + Kibana 접속 확인) | [ ] |
 
 ---

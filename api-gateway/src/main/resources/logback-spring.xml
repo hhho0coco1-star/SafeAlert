@@ -11,7 +11,7 @@
     <!-- Logstash TCP 전송 -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!-- Logstash 컨테이너 주소 (로컬 실행 시 localhost) -->
-        <destination>localhost:5044</destination>
+        <destination>${LOGSTASH_HOST:-localhost}:5044</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <!-- 서비스 이름 필드 추가 → Logstash에서 인덱스 이름으로 사용 -->
             <customFields>{"service_name":"api-gateway"}</customFields>

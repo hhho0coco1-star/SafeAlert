@@ -28,7 +28,7 @@
 > HPA 스케일 아웃을 Grafana로 실시간 관측할 수 있다. (기획서 safealert-monitor 네임스페이스 완성 목표)
 - [x] Prometheus + Grafana → `safealert-monitor` 네임스페이스 Helm 배포
 - [x] Jaeger → `safealert-monitor` Helm 배포 + otel endpoint 환경변수 적용 (6개 서비스)
-- [ ] ELK → `safealert-monitor` Helm 배포 + logstash TCP 주소 환경변수 적용 (6개 서비스 `logback-spring.xml`)
+- [x] ELK → `safealert-monitor` 경량 YAML 배포 + LOGSTASH_HOST 환경변수 적용 (6개 서비스 `logback-spring.xml`)
 - [ ] `docker-compose.yml` 모니터링 스택 제거 + 전체 동작 검증
 
 ---
