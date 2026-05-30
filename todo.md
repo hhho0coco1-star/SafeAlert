@@ -1,4 +1,4 @@
-# SafeAlert Todo (2026-05-29 기준)
+# SafeAlert Todo (2026-05-30 기준)
 
 ---
 
@@ -19,13 +19,7 @@
 
 ---
 
-#### 4-4: ELK 스택 로그 수집
-- [x] `docker-compose.yml` — Elasticsearch(9200), Logstash(5044), Kibana(5601) 컨테이너 추가
-- [x] `logstash.conf` 작성
-- [x] 6개 서비스 `build.gradle` — logstash-logback-encoder:7.4 의존성 추가
-- [x] 6개 서비스 `logback-spring.xml` — Logstash TCP appender + service_name 추가
-- [ ] ELK 컨테이너 실행 + 서비스 재시작 + 로그 전송 확인
-- [ ] Kibana에서 서비스별 로그 인덱스 패턴 생성 및 검색 확인
+#### ~~4-4: ELK 스택 로그 수집~~ ✅ 완료
 
 ---
 

@@ -35,7 +35,7 @@
 ✅ Phase 2-B   — Alert Processor Service 완료 (Kafka Consumer + MongoDB + Kafka Producer + K8s Replica 3)
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ✅ Phase 3     — 안정성 · 복원력 완료 (Outbox·Kafka·Redis 장애 대응·DUST 버그 수정)
-🔄 Phase 4     — 관측 가능성 진행 중 (Prometheus+Grafana 인프라 완료, 대시보드·Jaeger·ELK 잔여)
+🔄 Phase 4     — 관측 가능성 진행 중 (Prometheus+Grafana·Jaeger·ELK 완료, K8s 이전 잔여)
 ⬜ Phase 5     — 부하 테스트 및 마무리
 ```
 
@@ -498,8 +498,8 @@
 | 4-C-2 | logstash.conf 작성 — TCP 5044 수신 → safealert-{서비스명}-{날짜} 인덱스로 Elasticsearch 저장 | [O] |
 | 4-C-3 | 6개 서비스 build.gradle — logstash-logback-encoder:7.4 의존성 추가 | [O] |
 | 4-C-4 | 6개 서비스 logback-spring.xml — CONSOLE + Logstash TCP appender + service_name 필드 추가 | [O] |
-| 4-C-5 | ELK 컨테이너 실행 + 서비스 재시작 + Logstash 로그 수신 확인 | [ ] |
-| 4-C-6 | Kibana 인덱스 패턴 생성 + 서비스별 로그 검색 확인 | [ ] |
+| 4-C-5 | ELK 컨테이너 실행 + 서비스 재시작 + Logstash 로그 수신 확인 | [O] |
+| 4-C-6 | Kibana 인덱스 패턴 생성 + 서비스별 로그 검색 확인 | [O] |
 
 ### 4-D. 관측 가능성 스택 K8s 이전
 
