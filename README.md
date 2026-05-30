@@ -2,13 +2,17 @@
 
 > 재난·기상 알림 구독 서비스 — MSA + Kafka + Kubernetes 기반 프로젝트
 
-![Java](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.5-green?style=flat-square&logo=springboot)
+![Java](https://img.shields.io/badge/Java-17~24-orange?style=flat-square&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3~3.5-green?style=flat-square&logo=springboot)
 ![Kafka](https://img.shields.io/badge/Kafka-KRaft-black?style=flat-square&logo=apachekafka)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-minikube-blue?style=flat-square&logo=kubernetes)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=flat-square&logo=postgresql)
 ![Redis](https://img.shields.io/badge/Redis-7-red?style=flat-square&logo=redis)
+![Prometheus](https://img.shields.io/badge/Prometheus-latest-E6522C?style=flat-square&logo=prometheus)
+![Grafana](https://img.shields.io/badge/Grafana-latest-F46800?style=flat-square&logo=grafana)
+![Jaeger](https://img.shields.io/badge/Jaeger-OpenTelemetry-60D0E4?style=flat-square)
+![Elasticsearch](https://img.shields.io/badge/Elasticsearch-8.13-005571?style=flat-square&logo=elasticsearch)
 
 ---
 
@@ -24,12 +28,15 @@
 
 ## 주요 기능
 
-- **회원 인증**: JWT Access/Refresh Token 발급, Redis 기반 세션 관리
-- **구독 설정**: 지역(시/도) 및 카테고리(기상·지진·미세먼지·재난) 구독 관리
-- **실시간 알림**: WebSocket(STOMP)으로 구독 지역의 재난 알림 실시간 수신
-- **알림 이력**: 수신한 알림 목록 조회 및 필터링
-- **관리자 기능**: 수동 알림 발송, 통계 대시보드
+- **회원 인증**: JWT Access/Refresh Token, Redis 세션, Google/Kakao OAuth2 소셜 로그인
+- **이메일 인증**: 회원가입 이메일 인증 코드, 비밀번호 찾기/재설정
+- **구독 설정**: 시/군/구 단위 지역 구독 (최대 10개), 카테고리(기상·재난·미세먼지) 구독
+- **실시간 알림**: WebSocket(STOMP)으로 구독 지역 재난 알림 5초 이내 수신
+- **공공 API 수집**: 기상청·행정안전부·환경부 API 1시간 주기 자동 수집 + Circuit Breaker
+- **알림 이력**: 수신한 알림 목록 조회, 지역·카테고리 필터링
+- **관리자 기능**: 수동 알림 발송, 회원 관리, 통계 대시보드
 - **API Gateway**: JWT 인증, Rate Limiting(분당 60건/IP), 라우팅
+- **관측 가능성**: Prometheus·Grafana(메트릭), Jaeger(분산 트레이싱), ELK(로그 수집)
 
 ---
 
@@ -96,12 +103,12 @@ graph TB
 | 서비스 | 포트 | 역할 | 기술 |
 |--------|------|------|------|
 | **API Gateway** | 8080 | JWT 인증, Rate Limiting, 라우팅 | Spring Cloud Gateway, WebFlux |
-| **Auth Service** | 8081 | 회원가입, 로그인, JWT 발급 | Spring Boot, PostgreSQL, Redis |
-| **Subscription Service** | 8085 | 지역/카테고리 구독 관리, Outbox 이벤트 발행 | Spring Boot, PostgreSQL, Kafka |
-| **Notification Service** | 8084 | 알림 수신, WebSocket Push, 이력 저장 | Spring Boot, WebSocket, Kafka |
-| **Alert Collector** | — | 공공 API 주기적 수집, Kafka 발행 | Spring Boot, Scheduler |
-| **Alert Processor** | — | 지역 매핑, 중복 필터, MongoDB 저장 | Spring Boot, Kafka, MongoDB |
-| **React Frontend** | 3000 | UI, 실시간 알림 수신 | React 18, Vite, Tailwind CSS |
+| **Auth Service** | 8081 | 회원가입, 로그인, JWT 발급, OAuth2 소셜 로그인, 이메일 인증 | Spring Boot, PostgreSQL, Redis |
+| **Subscription Service** | 8085 | 시/군/구 단위 지역 구독, Outbox 이벤트 발행 | Spring Boot, PostgreSQL, Kafka |
+| **Notification Service** | 8083 | Kafka 소비, WebSocket Push, 알림 이력 저장 | Spring Boot, WebSocket, Kafka, Redis |
+| **Alert Collector** | 8086 | 공공 API 3종 1시간 주기 수집, Circuit Breaker | Spring Boot, Resilience4j, Kafka |
+| **Alert Processor** | 8087 | 지역 분류, 중복 필터, MongoDB 저장 (Replica 3) | Spring Boot, Kafka, MongoDB |
+| **React Frontend** | 5173 | UI, 실시간 알림 수신, 관리자 대시보드 | React 18, Vite, Tailwind CSS |
 
 ---
 
@@ -125,52 +132,43 @@ DB 조회 없이 O(1) 시간으로 처리합니다.
 
 ### 사전 요구사항
 - Docker Desktop
-- minikube
-- kubectl
-- Java 17
+- Java 17+
 - Node.js 18+
 
-### 1. 인프라 실행 (K8s)
+### 1. 인프라 + 모니터링 스택 실행
 
 ```bash
-minikube start
-kubectl apply -f infra/k8s/
-kubectl get pods -n safealert-infra  # 모든 Pod Running 확인
+docker compose up -d postgresql redis kafka mongodb elasticsearch logstash kibana
 ```
 
-### 2. DB 스키마 적용
+### 2. 백엔드 서비스 실행 (서비스별 별도 터미널)
 
 ```bash
-# PostgreSQL auth_db
-kubectl exec -n safealert-infra deployment/postgresql -- \
-  psql -U safealert -d auth_db -f /sql/auth-schema.sql
-
-# PostgreSQL subscription_db
-kubectl exec -n safealert-infra deployment/postgresql -- \
-  psql -U safealert -d subscription_db -f /sql/subscription-schema.sql
-```
-
-### 3. 백엔드 서비스 실행
-
-```bash
-# Auth Service
-cd auth-service && ./gradlew bootRun
-
-# API Gateway
 cd api-gateway && ./gradlew bootRun
-
-# Subscription Service
+cd auth-service && ./gradlew bootRun --args='--spring.profiles.active=local'
+cd notification-service && ./gradlew bootRun
 cd subscription-service && ./gradlew bootRun
+cd alert-collector-service && ./gradlew bootRun
+cd alert-processor-service && ./gradlew bootRun
 ```
 
-### 4. 프론트엔드 실행
+### 3. 프론트엔드 실행
 
 ```bash
-cd frontend
-npm install
-npm run dev
-# http://localhost:3000 접속
+cd frontend && npm run dev
+# http://localhost:5173 접속
 ```
+
+### 접속 주소 목록
+
+| 서비스 | 주소 |
+|--------|------|
+| 프론트엔드 | http://localhost:5173 |
+| API Gateway | http://localhost:8080 |
+| Grafana (admin/admin) | http://localhost:3000 |
+| Prometheus | http://localhost:9090 |
+| Jaeger | http://localhost:16686 |
+| Kibana | http://localhost:5601 |
 
 ---
 
@@ -191,16 +189,12 @@ npm run dev
 
 | Phase | 내용 | 상태 |
 |-------|------|------|
-| Phase 0 | K8s 인프라 구성 (Kafka, Redis, PostgreSQL, MongoDB) | ✅ 완료 |
-| Phase 1-A | Auth Service (JWT, Redis, PostgreSQL) | ✅ 완료 |
-| Phase 1-B | API Gateway (JWT 필터, Rate Limiting) | ✅ 완료 |
-| Phase 1-C | Subscription Service (구독 관리, Outbox, Kafka) | ✅ 완료 |
-| Phase 1-D | React 프론트엔드 | 🚧 진행 중 |
-| Phase 1-E | OAuth2 간편로그인 (Google, Kakao) | ⬜ 예정 |
-| Phase 2 | 이벤트 파이프라인 (Alert Collector, Processor, Notification) | ⬜ 예정 |
-| Phase 3 | 안정성 (Circuit Breaker, Saga 패턴, 장애 테스트) | ⬜ 예정 |
-| Phase 4 | 관측 가능성 (Prometheus, Grafana, Jaeger, ELK) | ⬜ 예정 |
-| Phase 5 | 부하 테스트 및 문서 마무리 | ⬜ 예정 |
+| Phase 0 | Docker + K8s 인프라 구성 (Kafka, Redis, PostgreSQL, MongoDB) | ✅ 완료 |
+| Phase 1 | Auth·Subscription·Notification·Alert 서비스, React 프론트엔드, OAuth2, 이메일 인증, 공공 API 파이프라인, 시/군/구 구독 시스템 | ✅ 완료 |
+| Phase 2 | 이벤트 파이프라인 (Alert Collector → Kafka → Processor → Notification → WebSocket) | ✅ 완료 |
+| Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅ 완료 |
+| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 완료) | 🔄 진행 중 |
+| Phase 5 | 부하 테스트 (k6) 및 문서 마무리 | ⬜ 예정 |
 
 ---
 
@@ -228,14 +222,21 @@ npm run dev
 
 ```
 SafeAlert/
-├── api-gateway/          # Spring Cloud Gateway
-├── auth-service/         # 인증 서비스
-├── subscription-service/ # 구독 서비스
-├── frontend/             # React 프론트엔드
-├── docs/
-│   ├── 01_기획서.md
-│   ├── 02_시스템아키텍처.md
-│   ├── 03_API_DB설계.md
-│   └── 04_개발계획_WBS.md
-└── README.md
+├── api-gateway/                # Spring Cloud Gateway (JWT·Rate Limit)
+├── auth-service/               # 인증 서비스 (JWT·OAuth2·이메일 인증)
+├── subscription-service/       # 구독 서비스 (시/군/구 단위·Outbox)
+├── notification-service/       # 알림 서비스 (WebSocket·Kafka·Redis)
+├── alert-collector-service/    # 공공 API 수집 (기상청·행안부·환경부)
+├── alert-processor-service/    # 알림 처리 (분류·중복 필터·MongoDB)
+├── frontend/                   # React 18 + Vite + Tailwind CSS
+├── prometheus.yml              # Prometheus 스크레이프 설정 (6개 서비스)
+├── logstash.conf               # Logstash 파이프라인 (TCP→Elasticsearch)
+├── docker-compose.yml          # 로컬 개발 인프라 (DB·Kafka·ELK·모니터링)
+├── opentelemetry-javaagent.jar # OpenTelemetry 자동 계측 에이전트
+└── docs/
+    ├── 01_기획서.md
+    ├── 02_시스템아키텍처.md
+    ├── 03_API_DB설계.md
+    ├── 04_개발계획_WBS.md
+    └── 05_개발환경.md
 ```

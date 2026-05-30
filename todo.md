@@ -20,9 +20,22 @@
 ---
 
 #### 4-4: ELK 스택 로그 수집
-- [ ] `docker-compose.yml` — Elasticsearch(9200), Logstash(5044), Kibana(5601) 컨테이너 추가
-- [ ] 각 서비스 `logback-spring.xml` — Logstash TCP appender 추가
+- [x] `docker-compose.yml` — Elasticsearch(9200), Logstash(5044), Kibana(5601) 컨테이너 추가
+- [x] `logstash.conf` 작성
+- [x] 6개 서비스 `build.gradle` — logstash-logback-encoder:7.4 의존성 추가
+- [x] 6개 서비스 `logback-spring.xml` — Logstash TCP appender + service_name 추가
+- [ ] ELK 컨테이너 실행 + 서비스 재시작 + 로그 전송 확인
 - [ ] Kibana에서 서비스별 로그 인덱스 패턴 생성 및 검색 확인
+
+---
+
+#### 4-D: 관측 가능성 스택 K8s 이전
+> docker-compose로 기능 검증 후 K8s로 이전해야 Phase 5 부하 테스트 시
+> HPA 스케일 아웃을 Grafana로 실시간 관측할 수 있다. (기획서 safealert-monitor 네임스페이스 완성 목표)
+- [ ] Prometheus + Grafana → `safealert-monitor` 네임스페이스 Helm 배포 (kube-prometheus-stack)
+- [ ] Jaeger → `safealert-monitor` Helm 배포 + otel endpoint 환경변수 적용 (6개 서비스)
+- [ ] ELK → `safealert-monitor` Helm 배포 + logstash TCP 주소 환경변수 적용 (6개 서비스 `logback-spring.xml`)
+- [ ] `docker-compose.yml` 모니터링 스택 제거 + 전체 동작 검증
 
 ---
 

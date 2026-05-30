@@ -10,7 +10,7 @@
 | Phase 1 | 핵심 서비스 구현 | 3~4주 | Auth, Subscription, API Gateway, React 프론트엔드, 이메일 인증, OAuth2 소셜 로그인, 비밀번호 찾기, 실시간 테스트 페이지, WebSocket 채널 분리, TestPage 알림 상세 표시, 알림 content 필드 정상화, DUST 전국 수집 범위 확장, 지역 코드 불일치 + Recent API 버그 수정, DUST 시/군/구 단위 수집 확장, WEATHER 지역 코드 매핑, 시/군/구 단위 구독 시스템(계층 매칭), 프론트엔드 페이지 전체 검증, DISASTER 지역 코드 매핑, 비밀번호 찾기/재설정 | 🔄 진행 중 |
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ✅ 완료 |
-| Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK | 🔄 진행 중 |
+| Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK, K8s 이전 | 🔄 진행 중 |
 | Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | ⬜ 대기 |
 
 **총 예상 기간: 12~14주**
@@ -490,12 +490,31 @@
 
 ### 4-C. ELK Stack
 
+> 구현 방식: docker-compose + Logstash TCP appender (Filebeat 대신 logback-spring.xml 직접 전송)
+
 | # | 작업 | 완료 |
 |---|------|------|
-| 4-C-1 | Elasticsearch + Kibana 배포 | [ ] |
-| 4-C-2 | Filebeat DaemonSet 배포 | [ ] |
-| 4-C-3 | 각 서비스 JSON 로그 포맷 통일 | [ ] |
-| 4-C-4 | Kibana 로그 검색 인덱스 패턴 설정 | [ ] |
+| 4-C-1 | docker-compose.yml — Elasticsearch(9200), Logstash(5044), Kibana(5601) 컨테이너 추가 | [O] |
+| 4-C-2 | logstash.conf 작성 — TCP 5044 수신 → safealert-{서비스명}-{날짜} 인덱스로 Elasticsearch 저장 | [O] |
+| 4-C-3 | 6개 서비스 build.gradle — logstash-logback-encoder:7.4 의존성 추가 | [O] |
+| 4-C-4 | 6개 서비스 logback-spring.xml — CONSOLE + Logstash TCP appender + service_name 필드 추가 | [O] |
+| 4-C-5 | ELK 컨테이너 실행 + 서비스 재시작 + Logstash 로그 수신 확인 | [ ] |
+| 4-C-6 | Kibana 인덱스 패턴 생성 + 서비스별 로그 검색 확인 | [ ] |
+
+### 4-D. 관측 가능성 스택 K8s 이전
+
+> **추가 이유:** Phase 4-A~C는 docker-compose로 기능을 먼저 검증하는 단계였다.
+> Phase 5 k6 부하 테스트에서 HPA 스케일 아웃을 Grafana로 실시간 관측하려면
+> 관측 도구가 K8s 안에 있어야 한다. docker-compose 상태로 Phase 5에 진입하면
+> 기획서에서 목표로 한 safealert-monitor 네임스페이스가 완성되지 않은 채
+> 포트폴리오가 끝나는 문제가 생긴다.
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 4-D-1 | Prometheus + Grafana → safealert-monitor 네임스페이스 Helm 배포 (kube-prometheus-stack) | [ ] |
+| 4-D-2 | Jaeger → safealert-monitor Helm 배포 + otel.exporter.otlp.endpoint 환경변수 적용 (6개 서비스) | [ ] |
+| 4-D-3 | ELK → safealert-monitor Helm 배포 + logstash TCP 주소 환경변수 적용 (6개 서비스 logback-spring.xml) | [ ] |
+| 4-D-4 | docker-compose.yml 모니터링 스택 제거 + 전체 동작 검증 (Grafana 대시보드 + Jaeger UI + Kibana 접속 확인) | [ ] |
 
 ---
 
