@@ -2,8 +2,8 @@
 
 > 재난·기상 알림 구독 서비스 — MSA + Kafka + Kubernetes 기반 프로젝트
 
-![Java](https://img.shields.io/badge/Java-17~24-orange?style=flat-square&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3~3.5-green?style=flat-square&logo=springboot)
+![Java](https://img.shields.io/badge/Java-17--24-orange?style=flat-square&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3--3.5-green?style=flat-square&logo=springboot)
 ![Kafka](https://img.shields.io/badge/Kafka-KRaft-black?style=flat-square&logo=apachekafka)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-minikube-blue?style=flat-square&logo=kubernetes)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)
@@ -51,7 +51,7 @@
 
 | 분류 | 기술 |
 |------|------|
-| **Backend** | Java 17~24, Spring Boot 3.3~3.5, Spring Cloud Gateway |
+| **Backend** | Java 17-24, Spring Boot 3.3-3.5, Spring Cloud Gateway |
 | **Messaging** | Apache Kafka (KRaft 모드) |
 | **Cache** | Redis 7 |
 | **Database** | PostgreSQL 15, MongoDB 7 |
