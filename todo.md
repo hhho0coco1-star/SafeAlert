@@ -17,15 +17,13 @@
 
 ---
 
+#### ~~5-4: API 명세 문서~~ ✅ 완료
+> 5개 서비스 Swagger UI 추가 (auth 12개, subscription 8개, notification 6개 API 문서화)
+
+---
+
 #### 5-3: README 최종 정리
 - [ ] 아키텍처 다이어그램 작성 (Mermaid 또는 draw.io)
 - [ ] 로컬 실행 방법 (`docker compose up` → Spring Boot 순서 안내)
 - [ ] 기술 스택 표 (언어·프레임워크·인프라)
 - [ ] 주요 기능 GIF 또는 스크린샷 첨부
-
----
-
-#### 5-4: API 명세 문서
-- [ ] 각 서비스 `build.gradle` — `springdoc-openapi-starter-webmvc-ui` 추가
-- [ ] `SwaggerConfig.java` 생성 — API 그룹·설명 설정
-- [ ] `http://localhost:{port}/swagger-ui.html` 접속 확인
