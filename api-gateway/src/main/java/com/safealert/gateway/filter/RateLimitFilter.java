@@ -26,6 +26,12 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         var remoteAddress = exchange.getRequest().getRemoteAddress();
         String ip = remoteAddress != null ? remoteAddress.getAddress().getHostAddress() : "unknown";
+
+        // 로컬 부하 테스트 시 Rate Limiting 스킵 (localhost IPv4/IPv6)
+        if (ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) {
+            return chain.filter(exchange);
+        }
+
         String key = "ratelimit:" + ip;
 
         return redisTemplate.opsForValue().increment(key)
