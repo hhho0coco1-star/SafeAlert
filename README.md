@@ -263,6 +263,7 @@ kubectl port-forward svc/kibana 5601:5601 -n safealert-monitor
 | [04_개발계획_WBS](docs/04_개발계획_WBS.md) | Phase별 작업 목록, 마일스톤 |
 | [05_개발환경](docs/05_개발환경.md) | 로컬 개발 환경, DB 접속, K8s 모니터링 |
 | [06_부하테스트_결과](docs/06_부하테스트_결과.md) | k6 부하 테스트 결과 및 개선 내역 |
+| [07_기술선택_이유](docs/07_기술선택_이유.md) | MSA·Kafka·Redis·WebSocket 등 기술 선택 근거 |
 
 ---
 
