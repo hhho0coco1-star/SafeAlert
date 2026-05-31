@@ -135,11 +135,14 @@ DB 조회 없이 O(1) 시간으로 처리합니다.
 - Java 17+
 - Node.js 18+
 
-### 1. 인프라 + 모니터링 스택 실행
+### 1. 인프라 실행
 
 ```bash
-docker compose up -d postgresql redis kafka mongodb elasticsearch logstash kibana
+docker compose up -d postgresql redis kafka mongodb
 ```
+
+> 모니터링 도구(Prometheus·Grafana·Jaeger·ELK)는 K8s `safealert-monitor` 네임스페이스에 배포됨.
+> 접근 방법은 `docs/05_개발환경.md` 참조.
 
 ### 2. 백엔드 서비스 실행 (서비스별 별도 터미널)
 
