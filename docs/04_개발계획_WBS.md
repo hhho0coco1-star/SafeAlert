@@ -11,7 +11,7 @@
 | Phase 2 | 이벤트 파이프라인 | 3~4주 | Kafka 파이프라인, 실시간 알림 | ✅ 완료 |
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ✅ 완료 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK, K8s 이전 | ✅ 완료 |
-| Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | ⬜ 대기 |
+| Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | 🔄 진행 중 |
 
 **총 예상 기간: 12~14주**
 
@@ -36,7 +36,7 @@
 ✅ Phase 2-C   — Notification Service 완료 (WebSocket + Kafka Consumer + Redis Pub/Sub)
 ✅ Phase 3     — 안정성 · 복원력 완료 (Outbox·Kafka·Redis 장애 대응·DUST 버그 수정)
 ✅ Phase 4     — 관측 가능성 완료 (Prometheus+Grafana·Jaeger·ELK docker-compose 구축 + K8s safealert-monitor 이전 완료)
-⬜ Phase 5     — 부하 테스트 및 마무리
+🔄 Phase 5     — 부하 테스트 및 마무리 진행 중 (k6 테스트 완료, README·API 문서 잔여)
 ```
 
 **현재 작업:** Phase 4-A — Grafana 대시보드 구성
@@ -533,12 +533,12 @@
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 5-1 | k6 설치 및 테스트 스크립트 작성 | [ ] |
-| 5-2 | WebSocket 동시 연결 부하 테스트 실행 | [ ] |
+| 5-1 | k6 설치 및 테스트 스크립트 작성 (login·subscription·websocket) | [O] |
+| 5-2 | 로그인·구독 조회·WebSocket 부하 테스트 실행 (100명/50개 동시) | [O] |
 | 5-3 | 알림 동시 발송 시뮬레이션 | [ ] |
-| 5-4 | 부하 테스트 결과 분석 (Grafana) | [ ] |
-| 5-5 | 병목 지점 개선 (DB 인덱스, 캐시 전략 등) | [ ] |
-| 5-6 | 재테스트 후 성능 비교 | [ ] |
+| 5-4 | 부하 테스트 결과 분석 — docs/06_부하테스트_결과.md 작성 | [O] |
+| 5-5 | 병목 지점 개선 — HikariCP 커넥션 풀 10→30 (p95 2.66s→1.86s, 30% 개선) | [O] |
+| 5-6 | 재테스트 후 성능 비교 완료 | [O] |
 | 5-7 | 프로젝트 README 작성 | [O] |
 | 5-8 | 아키텍처 다이어그램 최종 정리 | [O] |
 | 5-9 | 장애 테스트 결과 문서화 | [ ] |

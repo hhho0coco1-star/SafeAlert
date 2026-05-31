@@ -5,9 +5,9 @@ import { check, sleep } from 'k6';
 // Rate Limit(분당 60건) 이내로 유지: 5 VUs × sleep(2s) = 약 150건/분
 export const options = {
   stages: [
-    { duration: '10s', target: 5  },
-    { duration: '30s', target: 5  },
-    { duration: '10s', target: 0  },
+    { duration: '10s', target: 100 },
+    { duration: '30s', target: 100 },
+    { duration: '10s', target: 0   },
   ],
   thresholds: {
     http_req_failed:   ['rate<0.01'],   // 에러율 1% 미만
@@ -21,7 +21,7 @@ export function setup() {
     JSON.stringify({ email: 'dpcks2553@naver.com', password: 'dkstpdnd@123789' }),
     { headers: { 'Content-Type': 'application/json' } }
   );
-  return { token: res.json('accessToken') };
+  return { token: res.json('data.accessToken') };
 }
 
 export default function (data) {
