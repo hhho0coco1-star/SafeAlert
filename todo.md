@@ -15,6 +15,4 @@
 - [ ] **D-1** 데모 동영상 촬영 + README/포트폴리오 첨부 (촬영 가이드: WBS D-1 참고)
 
 ### GitHub 직접 설정 필요
-- [ ] **5-10** GitHub 레포 description·topics 설정 + 프로필 핀 고정
-  - Description: `재난·기상 알림 구독 서비스 — MSA + Kafka + Kubernetes`
-  - Topics: `spring-boot kafka kubernetes react websocket msa redis postgresql`
+- [x] **5-10** GitHub 레포 description·topics 설정 + 프로필 핀 고정 완료
