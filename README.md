@@ -37,19 +37,24 @@
 - **관리자 기능**: 수동 알림 발송, 회원 관리, 통계 대시보드
 - **API Gateway**: JWT 인증, Rate Limiting(분당 60건/IP), 라우팅
 - **관측 가능성**: Prometheus·Grafana(메트릭), Jaeger(분산 트레이싱), ELK(로그 수집)
+- **부하 테스트**: k6 — 100명 동시 로그인·구독 조회, WebSocket 50개 동시 연결 검증
 
 ---
 
 ## 기술 스택
 
-- **Backend:** Java 17, Spring Boot 3.3.5, Spring Cloud Gateway
-- **Messaging:** Apache Kafka (KRaft)
-- **Cache:** Redis
-- **Database:** PostgreSQL, MongoDB
-- **Frontend:** React 18, Vite, Tailwind CSS
-- **Infra:** Kubernetes (minikube), Docker
-- **Monitoring:** Prometheus, Grafana, Jaeger, ELK Stack
-- **Pattern:** MSA, Transactional Outbox, Saga, CQRS, Circuit Breaker
+| 분류 | 기술 |
+|------|------|
+| **Backend** | Java 17~24, Spring Boot 3.3~3.5, Spring Cloud Gateway |
+| **Messaging** | Apache Kafka (KRaft 모드) |
+| **Cache** | Redis 7 |
+| **Database** | PostgreSQL 15, MongoDB 7 |
+| **Frontend** | React 18, Vite, Tailwind CSS |
+| **Infra** | Kubernetes (minikube), Docker |
+| **Monitoring** | Prometheus, Grafana, Jaeger (OpenTelemetry), ELK Stack |
+| **Pattern** | MSA, Transactional Outbox, Circuit Breaker, CQRS |
+| **Test** | k6 (부하 테스트), JUnit 5 |
+| **API 문서** | Swagger UI (springdoc-openapi) |
 
 ---
 
@@ -68,7 +73,7 @@ graph TB
             Noti["🔔 Notification :8083\nWebSocket · STOMP"]
         end
         subgraph Pipeline["이벤트 파이프라인"]
-            Collector["📡 Alert Collector :8086\n5분 스케줄러 · Circuit Breaker"]
+            Collector["📡 Alert Collector :8086\n1시간 스케줄러 · Circuit Breaker"]
             Processor["⚡ Alert Processor :8087\nReplica 3 · 분류 · 필터"]
         end
     end
@@ -81,7 +86,15 @@ graph TB
         Redis[("Redis")]
     end
 
-    ExtAPI -->|"HTTP 5분 주기"| Collector
+    subgraph Monitor["모니터링 (safealert-monitor)"]
+        direction LR
+        Prometheus["Prometheus"]
+        Grafana["Grafana"]
+        Jaeger["Jaeger"]
+        ELK["ELK Stack"]
+    end
+
+    ExtAPI -->|"HTTP 1시간 주기"| Collector
     Client <-->|"REST / WebSocket"| Gateway
     Gateway --> Auth & Sub & Noti
 
@@ -126,6 +139,23 @@ Kafka가 일시적으로 다운돼도 이벤트가 유실되지 않습니다.
 `ratelimit:{ip}` 키에 TTL 1분을 설정해 분당 60건 초과 요청을 차단합니다.
 DB 조회 없이 O(1) 시간으로 처리합니다.
 
+### Alert Processor Replica 3
+Kafka Consumer Group을 3개 파티션으로 분산해 처리량을 높이고 단일 장애점을 제거합니다.
+
+---
+
+## 부하 테스트 결과
+
+> 도구: k6 | 환경: 로컬 PC | 상세: [docs/06_부하테스트_결과.md](docs/06_부하테스트_결과.md)
+
+| 시나리오 | 동시 사용자 | 에러율 | p(95) 응답시간 | 결과 |
+|---------|-----------|--------|--------------|------|
+| 로그인 | 100명 | 0% | 1.86s | ✅ |
+| 구독 조회 | 100명 | 0% | 375ms | ✅ |
+| WebSocket 연결 | 50개 | 0개 | 9.91ms (연결) | ✅ |
+
+**병목 개선**: HikariCP 커넥션 풀 10 → 30 조정으로 로그인 p(95) 2.66s → 1.86s **(30% 개선)**
+
 ---
 
 ## 로컬 실행 방법
@@ -140,9 +170,6 @@ DB 조회 없이 O(1) 시간으로 처리합니다.
 ```bash
 docker compose up -d postgresql redis kafka mongodb
 ```
-
-> 모니터링 도구(Prometheus·Grafana·Jaeger·ELK)는 K8s `safealert-monitor` 네임스페이스에 배포됨.
-> 접근 방법은 `docs/05_개발환경.md` 참조.
 
 ### 2. 백엔드 서비스 실행 (서비스별 별도 터미널)
 
@@ -159,15 +186,34 @@ cd alert-processor-service && ./gradlew bootRun
 
 ```bash
 cd frontend && npm run dev
-# http://localhost:5173 접속
 ```
 
-### 접속 주소 목록
+### 접속 주소
 
 | 서비스 | 주소 |
 |--------|------|
 | 프론트엔드 | http://localhost:5173 |
 | API Gateway | http://localhost:8080 |
+
+### Swagger UI (API 문서)
+
+| 서비스 | 주소 |
+|--------|------|
+| Auth Service | http://localhost:8081/swagger-ui/index.html |
+| Subscription Service | http://localhost:8085/swagger-ui/index.html |
+| Notification Service | http://localhost:8083/swagger-ui/index.html |
+
+### 모니터링 (K8s 포트포워딩 필요)
+
+```bash
+kubectl port-forward svc/grafana 3000:80 -n safealert-monitor
+kubectl port-forward svc/prometheus-server 9090:80 -n safealert-monitor
+kubectl port-forward svc/jaeger-query 16686:16686 -n safealert-monitor
+kubectl port-forward svc/kibana 5601:5601 -n safealert-monitor
+```
+
+| 도구 | 주소 |
+|------|------|
 | Grafana (admin/admin) | http://localhost:3000 |
 | Prometheus | http://localhost:9090 |
 | Jaeger | http://localhost:16686 |
@@ -196,8 +242,8 @@ cd frontend && npm run dev
 | Phase 1 | Auth·Subscription·Notification·Alert 서비스, React 프론트엔드, OAuth2, 이메일 인증, 공공 API 파이프라인, 시/군/구 구독 시스템 | ✅ 완료 |
 | Phase 2 | 이벤트 파이프라인 (Alert Collector → Kafka → Processor → Notification → WebSocket) | ✅ 완료 |
 | Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅ 완료 |
-| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | 🔄 진행 중 |
-| Phase 5 | 부하 테스트 (k6) 및 문서 마무리 | ⬜ 예정 |
+| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | ✅ 완료 |
+| Phase 5 | 부하 테스트 (k6), Swagger API 문서화, README 정리 | 🔄 진행 중 |
 
 ---
 
@@ -209,15 +255,8 @@ cd frontend && npm run dev
 | [02_시스템아키텍처](docs/02_시스템아키텍처.md) | MSA 구조, 이벤트 흐름, K8s 구성 |
 | [03_API_DB설계](docs/03_API_DB설계.md) | REST API 명세, DB 스키마 |
 | [04_개발계획_WBS](docs/04_개발계획_WBS.md) | Phase별 작업 목록, 마일스톤 |
-
-상세 API 스펙은 [API/DB 설계서](docs/03_API_DB설계.md)를 참고하세요.
-
-| 서비스 | 주요 엔드포인트 |
-|--------|--------------|
-| Auth | `POST /api/auth/signup` `POST /api/auth/login` `POST /api/auth/refresh` |
-| Subscription | `GET /api/subscriptions` `POST /api/subscriptions/regions` `PUT /api/subscriptions/categories` |
-| Notification | `GET /api/notifications` `WS /api/notifications/ws` |
-| Admin | `GET /api/admin/stats/alerts` `POST /api/admin/alerts/manual` |
+| [05_개발환경](docs/05_개발환경.md) | 로컬 개발 환경, DB 접속, K8s 모니터링 |
+| [06_부하테스트_결과](docs/06_부하테스트_결과.md) | k6 부하 테스트 결과 및 개선 내역 |
 
 ---
 
@@ -232,16 +271,21 @@ SafeAlert/
 ├── alert-collector-service/    # 공공 API 수집 (기상청·행안부·환경부)
 ├── alert-processor-service/    # 알림 처리 (분류·중복 필터·MongoDB)
 ├── frontend/                   # React 18 + Vite + Tailwind CSS
+├── load-test/                  # k6 부하 테스트 스크립트
+│   ├── login.js
+│   ├── subscription.js
+│   └── websocket.js
 ├── k8s/
 │   └── monitoring/             # ELK K8s YAML (Elasticsearch·Logstash·Kibana)
 ├── prometheus.yml              # Prometheus 스크레이프 설정 (6개 서비스)
 ├── logstash.conf               # Logstash 파이프라인 (TCP→Elasticsearch)
-├── docker-compose.yml          # 로컬 개발 인프라 (DB·Kafka·ELK)
+├── docker-compose.yml          # 로컬 개발 인프라 (DB·Kafka)
 ├── opentelemetry-javaagent.jar # OpenTelemetry 자동 계측 에이전트
 └── docs/
     ├── 01_기획서.md
     ├── 02_시스템아키텍처.md
     ├── 03_API_DB설계.md
     ├── 04_개발계획_WBS.md
-    └── 05_개발환경.md
+    ├── 05_개발환경.md
+    └── 06_부하테스트_결과.md
 ```

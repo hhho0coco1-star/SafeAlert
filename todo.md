@@ -17,6 +17,9 @@
 
 ---
 
+#### ~~5-3: README 최종 정리~~ ✅ 완료
+> 부하 테스트 결과 섹션·Swagger 주소·모니터링 포트포워딩·아키텍처 다이어그램 수정·기술 스택 표 개편
+
 #### ~~5-4: API 명세 문서~~ ✅ 완료
 > 5개 서비스 Swagger UI 추가 (auth 12개, subscription 8개, notification 6개 API 문서화)
 

@@ -14,6 +14,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,12 +74,24 @@ public class DisasterAlertClient {
                 return results;
             }
 
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
             for (JsonNode item : body) {
                 String sn = item.path("SN").asText();
                 String msgCn = item.path("MSG_CN").asText();
                 String regionRaw = item.path("RCPTN_RGN_NM").asText().trim();
                 String crtDt = item.path("CRT_DT").asText();
                 String dstSeNm = item.path("DST_SE_NM").asText();
+
+                // 오늘 날짜 데이터만 수집 (과거 재난문자 재수집 방지)
+                try {
+                    LocalDate msgDate = LocalDate.parse(crtDt, fmt);
+                    if (!msgDate.equals(today)) continue;
+                } catch (Exception ex) {
+                    log.warn("[행정안전부] 날짜 파싱 실패 - crtDt: {}", crtDt);
+                    continue;
+                }
 
                 if (duplicateFilter.isDuplicate("DISASTER", dstSeNm, sn)) {
                     continue;
