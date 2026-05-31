@@ -549,7 +549,25 @@
 
 | # | 문서 | 완료 |
 |---|------|------|
-| D-1 | README에 동작 스크린샷/GIF 추가 | [ ] |
+| D-1 | 데모 동영상 촬영 + README/포트폴리오 첨부 | [ ] |
+
+#### D-1 데모 동영상 촬영 가이드
+
+> **사전 준비**: `/run` 실행 → 서버 전체 기동 확인 | 녹화 도구: Windows `Win+G` (Xbox 게임바)
+> **목표 길이**: 2~3분 | **업로드**: GitHub README + 포트폴리오
+
+| 씬 | 화면 | 내용 | 예상 시간 |
+|----|------|------|---------|
+| 1 | http://localhost:5173/signup | 이메일 인증 → 회원가입 → 로그인 → 대시보드 이동 | 1분 |
+| 2 | http://localhost:5173/subscriptions | 시도·시군구 2단계 드롭다운 구독 설정 + 카테고리 토글 | 30초 |
+| 3 | http://localhost:5173/test + /admin | **핵심 장면** — 관리자 수동 알림 발송 → /test 페이지에 실시간 알림 즉시 수신 | 1분 |
+| 4 | http://localhost:3000 (Grafana) | JVM 힙·스레드 메트릭 대시보드 (`kubectl port-forward svc/grafana 3000:80 -n safealert-monitor`) | 30초 |
+| 5 | http://localhost:8081/swagger-ui/index.html | API 목록 펼치기 → /api/auth/login 파라미터 입력창 | 20초 |
+
+> **씬 3이 핵심**: 실시간 알림을 직접 만들려면 `/admin` → 수동 알림 발송 버튼 사용. 공공 API 수집 1시간 주기라 기다리지 않아도 됨.
+> **편집 팁**: 씬 3 비중을 가장 크게, 씬 1~2는 빠르게 편집.
+> **GIF 변환**: ezgif.com (무료, 브라우저)으로 동영상 → GIF 변환 후 README에 직접 삽입 가능.
+
 | D-2 | 시퀀스 다이어그램 (로그인, 알림 발송 플로우) | [ ] |
 | D-3 | 기술 선택 이유 문서 (Kafka vs RabbitMQ, MSA 이유 등) | [ ] |
 | D-4 | `.env.example` 파일 작성 | [ ] |
