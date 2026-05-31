@@ -265,6 +265,7 @@ kubectl port-forward svc/kibana 5601:5601 -n safealert-monitor
 | [06_부하테스트_결과](docs/06_부하테스트_결과.md) | k6 부하 테스트 결과 및 개선 내역 |
 | [07_기술선택_이유](docs/07_기술선택_이유.md) | MSA·Kafka·Redis·WebSocket 등 기술 선택 근거 |
 | [08_시퀀스_다이어그램](docs/08_시퀀스_다이어그램.md) | 로그인·알림 발송·구독 등 주요 플로우 시퀀스 다이어그램 |
+| [09_장애테스트_결과](docs/09_장애테스트_결과.md) | Kafka·Redis·Circuit Breaker 장애 주입 테스트 결과 |
 
 ---
 

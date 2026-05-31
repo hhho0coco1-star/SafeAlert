@@ -541,8 +541,8 @@
 | 5-6 | 재테스트 후 성능 비교 완료 | [O] |
 | 5-7 | 프로젝트 README 작성 | [O] |
 | 5-8 | 아키텍처 다이어그램 최종 정리 | [O] |
-| 5-9 | 장애 테스트 결과 문서화 | [ ] |
-| 5-10 | GitHub 포트폴리오 정리 | [ ] |
+| 5-9 | 장애 테스트 결과 문서화 — docs/09_장애테스트_결과.md (Kafka·Redis·Circuit Breaker) | [O] |
+| 5-10 | GitHub 포트폴리오 정리 — description·topics·핀 고정 안내 완료 | [O] |
 | 5-11 | Swagger UI 추가 — 5개 서비스 springdoc-openapi 2.3.0 (auth 12개·subscription 8개·notification 6개 API 문서화) | [O] |
 
 ### 문서 보완 TODO
@@ -571,7 +571,7 @@
 | D-2 | 시퀀스 다이어그램 (로그인, 알림 발송 플로우) — docs/08_시퀀스_다이어그램.md | [O] |
 | D-3 | 기술 선택 이유 문서 (Kafka vs RabbitMQ, MSA 이유 등) — docs/07_기술선택_이유.md | [O] |
 | D-4 | `.env.example` 파일 작성 | [O] |
-| D-5 | 로컬 실행 가이드 상세화 (트러블슈팅 포함) | [ ] |
+| D-5 | 로컬 실행 가이드 상세화 (트러블슈팅 포함) — 05_개발환경.md 섹션 6 추가 | [O] |
 
 ---
 

@@ -5,7 +5,7 @@
 ## ✅ 완료된 작업
 
 - Phase 0~4 전체 완료
-- Phase 5: k6 부하 테스트 (로그인·구독·WebSocket), HikariCP 개선, Swagger UI, README 정리
+- Phase 5: k6 부하 테스트, HikariCP 개선, Swagger UI, README 정리, 기술선택 이유 문서, 시퀀스 다이어그램, 장애 테스트 결과 문서, 트러블슈팅 가이드
 
 ---
 
@@ -14,10 +14,7 @@
 ### 필수 (나중에 진행 예정)
 - [ ] **D-1** 데모 동영상 촬영 + README/포트폴리오 첨부 (촬영 가이드: WBS D-1 참고)
 
-### 선택 (포트폴리오 보완용)
-- [ ] **5-9** 장애 테스트 결과 문서화
-- [ ] **5-10** GitHub 포트폴리오 정리 (핀고정, 설명 추가)
-- [x] **D-2** 시퀀스 다이어그램 → docs/08_시퀀스_다이어그램.md (5개 플로우)
-- [x] **D-3** 기술 선택 이유 문서 → docs/07_기술선택_이유.md 작성 완료
-- [x] **D-4** `.env.example` 파일 작성 완료
-- [ ] **D-5** 로컬 실행 가이드 상세화 (트러블슈팅 포함)
+### GitHub 직접 설정 필요
+- [ ] **5-10** GitHub 레포 description·topics 설정 + 프로필 핀 고정
+  - Description: `재난·기상 알림 구독 서비스 — MSA + Kafka + Kubernetes`
+  - Topics: `spring-boot kafka kubernetes react websocket msa redis postgresql`
