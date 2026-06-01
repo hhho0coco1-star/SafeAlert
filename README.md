@@ -244,12 +244,12 @@ kubectl port-forward svc/kibana 5601:5601 -n safealert-monitor
 
 | Phase | 내용 | 상태 |
 |-------|------|------|
-| Phase 0 | Docker + K8s 인프라 구성 (Kafka, Redis, PostgreSQL, MongoDB) | ✅ 완료 |
-| Phase 1 | Auth·Subscription·Notification·Alert 서비스, React 프론트엔드, OAuth2, 이메일 인증, 공공 API 파이프라인, 시/군/구 구독 시스템 | ✅ 완료 |
-| Phase 2 | 이벤트 파이프라인 (Alert Collector → Kafka → Processor → Notification → WebSocket) | ✅ 완료 |
-| Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅ 완료 |
-| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | ✅ 완료 |
-| Phase 5 | 부하 테스트 (k6), Swagger API 문서화, README 정리 | ✅ 완료 |
+| Phase 0 | Docker + K8s 인프라 구성 (Kafka, Redis, PostgreSQL, MongoDB) | ✅완료 |
+| Phase 1 | Auth·Subscription·Notification·Alert 서비스, React 프론트엔드, OAuth2, 이메일 인증, 공공 API 파이프라인, 시/군/구 구독 시스템 | ✅완료 |
+| Phase 2 | 이벤트 파이프라인 (Alert Collector → Kafka → Processor → Notification → WebSocket) | ✅완료 |
+| Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅완료 |
+| Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | ✅완료 |
+| Phase 5 | 부하 테스트 (k6), Swagger API 문서화, README 정리 | ✅완료 |
 
 ---
 
