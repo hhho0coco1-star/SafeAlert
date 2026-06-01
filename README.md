@@ -249,7 +249,7 @@ kubectl port-forward svc/kibana 5601:5601 -n safealert-monitor
 | Phase 2 | 이벤트 파이프라인 (Alert Collector → Kafka → Processor → Notification → WebSocket) | ✅ 완료 |
 | Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅ 완료 |
 | Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | ✅ 완료 |
-| Phase 5 | 부하 테스트 (k6), Swagger API 문서화, README 정리 | 🔄 진행 중 |
+| Phase 5 | 부하 테스트 (k6), Swagger API 문서화, README 정리 | ✅ 완료 |
 
 ---
 
@@ -297,5 +297,9 @@ SafeAlert/
     ├── 03_API_DB설계.md
     ├── 04_개발계획_WBS.md
     ├── 05_개발환경.md
-    └── 06_부하테스트_결과.md
+    ├── 06_부하테스트_결과.md
+    ├── 07_기술선택_이유.md
+    ├── 08_시퀀스_다이어그램.md
+    ├── 09_장애테스트_결과.md
+    └── 10_트러블슈팅_기록.md
 ```
