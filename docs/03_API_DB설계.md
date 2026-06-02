@@ -787,24 +787,24 @@
 
 ---
 
-## 5. Statistics Service — MongoDB (stats_db)
+## 5. 통계 (Statistics) — 미구현 / Notification Service에 통합
 
-### alert_stats_hourly 컬렉션 (집계 결과 저장)
+> 초기 설계에서는 별도 Statistics Service + MongoDB `stats_db`에 시간별 집계 컬렉션
+> (`alert_stats_hourly`)을 두는 CQRS Read 모델을 계획했으나, **구현하지 않았다.**
+> 실제로는 Notification Service가 `notification_history` 테이블을 실시간 집계해
+> 관리자 통계 API(`GET /api/admin/stats`)로 제공한다. (02 아키텍처 2.7 / ADR-007 참조)
+>
+> 아래는 미구현된 초기 설계안(참고용)이다.
 
 ```json
+// (미구현) alert_stats_hourly 컬렉션 설계안
 {
   "_id": "2025-01-01T12:00:00Z_WEATHER",
   "hour": "ISODate",
   "category": "WEATHER",
   "totalCount": 150,
-  "byRegion": {
-    "11": 80,
-    "26": 70
-  },
-  "bySeverity": {
-    "HIGH": 10,
-    "MEDIUM": 140
-  },
+  "byRegion": { "11": 80, "26": 70 },
+  "bySeverity": { "HIGH": 10, "MEDIUM": 140 },
   "updatedAt": "ISODate"
 }
 ```

@@ -12,6 +12,7 @@
 | Phase 3 | 안정성 / 복원력 | 2주 | Circuit Breaker, Saga, Outbox | ✅ 완료 |
 | Phase 4 | 관측 가능성 | 2주 | Prometheus, Grafana, Jaeger, ELK, K8s 이전 | ✅ 완료 |
 | Phase 5 | 부하 테스트 및 마무리 | 1주 | 부하 테스트 결과, 문서 | 🔄 진행 중 |
+| Phase 6 | K8s 전체 실배포 검증 + HPA | 1주 | 전체 minikube 배포, kubectl·부하 스케일아웃 캡처 | ⬜ 대기 |
 
 **총 예상 기간: 12~14주**
 
@@ -588,7 +589,12 @@
 
 ---
 
-## 현재 배포 중인 서비스 현황
+## 서비스 배포 구성 (매니페스트 기준)
+
+> ⚠️ 아래는 K8s 매니페스트에 정의된 목표 구성이다.
+> 매니페스트(deployment/service YAML)는 7개 서비스 모두 작성 완료됐으나,
+> 실제 클러스터 전체 배포·검증은 Phase 6에서 수행한다.
+> 일상 로컬 개발은 docker-compose(인프라) + gradlew bootRun(서비스)로 진행한다.
 
 | 서비스 | 포트 | Replica | 네임스페이스 |
 |--------|------|---------|------------|
@@ -603,3 +609,27 @@
 | postgresql | 5432 | 1 | safealert-infra |
 | mongodb | 27017 | 1 | safealert-infra |
 | redis-master | 6379 | 1 | safealert-infra |
+
+---
+
+## Phase 6 — K8s 전체 실배포 검증 + HPA ⬜
+
+**배경:** Phase 0~5 동안 K8s 매니페스트는 작성했으나(각 서비스 k8s/), 실제 운영·검증은
+로컬 docker-compose + gradlew bootRun으로 진행했다. 포트폴리오에서 K8s를 실증하기 위해
+전체를 minikube에 1회 배포하고, 기획서 5.3이 약속한 HPA 오토스케일링까지 구현·캡처한다.
+
+| # | 작업 | 완료 |
+|---|------|------|
+| 6-1 | minikube 기동 (--memory=12288 --cpus=8) | [ ] |
+| 6-2 | namespaces.yaml 적용 (safealert-app·safealert-infra) | [ ] |
+| 6-3 | secrets.yaml 적용 | [ ] |
+| 6-4 | 인프라 배포 (PostgreSQL·MongoDB·Redis Helm + Kafka YAML) Running 확인 | [ ] |
+| 6-5 | 6개 백엔드 이미지 빌드 + minikube image load (imagePullPolicy: Never) | [ ] |
+| 6-6 | frontend 이미지 빌드 + load | [ ] |
+| 6-7 | 7개 서비스 apply + safealert-app Pod 전체 Running | [ ] |
+| 6-8 | port-forward 동작 검증 (로그인·구독·알림 E2E) | [ ] |
+| 6-9 | kubectl get pods -A 전체 Running 캡처 | [ ] |
+| 6-10 | metrics-server addon 활성화 | [ ] |
+| 6-11 | HPA YAML 작성 (api-gateway·alert-processor, CPU 70%, min2/max5) apply | [ ] |
+| 6-12 | k6 부하 중 HPA 스케일아웃 캡처 (기획서 5.3 이행) | [ ] |
+| 6-13 | README 배포 검증 섹션 + 캡처 첨부, 문서 현황 정정 | [ ] |
