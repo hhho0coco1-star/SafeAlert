@@ -213,21 +213,65 @@ cd frontend && npm run dev
 | Subscription Service | http://localhost:8085/swagger-ui/index.html |
 | Notification Service | http://localhost:8083/swagger-ui/index.html |
 
-### Kubernetes 배포 (minikube)
+### Kubernetes 배포 검증 (minikube on AWS EC2)
 
-각 서비스의 K8s 매니페스트는 `<service>/k8s/`에, 인프라는 `infra/`에 정의돼 있습니다.
+> AWS EC2 t3.xlarge (Ubuntu 26.04, 16GB RAM) 환경에서 minikube 전체 배포 완료
+
+**배포 절차**
 
 ```bash
-minikube start --memory=12288 --cpus=8 --driver=docker
+minikube start --memory=12288 --cpus=4 --driver=docker
 kubectl apply -f infra/namespaces.yaml      # safealert-app · safealert-infra
 kubectl apply -f infra/secrets.yaml
-# 인프라 배포: PostgreSQL·MongoDB·Redis (Helm, infra/*/values.yaml) + Kafka (infra/kafka/kafka.yaml)
-# 서비스 이미지 빌드 후 minikube image load (deployment가 imagePullPolicy: Never)
+helm install postgresql bitnami/postgresql -n safealert-infra -f infra/postgresql/values.yaml
+helm install mongodb bitnami/mongodb -n safealert-infra -f infra/mongodb/values.yaml
+helm install redis bitnami/redis -n safealert-infra -f infra/redis/values.yaml
+kubectl apply -f infra/kafka/kafka.yaml
+# 서비스 이미지 빌드 후 minikube image load
 kubectl apply -f auth-service/k8s/          # 7개 서비스 동일하게 apply
-kubectl get pods -A                         # 전체 Running 확인
 ```
 
-> ⏳ 전체 실배포 검증 + HPA(CPU 70% 오토스케일링)는 Phase 6에서 진행 중입니다. (WBS Phase 6 참조)
+**전체 Pod Running 확인**
+
+```
+NAMESPACE         NAME                                       READY   STATUS    RESTARTS   AGE
+kube-system       coredns-7d764666f9-b42sj                   1/1     Running   0          30m
+kube-system       etcd-minikube                              1/1     Running   0          30m
+kube-system       kube-apiserver-minikube                    1/1     Running   0          30m
+kube-system       kube-controller-manager-minikube           1/1     Running   0          30m
+kube-system       kube-proxy-b747t                           1/1     Running   0          30m
+kube-system       kube-scheduler-minikube                    1/1     Running   0          30m
+kube-system       storage-provisioner                        1/1     Running   0          30m
+safealert-app     alert-collector-service-664dc9cf8c-whtds   1/1     Running   0          79s
+safealert-app     alert-processor-service-69b79844c5-cl9kr   1/1     Running   0          78s
+safealert-app     alert-processor-service-69b79844c5-f6wln   1/1     Running   0          78s
+safealert-app     alert-processor-service-69b79844c5-l445s   1/1     Running   0          78s
+safealert-app     api-gateway-7c877b7f45-pjl8z               1/1     Running   0          78s
+safealert-app     api-gateway-7c877b7f45-qdfwn               1/1     Running   0          78s
+safealert-app     auth-service-7b98d6b5d4-mppdb              1/1     Running   0          79s
+safealert-app     frontend-5488fdf887-h8fqq                  1/1     Running   0          77s
+safealert-app     notification-service-dcc746865-p4cbp       1/1     Running   0          79s
+safealert-app     subscription-service-9c4749558-cwxwh       1/1     Running   0          79s
+safealert-infra   kafka-5cf475f576-mv9g7                     1/1     Running   0          22m
+safealert-infra   mongodb-9699dbcb6-8cxdg                    1/1     Running   0          22m
+safealert-infra   postgresql-0                               1/1     Running   0          22m
+safealert-infra   redis-master-0                             1/1     Running   0          22m
+```
+
+**HPA 오토스케일링 검증** (기획서 5.3 이행)
+
+cpu 부하 시 api-gateway가 CPU 70% 기준을 초과하면 자동으로 Pod를 확장합니다.
+
+```
+# HPA 설정
+NAME                  REFERENCE                            TARGETS   MINPODS   MAXPODS
+api-gateway-hpa       Deployment/api-gateway               70%       2         5
+alert-processor-hpa   Deployment/alert-processor-service   70%       2         5
+
+# 부하 발생 후 스케일아웃 결과
+NAME                  TARGETS         REPLICAS
+api-gateway-hpa       133%/70%        4          ← 2 → 4 자동 확장
+```
 
 ### 모니터링 (K8s 포트포워딩 필요)
 
@@ -270,7 +314,7 @@ kubectl port-forward svc/kibana 5601:5601 -n safealert-monitor
 | Phase 3 | 안정성 (Transactional Outbox, Circuit Breaker, Kafka·Redis 장애 대응) | ✅ |
 | Phase 4 | 관측 가능성 (Prometheus·Grafana·Jaeger·ELK 구축 + K8s safealert-monitor 이전) | ✅ |
 | Phase 5 | 부하 테스트 (k6), Swagger API 문서화, README 정리 | ✅ |
-| Phase 6 | K8s 전체 실배포 검증 + HPA 오토스케일링 (minikube) | 🔄 |
+| Phase 6 | K8s 전체 실배포 검증 + HPA 오토스케일링 (minikube) | ✅ |
 
 ---
 
