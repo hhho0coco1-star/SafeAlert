@@ -552,22 +552,57 @@
 |---|------|------|
 | D-1 | 데모 동영상 촬영 + README/포트폴리오 첨부 | [ ] |
 
-#### D-1 데모 동영상 촬영 가이드
+#### D-1 데모 동영상 촬영 가이드 (2026-06-08 최신)
 
-> **사전 준비**: `/run` 실행 → 서버 전체 기동 확인 | 녹화 도구: Windows `Win+G` (Xbox 게임바)
-> **목표 길이**: 2~3분 | **업로드**: GitHub README + 포트폴리오
+> **구성**: 파트 A(로컬 앱 기능 데모) + 파트 B(K8s HPA 데모) 두 파트로 촬영
+> **녹화 도구**: Windows `Win+G` (Xbox 게임바) | **목표 길이**: 3~4분
+> **업로드**: GitHub README + 포트폴리오
+
+---
+
+**[파트 A] 로컬 앱 기능 데모 — 사전 준비**
+
+```bash
+# 인프라 기동 (docker-compose)
+docker-compose up -d
+
+# 각 서비스 bootRun (서비스별 터미널)
+# 프론트엔드
+cd frontend && npm run dev
+```
 
 | 씬 | 화면 | 내용 | 예상 시간 |
 |----|------|------|---------|
-| 1 | http://localhost:5173/signup | 이메일 인증 → 회원가입 → 로그인 → 대시보드 이동 | 1분 |
-| 2 | http://localhost:5173/subscriptions | 시도·시군구 2단계 드롭다운 구독 설정 + 카테고리 토글 | 30초 |
-| 3 | http://localhost:5173/test + /admin | **핵심 장면** — 관리자 수동 알림 발송 → /test 페이지에 실시간 알림 즉시 수신 | 1분 |
-| 4 | http://localhost:3000 (Grafana) | JVM 힙·스레드 메트릭 대시보드 (`kubectl port-forward svc/grafana 3000:80 -n safealert-monitor`) | 30초 |
-| 5 | http://localhost:8081/swagger-ui/index.html | API 목록 펼치기 → /api/auth/login 파라미터 입력창 | 20초 |
+| 1 | http://localhost:5173/signup | 이메일 인증 코드 발송 → 인증 확인 → 회원가입 → 로그인 → 대시보드 이동 | 1분 |
+| 2 | http://localhost:5173/subscriptions | 시도·시군구 2단계 드롭다운으로 구독 지역 추가 + 카테고리 토글 | 20초 |
+| 3 | http://localhost:5173/admin → /test | **핵심** — 관리자 수동 알림 발송 → /test 페이지에 실시간 알림 즉시 수신 (WebSocket) | 1분 |
+| 4 | http://localhost:8081/swagger-ui/index.html | Swagger API 목록 펼치기 → /api/auth/login 파라미터 입력창 | 20초 |
 
-> **씬 3이 핵심**: 실시간 알림을 직접 만들려면 `/admin` → 수동 알림 발송 버튼 사용. 공공 API 수집 1시간 주기라 기다리지 않아도 됨.
-> **편집 팁**: 씬 3 비중을 가장 크게, 씬 1~2는 빠르게 편집.
-> **GIF 변환**: ezgif.com (무료, 브라우저)으로 동영상 → GIF 변환 후 README에 직접 삽입 가능.
+---
+
+**[파트 B] K8s HPA 오토스케일링 데모 — 사전 준비**
+
+```bash
+# 1. AWS 콘솔에서 EC2 인스턴스(safealert-minikube) 시작
+# 2. 새 Public IP 확인 후 SSH 접속
+ssh -i "C:\Users\hhho0\Desktop\safealert-key.pem" ubuntu@<새IP>
+
+# 3. minikube 상태 확인 (중지 후 재시작 시 minikube도 재기동 필요할 수 있음)
+minikube status
+# 안 떠 있으면: minikube start --memory=12288 --cpus=4 --driver=docker
+
+# 4. Pod 상태 확인
+kubectl get pods -A
+```
+
+| 씬 | 화면 | 내용 | 예상 시간 |
+|----|------|------|---------|
+| 5 | VM 터미널 | `kubectl get pods -A` — 전체 23개 Pod Running 출력 | 20초 |
+| 6 | VM 터미널 | `kubectl get hpa -n safealert-app` → CPU 부하 발생 → REPLICAS 2→4 증가 장면 | 1분 |
+
+> **씬 6 재현 방법**: `kubectl exec`로 api-gateway Pod에 `yes > /dev/null &` 실행하면 CPU 133% 유도 가능
+> **편집 팁**: 파트 A 씬 3 + 파트 B 씬 6 비중을 크게, 나머지는 빠르게 편집
+> **GIF 변환**: ezgif.com (무료, 브라우저)으로 동영상 → GIF 변환 후 README에 직접 삽입 가능
 
 | D-2 | 시퀀스 다이어그램 (로그인, 알림 발송 플로우) — docs/08_시퀀스_다이어그램.md | [O] |
 | D-3 | 기술 선택 이유 문서 (Kafka vs RabbitMQ, MSA 이유 등) — docs/07_기술선택_이유.md | [O] |
@@ -583,18 +618,15 @@
 | M1: 인프라 완성 | K8s + Kafka + Redis + DB 모두 Running | ✅ 완료 |
 | M2: 인증/구독 완성 | 로그인 → JWT → 구독 등록 플로우 동작 | ✅ 완료 |
 | M3: 알림 파이프라인 완성 | 공공 API → WebSocket 알림 E2E 동작 | ✅ 완료 |
-| M4: 장애 복원력 완성 | Circuit Breaker / Saga / Chaos Test 통과 | ⬜ 대기 |
-| M5: 관측 가능성 완성 | Grafana / Jaeger / ELK 모두 동작 | ⬜ 대기 |
-| M6: 프로젝트 완료 | 부하 테스트 통과 + 문서 완성 | ⬜ 대기 |
+| M4: 장애 복원력 완성 | Circuit Breaker / Saga / Chaos Test 통과 | ✅ 완료 |
+| M5: 관측 가능성 완성 | Grafana / Jaeger / ELK 모두 동작 | ✅ 완료 |
+| M6: 프로젝트 완료 | K8s 전체 배포 + HPA 스케일아웃 + 문서 완성 | ✅ 완료 |
 
 ---
 
 ## 서비스 배포 구성 (매니페스트 기준)
 
-> ⚠️ 아래는 K8s 매니페스트에 정의된 목표 구성이다.
-> 매니페스트(deployment/service YAML)는 7개 서비스 모두 작성 완료됐으나,
-> 실제 클러스터 전체 배포·검증은 Phase 6에서 수행한다.
-> 일상 로컬 개발은 docker-compose(인프라) + gradlew bootRun(서비스)로 진행한다.
+ > Phase 6에서 AWS EC2 t3.xlarge minikube 위에 전체 배포 완료. 아래 구성 그대로 Running 확인됨.
 
 | 서비스 | 포트 | Replica | 네임스페이스 |
 |--------|------|---------|------------|
@@ -612,24 +644,27 @@
 
 ---
 
-## Phase 6 — K8s 전체 실배포 검증 + HPA ⬜
+## Phase 6 — K8s 전체 실배포 검증 + HPA ✅
 
 **배경:** Phase 0~5 동안 K8s 매니페스트는 작성했으나(각 서비스 k8s/), 실제 운영·검증은
 로컬 docker-compose + gradlew bootRun으로 진행했다. 포트폴리오에서 K8s를 실증하기 위해
 전체를 minikube에 1회 배포하고, 기획서 5.3이 약속한 HPA 오토스케일링까지 구현·캡처한다.
+로컬 PC RAM 부족(여유 4GB)으로 AWS EC2 t3.xlarge(RAM 16GB) VM에서 진행 — 완료.
 
 | # | 작업 | 완료 |
 |---|------|------|
-| 6-1 | minikube 기동 (--memory=12288 --cpus=8) | [ ] |
-| 6-2 | namespaces.yaml 적용 (safealert-app·safealert-infra) | [ ] |
-| 6-3 | secrets.yaml 적용 | [ ] |
-| 6-4 | 인프라 배포 (PostgreSQL·MongoDB·Redis Helm + Kafka YAML) Running 확인 | [ ] |
-| 6-5 | 6개 백엔드 이미지 빌드 + minikube image load (imagePullPolicy: Never) | [ ] |
-| 6-6 | frontend 이미지 빌드 + load | [ ] |
-| 6-7 | 7개 서비스 apply + safealert-app Pod 전체 Running | [ ] |
+| 6-0a | AWS EC2 t3.xlarge (Ubuntu 26.04, 30GB) 생성 + SSH 접속 | [O] |
+| 6-0b | Docker·minikube·kubectl·Helm 설치 (VM 위) | [O] |
+| 6-1 | minikube 기동 (--memory=12288 --cpus=4, VM 위에서 실행) | [O] |
+| 6-2 | namespaces.yaml 적용 (safealert-app·safealert-infra) | [O] |
+| 6-3 | secrets.yaml 적용 | [O] |
+| 6-4 | 인프라 배포 (PostgreSQL·MongoDB·Redis Helm + Kafka YAML) Running 확인 | [O] |
+| 6-5 | 6개 백엔드 이미지 빌드 + minikube image load (imagePullPolicy: Never) | [O] |
+| 6-6 | frontend 이미지 빌드 + load | [O] |
+| 6-7 | 7개 서비스 apply + safealert-app Pod 전체 Running | [O] |
 | 6-8 | port-forward 동작 검증 (로그인·구독·알림 E2E) | [ ] |
-| 6-9 | kubectl get pods -A 전체 Running 캡처 | [ ] |
-| 6-10 | metrics-server addon 활성화 | [ ] |
-| 6-11 | HPA YAML 작성 (api-gateway·alert-processor, CPU 70%, min2/max5) apply | [ ] |
-| 6-12 | k6 부하 중 HPA 스케일아웃 캡처 (기획서 5.3 이행) | [ ] |
-| 6-13 | README 배포 검증 섹션 + 캡처 첨부, 문서 현황 정정 | [ ] |
+| 6-9 | kubectl get pods -A 전체 Running 캡처 | [O] |
+| 6-10 | metrics-server addon 활성화 | [O] |
+| 6-11 | HPA YAML 작성 (api-gateway·alert-processor, CPU 70%, min2/max5) apply | [O] |
+| 6-12 | k6 부하 중 HPA 스케일아웃 캡처 — cpu 133%/70% → REPLICAS 2→4 확인 | [O] |
+| 6-13 | README 배포 검증 섹션 + 캡처 첨부, 문서 현황 정정 | [O] |
