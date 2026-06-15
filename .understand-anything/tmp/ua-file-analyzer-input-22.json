@@ -1,0 +1,21 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "docs/mockup/safealert_admin.html", "language": "html", "sizeLines": 471, "fileCategory": "markup"},
+    {"path": "docs/mockup/safealert_dashboard.html", "language": "html", "sizeLines": 469, "fileCategory": "markup"},
+    {"path": "docs/mockup/safealert_history.html", "language": "html", "sizeLines": 315, "fileCategory": "markup"},
+    {"path": "docs/mockup/safealert_landing.html", "language": "html", "sizeLines": 451, "fileCategory": "markup"},
+    {"path": "docs/mockup/safealert_login.html", "language": "html", "sizeLines": 334, "fileCategory": "markup"},
+    {"path": "docs/mockup/safealert_profile.html", "language": "html", "sizeLines": 332, "fileCategory": "markup"},
+    {"path": "docs/mockup/safealert_subscriptions.html", "language": "html", "sizeLines": 407, "fileCategory": "markup"}
+  ],
+  "batchImportData": {
+    "docs/mockup/safealert_admin.html": [],
+    "docs/mockup/safealert_dashboard.html": [],
+    "docs/mockup/safealert_history.html": [],
+    "docs/mockup/safealert_landing.html": [],
+    "docs/mockup/safealert_login.html": [],
+    "docs/mockup/safealert_profile.html": [],
+    "docs/mockup/safealert_subscriptions.html": []
+  }
+}

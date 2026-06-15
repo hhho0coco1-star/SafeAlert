@@ -1,0 +1,37 @@
+﻿{
+    "batchIndex":  28,
+    "files":  [
+                  {
+                      "path":  "subscription-service/build.gradle",
+                      "language":  "gradle",
+                      "sizeLines":  58,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "subscription-service/gradlew.bat",
+                      "language":  "batch",
+                      "sizeLines":  91,
+                      "fileCategory":  "script"
+                  },
+                  {
+                      "path":  "subscription-service/settings.gradle",
+                      "language":  "gradle",
+                      "sizeLines":  0,
+                      "fileCategory":  "config"
+                  }
+              ],
+    "batchImportData":  {
+                            "subscription-service/build.gradle":  [
+
+                                                                  ],
+                            "subscription-service/gradlew.bat":  [
+
+                                                                 ],
+                            "subscription-service/settings.gradle":  [
+
+                                                                     ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

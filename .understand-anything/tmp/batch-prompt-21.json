@@ -1,0 +1,145 @@
+﻿{
+    "batchIndex":  21,
+    "files":  [
+                  {
+                      "path":  "docs/01_湲고쉷??md",
+                      "language":  "markdown",
+                      "sizeLines":  180,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/02_?쒖뒪?쒖븘?ㅽ뀓泥?md",
+                      "language":  "markdown",
+                      "sizeLines":  367,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/03_API_DB?ㅺ퀎.md",
+                      "language":  "markdown",
+                      "sizeLines":  842,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/04_媛쒕컻怨꾪쉷_WBS.md",
+                      "language":  "markdown",
+                      "sizeLines":  670,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/05_媛쒕컻?섍꼍.md",
+                      "language":  "markdown",
+                      "sizeLines":  166,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/05_?꾨줎?몄뿏???붾㈃?ㅺ퀎.md",
+                      "language":  "markdown",
+                      "sizeLines":  541,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/05_?숈뒿寃利앷??대뱶.md",
+                      "language":  "markdown",
+                      "sizeLines":  1034,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/06_湲곗닠寃곗젙洹쇨굅_ADR.md",
+                      "language":  "markdown",
+                      "sizeLines":  288,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/06_遺?섑뀒?ㅽ듃_寃곌낵.md",
+                      "language":  "markdown",
+                      "sizeLines":  194,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/07_湲곗닠?좏깮_?댁쑀.md",
+                      "language":  "markdown",
+                      "sizeLines":  196,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/08_?쒗???ㅼ씠?닿렇??md",
+                      "language":  "markdown",
+                      "sizeLines":  164,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/09_?μ븷?뚯뒪??寃곌낵.md",
+                      "language":  "markdown",
+                      "sizeLines":  139,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/10_?몃윭釉붿뒋??湲곕줉.md",
+                      "language":  "markdown",
+                      "sizeLines":  133,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/11_?곕え?곸긽_?쒕굹由ъ삤.md",
+                      "language":  "markdown",
+                      "sizeLines":  277,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docs/db_init.sql",
+                      "language":  "sql",
+                      "sizeLines":  115,
+                      "fileCategory":  "data"
+                  }
+              ],
+    "batchImportData":  {
+                            "docs/01_湲고쉷??md":  [
+
+                                                ],
+                            "docs/02_?쒖뒪?쒖븘?ㅽ뀓泥?md":  [
+
+                                                      ],
+                            "docs/03_API_DB?ㅺ퀎.md":  [
+
+                                                     ],
+                            "docs/04_媛쒕컻怨꾪쉷_WBS.md":  [
+
+                                                      ],
+                            "docs/05_媛쒕컻?섍꼍.md":  [
+
+                                                  ],
+                            "docs/05_?꾨줎?몄뿏???붾㈃?ㅺ퀎.md":  [
+
+                                                          ],
+                            "docs/05_?숈뒿寃利앷??대뱶.md":  [
+
+                                                       ],
+                            "docs/06_湲곗닠寃곗젙洹쇨굅_ADR.md":  [
+
+                                                         ],
+                            "docs/06_遺?섑뀒?ㅽ듃_寃곌낵.md":  [
+
+                                                        ],
+                            "docs/07_湲곗닠?좏깮_?댁쑀.md":  [
+
+                                                      ],
+                            "docs/08_?쒗???ㅼ씠?닿렇??md":  [
+
+                                                         ],
+                            "docs/09_?μ븷?뚯뒪??寃곌낵.md":  [
+
+                                                       ],
+                            "docs/10_?몃윭釉붿뒋??湲곕줉.md":  [
+
+                                                       ],
+                            "docs/11_?곕え?곸긽_?쒕굹由ъ삤.md":  [
+
+                                                         ],
+                            "docs/db_init.sql":  [
+
+                                                 ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

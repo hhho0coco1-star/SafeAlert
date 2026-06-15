@@ -1,0 +1,38 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "docs/01_기획서.md", "language": "markdown", "sizeLines": 180, "fileCategory": "docs"},
+    {"path": "docs/02_시스템아키텍처.md", "language": "markdown", "sizeLines": 367, "fileCategory": "docs"},
+    {"path": "docs/03_API_DB설계.md", "language": "markdown", "sizeLines": 842, "fileCategory": "docs"},
+    {"path": "docs/04_개발계획_WBS.md", "language": "markdown", "sizeLines": 670, "fileCategory": "docs"},
+    {"path": "docs/05_개발환경.md", "language": "markdown", "sizeLines": 166, "fileCategory": "docs"},
+    {"path": "docs/05_프론트엔드_화면설계.md", "language": "markdown", "sizeLines": 541, "fileCategory": "docs"},
+    {"path": "docs/05_학습검증가이드.md", "language": "markdown", "sizeLines": 1034, "fileCategory": "docs"},
+    {"path": "docs/06_기술결정근거_ADR.md", "language": "markdown", "sizeLines": 288, "fileCategory": "docs"},
+    {"path": "docs/06_부하테스트_결과.md", "language": "markdown", "sizeLines": 194, "fileCategory": "docs"},
+    {"path": "docs/07_기술선택_이유.md", "language": "markdown", "sizeLines": 196, "fileCategory": "docs"},
+    {"path": "docs/08_시퀀스_다이어그램.md", "language": "markdown", "sizeLines": 164, "fileCategory": "docs"},
+    {"path": "docs/09_장애테스트_결과.md", "language": "markdown", "sizeLines": 139, "fileCategory": "docs"},
+    {"path": "docs/10_트러블슈팅_기록.md", "language": "markdown", "sizeLines": 133, "fileCategory": "docs"},
+    {"path": "docs/11_데모영상_시나리오.md", "language": "markdown", "sizeLines": 277, "fileCategory": "docs"},
+    {"path": "docs/db_init.sql", "language": "sql", "sizeLines": 115, "fileCategory": "data"}
+  ],
+  "batchImportData": {
+    "docs/01_기획서.md": [],
+    "docs/02_시스템아키텍처.md": [],
+    "docs/03_API_DB설계.md": [],
+    "docs/04_개발계획_WBS.md": [],
+    "docs/05_개발환경.md": [],
+    "docs/05_프론트엔드_화면설계.md": [],
+    "docs/05_학습검증가이드.md": [],
+    "docs/06_기술결정근거_ADR.md": [],
+    "docs/06_부하테스트_결과.md": [],
+    "docs/07_기술선택_이유.md": [],
+    "docs/08_시퀀스_다이어그램.md": [],
+    "docs/09_장애테스트_결과.md": [],
+    "docs/10_트러블슈팅_기록.md": [],
+    "docs/11_데모영상_시나리오.md": [],
+    "docs/db_init.sql": []
+  },
+  "neighborMap": {}
+}

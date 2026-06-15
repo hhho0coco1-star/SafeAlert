@@ -1,0 +1,36 @@
+{
+  "batchIndex": 23,
+  "files": [
+    {
+      "path": "frontend/.env.production",
+      "language": "config",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/README.md",
+      "language": "markdown",
+      "sizeLines": 16,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "frontend/index.html",
+      "language": "html",
+      "sizeLines": 13,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "sizeLines": 34,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "frontend/.env.production": [],
+    "frontend/README.md": [],
+    "frontend/index.html": [],
+    "frontend/package.json": []
+  },
+  "neighborMap": {}
+}

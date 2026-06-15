@@ -1,0 +1,19 @@
+﻿{
+    "batchIndex":  11,
+    "files":  [
+                  {
+                      "path":  "auth-service/Dockerfile",
+                      "language":  "dockerfile",
+                      "sizeLines":  4,
+                      "fileCategory":  "infra"
+                  }
+              ],
+    "batchImportData":  {
+                            "auth-service/Dockerfile":  [
+
+                                                        ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

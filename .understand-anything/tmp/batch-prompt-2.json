@@ -1,0 +1,203 @@
+﻿{
+    "batchIndex":  2,
+    "files":  [
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/config/SecurityConfig.java",
+                      "language":  "java",
+                      "sizeLines":  55,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/controller/AuthController.java",
+                      "language":  "java",
+                      "sizeLines":  131,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+                      "language":  "java",
+                      "sizeLines":  100,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java",
+                      "language":  "java",
+                      "sizeLines":  16,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java",
+                      "language":  "java",
+                      "sizeLines":  19,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+                      "language":  "java",
+                      "sizeLines":  18,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java",
+                      "language":  "java",
+                      "sizeLines":  18,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java",
+                      "language":  "java",
+                      "sizeLines":  15,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+                      "language":  "java",
+                      "sizeLines":  21,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+                      "language":  "java",
+                      "sizeLines":  17,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java",
+                      "language":  "java",
+                      "sizeLines":  15,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java",
+                      "language":  "java",
+                      "sizeLines":  21,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java",
+                      "language":  "java",
+                      "sizeLines":  75,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+                      "language":  "java",
+                      "sizeLines":  33,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java",
+                      "language":  "java",
+                      "sizeLines":  68,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java",
+                      "language":  "java",
+                      "sizeLines":  87,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/service/AuthService.java",
+                      "language":  "java",
+                      "sizeLines":  259,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java",
+                      "language":  "java",
+                      "sizeLines":  61,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "auth-service/src/test/java/com/safealert/auth/service/AuthServiceTest.java",
+                      "language":  "java",
+                      "sizeLines":  159,
+                      "fileCategory":  "code"
+                  }
+              ],
+    "batchImportData":  {
+                            "auth-service/src/main/java/com/safealert/auth/config/SecurityConfig.java":  [
+                                                                                                             "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java",
+                                                                                                             "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java",
+                                                                                                             "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java"
+                                                                                                         ],
+                            "auth-service/src/main/java/com/safealert/auth/controller/AuthController.java":  [
+                                                                                                                 "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+                                                                                                                 "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java",
+                                                                                                                 "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java",
+                                                                                                                 "auth-service/src/main/java/com/safealert/auth/service/AuthService.java"
+                                                                                                             ],
+                            "auth-service/src/main/java/com/safealert/auth/domain/User.java":  [
+
+                                                                                               ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java":  [
+
+                                                                                                          ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java":  [
+
+                                                                                                             ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java":  [
+
+                                                                                                    ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java":  [
+
+                                                                                                  ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java":  [
+
+                                                                                                       ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java":  [
+
+                                                                                                     ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java":  [
+
+                                                                                                     ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java":  [
+
+                                                                                                             ],
+                            "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java":  [
+
+                                                                                                         ],
+                            "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java":  [
+                                                                                                                         "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+                                                                                                                         "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+                                                                                                                         "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java"
+                                                                                                                     ],
+                            "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java":  [
+                                                                                                                 "auth-service/src/main/java/com/safealert/auth/domain/User.java"
+                                                                                                             ],
+                            "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java":  [
+
+                                                                                                        ],
+                            "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java":  [
+
+                                                                                                                                      ],
+                            "auth-service/src/main/java/com/safealert/auth/service/AuthService.java":  [
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+                                                                                                           "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java"
+                                                                                                       ],
+                            "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java":  [
+                                                                                                                       "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+                                                                                                                       "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java"
+                                                                                                                   ],
+                            "auth-service/src/test/java/com/safealert/auth/service/AuthServiceTest.java":  [
+                                                                                                               "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+                                                                                                               "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+                                                                                                               "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+                                                                                                               "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+                                                                                                               "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+                                                                                                               "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java"
+                                                                                                           ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

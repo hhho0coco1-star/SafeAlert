@@ -1,0 +1,1770 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "files": [
+    {
+      "path": ".claude/CLAUDE.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".claude/settings.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".claude/settings.local.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".env.example",
+      "language": "config",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/fingerprints.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/assemble-review.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/assembled-graph.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-1-part-1.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-10.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-11.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-12.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-13.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-14.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-15.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-16.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-17.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-18.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-19.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-2.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-20.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-21.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-22.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-23.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-24.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-25.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-26.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-27.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-28.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-29.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-3.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-30.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-31.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-32.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-4.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-5.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-6.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-7.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-8.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-9.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batches.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/layers.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/review.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/scan-result.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/tour.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/knowledge-graph.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/assemble-final.cjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-1.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-10.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-11.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-12.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-13.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-14.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-15.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-16.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-17.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-18.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-19.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-2.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-20.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-21.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-22.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-23.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-24.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-25.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-26.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-27.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-28.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-29.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-3.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-30.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-31.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-32.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-4.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-5.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-6.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-7.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-8.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-9.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/fingerprint-input.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-1.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-10.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-11.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-12.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-13.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-14.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-15.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-16.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-17.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-18.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-19.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-2.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-20.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-21.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-22.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-23.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-24.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-25.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-26.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-27.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-28.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-29.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-3.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-30.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-31.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-32.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-4.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-5.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-6.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-7.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-8.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-9.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-import-map-input.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-import-map-output.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-inline-validate.cjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-scan-files.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "공부/info.txt",
+      "language": "txt",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "alert-collector-service/.gitattributes",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/build.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-collector-service/gradle/wrapper/gradle-wrapper.jar",
+      "language": "jar",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/gradlew",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/gradlew.bat",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "alert-collector-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-collector-service/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-collector-service/settings.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/AlertCollectorServiceApplication.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/config/AppConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/kafka/AlertKafkaProducer.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/service/DuplicateFilterService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/service/MeasureStationCacheService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/resources/application.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/src/test/java/com/safealert/collector/AlertCollectorServiceApplicationTests.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/.gitattributes",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/build.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-processor-service/gradle/wrapper/gradle-wrapper.jar",
+      "language": "jar",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/gradlew",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/gradlew.bat",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "alert-processor-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-processor-service/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-processor-service/settings.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/AlertProcessorServiceApplication.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/resources/application.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/src/test/java/com/safealert/processor/AlertProcessorServiceApplicationTests.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/build.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "api-gateway/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/gradlew.bat",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "api-gateway/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "api-gateway/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "api-gateway/settings.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/resources/application.yml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/build.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "auth-service/gradle.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/gradlew.bat",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "auth-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "auth-service/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "auth-service/settings.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/config/SecurityConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/controller/AuthController.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/service/AuthService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/resources/application.yml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/src/main/resources/sql/schema.sql",
+      "language": "sql",
+      "fileCategory": "data"
+    },
+    {
+      "path": "auth-service/src/test/java/com/safealert/auth/service/AuthServiceTest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "docker-compose.yml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "docs/01_기획서.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/02_시스템아키텍처.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/03_API_DB설계.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/04_개발계획_WBS.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/05_개발환경.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/05_프론트엔드_화면설계.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/05_학습검증가이드.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/06_기술결정근거_ADR.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/06_부하테스트_결과.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/07_기술선택_이유.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/08_시퀀스_다이어그램.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/09_장애테스트_결과.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/10_트러블슈팅_기록.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/11_데모영상_시나리오.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/db_init.sql",
+      "language": "sql",
+      "fileCategory": "data"
+    },
+    {
+      "path": "docs/mockup/safealert_admin.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_dashboard.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_history.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_landing.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_login.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_profile.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_subscriptions.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/.env.production",
+      "language": "config",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "frontend/eslint.config.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/index.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "frontend/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "frontend/nginx.conf",
+      "language": "conf",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "frontend/src/api/axios.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/App.css",
+      "language": "css",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/App.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/Navbar.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/context/AuthContext.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/hooks/useWebSocket.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/index.css",
+      "language": "css",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/main.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Admin.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Dashboard.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/FindPassword.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/History.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Landing.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Login.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/OAuthSuccess.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Privacy.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Profile.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/ResetPassword.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Subscriptions.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Terms.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/TestPage.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/routes/AdminRoute.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/routes/GuestRoute.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/routes/ProtectedRoute.jsx",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/vite.config.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "infra/docker/grafana/dashboard-4701-fixed.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/grafana/dashboard-4701-raw.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/grafana/dashboard-4701.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/grafana/docker.lnk",
+      "language": "lnk",
+      "fileCategory": "code"
+    },
+    {
+      "path": "infra/docker/grafana/provisioning/datasources/prometheus.yml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/init-postgresql.sql",
+      "language": "sql",
+      "fileCategory": "data"
+    },
+    {
+      "path": "infra/hpa.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/kafka/kafka.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/kafka/values.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/mongodb/values.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/namespaces.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/postgresql/values.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/redis/values.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/secrets.yaml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "k8s/monitoring/elasticsearch.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "k8s/monitoring/kibana.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "k8s/monitoring/logstash.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "load-test/login.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "load-test/subscription.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "load-test/websocket.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "logstash.conf",
+      "language": "conf",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/build.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "notification-service/gradle.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/gradle/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/gradlew.bat",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "notification-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "notification-service/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "notification-service/settings.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/SecurityConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/WebSocketConfig.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/AdminAlertResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/AdminStatsResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/ManualAlertRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/NotificationResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/NotificationSummaryResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/kafka/AlertProcessedConsumer.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/resources/application.yml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/src/main/resources/sql/schema.sql",
+      "language": "sql",
+      "fileCategory": "data"
+    },
+    {
+      "path": "prometheus.yml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "subscription-service/build.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "subscription-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/gradlew.bat",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "subscription-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "subscription-service/k8s/service.yaml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "subscription-service/settings.gradle",
+      "language": "gradle",
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "language": "java",
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/resources/application.yml",
+      "language": "yaml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/src/main/resources/sql/data.sql",
+      "language": "sql",
+      "fileCategory": "data"
+    },
+    {
+      "path": "subscription-service/src/main/resources/sql/schema.sql",
+      "language": "sql",
+      "fileCategory": "data"
+    },
+    {
+      "path": "todo.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    }
+  ]
+}

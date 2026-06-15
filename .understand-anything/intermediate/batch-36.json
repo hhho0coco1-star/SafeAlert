@@ -1,0 +1,334 @@
+{
+  "nodes": [
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "코드베이스 분석 도구(understand-anything)가 무시할 파일·디렉터리 패턴을 정의하는 ignore 설정 파일로, .gitignore에서 파생된 Java 빌드 아티팩트, 환경 변수 파일, 시크릿 파일 등을 제외한다.",
+      "tags": ["configuration", "build-system", "documentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/tmp/assemble-final.cjs",
+      "type": "file",
+      "name": "assemble-final.cjs",
+      "filePath": ".understand-anything/tmp/assemble-final.cjs",
+      "summary": "분산된 배치 분석 결과물(assembled-graph.json, layers.json, tour.json, scan-result.json)을 읽어 최종 knowledge-graph.json을 생성하는 Node.js CJS 조립 스크립트이다.",
+      "tags": ["utility", "script", "data-pipeline"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/tmp/ua-inline-validate.cjs",
+      "type": "file",
+      "name": "ua-inline-validate.cjs",
+      "filePath": ".understand-anything/tmp/ua-inline-validate.cjs",
+      "summary": "조립된 knowledge graph JSON을 검증하는 Node.js 스크립트로, 중복 노드 ID, 필수 필드 누락, 댕글링 엣지, 고아 노드, 레이어·투어 참조 오류 등 6가지 검증 규칙을 실행하고 결과를 review.json으로 저장한다.",
+      "tags": ["utility", "validation", "script"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:공부/info.txt",
+      "type": "document",
+      "name": "info.txt",
+      "filePath": "공부/info.txt",
+      "summary": "Claude Code 사용 규칙, MSA·클라우드 핵심 용어(Minikube, Kubernetes, Kafka, Redis, STOMP, gRPC, docker-compose 등) 및 효과적인 AI 프롬프트 작성 기법, React+Vite 선택 이유를 정리한 개인 학습 메모 문서이다.",
+      "tags": ["documentation", "development", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:alert-collector-service/.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": "alert-collector-service/.gitattributes",
+      "summary": "alert-collector-service의 Git 줄 끝 처리를 제어하는 속성 파일로, gradlew는 LF, .bat 파일은 CRLF, .jar 파일은 바이너리로 지정한다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:alert-collector-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "config",
+      "name": "gradle-wrapper.jar",
+      "filePath": "alert-collector-service/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "alert-collector-service의 Gradle Wrapper 바이너리 JAR로, 지정된 버전의 Gradle을 자동 다운로드·실행하여 빌드 환경을 통일시키는 바이너리 아티팩트이다.",
+      "tags": ["build-system", "configuration", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:alert-collector-service/gradle/wrapper/gradle-wrapper.properties",
+      "type": "config",
+      "name": "gradle-wrapper.properties",
+      "filePath": "alert-collector-service/gradle/wrapper/gradle-wrapper.properties",
+      "summary": "alert-collector-service에서 사용할 Gradle 8.14.4 바이너리 배포 URL 및 로컬 저장 경로를 지정하는 Gradle Wrapper 설정 파일이다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-collector-service/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "alert-collector-service/gradlew",
+      "summary": "alert-collector-service의 POSIX 호환 Gradle Wrapper 실행 스크립트로, JVM을 탐색하고 gradle-wrapper.jar를 사용해 지정된 Gradle 버전을 자동으로 부트스트랩한 뒤 빌드 태스크를 실행한다.",
+      "tags": ["build-system", "script", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:alert-processor-service/.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": "alert-processor-service/.gitattributes",
+      "summary": "alert-processor-service의 Git 줄 끝 처리를 제어하는 속성 파일로, gradlew는 LF, .bat 파일은 CRLF, .jar 파일은 바이너리로 지정한다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:alert-processor-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "config",
+      "name": "gradle-wrapper.jar",
+      "filePath": "alert-processor-service/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "alert-processor-service의 Gradle Wrapper 바이너리 JAR로, 지정된 버전의 Gradle을 자동 다운로드·실행하여 빌드 환경을 통일시키는 바이너리 아티팩트이다.",
+      "tags": ["build-system", "configuration", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:alert-processor-service/gradle/wrapper/gradle-wrapper.properties",
+      "type": "config",
+      "name": "gradle-wrapper.properties",
+      "filePath": "alert-processor-service/gradle/wrapper/gradle-wrapper.properties",
+      "summary": "alert-processor-service에서 사용할 Gradle 8.14.4 바이너리 배포 URL 및 로컬 저장 경로를 지정하는 Gradle Wrapper 설정 파일이다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-processor-service/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "alert-processor-service/gradlew",
+      "summary": "alert-processor-service의 POSIX 호환 Gradle Wrapper 실행 스크립트로, JVM을 탐색하고 gradle-wrapper.jar를 사용해 지정된 Gradle 버전을 자동으로 부트스트랩한 뒤 빌드 태스크를 실행한다.",
+      "tags": ["build-system", "script", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:api-gateway/.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": "api-gateway/.gitattributes",
+      "summary": "api-gateway 모듈의 Git 줄 끝 처리를 제어하는 속성 파일로, gradlew는 LF, .bat 파일은 CRLF, .jar 파일은 바이너리로 지정한다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:api-gateway/gradle/wrapper/gradle-wrapper.jar",
+      "type": "config",
+      "name": "gradle-wrapper.jar",
+      "filePath": "api-gateway/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "api-gateway 모듈의 Gradle Wrapper 바이너리 JAR로, 지정된 버전의 Gradle을 자동 다운로드·실행하여 빌드 환경을 통일시키는 바이너리 아티팩트이다.",
+      "tags": ["build-system", "configuration", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:api-gateway/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "api-gateway/gradlew",
+      "summary": "api-gateway 모듈의 POSIX 호환 Gradle Wrapper 실행 스크립트로, JVM을 탐색하고 gradle-wrapper.jar를 사용해 지정된 Gradle 버전을 자동으로 부트스트랩한 뒤 빌드 태스크를 실행한다.",
+      "tags": ["build-system", "script", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:auth-service/.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": "auth-service/.gitattributes",
+      "summary": "auth-service 모듈의 Git 줄 끝 처리를 제어하는 속성 파일로, gradlew는 LF, .bat 파일은 CRLF, .jar 파일은 바이너리로 지정한다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:auth-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "config",
+      "name": "gradle-wrapper.jar",
+      "filePath": "auth-service/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "auth-service 모듈의 Gradle Wrapper 바이너리 JAR로, 지정된 버전의 Gradle을 자동 다운로드·실행하여 빌드 환경을 통일시키는 바이너리 아티팩트이다.",
+      "tags": ["build-system", "configuration", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "auth-service/gradlew",
+      "summary": "auth-service 모듈의 POSIX 호환 Gradle Wrapper 실행 스크립트로, JVM을 탐색하고 gradle-wrapper.jar를 사용해 지정된 Gradle 버전을 자동으로 부트스트랩한 뒤 빌드 태스크를 실행한다.",
+      "tags": ["build-system", "script", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:notification-service/.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": "notification-service/.gitattributes",
+      "summary": "notification-service 모듈의 Git 줄 끝 처리를 제어하는 속성 파일로, gradlew는 LF, .bat 파일은 CRLF, .jar 파일은 바이너리로 지정한다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:notification-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "config",
+      "name": "gradle-wrapper.jar",
+      "filePath": "notification-service/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "notification-service 모듈의 Gradle Wrapper 바이너리 JAR로, 지정된 버전의 Gradle을 자동 다운로드·실행하여 빌드 환경을 통일시키는 바이너리 아티팩트이다.",
+      "tags": ["build-system", "configuration", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notification-service/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "notification-service/gradlew",
+      "summary": "notification-service 모듈의 POSIX 호환 Gradle Wrapper 실행 스크립트로, JVM을 탐색하고 gradle-wrapper.jar를 사용해 지정된 Gradle 버전을 자동으로 부트스트랩한 뒤 빌드 태스크를 실행한다.",
+      "tags": ["build-system", "script", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:subscription-service/.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": "subscription-service/.gitattributes",
+      "summary": "subscription-service 모듈의 Git 줄 끝 처리를 제어하는 속성 파일로, gradlew는 LF, .bat 파일은 CRLF, .jar 파일은 바이너리로 지정한다.",
+      "tags": ["configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:subscription-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "config",
+      "name": "gradle-wrapper.jar",
+      "filePath": "subscription-service/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "subscription-service 모듈의 Gradle Wrapper 바이너리 JAR로, 지정된 버전의 Gradle을 자동 다운로드·실행하여 빌드 환경을 통일시키는 바이너리 아티팩트이다.",
+      "tags": ["build-system", "configuration", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "subscription-service/gradlew",
+      "summary": "subscription-service 모듈의 POSIX 호환 Gradle Wrapper 실행 스크립트로, JVM을 탐색하고 gradle-wrapper.jar를 사용해 지정된 Gradle 버전을 자동으로 부트스트랩한 뒤 빌드 태스크를 실행한다.",
+      "tags": ["build-system", "script", "infrastructure"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:alert-collector-service/gradlew",
+      "target": "config:alert-collector-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:alert-collector-service/gradlew",
+      "target": "config:alert-collector-service/gradle/wrapper/gradle-wrapper.properties",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:alert-processor-service/gradlew",
+      "target": "config:alert-processor-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:alert-processor-service/gradlew",
+      "target": "config:alert-processor-service/gradle/wrapper/gradle-wrapper.properties",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:api-gateway/gradlew",
+      "target": "config:api-gateway/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:auth-service/gradlew",
+      "target": "config:auth-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notification-service/gradlew",
+      "target": "config:notification-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:subscription-service/gradlew",
+      "target": "config:subscription-service/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:alert-collector-service/.gitattributes",
+      "target": "file:alert-collector-service/gradlew",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:alert-processor-service/.gitattributes",
+      "target": "file:alert-processor-service/gradlew",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:api-gateway/.gitattributes",
+      "target": "file:api-gateway/gradlew",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:auth-service/.gitattributes",
+      "target": "file:auth-service/gradlew",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:notification-service/.gitattributes",
+      "target": "file:notification-service/gradlew",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:subscription-service/.gitattributes",
+      "target": "file:subscription-service/gradlew",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.understand-anything/.understandignore",
+      "target": "file:.understand-anything/tmp/assemble-final.cjs",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.understand-anything/tmp/assemble-final.cjs",
+      "target": "file:.understand-anything/tmp/ua-inline-validate.cjs",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

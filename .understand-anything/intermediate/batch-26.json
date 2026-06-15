@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "config:api-gateway/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "api-gateway/build.gradle",
+      "summary": "api-gateway의 Gradle 빌드 설정 파일로, Spring Boot 3.3.5(Java 17), Spring Cloud Gateway, Redis Reactive, Security, JWT(jjwt 0.12.6), Prometheus, Logstash, OpenTelemetry 에이전트 의존성을 정의하고 Spring Cloud 2023.0.3 BOM을 관리한다.",
+      "tags": ["configuration", "build-system", "spring-boot", "api-gateway", "security"],
+      "complexity": "moderate",
+      "languageNotes": "Spring Cloud Gateway는 Reactive(WebFlux) 기반이므로 spring-boot-starter-data-redis-reactive를 사용한다. Spring Cloud BOM을 통해 버전 충돌을 방지하며, Java 17을 타겟으로 한다."
+    },
+    {
+      "id": "config:api-gateway/settings.gradle",
+      "type": "config",
+      "name": "settings.gradle",
+      "filePath": "api-gateway/settings.gradle",
+      "summary": "api-gateway Gradle 프로젝트의 루트 프로젝트 이름을 'api-gateway'로 설정하는 파일이다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:api-gateway/gradlew.bat",
+      "type": "file",
+      "name": "gradlew.bat",
+      "filePath": "api-gateway/gradlew.bat",
+      "summary": "Windows 환경에서 Gradle Wrapper를 실행하는 표준 배치 스크립트로, JAVA_HOME 검증과 Gradle 래퍼 JAR 실행을 자동화한다.",
+      "tags": ["build-system", "script", "gradle", "windows"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:api-gateway/build.gradle",
+      "target": "config:api-gateway/settings.gradle",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

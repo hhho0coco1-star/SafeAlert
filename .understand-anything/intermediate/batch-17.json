@@ -1,0 +1,33 @@
+{
+  "batchIndex": 17,
+  "nodes": [
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "understand-anything 플러그인의 내부 설정 파일로, 분석 대상 프로젝트 경로 및 옵션을 관리한다.",
+      "tags": ["internal", "tooling", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/fingerprints.json",
+      "type": "config",
+      "name": "fingerprints.json",
+      "filePath": ".understand-anything/fingerprints.json",
+      "summary": "파일 변경 감지를 위한 내부 핑거프린트 캐시 파일로, 분석 재실행 시 변경된 파일만 처리하는 데 사용된다.",
+      "tags": ["internal", "tooling", "cache"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/knowledge-graph.json",
+      "type": "config",
+      "name": "knowledge-graph.json",
+      "filePath": ".understand-anything/knowledge-graph.json",
+      "summary": "프로젝트 전체 코드베이스의 지식 그래프 최종 결과물로, 노드와 엣지 정보를 담은 내부 분석 산출물이다.",
+      "tags": ["internal", "tooling", "knowledge-graph"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": []
+}

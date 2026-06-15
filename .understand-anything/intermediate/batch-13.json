@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "service:notification-service/Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "notification-service/Dockerfile",
+      "summary": "notification-service를 컨테이너화하는 Dockerfile로, eclipse-temurin:17-jre-alpine 이미지에서 이메일·SMS·푸시 알림 발송 서비스 JAR을 실행한다.",
+      "tags": ["containerization", "infrastructure", "deployment", "java"],
+      "complexity": "simple",
+      "languageNotes": "Java 17 LTS 런타임을 사용하며, Alpine 기반 경량 이미지로 구성된다."
+    }
+  ],
+  "edges": []
+}

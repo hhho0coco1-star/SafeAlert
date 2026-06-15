@@ -1,0 +1,275 @@
+{
+  "nodes": [
+    {
+      "id": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "type": "file",
+      "name": "AlertRawConsumer.java",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "summary": "Kafka `alert.raw` 토픽을 구독하여 원시 알림 메시지를 수신하고, 중복 필터링 → 심각도 분류 → MongoDB 저장 → `alert.processed` 토픽 전송의 전체 처리 파이프라인을 조율하는 핵심 Kafka Consumer 컴포넌트이다.",
+      "tags": ["kafka", "event-handler", "middleware", "data-pipeline"],
+      "complexity": "moderate",
+      "languageNotes": "Spring @KafkaListener 애노테이션으로 alert-processor-group 컨슈머 그룹에 등록하여 분산 병렬 처리를 지원하며, Lombok @RequiredArgsConstructor로 의존성을 주입받는다."
+    },
+    {
+      "id": "class:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:AlertRawConsumer",
+      "type": "class",
+      "name": "AlertRawConsumer",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "lineRange": [19, 69],
+      "summary": "Kafka `alert.raw` 토픽 메시지를 수신하여 중복 확인·심각도 분류·저장·재발행을 순차 실행하는 Spring Component 클래스이다.",
+      "tags": ["kafka", "event-handler", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:consume",
+      "type": "function",
+      "name": "consume",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "lineRange": [31, 68],
+      "summary": "Kafka 메시지를 JSON 파싱하여 중복 필터 적용 후 심각도를 분류하고 MongoDB에 저장한 뒤 `alert.processed` 토픽으로 전송하는 메인 소비 메서드이다.",
+      "tags": ["kafka", "event-handler", "data-pipeline"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "type": "file",
+      "name": "ProcessedAlertProducer.java",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "summary": "처리 완료된 알림 객체를 JSON으로 직렬화하여 Kafka `alert.processed` 토픽에 발행하는 프로듀서 서비스이다.",
+      "tags": ["kafka", "service", "serialization"],
+      "complexity": "simple",
+      "languageNotes": "KafkaTemplate을 사용하며 source 값을 파티션 키로 지정해 동일 출처 메시지의 순서를 보장한다."
+    },
+    {
+      "id": "class:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java:ProcessedAlertProducer",
+      "type": "class",
+      "name": "ProcessedAlertProducer",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "lineRange": [13, 28],
+      "summary": "KafkaTemplate을 래핑하여 ProcessedAlert를 `alert.processed` 토픽에 발행하는 Spring Service 클래스이다.",
+      "tags": ["kafka", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java:send",
+      "type": "function",
+      "name": "send",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "lineRange": [19, 27],
+      "summary": "ProcessedAlert 객체를 JSON 문자열로 직렬화하여 `alert.processed` Kafka 토픽에 source를 파티션 키로 전송하는 메서드이다.",
+      "tags": ["kafka", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "type": "file",
+      "name": "ProcessedAlert.java",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "summary": "MongoDB `processed_alerts` 컬렉션에 매핑되는 처리된 알림 도메인 모델로, 출처·분류·심각도·지역·처리 시각 필드를 포함한다.",
+      "tags": ["data-model", "mongodb", "schema-definition"],
+      "complexity": "simple",
+      "languageNotes": "Spring Data MongoDB @Document와 Lombok @Data·@Builder를 조합하여 불변 빌더 패턴을 구현한다."
+    },
+    {
+      "id": "class:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java:ProcessedAlert",
+      "type": "class",
+      "name": "ProcessedAlert",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "lineRange": [13, 25],
+      "summary": "재난·기상 알림의 처리 결과를 저장하는 MongoDB 문서 엔티티 클래스로, 심각도(severity)와 처리 시각(processedAt)을 포함한다.",
+      "tags": ["data-model", "mongodb"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "type": "file",
+      "name": "ProcessedAlertRepository.java",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "summary": "ProcessedAlert 엔티티에 대한 CRUD 연산을 제공하는 Spring Data MongoDB 레포지토리 인터페이스이다.",
+      "tags": ["data-model", "mongodb", "service"],
+      "complexity": "simple",
+      "languageNotes": "MongoRepository<ProcessedAlert, String>을 상속하여 기본 CRUD 메서드를 자동 구현한다."
+    },
+    {
+      "id": "file:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "type": "file",
+      "name": "AlertClassifierService.java",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "summary": "알림 출처(DISASTER/WEATHER/DUST)와 내용 키워드를 분석하여 HIGH·MEDIUM·LOW 심각도를 반환하는 규칙 기반 분류 서비스이다.",
+      "tags": ["service", "validation", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java:classifySeverity",
+      "type": "function",
+      "name": "classifySeverity",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "lineRange": [8, 32],
+      "summary": "source 유형(DISASTER/WEATHER/DUST)과 content 내 한국어 키워드(태풍, 홍수, 매우나쁨 등)를 기반으로 알림의 심각도를 HIGH·MEDIUM·LOW 중 하나로 결정하는 분류 메서드이다.",
+      "tags": ["service", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "type": "file",
+      "name": "DuplicateFilterService.java",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "summary": "Redis의 SetIfAbsent 연산과 24시간 TTL을 활용하여 동일한 출처·제목·발행시각 조합의 중복 알림 처리를 방지하는 서비스이다.",
+      "tags": ["service", "middleware", "validation"],
+      "complexity": "simple",
+      "languageNotes": "StringRedisTemplate의 원자적 setIfAbsent(SETNX) 연산을 통해 분산 환경에서도 안전한 idempotency를 보장한다."
+    },
+    {
+      "id": "function:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java:isDuplicate",
+      "type": "function",
+      "name": "isDuplicate",
+      "filePath": "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "lineRange": [19, 28],
+      "summary": "source:title:issuedAt 복합 키를 Redis에 원자적으로 저장하고, 이미 존재하면 중복으로 판단하여 true를 반환한다.",
+      "tags": ["service", "validation", "middleware"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "target": "class:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:AlertRawConsumer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:consume",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "target": "file:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "target": "file:alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "target": "file:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "target": "file:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:consume",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java:isDuplicate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:consume",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java:classifySeverity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java:consume",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java:send",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "target": "class:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java:ProcessedAlertProducer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java:send",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "target": "file:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "target": "class:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java:ProcessedAlert",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "target": "class:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java:ProcessedAlert",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "target": "file:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "target": "class:alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java:ProcessedAlert",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java:classifySeverity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java:classifySeverity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java:isDuplicate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "target": "function:alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java:isDuplicate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

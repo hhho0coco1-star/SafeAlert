@@ -1,0 +1,672 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/src/App.jsx",
+      "type": "file",
+      "name": "App.jsx",
+      "filePath": "frontend/src/App.jsx",
+      "summary": "React 애플리케이션의 루트 컴포넌트로, BrowserRouter와 AuthProvider를 설정하고 전체 라우트 구조(인증 보호 경로, 관리자 경로, 게스트 경로 포함)를 정의하는 진입점이다.",
+      "tags": ["entry-point", "라우팅", "인증", "컴포넌트"],
+      "complexity": "simple",
+      "languageNotes": "ProtectedRoute, AdminRoute, GuestRoute 등 역할 기반 라우트 가드를 사용하며, AuthProvider로 전체 앱을 감싸 인증 컨텍스트를 전역으로 공급한다."
+    },
+    {
+      "id": "file:frontend/src/api/axios.js",
+      "type": "file",
+      "name": "axios.js",
+      "filePath": "frontend/src/api/axios.js",
+      "summary": "Axios 인스턴스를 생성하고 JWT 액세스 토큰 자동 첨부, 401 응답 시 리프레시 토큰으로 자동 재발급 및 실패한 요청 큐 재처리 로직을 인터셉터로 구현한 API 클라이언트 모듈이다.",
+      "tags": ["서비스", "api-handler", "인증", "middleware"],
+      "complexity": "moderate",
+      "languageNotes": "isRefreshing 플래그와 failedQueue 배열로 동시 다발 401 재시도 경쟁 조건을 방지하는 패턴을 구현하였다."
+    },
+    {
+      "id": "file:frontend/src/components/Navbar.jsx",
+      "type": "file",
+      "name": "Navbar.jsx",
+      "filePath": "frontend/src/components/Navbar.jsx",
+      "summary": "로그인/비로그인 상태에 따라 다른 네비게이션 바를 렌더링하며, 사용자 드롭다운 메뉴와 로그아웃 기능을 포함하는 공통 네비게이션 컴포넌트다.",
+      "tags": ["컴포넌트", "인증", "네비게이션", "ui"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/context/AuthContext.jsx",
+      "type": "file",
+      "name": "AuthContext.jsx",
+      "filePath": "frontend/src/context/AuthContext.jsx",
+      "summary": "React Context API를 활용하여 로그인 상태, 액세스 토큰, 사용자 정보를 전역으로 관리하고 login/logout 함수를 공급하는 인증 컨텍스트 프로바이더 및 커스텀 훅이다.",
+      "tags": ["컨텍스트", "인증", "상태관리", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/hooks/useWebSocket.js",
+      "type": "file",
+      "name": "useWebSocket.js",
+      "filePath": "frontend/src/hooks/useWebSocket.js",
+      "summary": "STOMP over SockJS를 사용해 여러 토픽을 구독하고 메시지 수신 시 콜백을 호출하는 재사용 가능한 WebSocket 커스텀 훅으로, 자동 재연결과 클린업을 처리한다.",
+      "tags": ["hook", "websocket", "실시간", "utility"],
+      "complexity": "simple",
+      "languageNotes": "onMessage/onConnect 콜백을 ref에 저장하여 stale closure 문제를 피하는 패턴을 사용하며, topics.join(',')를 의존성으로 삼아 구독 토픽 변경 시만 재연결한다."
+    },
+    {
+      "id": "file:frontend/src/main.jsx",
+      "type": "file",
+      "name": "main.jsx",
+      "filePath": "frontend/src/main.jsx",
+      "summary": "Vite 기반 React 애플리케이션의 DOM 마운트 진입점으로, StrictMode 안에 App 컴포넌트를 렌더링한다.",
+      "tags": ["entry-point", "초기화", "컴포넌트"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/pages/Admin.jsx",
+      "type": "file",
+      "name": "Admin.jsx",
+      "filePath": "frontend/src/pages/Admin.jsx",
+      "summary": "관리자 전용 대시보드 페이지로, 시스템 통계·최근 알림·회원 목록을 조회하고 수동 알림 발송 및 사용자 권한 변경 기능을 제공하는 복잡한 관리 화면이다.",
+      "tags": ["페이지", "관리자", "api-handler", "대시보드"],
+      "complexity": "complex",
+      "languageNotes": "Promise.allSettled로 4개 API를 병렬 호출하고, 모달과 토스트 알림을 조합하여 UX를 구성한다."
+    },
+    {
+      "id": "file:frontend/src/pages/Dashboard.jsx",
+      "type": "file",
+      "name": "Dashboard.jsx",
+      "filePath": "frontend/src/pages/Dashboard.jsx",
+      "summary": "사용자 로그인 후 메인 화면으로, 구독 지역의 실시간 재난 알림을 WebSocket으로 수신하고 알림 요약 통계 및 구독 현황을 표시하는 대시보드 페이지다.",
+      "tags": ["페이지", "대시보드", "실시간", "websocket"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/pages/FindPassword.jsx",
+      "type": "file",
+      "name": "FindPassword.jsx",
+      "filePath": "frontend/src/pages/FindPassword.jsx",
+      "summary": "이메일을 입력받아 비밀번호 재설정 링크를 발송하는 비밀번호 찾기 페이지다.",
+      "tags": ["페이지", "인증", "폼", "비밀번호"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/pages/History.jsx",
+      "type": "file",
+      "name": "History.jsx",
+      "filePath": "frontend/src/pages/History.jsx",
+      "summary": "수신한 알림 이력을 날짜 범위·카테고리·키워드로 필터링하고 페이지네이션으로 조회할 수 있는 알림 이력 페이지다.",
+      "tags": ["페이지", "이력조회", "필터링", "페이지네이션"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/pages/Landing.jsx",
+      "type": "file",
+      "name": "Landing.jsx",
+      "filePath": "frontend/src/pages/Landing.jsx",
+      "summary": "서비스 소개 랜딩 페이지로, 샘플 알림 피드 애니메이션·핵심 기능 소개·CTA 섹션 등 스냅 스크롤 3단 구성으로 비로그인 사용자에게 서비스를 소개한다.",
+      "tags": ["페이지", "랜딩", "마케팅", "ui"],
+      "complexity": "complex",
+      "languageNotes": "IntersectionObserver로 통계 카운트업 애니메이션을 구현하고, DOM을 직접 조작하여 실시간 피드 시뮬레이션 효과를 구현하였다."
+    },
+    {
+      "id": "file:frontend/src/pages/Login.jsx",
+      "type": "file",
+      "name": "Login.jsx",
+      "filePath": "frontend/src/pages/Login.jsx",
+      "summary": "로그인과 회원가입을 탭 전환 방식으로 제공하며, 이메일 인증 코드 발송/검증·비밀번호 강도 측정·Google/Kakao OAuth 소셜 로그인을 지원하는 인증 페이지다.",
+      "tags": ["페이지", "인증", "폼", "oauth"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/pages/OAuthSuccess.jsx",
+      "type": "file",
+      "name": "OAuthSuccess.jsx",
+      "filePath": "frontend/src/pages/OAuthSuccess.jsx",
+      "summary": "OAuth 소셜 로그인 콜백 페이지로, URL 파라미터에서 토큰을 추출하고 사용자 정보를 조회하여 인증 컨텍스트에 저장한 뒤 대시보드로 이동한다.",
+      "tags": ["페이지", "인증", "oauth", "콜백"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/pages/Privacy.jsx",
+      "type": "file",
+      "name": "Privacy.jsx",
+      "filePath": "frontend/src/pages/Privacy.jsx",
+      "summary": "SafeAlert 서비스의 개인정보처리방침 8개 조항을 섹션별로 렌더링하는 정적 페이지다.",
+      "tags": ["페이지", "법적고지", "정적페이지", "개인정보"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/pages/Profile.jsx",
+      "type": "file",
+      "name": "Profile.jsx",
+      "filePath": "frontend/src/pages/Profile.jsx",
+      "summary": "닉네임 수정·비밀번호 변경·로그아웃·회원 탈퇴 기능을 카드 형태로 제공하는 내 계정 관리 페이지로, 소셜 로그인 사용자에 대해 비밀번호 변경을 비활성화한다.",
+      "tags": ["페이지", "계정관리", "인증", "폼"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/pages/ResetPassword.jsx",
+      "type": "file",
+      "name": "ResetPassword.jsx",
+      "filePath": "frontend/src/pages/ResetPassword.jsx",
+      "summary": "이메일로 전송된 토큰을 URL에서 읽어 새 비밀번호로 재설정하는 비밀번호 재설정 페이지다.",
+      "tags": ["페이지", "인증", "폼", "비밀번호"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/pages/Subscriptions.jsx",
+      "type": "file",
+      "name": "Subscriptions.jsx",
+      "filePath": "frontend/src/pages/Subscriptions.jsx",
+      "summary": "구독 지역(시도·시군구 단계 선택, 최대 10개)과 알림 카테고리(기상특보·지진·미세먼지·재난문자)를 설정·저장하는 구독 설정 페이지다.",
+      "tags": ["페이지", "구독설정", "폼", "api-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/pages/TestPage.jsx",
+      "type": "file",
+      "name": "TestPage.jsx",
+      "filePath": "frontend/src/pages/TestPage.jsx",
+      "summary": "전국 공개 WebSocket 토픽을 구독하여 실시간 재난 알림 파이프라인을 검증하고, 지역별·카테고리별 수신 건수를 시각화하는 개발·검증용 테스트 페이지다.",
+      "tags": ["페이지", "테스트", "실시간", "websocket"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/api/axios.js:processQueue",
+      "type": "function",
+      "name": "processQueue",
+      "filePath": "frontend/src/api/axios.js",
+      "lineRange": [10, 16],
+      "summary": "토큰 재발급 대기 중인 요청 큐를 순회하여 성공/실패 여부에 따라 각 Promise를 resolve 또는 reject한다.",
+      "tags": ["utility", "인증", "비동기"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/context/AuthContext.jsx:AuthProvider",
+      "type": "function",
+      "name": "AuthProvider",
+      "filePath": "frontend/src/context/AuthContext.jsx",
+      "lineRange": [6, 46],
+      "summary": "인증 상태(user, accessToken)를 관리하고 login·logout 함수를 Context로 하위 컴포넌트에 제공하는 React 프로바이더 컴포넌트다.",
+      "tags": ["컨텍스트", "인증", "상태관리"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "function",
+      "name": "useAuth",
+      "filePath": "frontend/src/context/AuthContext.jsx",
+      "lineRange": [48, 50],
+      "summary": "AuthContext를 소비하는 커스텀 훅으로, 하위 컴포넌트에서 인증 상태와 함수에 쉽게 접근할 수 있도록 한다.",
+      "tags": ["hook", "인증", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/hooks/useWebSocket.js:useWebSocket",
+      "type": "function",
+      "name": "useWebSocket",
+      "filePath": "frontend/src/hooks/useWebSocket.js",
+      "lineRange": [5, 37],
+      "summary": "주어진 토픽 목록에 대해 STOMP/SockJS WebSocket 연결을 생성하고 구독하며, 컴포넌트 언마운트 시 자동으로 연결을 해제하는 커스텀 훅이다.",
+      "tags": ["hook", "websocket", "실시간"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/pages/Admin.jsx:Admin",
+      "type": "function",
+      "name": "Admin",
+      "filePath": "frontend/src/pages/Admin.jsx",
+      "lineRange": [52, 577],
+      "summary": "관리자 대시보드의 메인 컴포넌트로, 시스템 통계·알림·회원 데이터를 병렬 로드하고 수동 알림 발송·권한 변경 인터랙션을 처리한다.",
+      "tags": ["컴포넌트", "관리자", "api-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/pages/Dashboard.jsx:Dashboard",
+      "type": "function",
+      "name": "Dashboard",
+      "filePath": "frontend/src/pages/Dashboard.jsx",
+      "lineRange": [45, 312],
+      "summary": "사용자 구독 지역 기반으로 WebSocket 토픽을 동적으로 생성하고 실시간 알림을 수신하며, 카테고리별 필터링과 알림 상세 모달을 제공하는 대시보드 컴포넌트다.",
+      "tags": ["컴포넌트", "대시보드", "실시간", "websocket"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/pages/History.jsx:History",
+      "type": "function",
+      "name": "History",
+      "filePath": "frontend/src/pages/History.jsx",
+      "lineRange": [54, 306],
+      "summary": "날짜·카테고리·키워드 필터를 조합하여 알림 이력을 페이지네이션으로 조회하고, 클릭 시 상세 내용을 아코디언으로 표시하는 컴포넌트다.",
+      "tags": ["컴포넌트", "이력조회", "필터링"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/pages/Login.jsx:Login",
+      "type": "function",
+      "name": "Login",
+      "filePath": "frontend/src/pages/Login.jsx",
+      "lineRange": [22, 386],
+      "summary": "로그인·회원가입 탭 전환, 이메일 인증 코드 타이머, 비밀번호 강도 검사, OAuth 소셜 로그인을 모두 처리하는 복합 인증 컴포넌트다.",
+      "tags": ["컴포넌트", "인증", "폼", "oauth"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/pages/Profile.jsx:Profile",
+      "type": "function",
+      "name": "Profile",
+      "filePath": "frontend/src/pages/Profile.jsx",
+      "lineRange": [17, 350],
+      "summary": "닉네임 수정·비밀번호 변경·로그아웃·회원 탈퇴를 각각 독립된 카드 섹션으로 구성하며, 소셜 가입 여부에 따라 비밀번호 변경을 조건부 비활성화하는 계정 관리 컴포넌트다.",
+      "tags": ["컴포넌트", "계정관리", "폼"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/pages/Subscriptions.jsx:Subscriptions",
+      "type": "function",
+      "name": "Subscriptions",
+      "filePath": "frontend/src/pages/Subscriptions.jsx",
+      "lineRange": [25, 288],
+      "summary": "시도·시군구 계층 구조의 드롭다운으로 구독 지역을 추가/삭제하고, 카테고리 토글 스위치로 알림 유형을 선택·저장하는 구독 설정 컴포넌트다.",
+      "tags": ["컴포넌트", "구독설정", "폼"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/context/AuthContext.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/components/Navbar.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Landing.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Login.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Dashboard.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Admin.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Subscriptions.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/History.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/TestPage.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Profile.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/FindPassword.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/ResetPassword.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/OAuthSuccess.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.jsx",
+      "target": "file:frontend/src/pages/Privacy.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/Navbar.jsx",
+      "target": "file:frontend/src/context/AuthContext.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/context/AuthContext.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.jsx",
+      "target": "file:frontend/src/App.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Admin.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Dashboard.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Dashboard.jsx",
+      "target": "file:frontend/src/hooks/useWebSocket.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/FindPassword.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/History.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Login.jsx",
+      "target": "file:frontend/src/context/AuthContext.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Login.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/OAuthSuccess.jsx",
+      "target": "file:frontend/src/context/AuthContext.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Profile.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Profile.jsx",
+      "target": "file:frontend/src/context/AuthContext.jsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/ResetPassword.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/Subscriptions.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/TestPage.jsx",
+      "target": "file:frontend/src/api/axios.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/pages/TestPage.jsx",
+      "target": "file:frontend/src/hooks/useWebSocket.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/api/axios.js",
+      "target": "function:frontend/src/api/axios.js:processQueue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/context/AuthContext.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:AuthProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/context/AuthContext.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/context/AuthContext.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:AuthProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/context/AuthContext.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/hooks/useWebSocket.js",
+      "target": "function:frontend/src/hooks/useWebSocket.js:useWebSocket",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/hooks/useWebSocket.js",
+      "target": "function:frontend/src/hooks/useWebSocket.js:useWebSocket",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/Admin.jsx",
+      "target": "function:frontend/src/pages/Admin.jsx:Admin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/pages/Admin.jsx",
+      "target": "function:frontend/src/pages/Admin.jsx:Admin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/Dashboard.jsx",
+      "target": "function:frontend/src/pages/Dashboard.jsx:Dashboard",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/pages/Dashboard.jsx",
+      "target": "function:frontend/src/pages/Dashboard.jsx:Dashboard",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/History.jsx",
+      "target": "function:frontend/src/pages/History.jsx:History",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/pages/History.jsx",
+      "target": "function:frontend/src/pages/History.jsx:History",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/Login.jsx",
+      "target": "function:frontend/src/pages/Login.jsx:Login",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/pages/Login.jsx",
+      "target": "function:frontend/src/pages/Login.jsx:Login",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/Profile.jsx",
+      "target": "function:frontend/src/pages/Profile.jsx:Profile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/pages/Profile.jsx",
+      "target": "function:frontend/src/pages/Profile.jsx:Profile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/Subscriptions.jsx",
+      "target": "function:frontend/src/pages/Subscriptions.jsx:Subscriptions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:frontend/src/pages/Subscriptions.jsx",
+      "target": "function:frontend/src/pages/Subscriptions.jsx:Subscriptions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/pages/Dashboard.jsx",
+      "target": "function:frontend/src/hooks/useWebSocket.js:useWebSocket",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/pages/TestPage.jsx",
+      "target": "function:frontend/src/hooks/useWebSocket.js:useWebSocket",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/components/Navbar.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/pages/Login.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/pages/OAuthSuccess.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/pages/Profile.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/pages/Dashboard.jsx",
+      "target": "function:frontend/src/context/AuthContext.jsx:useAuth",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

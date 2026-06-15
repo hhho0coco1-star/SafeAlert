@@ -1,0 +1,243 @@
+﻿{
+    "batchIndex":  31,
+    "files":  [
+                  {
+                      "path":  "frontend/src/index.css",
+                      "language":  "css",
+                      "sizeLines":  18,
+                      "fileCategory":  "markup"
+                  },
+                  {
+                      "path":  "frontend/vite.config.js",
+                      "language":  "javascript",
+                      "sizeLines":  18,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "infra/docker/grafana/docker.lnk",
+                      "language":  "lnk",
+                      "sizeLines":  2,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "infra/docker/grafana/provisioning/datasources/prometheus.yml",
+                      "language":  "yaml",
+                      "sizeLines":  8,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/docker/init-postgresql.sql",
+                      "language":  "sql",
+                      "sizeLines":  4,
+                      "fileCategory":  "data"
+                  },
+                  {
+                      "path":  "infra/kafka/kafka.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  67,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/kafka/values.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  17,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/mongodb/values.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  20,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/postgresql/values.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  25,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/redis/values.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  16,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "load-test/login.js",
+                      "language":  "javascript",
+                      "sizeLines":  31,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "load-test/subscription.js",
+                      "language":  "javascript",
+                      "sizeLines":  39,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "load-test/websocket.js",
+                      "language":  "javascript",
+                      "sizeLines":  53,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "logstash.conf",
+                      "language":  "conf",
+                      "sizeLines":  35,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/gradle/gradle/wrapper/gradle-wrapper.properties",
+                      "language":  "properties",
+                      "sizeLines":  7,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "notification-service/gradle/wrapper/gradle-wrapper.properties",
+                      "language":  "properties",
+                      "sizeLines":  7,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "notification-service/k8s/deployment.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  46,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "notification-service/k8s/service.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  11,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/config/SecurityConfig.java",
+                      "language":  "java",
+                      "sizeLines":  23,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/config/WebSocketConfig.java",
+                      "language":  "java",
+                      "sizeLines":  30,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/dto/AdminStatsResponse.java",
+                      "language":  "java",
+                      "sizeLines":  13,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java",
+                      "language":  "java",
+                      "sizeLines":  29,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/dto/ManualAlertRequest.java",
+                      "language":  "java",
+                      "sizeLines":  29,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/dto/NotificationSummaryResponse.java",
+                      "language":  "java",
+                      "sizeLines":  14,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java",
+                      "language":  "java",
+                      "sizeLines":  24,
+                      "fileCategory":  "code"
+                  }
+              ],
+    "batchImportData":  {
+                            "frontend/src/index.css":  [
+
+                                                       ],
+                            "frontend/vite.config.js":  [
+
+                                                        ],
+                            "infra/docker/grafana/docker.lnk":  [
+
+                                                                ],
+                            "infra/docker/grafana/provisioning/datasources/prometheus.yml":  [
+
+                                                                                             ],
+                            "infra/docker/init-postgresql.sql":  [
+
+                                                                 ],
+                            "infra/kafka/kafka.yaml":  [
+
+                                                       ],
+                            "infra/kafka/values.yaml":  [
+
+                                                        ],
+                            "infra/mongodb/values.yaml":  [
+
+                                                          ],
+                            "infra/postgresql/values.yaml":  [
+
+                                                             ],
+                            "infra/redis/values.yaml":  [
+
+                                                        ],
+                            "load-test/login.js":  [
+
+                                                   ],
+                            "load-test/subscription.js":  [
+
+                                                          ],
+                            "load-test/websocket.js":  [
+
+                                                       ],
+                            "logstash.conf":  [
+
+                                              ],
+                            "notification-service/gradle/gradle/wrapper/gradle-wrapper.properties":  [
+
+                                                                                                     ],
+                            "notification-service/gradle/wrapper/gradle-wrapper.properties":  [
+
+                                                                                              ],
+                            "notification-service/k8s/deployment.yaml":  [
+
+                                                                         ],
+                            "notification-service/k8s/service.yaml":  [
+
+                                                                      ],
+                            "notification-service/src/main/java/com/safealert/notification/config/SecurityConfig.java":  [
+
+                                                                                                                         ],
+                            "notification-service/src/main/java/com/safealert/notification/config/WebSocketConfig.java":  [
+
+                                                                                                                          ],
+                            "notification-service/src/main/java/com/safealert/notification/dto/AdminStatsResponse.java":  [
+
+                                                                                                                          ],
+                            "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java":  [
+
+                                                                                                                   ],
+                            "notification-service/src/main/java/com/safealert/notification/dto/ManualAlertRequest.java":  [
+
+                                                                                                                          ],
+                            "notification-service/src/main/java/com/safealert/notification/dto/NotificationSummaryResponse.java":  [
+
+                                                                                                                                   ],
+                            "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java":  [
+                                                                                                                                        "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java"
+                                                                                                                                    ]
+                        },
+    "neighborMap":  {
+                        "frontend/src/index.css":  [
+                                                       {
+                                                           "path":  "frontend/src/main.jsx",
+                                                           "batchIndex":  1,
+                                                           "symbols":  [
+
+                                                                       ]
+                                                       }
+                                                   ]
+                    }
+}

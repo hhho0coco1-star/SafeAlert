@@ -1,0 +1,19 @@
+﻿{
+    "batchIndex":  9,
+    "files":  [
+                  {
+                      "path":  "alert-processor-service/Dockerfile",
+                      "language":  "dockerfile",
+                      "sizeLines":  3,
+                      "fileCategory":  "infra"
+                  }
+              ],
+    "batchImportData":  {
+                            "alert-processor-service/Dockerfile":  [
+
+                                                                   ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

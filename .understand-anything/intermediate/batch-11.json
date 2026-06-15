@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "service:auth-service/Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "auth-service/Dockerfile",
+      "summary": "auth-service를 컨테이너화하는 Dockerfile로, eclipse-temurin:17-jre-alpine 이미지 위에 JWT 기반 인증 서비스 JAR을 복사하여 실행한다.",
+      "tags": ["containerization", "infrastructure", "deployment", "security"],
+      "complexity": "simple",
+      "languageNotes": "Java 17 LTS 런타임을 사용하며, Alpine 기반 경량 이미지로 보안 서비스의 공격 표면을 최소화한다."
+    }
+  ],
+  "edges": []
+}

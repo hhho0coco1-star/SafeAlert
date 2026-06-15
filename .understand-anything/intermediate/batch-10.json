@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "service:api-gateway/Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "api-gateway/Dockerfile",
+      "summary": "api-gateway 서비스를 컨테이너화하는 Dockerfile로, eclipse-temurin:17-jre-alpine 이미지에서 Spring Cloud Gateway JAR을 실행하여 MSA 진입점 역할을 수행한다.",
+      "tags": ["containerization", "infrastructure", "deployment", "api-gateway"],
+      "complexity": "simple",
+      "languageNotes": "Java 17 LTS 런타임을 사용하며, Spring Cloud Gateway와의 호환성을 위해 Java 24 대신 Java 17을 선택하였다."
+    }
+  ],
+  "edges": []
+}

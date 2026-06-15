@@ -1,0 +1,19 @@
+﻿{
+    "batchIndex":  13,
+    "files":  [
+                  {
+                      "path":  "notification-service/Dockerfile",
+                      "language":  "dockerfile",
+                      "sizeLines":  4,
+                      "fileCategory":  "infra"
+                  }
+              ],
+    "batchImportData":  {
+                            "notification-service/Dockerfile":  [
+
+                                                                ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

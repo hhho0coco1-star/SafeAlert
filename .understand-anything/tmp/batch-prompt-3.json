@@ -1,0 +1,190 @@
+﻿{
+    "batchIndex":  3,
+    "files":  [
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+                      "language":  "java",
+                      "sizeLines":  88,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+                      "language":  "java",
+                      "sizeLines":  74,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+                      "language":  "java",
+                      "sizeLines":  29,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+                      "language":  "java",
+                      "sizeLines":  71,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+                      "language":  "java",
+                      "sizeLines":  30,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+                      "language":  "java",
+                      "sizeLines":  34,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+                      "language":  "java",
+                      "sizeLines":  29,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+                      "language":  "java",
+                      "sizeLines":  26,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+                      "language":  "java",
+                      "sizeLines":  19,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+                      "language":  "java",
+                      "sizeLines":  24,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+                      "language":  "java",
+                      "sizeLines":  42,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+                      "language":  "java",
+                      "sizeLines":  30,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+                      "language":  "java",
+                      "sizeLines":  12,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+                      "language":  "java",
+                      "sizeLines":  7,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+                      "language":  "java",
+                      "sizeLines":  36,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+                      "language":  "java",
+                      "sizeLines":  59,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+                      "language":  "java",
+                      "sizeLines":  99,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+                      "language":  "java",
+                      "sizeLines":  135,
+                      "fileCategory":  "code"
+                  }
+              ],
+    "batchImportData":  {
+                            "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java":  [
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java"
+                                                                                                                                     ],
+                            "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java":  [
+
+                                                                                                                      ],
+                            "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java":  [
+
+                                                                                                                     ],
+                            "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java":  [
+
+                                                                                                                       ],
+                            "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java":  [
+
+                                                                                                                               ],
+                            "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java":  [
+
+                                                                                                                             ],
+                            "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java":  [
+
+                                                                                                                   ],
+                            "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java":  [
+                                                                                                                              "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java"
+                                                                                                                          ],
+                            "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java":  [
+
+                                                                                                                          ],
+                            "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java":  [
+
+                                                                                                                           ],
+                            "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java":  [
+                                                                                                                                "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+                                                                                                                                "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+                                                                                                                                "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java"
+                                                                                                                            ],
+                            "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java":  [
+                                                                                                                                        "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java"
+                                                                                                                                    ],
+                            "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java":  [
+                                                                                                                                        "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java"
+                                                                                                                                    ],
+                            "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java":  [
+                                                                                                                                       "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java"
+                                                                                                                                   ],
+                            "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java":  [
+                                                                                                                                         "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java"
+                                                                                                                                     ],
+                            "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java":  [
+                                                                                                                                 "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+                                                                                                                                 "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java"
+                                                                                                                             ],
+                            "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java":  [
+                                                                                                                                     "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+                                                                                                                                     "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java"
+                                                                                                                                 ],
+                            "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java":  [
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+                                                                                                                                   "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java"
+                                                                                                                               ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

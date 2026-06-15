@@ -1,0 +1,37 @@
+﻿{
+    "batchIndex":  24,
+    "files":  [
+                  {
+                      "path":  "infra/docker/grafana/dashboard-4701-fixed.json",
+                      "language":  "json",
+                      "sizeLines":  2973,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/docker/grafana/dashboard-4701-raw.json",
+                      "language":  "json",
+                      "sizeLines":  2973,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "infra/docker/grafana/dashboard-4701.json",
+                      "language":  "json",
+                      "sizeLines":  3238,
+                      "fileCategory":  "config"
+                  }
+              ],
+    "batchImportData":  {
+                            "infra/docker/grafana/dashboard-4701-fixed.json":  [
+
+                                                                               ],
+                            "infra/docker/grafana/dashboard-4701-raw.json":  [
+
+                                                                             ],
+                            "infra/docker/grafana/dashboard-4701.json":  [
+
+                                                                         ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

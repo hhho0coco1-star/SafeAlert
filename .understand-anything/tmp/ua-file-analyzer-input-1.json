@@ -1,0 +1,119 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "frontend/src/App.jsx", "language": "javascript", "sizeLines": 44, "fileCategory": "code"},
+    {"path": "frontend/src/api/axios.js", "language": "javascript", "sizeLines": 80, "fileCategory": "code"},
+    {"path": "frontend/src/components/Navbar.jsx", "language": "javascript", "sizeLines": 128, "fileCategory": "code"},
+    {"path": "frontend/src/context/AuthContext.jsx", "language": "javascript", "sizeLines": 49, "fileCategory": "code"},
+    {"path": "frontend/src/hooks/useWebSocket.js", "language": "javascript", "sizeLines": 38, "fileCategory": "code"},
+    {"path": "frontend/src/main.jsx", "language": "javascript", "sizeLines": 9, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Admin.jsx", "language": "javascript", "sizeLines": 577, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Dashboard.jsx", "language": "javascript", "sizeLines": 312, "fileCategory": "code"},
+    {"path": "frontend/src/pages/FindPassword.jsx", "language": "javascript", "sizeLines": 80, "fileCategory": "code"},
+    {"path": "frontend/src/pages/History.jsx", "language": "javascript", "sizeLines": 306, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Landing.jsx", "language": "javascript", "sizeLines": 338, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Login.jsx", "language": "javascript", "sizeLines": 386, "fileCategory": "code"},
+    {"path": "frontend/src/pages/OAuthSuccess.jsx", "language": "javascript", "sizeLines": 31, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Privacy.jsx", "language": "javascript", "sizeLines": 79, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Profile.jsx", "language": "javascript", "sizeLines": 350, "fileCategory": "code"},
+    {"path": "frontend/src/pages/ResetPassword.jsx", "language": "javascript", "sizeLines": 101, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Subscriptions.jsx", "language": "javascript", "sizeLines": 288, "fileCategory": "code"},
+    {"path": "frontend/src/pages/Terms.jsx", "language": "javascript", "sizeLines": 79, "fileCategory": "code"},
+    {"path": "frontend/src/pages/TestPage.jsx", "language": "javascript", "sizeLines": 232, "fileCategory": "code"},
+    {"path": "frontend/src/routes/AdminRoute.jsx", "language": "javascript", "sizeLines": 10, "fileCategory": "code"},
+    {"path": "frontend/src/routes/GuestRoute.jsx", "language": "javascript", "sizeLines": 10, "fileCategory": "code"},
+    {"path": "frontend/src/routes/ProtectedRoute.jsx", "language": "javascript", "sizeLines": 6, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "frontend/src/App.jsx": [
+      "frontend/src/components/Navbar.jsx",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/pages/Admin.jsx",
+      "frontend/src/pages/Dashboard.jsx",
+      "frontend/src/pages/FindPassword.jsx",
+      "frontend/src/pages/History.jsx",
+      "frontend/src/pages/Landing.jsx",
+      "frontend/src/pages/Login.jsx",
+      "frontend/src/pages/OAuthSuccess.jsx",
+      "frontend/src/pages/Privacy.jsx",
+      "frontend/src/pages/Profile.jsx",
+      "frontend/src/pages/ResetPassword.jsx",
+      "frontend/src/pages/Subscriptions.jsx",
+      "frontend/src/pages/Terms.jsx",
+      "frontend/src/pages/TestPage.jsx",
+      "frontend/src/routes/AdminRoute.jsx",
+      "frontend/src/routes/GuestRoute.jsx",
+      "frontend/src/routes/ProtectedRoute.jsx"
+    ],
+    "frontend/src/api/axios.js": [],
+    "frontend/src/components/Navbar.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/context/AuthContext.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/hooks/useWebSocket.js": [],
+    "frontend/src/main.jsx": [
+      "frontend/src/App.jsx",
+      "frontend/src/index.css"
+    ],
+    "frontend/src/pages/Admin.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Dashboard.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/hooks/useWebSocket.js"
+    ],
+    "frontend/src/pages/FindPassword.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/History.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Landing.jsx": [],
+    "frontend/src/pages/Login.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/OAuthSuccess.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/Privacy.jsx": [],
+    "frontend/src/pages/Profile.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/ResetPassword.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Subscriptions.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Terms.jsx": [],
+    "frontend/src/pages/TestPage.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/hooks/useWebSocket.js"
+    ],
+    "frontend/src/routes/AdminRoute.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/routes/GuestRoute.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/routes/ProtectedRoute.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ]
+  },
+  "neighborMap": {
+    "frontend/src/main.jsx": [
+      {
+        "path": "frontend/src/index.css",
+        "batchIndex": 31,
+        "symbols": []
+      }
+    ]
+  }
+}

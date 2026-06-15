@@ -1,0 +1,46 @@
+﻿{
+    "batchIndex":  27,
+    "files":  [
+                  {
+                      "path":  "notification-service/build.gradle",
+                      "language":  "gradle",
+                      "sizeLines":  61,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "notification-service/gradle.properties",
+                      "language":  "properties",
+                      "sizeLines":  1,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "notification-service/gradlew.bat",
+                      "language":  "batch",
+                      "sizeLines":  91,
+                      "fileCategory":  "script"
+                  },
+                  {
+                      "path":  "notification-service/settings.gradle",
+                      "language":  "gradle",
+                      "sizeLines":  0,
+                      "fileCategory":  "config"
+                  }
+              ],
+    "batchImportData":  {
+                            "notification-service/build.gradle":  [
+
+                                                                  ],
+                            "notification-service/gradle.properties":  [
+
+                                                                       ],
+                            "notification-service/gradlew.bat":  [
+
+                                                                 ],
+                            "notification-service/settings.gradle":  [
+
+                                                                     ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

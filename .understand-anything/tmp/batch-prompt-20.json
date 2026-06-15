@@ -1,0 +1,46 @@
+﻿{
+    "batchIndex":  20,
+    "files":  [
+                  {
+                      "path":  "auth-service/build.gradle",
+                      "language":  "gradle",
+                      "sizeLines":  75,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "auth-service/gradle.properties",
+                      "language":  "properties",
+                      "sizeLines":  1,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "auth-service/gradlew.bat",
+                      "language":  "batch",
+                      "sizeLines":  91,
+                      "fileCategory":  "script"
+                  },
+                  {
+                      "path":  "auth-service/settings.gradle",
+                      "language":  "gradle",
+                      "sizeLines":  1,
+                      "fileCategory":  "config"
+                  }
+              ],
+    "batchImportData":  {
+                            "auth-service/build.gradle":  [
+
+                                                          ],
+                            "auth-service/gradle.properties":  [
+
+                                                               ],
+                            "auth-service/gradlew.bat":  [
+
+                                                         ],
+                            "auth-service/settings.gradle":  [
+
+                                                             ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

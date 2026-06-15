@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "service:k8s/monitoring/elasticsearch.yaml",
+      "type": "service",
+      "name": "elasticsearch.yaml",
+      "filePath": "k8s/monitoring/elasticsearch.yaml",
+      "summary": "ELK 스택의 Elasticsearch 8.13.0을 safealert-monitor 네임스페이스에 단일 노드로 배포하는 K8s Deployment + Service 매니페스트로, 포트 9200을 노출하고 보안 비활성화(xpack.security.enabled=false) 상태로 운영된다.",
+      "tags": ["infrastructure", "kubernetes", "elasticsearch", "monitoring"],
+      "complexity": "simple",
+      "languageNotes": "single-node 모드로 실행되며, ES_JAVA_OPTS로 힙을 256m으로 제한해 로컬 개발 환경에 적합하도록 설정되었다."
+    },
+    {
+      "id": "service:k8s/monitoring/kibana.yaml",
+      "type": "service",
+      "name": "kibana.yaml",
+      "filePath": "k8s/monitoring/kibana.yaml",
+      "summary": "ELK 스택의 Kibana 8.13.0을 safealert-monitor 네임스페이스에 배포하는 K8s Deployment + Service 매니페스트로, Elasticsearch 서비스(http://elasticsearch:9200)를 백엔드로 연결하고 포트 5601을 노출한다.",
+      "tags": ["infrastructure", "kubernetes", "kibana", "monitoring"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:k8s/monitoring/logstash.yaml",
+      "type": "service",
+      "name": "logstash.yaml",
+      "filePath": "k8s/monitoring/logstash.yaml",
+      "summary": "Logstash 8.13.0을 safealert-monitor 네임스페이스에 배포하는 K8s ConfigMap + Deployment + Service 매니페스트로, TCP 5044 포트에서 JSON 로그를 수신해 서비스명 기반으로 Elasticsearch 인덱스에 라우팅한다.",
+      "tags": ["infrastructure", "kubernetes", "logstash", "monitoring"],
+      "complexity": "moderate",
+      "languageNotes": "logstash.conf를 ConfigMap으로 주입하며, filter 단계에서 service_name 필드를 기반으로 동적 인덱스명(safealert-{service}-{date})을 생성한다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "service:k8s/monitoring/kibana.yaml",
+      "target": "service:k8s/monitoring/elasticsearch.yaml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:k8s/monitoring/logstash.yaml",
+      "target": "service:k8s/monitoring/elasticsearch.yaml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

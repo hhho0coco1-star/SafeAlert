@@ -1,0 +1,262 @@
+{
+  "nodes": [
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "type": "file",
+      "name": "DisasterAlertClient.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "summary": "행정안전부 재난문자 공공 API(DSSP-IF-00247)를 호출하여 오늘 날짜의 재난 알림 데이터를 수집하고, 시도 코드 매핑과 중복 필터링을 수행하는 클라이언트 컴포넌트. Resilience4j Circuit Breaker가 적용되어 API 장애 시 빈 목록을 반환한다.",
+      "tags": ["service", "api-handler", "외부-api-클라이언트", "circuit-breaker"],
+      "complexity": "moderate",
+      "languageNotes": "Resilience4j @CircuitBreaker 어노테이션으로 장애 격리를 구현하며, Java Map.ofEntries를 활용한 시도명→코드 정적 매핑을 사용한다."
+    },
+    {
+      "id": "class:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java:DisasterAlertClient",
+      "type": "class",
+      "name": "DisasterAlertClient",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "lineRange": [26, 129],
+      "summary": "행정안전부 재난문자 API(DSSP-IF-00247)를 RestTemplate으로 호출하고, 오늘 날짜 필터링 및 중복 제거 후 AlertRawMessage 리스트를 반환하는 Spring Component.",
+      "tags": ["api-handler", "외부-api-클라이언트", "circuit-breaker", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java:fetch",
+      "type": "function",
+      "name": "fetch",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "lineRange": [50, 117],
+      "summary": "행정안전부 재난문자 API를 호출하여 오늘 날짜 데이터만 필터링한 뒤, 중복이 아닌 항목을 AlertRawMessage로 변환하여 반환한다.",
+      "tags": ["api-handler", "외부-api-클라이언트", "데이터-수집"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "type": "file",
+      "name": "DustAlertClient.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "summary": "환경부 대기오염정보 공공 API를 시도 단위로 순회 호출하여 미세먼지(PM10, PM2.5) 및 오존 현황 알림을 수집하는 클라이언트 컴포넌트. 측정소 캐시 서비스를 통해 시군구 코드를 매핑하고 중복을 제거한다.",
+      "tags": ["service", "api-handler", "외부-api-클라이언트", "circuit-breaker"],
+      "complexity": "moderate",
+      "languageNotes": "MeasureStationCacheService와의 의존성으로 캐시 초기화 여부를 사전 검사하며, 시도별 반복 API 호출 방식을 사용한다."
+    },
+    {
+      "id": "class:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java:DustAlertClient",
+      "type": "class",
+      "name": "DustAlertClient",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "lineRange": [29, 139],
+      "summary": "환경부 실시간 대기 측정 API를 17개 시도 코드에 대해 순회 호출하고, MeasureStationCacheService를 통해 측정소명을 시군구 코드로 변환하여 AlertRawMessage를 생성하는 Spring Component.",
+      "tags": ["api-handler", "외부-api-클라이언트", "circuit-breaker", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java:fetch",
+      "type": "function",
+      "name": "fetch",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "lineRange": [49, 106],
+      "summary": "시도별 환경부 대기오염 API를 순회 호출하고, 시군구 단위 중복 제거 후 미세먼지 현황 AlertRawMessage 리스트를 반환한다.",
+      "tags": ["api-handler", "데이터-수집", "외부-api-클라이언트"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "type": "file",
+      "name": "WeatherAlertClient.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "summary": "기상청 기상특보 공공 API를 호출하여 현재 발효 중인 기상특보 정보를 수집하는 클라이언트 컴포넌트. 기상청 기지국 ID를 지역 코드로 매핑하고, Circuit Breaker로 장애를 격리한다.",
+      "tags": ["service", "api-handler", "외부-api-클라이언트", "circuit-breaker"],
+      "complexity": "moderate",
+      "languageNotes": "기상청 stnId(기지국 번호)를 광역시도 코드로 변환하는 정적 Map을 내장하며, title 문자열 파싱으로 특보 내용을 추출한다."
+    },
+    {
+      "id": "class:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java:WeatherAlertClient",
+      "type": "class",
+      "name": "WeatherAlertClient",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "lineRange": [23, 122],
+      "summary": "기상청 WthrWrnInfoService API를 RestTemplate으로 호출하고, 기지국 ID 기반 지역 매핑 및 중복 필터링을 거쳐 기상특보 AlertRawMessage 리스트를 반환하는 Spring Component.",
+      "tags": ["api-handler", "외부-api-클라이언트", "circuit-breaker", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java:fetch",
+      "type": "function",
+      "name": "fetch",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "lineRange": [53, 102],
+      "summary": "기상청 기상특보 API를 호출하여 유효한 특보 항목을 중복 필터링한 뒤 AlertRawMessage 리스트로 반환한다.",
+      "tags": ["api-handler", "데이터-수집", "외부-api-클라이언트"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/config/CircuitBreakerConfig.java",
+      "type": "file",
+      "name": "CircuitBreakerConfig.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/config/CircuitBreakerConfig.java",
+      "summary": "Resilience4j CircuitBreaker 인스턴스의 실패율 임계치, 슬라이딩 윈도우 크기, 대기 시간 등 설정값을 정의하는 Spring 설정 클래스. 외부 API 클라이언트들의 장애 격리 정책을 중앙 관리한다.",
+      "tags": ["configuration", "circuit-breaker", "인프라"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "type": "file",
+      "name": "AlertCollectorScheduler.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "summary": "Spring @Scheduled를 사용하여 기상청·환경부·행정안전부 세 클라이언트를 주기적으로 호출하고, 수집된 AlertRawMessage 목록을 Kafka 프로듀서로 전달하는 스케줄러.",
+      "tags": ["스케줄러", "entry-point", "오케스트레이션", "service"],
+      "complexity": "simple",
+      "languageNotes": "cron 표현식을 application.yml 외부 설정으로 주입받아 운영 환경별 수집 주기를 유연하게 변경할 수 있도록 설계되었다."
+    },
+    {
+      "id": "class:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java:AlertCollectorScheduler",
+      "type": "class",
+      "name": "AlertCollectorScheduler",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "lineRange": [19, 49],
+      "summary": "세 개의 알림 수집 클라이언트(기상청·환경부·행정안전부)를 각각 독립된 cron 스케줄로 실행하고, 결과를 Kafka로 전송하는 스케줄러 컴포넌트.",
+      "tags": ["스케줄러", "오케스트레이션", "entry-point"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/service/KafkaProducerService.java",
+      "type": "file",
+      "name": "KafkaProducerService.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/service/KafkaProducerService.java",
+      "summary": "AlertRawMessage를 JSON으로 직렬화하여 Kafka 토픽으로 발행하는 프로듀서 서비스. KafkaTemplate을 통해 메시지를 비동기 전송하고 전송 결과를 로그로 기록한다.",
+      "tags": ["service", "kafka", "메시지-발행", "직렬화"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-collector-service/src/main/java/com/safealert/collector/service/RegionCodeMappingService.java",
+      "type": "file",
+      "name": "RegionCodeMappingService.java",
+      "filePath": "alert-collector-service/src/main/java/com/safealert/collector/service/RegionCodeMappingService.java",
+      "summary": "지역명과 시도·시군구 코드 간의 매핑을 관리하는 서비스. 각 알림 클라이언트가 공통으로 사용하는 지역 코드 변환 로직을 중앙화하여 제공한다.",
+      "tags": ["service", "utility", "지역코드", "데이터-매핑"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java:DisasterAlertClient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "target": "function:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java:fetch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java:DisasterAlertClient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java:DustAlertClient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "target": "function:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java:fetch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java:DustAlertClient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java:WeatherAlertClient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "target": "function:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java:fetch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java:WeatherAlertClient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java:AlertCollectorScheduler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "target": "class:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java:AlertCollectorScheduler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "target": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "target": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "target": "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/config/CircuitBreakerConfig.java",
+      "target": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/config/CircuitBreakerConfig.java",
+      "target": "file:alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:alert-collector-service/src/main/java/com/safealert/collector/config/CircuitBreakerConfig.java",
+      "target": "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

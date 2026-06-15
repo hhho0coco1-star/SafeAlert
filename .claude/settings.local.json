@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node /c/Users/hhho0/.claude/plugins/cache/understand-anything/understand-anything/2.7.7/skills/understand/scan-project.mjs C:/study/SafeAlert C:/study/SafeAlert/.understand-anything/tmp/ua-scan-files.json)"
+    ]
+  }
+}

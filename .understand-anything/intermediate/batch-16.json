@@ -1,0 +1,486 @@
+{
+  "nodes": [
+    {
+      "id": "config:.env.example",
+      "type": "config",
+      "name": ".env.example",
+      "filePath": ".env.example",
+      "summary": "SafeAlert 전체 서비스에서 필요한 환경변수 템플릿 파일로, JWT 시크릿·PostgreSQL 접속 정보·Google/Kakao OAuth2 키·Gmail SMTP 정보·기상청·행정안전부·환경부·법정동코드 공공 API 키의 자리표시자를 포함한다.",
+      "tags": ["configuration", "security", "environment", "documentation"],
+      "complexity": "simple",
+      "languageNotes": "실제 민감 정보는 .env 파일에 별도 보관하며, .env.example은 버전 관리에 포함되어 신규 개발자 온보딩을 돕는다."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "SafeAlert 프로젝트의 메인 문서로, MSA 기반 재난·기상 알림 시스템의 주요 기능·기술 스택·시스템 아키텍처(Mermaid 다이어그램)·서비스 구성·부하 테스트 결과·로컬 실행 방법·Kubernetes 배포 절차·HPA 오토스케일링 검증 결과·개발 현황(Phase 0~6)을 370줄에 걸쳐 포괄적으로 서술한다.",
+      "tags": ["documentation", "entry-point", "overview", "architecture"],
+      "complexity": "complex"
+    },
+    {
+      "id": "service:docker-compose.yml",
+      "type": "service",
+      "name": "docker-compose.yml",
+      "filePath": "docker-compose.yml",
+      "summary": "로컬 개발 환경용 Docker Compose 파일로, PostgreSQL·Redis·Kafka(KRaft)·MongoDB 인프라 4종과 auth-service·subscription-service·notification-service·api-gateway·alert-collector-service·alert-processor-service 백엔드 6종, 그리고 Prometheus·Grafana·Jaeger 모니터링 3종을 포함해 총 13개 서비스를 정의한다.",
+      "tags": ["orchestration", "infrastructure", "containerization", "deployment"],
+      "complexity": "complex",
+      "languageNotes": "healthcheck 조건부 depends_on을 활용해 서비스 기동 순서를 보장하며, Kafka는 KRaft 모드(브로커+컨트롤러 단일 노드)로 ZooKeeper 없이 동작한다."
+    },
+    {
+      "id": "service:docker-compose.yml:postgresql",
+      "type": "service",
+      "name": "postgresql",
+      "filePath": "docker-compose.yml",
+      "summary": "PostgreSQL 15 Alpine 컨테이너로, auth_db를 초기 데이터베이스로 생성하고 init SQL 스크립트를 자동 실행하며 포트 5432를 노출한다.",
+      "tags": ["database", "infrastructure", "postgresql"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:redis",
+      "type": "service",
+      "name": "redis",
+      "filePath": "docker-compose.yml",
+      "summary": "Redis 7 Alpine 컨테이너로, JWT 세션 캐시 및 Rate Limiting 용도로 포트 6379를 노출한다.",
+      "tags": ["cache", "infrastructure", "redis"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:kafka",
+      "type": "service",
+      "name": "kafka",
+      "filePath": "docker-compose.yml",
+      "summary": "Apache Kafka 3.7.1 KRaft 모드 컨테이너로, 브로커와 컨트롤러 역할을 단일 노드에서 처리하며 포트 9092를 노출한다.",
+      "tags": ["messaging", "infrastructure", "kafka"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "service:docker-compose.yml:mongodb",
+      "type": "service",
+      "name": "mongodb",
+      "filePath": "docker-compose.yml",
+      "summary": "MongoDB 7 컨테이너로, alert-processor-service가 처리된 알림 이벤트를 저장하는 event_store 데이터베이스를 초기화하며 포트 27017을 노출한다.",
+      "tags": ["database", "infrastructure", "mongodb"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:auth-service",
+      "type": "service",
+      "name": "auth-service",
+      "filePath": "docker-compose.yml",
+      "summary": "인증 서비스 컨테이너로, PostgreSQL과 Redis에 의존하며 JWT 발급·OAuth2 소셜 로그인·이메일 인증을 담당하고 포트 8081을 노출한다.",
+      "tags": ["authentication", "backend", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:subscription-service",
+      "type": "service",
+      "name": "subscription-service",
+      "filePath": "docker-compose.yml",
+      "summary": "구독 서비스 컨테이너로, PostgreSQL과 Kafka에 의존하며 시/군/구 단위 지역 구독 및 Outbox 이벤트 발행을 담당하고 포트 8085를 노출한다.",
+      "tags": ["subscription", "backend", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:notification-service",
+      "type": "service",
+      "name": "notification-service",
+      "filePath": "docker-compose.yml",
+      "summary": "알림 서비스 컨테이너로, PostgreSQL·Redis·Kafka에 의존하며 WebSocket STOMP 실시간 알림 발송 및 알림 이력 저장을 담당하고 포트 8083을 노출한다.",
+      "tags": ["notification", "websocket", "backend", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:api-gateway",
+      "type": "service",
+      "name": "api-gateway",
+      "filePath": "docker-compose.yml",
+      "summary": "API Gateway 컨테이너로, Redis·JWT 검증·Rate Limiting을 담당하고 auth-service·subscription-service·notification-service에 라우팅하며 포트 8080을 노출한다.",
+      "tags": ["api-gateway", "routing", "backend", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "service:docker-compose.yml:alert-collector-service",
+      "type": "service",
+      "name": "alert-collector-service",
+      "filePath": "docker-compose.yml",
+      "summary": "공공 API 수집 서비스 컨테이너로, Kafka와 Redis에 의존하며 기상청·행안부·환경부 API를 1시간 주기로 수집하고 포트 8086을 노출한다.",
+      "tags": ["collector", "scheduler", "backend", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:alert-processor-service",
+      "type": "service",
+      "name": "alert-processor-service",
+      "filePath": "docker-compose.yml",
+      "summary": "알림 처리 서비스 컨테이너로, Kafka·MongoDB·Redis에 의존하며 알림 분류·중복 필터링·MongoDB 저장을 담당하고 포트 8087을 노출한다.",
+      "tags": ["processor", "kafka-consumer", "backend", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:prometheus",
+      "type": "service",
+      "name": "prometheus",
+      "filePath": "docker-compose.yml",
+      "summary": "Prometheus 모니터링 컨테이너로, prometheus.yml 스크레이프 설정을 마운트하며 포트 9090을 노출한다.",
+      "tags": ["monitoring", "metrics", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:grafana",
+      "type": "service",
+      "name": "grafana",
+      "filePath": "docker-compose.yml",
+      "summary": "Grafana 대시보드 컨테이너로, Prometheus에 의존하며 provisioning 설정을 마운트하고 포트 3000을 노출한다.",
+      "tags": ["monitoring", "dashboard", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:jaeger",
+      "type": "service",
+      "name": "jaeger",
+      "filePath": "docker-compose.yml",
+      "summary": "Jaeger 분산 트레이싱 컨테이너로, OTLP gRPC(4317)·HTTP(4318) 및 Jaeger UI(16686) 포트를 노출하며 OpenTelemetry 수신을 활성화한다.",
+      "tags": ["monitoring", "tracing", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:prometheus.yml",
+      "type": "config",
+      "name": "prometheus.yml",
+      "filePath": "prometheus.yml",
+      "summary": "Prometheus 스크레이프 설정 파일로, 15초 간격으로 api-gateway(8080)·auth-service(8081)·notification-service(8083)·subscription-service(8085)·alert-collector-service(8086)·alert-processor-service(8087) 총 6개 서비스의 /actuator/prometheus 엔드포인트를 수집한다.",
+      "tags": ["monitoring", "configuration", "metrics", "infrastructure"],
+      "complexity": "simple",
+      "languageNotes": "Spring Boot Actuator의 Prometheus 엔드포인트를 대상으로 하며, host.docker.internal을 통해 Docker 컨테이너에서 호스트 프로세스를 스크레이프하는 로컬 개발 패턴을 사용한다."
+    },
+    {
+      "id": "document:todo.md",
+      "type": "document",
+      "name": "todo.md",
+      "filePath": "todo.md",
+      "summary": "SafeAlert 프로젝트의 작업 큐 문서로, Phase 0~6 완료 이력을 요약하고 남은 작업인 데모 동영상 촬영(파트 A 앱 기능 6장면, 파트 B K8s HPA 장면) 및 E2E 동작 검증 체크리스트를 우선순위 순으로 구체적으로 기록한다.",
+      "tags": ["documentation", "development", "planning"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:README.md",
+      "target": "service:docker-compose.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:prometheus.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:.env.example",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:postgresql",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:redis",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:kafka",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:mongodb",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:auth-service",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:subscription-service",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:notification-service",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:api-gateway",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:alert-collector-service",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:alert-processor-service",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:prometheus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:grafana",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:jaeger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml:auth-service",
+      "target": "service:docker-compose.yml:postgresql",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:auth-service",
+      "target": "service:docker-compose.yml:redis",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:subscription-service",
+      "target": "service:docker-compose.yml:postgresql",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:subscription-service",
+      "target": "service:docker-compose.yml:kafka",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:notification-service",
+      "target": "service:docker-compose.yml:postgresql",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:notification-service",
+      "target": "service:docker-compose.yml:redis",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:notification-service",
+      "target": "service:docker-compose.yml:kafka",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:api-gateway",
+      "target": "service:docker-compose.yml:redis",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:api-gateway",
+      "target": "service:docker-compose.yml:auth-service",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:api-gateway",
+      "target": "service:docker-compose.yml:subscription-service",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:api-gateway",
+      "target": "service:docker-compose.yml:notification-service",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:alert-collector-service",
+      "target": "service:docker-compose.yml:kafka",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:alert-collector-service",
+      "target": "service:docker-compose.yml:redis",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:alert-processor-service",
+      "target": "service:docker-compose.yml:kafka",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:alert-processor-service",
+      "target": "service:docker-compose.yml:mongodb",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:alert-processor-service",
+      "target": "service:docker-compose.yml:redis",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:grafana",
+      "target": "service:docker-compose.yml:prometheus",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yml:prometheus",
+      "target": "config:prometheus.yml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:prometheus.yml",
+      "target": "service:docker-compose.yml:api-gateway",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:prometheus.yml",
+      "target": "service:docker-compose.yml:auth-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:prometheus.yml",
+      "target": "service:docker-compose.yml:notification-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:prometheus.yml",
+      "target": "service:docker-compose.yml:subscription-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:prometheus.yml",
+      "target": "service:docker-compose.yml:alert-collector-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:prometheus.yml",
+      "target": "service:docker-compose.yml:alert-processor-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "service:docker-compose.yml:auth-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "service:docker-compose.yml:subscription-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "service:docker-compose.yml:notification-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "service:docker-compose.yml:alert-collector-service",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:todo.md",
+      "target": "service:docker-compose.yml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

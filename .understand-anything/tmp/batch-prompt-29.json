@@ -1,0 +1,235 @@
+﻿{
+    "batchIndex":  29,
+    "files":  [
+                  {
+                      "path":  ".understand-anything/.understandignore",
+                      "language":  "unknown",
+                      "sizeLines":  28,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  ".understand-anything/config.json",
+                      "language":  "json",
+                      "sizeLines":  1,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "怨듬?/info.txt",
+                      "language":  "txt",
+                      "sizeLines":  111,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "alert-collector-service/.gitattributes",
+                      "language":  "unknown",
+                      "sizeLines":  3,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-collector-service/gradle/wrapper/gradle-wrapper.jar",
+                      "language":  "jar",
+                      "sizeLines":  157,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-collector-service/gradle/wrapper/gradle-wrapper.properties",
+                      "language":  "properties",
+                      "sizeLines":  7,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "alert-collector-service/gradlew",
+                      "language":  "unknown",
+                      "sizeLines":  251,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-collector-service/k8s/deployment.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  40,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "alert-collector-service/k8s/service.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  13,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "alert-collector-service/src/main/java/com/safealert/collector/AlertCollectorServiceApplication.java",
+                      "language":  "java",
+                      "sizeLines":  13,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-collector-service/src/main/java/com/safealert/collector/config/AppConfig.java",
+                      "language":  "java",
+                      "sizeLines":  14,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-collector-service/src/main/resources/application.properties",
+                      "language":  "properties",
+                      "sizeLines":  47,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "alert-collector-service/src/main/resources/logback-spring.xml",
+                      "language":  "xml",
+                      "sizeLines":  22,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "alert-collector-service/src/test/java/com/safealert/collector/AlertCollectorServiceApplicationTests.java",
+                      "language":  "java",
+                      "sizeLines":  13,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/.gitattributes",
+                      "language":  "unknown",
+                      "sizeLines":  3,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/gradle/wrapper/gradle-wrapper.jar",
+                      "language":  "jar",
+                      "sizeLines":  157,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/gradle/wrapper/gradle-wrapper.properties",
+                      "language":  "properties",
+                      "sizeLines":  7,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "alert-processor-service/gradlew",
+                      "language":  "unknown",
+                      "sizeLines":  251,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/k8s/deployment.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  41,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "alert-processor-service/k8s/service.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  12,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/AlertProcessorServiceApplication.java",
+                      "language":  "java",
+                      "sizeLines":  13,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/resources/application.properties",
+                      "language":  "properties",
+                      "sizeLines":  35,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/resources/logback-spring.xml",
+                      "language":  "xml",
+                      "sizeLines":  22,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/test/java/com/safealert/processor/AlertProcessorServiceApplicationTests.java",
+                      "language":  "java",
+                      "sizeLines":  13,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "api-gateway/gradle/wrapper/gradle-wrapper.properties",
+                      "language":  "properties",
+                      "sizeLines":  7,
+                      "fileCategory":  "config"
+                  }
+              ],
+    "batchImportData":  {
+                            ".understand-anything/.understandignore":  [
+
+                                                                       ],
+                            ".understand-anything/config.json":  [
+
+                                                                 ],
+                            "怨듬?/info.txt":  [
+
+                                             ],
+                            "alert-collector-service/.gitattributes":  [
+
+                                                                       ],
+                            "alert-collector-service/gradle/wrapper/gradle-wrapper.jar":  [
+
+                                                                                          ],
+                            "alert-collector-service/gradle/wrapper/gradle-wrapper.properties":  [
+
+                                                                                                 ],
+                            "alert-collector-service/gradlew":  [
+
+                                                                ],
+                            "alert-collector-service/k8s/deployment.yaml":  [
+
+                                                                            ],
+                            "alert-collector-service/k8s/service.yaml":  [
+
+                                                                         ],
+                            "alert-collector-service/src/main/java/com/safealert/collector/AlertCollectorServiceApplication.java":  [
+
+                                                                                                                                    ],
+                            "alert-collector-service/src/main/java/com/safealert/collector/config/AppConfig.java":  [
+
+                                                                                                                    ],
+                            "alert-collector-service/src/main/resources/application.properties":  [
+
+                                                                                                  ],
+                            "alert-collector-service/src/main/resources/logback-spring.xml":  [
+
+                                                                                              ],
+                            "alert-collector-service/src/test/java/com/safealert/collector/AlertCollectorServiceApplicationTests.java":  [
+
+                                                                                                                                         ],
+                            "alert-processor-service/.gitattributes":  [
+
+                                                                       ],
+                            "alert-processor-service/gradle/wrapper/gradle-wrapper.jar":  [
+
+                                                                                          ],
+                            "alert-processor-service/gradle/wrapper/gradle-wrapper.properties":  [
+
+                                                                                                 ],
+                            "alert-processor-service/gradlew":  [
+
+                                                                ],
+                            "alert-processor-service/k8s/deployment.yaml":  [
+
+                                                                            ],
+                            "alert-processor-service/k8s/service.yaml":  [
+
+                                                                         ],
+                            "alert-processor-service/src/main/java/com/safealert/processor/AlertProcessorServiceApplication.java":  [
+
+                                                                                                                                    ],
+                            "alert-processor-service/src/main/resources/application.properties":  [
+
+                                                                                                  ],
+                            "alert-processor-service/src/main/resources/logback-spring.xml":  [
+
+                                                                                              ],
+                            "alert-processor-service/src/test/java/com/safealert/processor/AlertProcessorServiceApplicationTests.java":  [
+
+                                                                                                                                         ],
+                            "api-gateway/gradle/wrapper/gradle-wrapper.properties":  [
+
+                                                                                     ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

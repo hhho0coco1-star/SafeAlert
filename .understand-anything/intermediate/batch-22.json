@@ -1,0 +1,186 @@
+{
+  "batchIndex": 22,
+  "nodes": [
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-1.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-1.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-1.json",
+      "summary": "파일 분석기 1번 배치 입력 임시 파일로, 분석 대상 파일 목록과 임포트 데이터를 포함한다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-2.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-2.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-2.json",
+      "summary": "파일 분석기 2번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-3.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-3.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-3.json",
+      "summary": "파일 분석기 3번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-4.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-4.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-4.json",
+      "summary": "파일 분석기 4번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-5.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-5.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-5.json",
+      "summary": "파일 분석기 5번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-6.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-6.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-6.json",
+      "summary": "파일 분석기 6번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-7.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-7.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-7.json",
+      "summary": "파일 분석기 7번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-8.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-8.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-8.json",
+      "summary": "파일 분석기 8번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-9.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-9.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-9.json",
+      "summary": "파일 분석기 9번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-10.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-10.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-10.json",
+      "summary": "파일 분석기 10번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-11.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-11.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-11.json",
+      "summary": "파일 분석기 11번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-12.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-12.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-12.json",
+      "summary": "파일 분석기 12번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-13.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-13.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-13.json",
+      "summary": "파일 분석기 13번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-14.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-14.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-14.json",
+      "summary": "파일 분석기 14번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-15.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-15.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-15.json",
+      "summary": "파일 분석기 15번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-16.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-16.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-16.json",
+      "summary": "파일 분석기 16번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-17.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-17.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-17.json",
+      "summary": "파일 분석기 17번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-18.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-18.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-18.json",
+      "summary": "파일 분석기 18번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-19.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-19.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-19.json",
+      "summary": "파일 분석기 19번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-20.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-20.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-20.json",
+      "summary": "파일 분석기 20번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

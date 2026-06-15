@@ -1,0 +1,19 @@
+﻿{
+    "batchIndex":  12,
+    "files":  [
+                  {
+                      "path":  "frontend/Dockerfile",
+                      "language":  "dockerfile",
+                      "sizeLines":  11,
+                      "fileCategory":  "infra"
+                  }
+              ],
+    "batchImportData":  {
+                            "frontend/Dockerfile":  [
+
+                                                    ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

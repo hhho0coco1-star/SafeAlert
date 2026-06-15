@@ -1,0 +1,2159 @@
+{
+  "scriptCompleted": true,
+  "files": [
+    {
+      "path": ".claude/CLAUDE.md",
+      "language": "markdown",
+      "sizeLines": 53,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".claude/settings.json",
+      "language": "json",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".claude/settings.local.json",
+      "language": "json",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".env.example",
+      "language": "config",
+      "sizeLines": 36,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/fingerprints.json",
+      "language": "json",
+      "sizeLines": 10649,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/assemble-review.json",
+      "language": "json",
+      "sizeLines": 18,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/assembled-graph.json",
+      "language": "json",
+      "sizeLines": 7561,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-1-part-1.json",
+      "language": "json",
+      "sizeLines": 737,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-10.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-11.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-12.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-13.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-14.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-15.json",
+      "language": "json",
+      "sizeLines": 48,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-16.json",
+      "language": "json",
+      "sizeLines": 486,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-17.json",
+      "language": "json",
+      "sizeLines": 33,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-18.json",
+      "language": "json",
+      "sizeLines": 33,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-19.json",
+      "language": "json",
+      "sizeLines": 33,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-2.json",
+      "language": "json",
+      "sizeLines": 572,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-20.json",
+      "language": "json",
+      "sizeLines": 50,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-21.json",
+      "language": "json",
+      "sizeLines": 380,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-22.json",
+      "language": "json",
+      "sizeLines": 68,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-23.json",
+      "language": "json",
+      "sizeLines": 64,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-24.json",
+      "language": "json",
+      "sizeLines": 50,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-25.json",
+      "language": "json",
+      "sizeLines": 49,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-26.json",
+      "language": "json",
+      "sizeLines": 57,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-27.json",
+      "language": "json",
+      "sizeLines": 57,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-28.json",
+      "language": "json",
+      "sizeLines": 41,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-29.json",
+      "language": "json",
+      "sizeLines": 303,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-3.json",
+      "language": "json",
+      "sizeLines": 666,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-30.json",
+      "language": "json",
+      "sizeLines": 348,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-31.json",
+      "language": "json",
+      "sizeLines": 278,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-32.json",
+      "language": "json",
+      "sizeLines": 235,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-4.json",
+      "language": "json",
+      "sizeLines": 379,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-5.json",
+      "language": "json",
+      "sizeLines": 508,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-6.json",
+      "language": "json",
+      "sizeLines": 241,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-7.json",
+      "language": "json",
+      "sizeLines": 199,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-8.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batch-9.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/batches.json",
+      "language": "json",
+      "sizeLines": 2659,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/layers.json",
+      "language": "json",
+      "sizeLines": 323,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/review.json",
+      "language": "json",
+      "sizeLines": 278,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/scan-result.json",
+      "language": "json",
+      "sizeLines": 1911,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/intermediate/tour.json",
+      "language": "json",
+      "sizeLines": 107,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/knowledge-graph.json",
+      "language": "json",
+      "sizeLines": 8056,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/assemble-final.cjs",
+      "language": "javascript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-1.json",
+      "language": "json",
+      "sizeLines": 241,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-10.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-11.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-12.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-13.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-14.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-15.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-16.json",
+      "language": "json",
+      "sizeLines": 55,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-17.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-18.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-19.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-2.json",
+      "language": "json",
+      "sizeLines": 203,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-20.json",
+      "language": "json",
+      "sizeLines": 46,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-21.json",
+      "language": "json",
+      "sizeLines": 145,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-22.json",
+      "language": "json",
+      "sizeLines": 73,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-23.json",
+      "language": "json",
+      "sizeLines": 46,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-24.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-25.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-26.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-27.json",
+      "language": "json",
+      "sizeLines": 46,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-28.json",
+      "language": "json",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-29.json",
+      "language": "json",
+      "sizeLines": 235,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-3.json",
+      "language": "json",
+      "sizeLines": 190,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-30.json",
+      "language": "json",
+      "sizeLines": 235,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-31.json",
+      "language": "json",
+      "sizeLines": 243,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-32.json",
+      "language": "json",
+      "sizeLines": 118,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-4.json",
+      "language": "json",
+      "sizeLines": 94,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-5.json",
+      "language": "json",
+      "sizeLines": 90,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-6.json",
+      "language": "json",
+      "sizeLines": 67,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-7.json",
+      "language": "json",
+      "sizeLines": 38,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-8.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/batch-prompt-9.json",
+      "language": "json",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/fingerprint-input.json",
+      "language": "json",
+      "sizeLines": 247,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-1.json",
+      "language": "json",
+      "sizeLines": 119,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-10.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-11.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-12.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-13.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-14.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-15.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-16.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-17.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-18.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-19.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-2.json",
+      "language": "json",
+      "sizeLines": 82,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-20.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-21.json",
+      "language": "json",
+      "sizeLines": 38,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-22.json",
+      "language": "json",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-23.json",
+      "language": "json",
+      "sizeLines": 35,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-24.json",
+      "language": "json",
+      "sizeLines": 28,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-25.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-26.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-27.json",
+      "language": "json",
+      "sizeLines": 16,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-28.json",
+      "language": "json",
+      "sizeLines": 14,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-29.json",
+      "language": "json",
+      "sizeLines": 182,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-3.json",
+      "language": "json",
+      "sizeLines": 82,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-30.json",
+      "language": "json",
+      "sizeLines": 184,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-31.json",
+      "language": "json",
+      "sizeLines": 192,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-32.json",
+      "language": "json",
+      "sizeLines": 91,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-4.json",
+      "language": "json",
+      "sizeLines": 43,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-5.json",
+      "language": "json",
+      "sizeLines": 42,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-6.json",
+      "language": "json",
+      "sizeLines": 29,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-7.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-8.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-file-analyzer-input-9.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-import-map-input.json",
+      "language": "json",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-import-map-output.json",
+      "language": "json",
+      "sizeLines": 435,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-inline-validate.cjs",
+      "language": "javascript",
+      "sizeLines": 118,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/tmp/ua-scan-files.json",
+      "language": "json",
+      "sizeLines": 1492,
+      "fileCategory": "config"
+    },
+    {
+      "path": "공부/info.txt",
+      "language": "txt",
+      "sizeLines": 111,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "alert-collector-service/.gitattributes",
+      "language": "unknown",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/build.gradle",
+      "language": "gradle",
+      "sizeLines": 51,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 3,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-collector-service/gradle/wrapper/gradle-wrapper.jar",
+      "language": "jar",
+      "sizeLines": 157,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/gradlew",
+      "language": "unknown",
+      "sizeLines": 251,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 94,
+      "fileCategory": "script"
+    },
+    {
+      "path": "alert-collector-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 40,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-collector-service/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 13,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-collector-service/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/AlertCollectorServiceApplication.java",
+      "language": "java",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "language": "java",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "language": "java",
+      "sizeLines": 139,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "language": "java",
+      "sizeLines": 122,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/config/AppConfig.java",
+      "language": "java",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/kafka/AlertKafkaProducer.java",
+      "language": "java",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java",
+      "language": "java",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "language": "java",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/service/DuplicateFilterService.java",
+      "language": "java",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/java/com/safealert/collector/service/MeasureStationCacheService.java",
+      "language": "java",
+      "sizeLines": 171,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-collector-service/src/main/resources/application.properties",
+      "language": "properties",
+      "sizeLines": 47,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-collector-service/src/test/java/com/safealert/collector/AlertCollectorServiceApplicationTests.java",
+      "language": "java",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/.gitattributes",
+      "language": "unknown",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/build.gradle",
+      "language": "gradle",
+      "sizeLines": 50,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 3,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-processor-service/gradle/wrapper/gradle-wrapper.jar",
+      "language": "jar",
+      "sizeLines": 157,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/gradlew",
+      "language": "unknown",
+      "sizeLines": 251,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 94,
+      "fileCategory": "script"
+    },
+    {
+      "path": "alert-processor-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 41,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-processor-service/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 12,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "alert-processor-service/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/AlertProcessorServiceApplication.java",
+      "language": "java",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+      "language": "java",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+      "language": "java",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "language": "java",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "language": "java",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "language": "java",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+      "language": "java",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "alert-processor-service/src/main/resources/application.properties",
+      "language": "properties",
+      "sizeLines": 35,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "alert-processor-service/src/test/java/com/safealert/processor/AlertProcessorServiceApplicationTests.java",
+      "language": "java",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/build.gradle",
+      "language": "gradle",
+      "sizeLines": 69,
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "api-gateway/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 91,
+      "fileCategory": "script"
+    },
+    {
+      "path": "api-gateway/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 47,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "api-gateway/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 11,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "api-gateway/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "language": "java",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java",
+      "language": "java",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "language": "java",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "language": "java",
+      "sizeLines": 62,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api-gateway/src/main/resources/application.yml",
+      "language": "yaml",
+      "sizeLines": 72,
+      "fileCategory": "config"
+    },
+    {
+      "path": "api-gateway/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "sizeLines": 26,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/build.gradle",
+      "language": "gradle",
+      "sizeLines": 75,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "auth-service/gradle.properties",
+      "language": "properties",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 91,
+      "fileCategory": "script"
+    },
+    {
+      "path": "auth-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 70,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "auth-service/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 25,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "auth-service/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "language": "java",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java",
+      "language": "java",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java",
+      "language": "java",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/config/SecurityConfig.java",
+      "language": "java",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/controller/AuthController.java",
+      "language": "java",
+      "sizeLines": 131,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "language": "java",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java",
+      "language": "java",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java",
+      "language": "java",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java",
+      "language": "java",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+      "language": "java",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java",
+      "language": "java",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java",
+      "language": "java",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java",
+      "language": "java",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+      "language": "java",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+      "language": "java",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java",
+      "language": "java",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java",
+      "language": "java",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java",
+      "language": "java",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java",
+      "language": "java",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+      "language": "java",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java",
+      "language": "java",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java",
+      "language": "java",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/service/AuthService.java",
+      "language": "java",
+      "sizeLines": 259,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java",
+      "language": "java",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "auth-service/src/main/resources/application.yml",
+      "language": "yaml",
+      "sizeLines": 98,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "auth-service/src/main/resources/sql/schema.sql",
+      "language": "sql",
+      "sizeLines": 19,
+      "fileCategory": "data"
+    },
+    {
+      "path": "auth-service/src/test/java/com/safealert/auth/service/AuthServiceTest.java",
+      "language": "java",
+      "sizeLines": 159,
+      "fileCategory": "code"
+    },
+    {
+      "path": "docker-compose.yml",
+      "language": "yaml",
+      "sizeLines": 204,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "docs/01_기획서.md",
+      "language": "markdown",
+      "sizeLines": 180,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/02_시스템아키텍처.md",
+      "language": "markdown",
+      "sizeLines": 367,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/03_API_DB설계.md",
+      "language": "markdown",
+      "sizeLines": 842,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/04_개발계획_WBS.md",
+      "language": "markdown",
+      "sizeLines": 670,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/05_개발환경.md",
+      "language": "markdown",
+      "sizeLines": 166,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/05_프론트엔드_화면설계.md",
+      "language": "markdown",
+      "sizeLines": 541,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/05_학습검증가이드.md",
+      "language": "markdown",
+      "sizeLines": 1034,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/06_기술결정근거_ADR.md",
+      "language": "markdown",
+      "sizeLines": 288,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/06_부하테스트_결과.md",
+      "language": "markdown",
+      "sizeLines": 194,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/07_기술선택_이유.md",
+      "language": "markdown",
+      "sizeLines": 196,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/08_시퀀스_다이어그램.md",
+      "language": "markdown",
+      "sizeLines": 164,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/09_장애테스트_결과.md",
+      "language": "markdown",
+      "sizeLines": 139,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/10_트러블슈팅_기록.md",
+      "language": "markdown",
+      "sizeLines": 133,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/11_데모영상_시나리오.md",
+      "language": "markdown",
+      "sizeLines": 277,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/db_init.sql",
+      "language": "sql",
+      "sizeLines": 115,
+      "fileCategory": "data"
+    },
+    {
+      "path": "docs/mockup/safealert_admin.html",
+      "language": "html",
+      "sizeLines": 471,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_dashboard.html",
+      "language": "html",
+      "sizeLines": 469,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_history.html",
+      "language": "html",
+      "sizeLines": 315,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_landing.html",
+      "language": "html",
+      "sizeLines": 451,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_login.html",
+      "language": "html",
+      "sizeLines": 334,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_profile.html",
+      "language": "html",
+      "sizeLines": 332,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/mockup/safealert_subscriptions.html",
+      "language": "html",
+      "sizeLines": 407,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/.env.production",
+      "language": "config",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 11,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "frontend/eslint.config.js",
+      "language": "javascript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/index.html",
+      "language": "html",
+      "sizeLines": 13,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 27,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "frontend/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 12,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "frontend/nginx.conf",
+      "language": "conf",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "sizeLines": 34,
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/README.md",
+      "language": "markdown",
+      "sizeLines": 16,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "frontend/src/api/axios.js",
+      "language": "javascript",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/App.css",
+      "language": "css",
+      "sizeLines": 184,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/App.jsx",
+      "language": "javascript",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/Navbar.jsx",
+      "language": "javascript",
+      "sizeLines": 128,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/context/AuthContext.jsx",
+      "language": "javascript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/hooks/useWebSocket.js",
+      "language": "javascript",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/index.css",
+      "language": "css",
+      "sizeLines": 18,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/main.jsx",
+      "language": "javascript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Admin.jsx",
+      "language": "javascript",
+      "sizeLines": 577,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Dashboard.jsx",
+      "language": "javascript",
+      "sizeLines": 312,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/FindPassword.jsx",
+      "language": "javascript",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/History.jsx",
+      "language": "javascript",
+      "sizeLines": 306,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Landing.jsx",
+      "language": "javascript",
+      "sizeLines": 338,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Login.jsx",
+      "language": "javascript",
+      "sizeLines": 386,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/OAuthSuccess.jsx",
+      "language": "javascript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Privacy.jsx",
+      "language": "javascript",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Profile.jsx",
+      "language": "javascript",
+      "sizeLines": 350,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/ResetPassword.jsx",
+      "language": "javascript",
+      "sizeLines": 101,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Subscriptions.jsx",
+      "language": "javascript",
+      "sizeLines": 288,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/Terms.jsx",
+      "language": "javascript",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/pages/TestPage.jsx",
+      "language": "javascript",
+      "sizeLines": 232,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/routes/AdminRoute.jsx",
+      "language": "javascript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/routes/GuestRoute.jsx",
+      "language": "javascript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/routes/ProtectedRoute.jsx",
+      "language": "javascript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/vite.config.js",
+      "language": "javascript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "infra/docker/grafana/dashboard-4701-fixed.json",
+      "language": "json",
+      "sizeLines": 2973,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/grafana/dashboard-4701-raw.json",
+      "language": "json",
+      "sizeLines": 2973,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/grafana/dashboard-4701.json",
+      "language": "json",
+      "sizeLines": 3238,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/grafana/docker.lnk",
+      "language": "lnk",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "infra/docker/grafana/provisioning/datasources/prometheus.yml",
+      "language": "yaml",
+      "sizeLines": 8,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/docker/init-postgresql.sql",
+      "language": "sql",
+      "sizeLines": 4,
+      "fileCategory": "data"
+    },
+    {
+      "path": "infra/hpa.yaml",
+      "language": "yaml",
+      "sizeLines": 39,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/kafka/kafka.yaml",
+      "language": "yaml",
+      "sizeLines": 67,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/kafka/values.yaml",
+      "language": "yaml",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/mongodb/values.yaml",
+      "language": "yaml",
+      "sizeLines": 20,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/namespaces.yaml",
+      "language": "yaml",
+      "sizeLines": 14,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/postgresql/values.yaml",
+      "language": "yaml",
+      "sizeLines": 25,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/redis/values.yaml",
+      "language": "yaml",
+      "sizeLines": 16,
+      "fileCategory": "config"
+    },
+    {
+      "path": "infra/secrets.yaml",
+      "language": "yaml",
+      "sizeLines": 30,
+      "fileCategory": "config"
+    },
+    {
+      "path": "k8s/monitoring/elasticsearch.yaml",
+      "language": "yaml",
+      "sizeLines": 46,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "k8s/monitoring/kibana.yaml",
+      "language": "yaml",
+      "sizeLines": 42,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "k8s/monitoring/logstash.yaml",
+      "language": "yaml",
+      "sizeLines": 81,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "load-test/login.js",
+      "language": "javascript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "load-test/subscription.js",
+      "language": "javascript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "load-test/websocket.js",
+      "language": "javascript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "logstash.conf",
+      "language": "conf",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/build.gradle",
+      "language": "gradle",
+      "sizeLines": 61,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "notification-service/gradle.properties",
+      "language": "properties",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/gradle/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 91,
+      "fileCategory": "script"
+    },
+    {
+      "path": "notification-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 46,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "notification-service/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 11,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "notification-service/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "language": "java",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/SecurityConfig.java",
+      "language": "java",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java",
+      "language": "java",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/config/WebSocketConfig.java",
+      "language": "java",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "language": "java",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "language": "java",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/AdminAlertResponse.java",
+      "language": "java",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/AdminStatsResponse.java",
+      "language": "java",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java",
+      "language": "java",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/ManualAlertRequest.java",
+      "language": "java",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/NotificationResponse.java",
+      "language": "java",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/dto/NotificationSummaryResponse.java",
+      "language": "java",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java",
+      "language": "java",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/kafka/AlertProcessedConsumer.java",
+      "language": "java",
+      "sizeLines": 110,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java",
+      "language": "java",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "language": "java",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "language": "java",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "language": "java",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java",
+      "language": "java",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "language": "java",
+      "sizeLines": 175,
+      "fileCategory": "code"
+    },
+    {
+      "path": "notification-service/src/main/resources/application.yml",
+      "language": "yaml",
+      "sizeLines": 56,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "notification-service/src/main/resources/sql/schema.sql",
+      "language": "sql",
+      "sizeLines": 21,
+      "fileCategory": "data"
+    },
+    {
+      "path": "prometheus.yml",
+      "language": "yaml",
+      "sizeLines": 45,
+      "fileCategory": "config"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 370,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "subscription-service/build.gradle",
+      "language": "gradle",
+      "sizeLines": 58,
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "subscription-service/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 91,
+      "fileCategory": "script"
+    },
+    {
+      "path": "subscription-service/k8s/deployment.yaml",
+      "language": "yaml",
+      "sizeLines": 46,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "subscription-service/k8s/service.yaml",
+      "language": "yaml",
+      "sizeLines": 14,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "subscription-service/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "language": "java",
+      "sizeLines": 88,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "language": "java",
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "language": "java",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "language": "java",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "language": "java",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "language": "java",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "language": "java",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "language": "java",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "language": "java",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "language": "java",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "language": "java",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "language": "java",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "language": "java",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "language": "java",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+      "language": "java",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "language": "java",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "language": "java",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "language": "java",
+      "sizeLines": 135,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "language": "java",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "subscription-service/src/main/resources/application.yml",
+      "language": "yaml",
+      "sizeLines": 61,
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/src/main/resources/logback-spring.xml",
+      "language": "xml",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "subscription-service/src/main/resources/sql/data.sql",
+      "language": "sql",
+      "sizeLines": 270,
+      "fileCategory": "data"
+    },
+    {
+      "path": "subscription-service/src/main/resources/sql/schema.sql",
+      "language": "sql",
+      "sizeLines": 43,
+      "fileCategory": "data"
+    },
+    {
+      "path": "todo.md",
+      "language": "markdown",
+      "sizeLines": 50,
+      "fileCategory": "docs"
+    }
+  ],
+  "totalFiles": 353,
+  "filteredByIgnore": 0,
+  "estimatedComplexity": "large",
+  "stats": {
+    "filesScanned": 353,
+    "byCategory": {
+      "docs": 19,
+      "config": 161,
+      "code": 126,
+      "infra": 25,
+      "script": 6,
+      "data": 6,
+      "markup": 10
+    },
+    "byLanguage": {
+      "markdown": 18,
+      "json": 116,
+      "config": 2,
+      "unknown": 5,
+      "javascript": 29,
+      "txt": 1,
+      "gradle": 12,
+      "dockerfile": 7,
+      "jar": 2,
+      "properties": 11,
+      "batch": 6,
+      "yaml": 32,
+      "java": 87,
+      "xml": 6,
+      "sql": 6,
+      "html": 8,
+      "conf": 2,
+      "css": 2,
+      "lnk": 1
+    }
+  }
+}

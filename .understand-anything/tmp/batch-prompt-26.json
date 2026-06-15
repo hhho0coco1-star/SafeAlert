@@ -1,0 +1,37 @@
+﻿{
+    "batchIndex":  26,
+    "files":  [
+                  {
+                      "path":  "k8s/monitoring/elasticsearch.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  46,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "k8s/monitoring/kibana.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  42,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "k8s/monitoring/logstash.yaml",
+                      "language":  "yaml",
+                      "sizeLines":  81,
+                      "fileCategory":  "infra"
+                  }
+              ],
+    "batchImportData":  {
+                            "k8s/monitoring/elasticsearch.yaml":  [
+
+                                                                  ],
+                            "k8s/monitoring/kibana.yaml":  [
+
+                                                           ],
+                            "k8s/monitoring/logstash.yaml":  [
+
+                                                             ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

@@ -1,0 +1,43 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java", "language": "java", "sizeLines": 42, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java", "language": "java", "sizeLines": 65, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java", "language": "java", "sizeLines": 73, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/dto/AdminAlertResponse.java", "language": "java", "sizeLines": 47, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/dto/NotificationResponse.java", "language": "java", "sizeLines": 30, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/kafka/AlertProcessedConsumer.java", "language": "java", "sizeLines": 110, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java", "language": "java", "sizeLines": 175, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java", "language": "java", "sizeLines": 54, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/websocket/NotificationWebSocketHandler.java", "language": "java", "sizeLines": 0, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java": [
+      "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java": [
+      "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java": [],
+    "notification-service/src/main/java/com/safealert/notification/dto/AdminAlertResponse.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/dto/NotificationResponse.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/kafka/AlertProcessedConsumer.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java": [],
+    "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java"
+    ]
+  },
+  "neighborMap": {}
+}

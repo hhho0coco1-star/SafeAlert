@@ -1,0 +1,199 @@
+{
+  "nodes": [
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "type": "file",
+      "name": "RedisConfig.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "summary": "Redis Pub/Sub 수신 컨테이너와 StringRedisTemplate, RestTemplate을 Spring Bean으로 등록하는 설정 클래스. alert:broadcast:* 패턴 채널과 alert:public 채널에 각각 Subscriber를 연결한다.",
+      "tags": ["config", "middleware", "redis", "pub-sub"],
+      "complexity": "simple",
+      "languageNotes": "Spring @Configuration 클래스로, RedisMessageListenerContainer에 PatternTopic과 ChannelTopic을 혼용하여 지역별/공개 알림 채널을 분리 구독한다."
+    },
+    {
+      "id": "class:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:RedisConfig",
+      "type": "class",
+      "name": "RedisConfig",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "lineRange": [17, 39],
+      "summary": "RedisMessageListenerContainer에 두 개의 Subscriber를 등록하고 StringRedisTemplate, RestTemplate Bean을 제공하는 Spring 설정 클래스.",
+      "tags": ["config", "redis", "spring-bean", "pub-sub"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:redisContainer",
+      "type": "function",
+      "name": "redisContainer",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "lineRange": [23, 29],
+      "summary": "RedisConnectionFactory를 받아 AlertRedisSubscriber와 AlertPublicSubscriber를 각각 PatternTopic/ChannelTopic에 등록한 RedisMessageListenerContainer Bean을 생성한다.",
+      "tags": ["spring-bean", "redis", "pub-sub", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "type": "file",
+      "name": "AlertPublicSubscriber.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "summary": "Redis alert:public 채널의 메시지를 수신하여 WebSocket /topic/public/alerts 토픽으로 브로드캐스트하는 공개 알림 구독자 컴포넌트.",
+      "tags": ["service", "redis", "pub-sub", "websocket"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:AlertPublicSubscriber",
+      "type": "class",
+      "name": "AlertPublicSubscriber",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "lineRange": [13, 27],
+      "summary": "Redis MessageListener를 구현하여 공개 채널 메시지를 WebSocket을 통해 모든 클라이언트에게 전달하는 Spring 컴포넌트.",
+      "tags": ["service", "redis", "pub-sub", "websocket", "event-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:onMessage",
+      "type": "function",
+      "name": "onMessage",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "lineRange": [18, 26],
+      "summary": "Redis 메시지를 수신하여 SimpMessagingTemplate으로 /topic/public/alerts WebSocket 토픽에 전송한다.",
+      "tags": ["event-handler", "redis", "websocket"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "type": "file",
+      "name": "AlertRedisSubscriber.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "summary": "Redis alert:broadcast:* 패턴 채널을 구독하여 채널명에서 지역 코드를 파싱한 뒤 /topic/alerts/{region} WebSocket 토픽으로 지역별 알림을 전달하는 구독자 컴포넌트.",
+      "tags": ["service", "redis", "pub-sub", "websocket"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:AlertRedisSubscriber",
+      "type": "class",
+      "name": "AlertRedisSubscriber",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "lineRange": [13, 28],
+      "summary": "Redis MessageListener를 구현하여 지역별 브로드캐스트 채널 메시지를 파싱하고 해당 지역의 WebSocket 토픽으로 라우팅하는 Spring 컴포넌트.",
+      "tags": ["service", "redis", "pub-sub", "websocket", "event-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:onMessage",
+      "type": "function",
+      "name": "onMessage",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "lineRange": [18, 28],
+      "summary": "Redis 채널명에서 지역 코드를 추출하여 SimpMessagingTemplate으로 /topic/alerts/{region} WebSocket 토픽에 메시지를 전송한다.",
+      "tags": ["event-handler", "redis", "websocket", "routing"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:RedisConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:RedisConfig",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:redisContainer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:redisContainer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "function:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:redisContainer",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:AlertRedisSubscriber",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java:redisContainer",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:AlertPublicSubscriber",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:AlertPublicSubscriber",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:AlertPublicSubscriber",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:AlertPublicSubscriber",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:onMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java:onMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:AlertRedisSubscriber",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:AlertRedisSubscriber",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:AlertRedisSubscriber",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:onMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java:onMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

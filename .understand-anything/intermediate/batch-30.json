@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "config:frontend/.env.production",
+      "type": "config",
+      "name": ".env.production",
+      "filePath": "frontend/.env.production",
+      "summary": "프론트엔드 프로덕션 빌드용 환경 변수 파일로, Vite 빌드 시 WebSocket 엔드포인트 URL(VITE_WS_URL)을 NodePort 30080으로 지정한다.",
+      "tags": ["configuration", "환경변수", "production", "websocket"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:frontend/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "frontend/README.md",
+      "summary": "Vite + React 프로젝트 초기 템플릿 README로, HMR 설정과 ESLint 규칙, React Compiler 및 TypeScript 확장 방법을 간략히 안내한다.",
+      "tags": ["documentation", "react", "vite", "개발환경"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "frontend/index.html",
+      "summary": "Vite React 앱의 HTML 진입점으로, id=\"root\" div와 /src/main.jsx 모듈 스크립트를 포함하여 SPA를 부트스트랩한다.",
+      "tags": ["entry-point", "markup", "vite", "react"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "frontend/package.json",
+      "summary": "프론트엔드 React 19 + Vite 8 프로젝트의 패키지 매니페스트로, STOMP WebSocket·axios·react-router-dom 런타임 의존성과 Tailwind CSS·ESLint 개발 의존성을 정의한다.",
+      "tags": ["configuration", "패키지관리", "react", "build-system"],
+      "complexity": "simple",
+      "languageNotes": "STOMP over SockJS 패턴으로 WebSocket 연결을 처리하며, Tailwind CSS v4는 Vite 플러그인 방식으로 통합된다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:frontend/.env.production",
+      "target": "file:frontend/index.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/index.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:frontend/README.md",
+      "target": "file:frontend/index.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

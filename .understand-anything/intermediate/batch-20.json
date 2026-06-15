@@ -1,0 +1,186 @@
+{
+  "batchIndex": 20,
+  "nodes": [
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-1.json",
+      "type": "config",
+      "name": "batch-prompt-1.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-1.json",
+      "summary": "배치 1번 분석 에이전트에 전달되는 프롬프트 임시 파일로, 파일 목록과 컨텍스트 정보를 포함한다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-2.json",
+      "type": "config",
+      "name": "batch-prompt-2.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-2.json",
+      "summary": "배치 2번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-3.json",
+      "type": "config",
+      "name": "batch-prompt-3.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-3.json",
+      "summary": "배치 3번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-4.json",
+      "type": "config",
+      "name": "batch-prompt-4.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-4.json",
+      "summary": "배치 4번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-5.json",
+      "type": "config",
+      "name": "batch-prompt-5.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-5.json",
+      "summary": "배치 5번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-6.json",
+      "type": "config",
+      "name": "batch-prompt-6.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-6.json",
+      "summary": "배치 6번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-7.json",
+      "type": "config",
+      "name": "batch-prompt-7.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-7.json",
+      "summary": "배치 7번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-8.json",
+      "type": "config",
+      "name": "batch-prompt-8.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-8.json",
+      "summary": "배치 8번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-9.json",
+      "type": "config",
+      "name": "batch-prompt-9.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-9.json",
+      "summary": "배치 9번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-10.json",
+      "type": "config",
+      "name": "batch-prompt-10.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-10.json",
+      "summary": "배치 10번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-11.json",
+      "type": "config",
+      "name": "batch-prompt-11.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-11.json",
+      "summary": "배치 11번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-12.json",
+      "type": "config",
+      "name": "batch-prompt-12.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-12.json",
+      "summary": "배치 12번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-13.json",
+      "type": "config",
+      "name": "batch-prompt-13.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-13.json",
+      "summary": "배치 13번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-14.json",
+      "type": "config",
+      "name": "batch-prompt-14.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-14.json",
+      "summary": "배치 14번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-15.json",
+      "type": "config",
+      "name": "batch-prompt-15.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-15.json",
+      "summary": "배치 15번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-16.json",
+      "type": "config",
+      "name": "batch-prompt-16.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-16.json",
+      "summary": "배치 16번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-17.json",
+      "type": "config",
+      "name": "batch-prompt-17.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-17.json",
+      "summary": "배치 17번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-18.json",
+      "type": "config",
+      "name": "batch-prompt-18.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-18.json",
+      "summary": "배치 18번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-19.json",
+      "type": "config",
+      "name": "batch-prompt-19.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-19.json",
+      "summary": "배치 19번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/batch-prompt-20.json",
+      "type": "config",
+      "name": "batch-prompt-20.json",
+      "filePath": ".understand-anything/tmp/batch-prompt-20.json",
+      "summary": "배치 20번 분석 에이전트에 전달되는 프롬프트 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

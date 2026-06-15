@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "config:infra/docker/grafana/dashboard-4701-fixed.json",
+      "type": "config",
+      "name": "dashboard-4701-fixed.json",
+      "filePath": "infra/docker/grafana/dashboard-4701-fixed.json",
+      "summary": "JVM(Micrometer) 메트릭을 시각화하는 Grafana 대시보드 4701의 수정본으로, Prometheus 데이터소스를 입력으로 받아 힙 메모리·GC·스레드 등의 패널을 포함하며 원본의 datasource 참조 오류를 수정한 버전이다.",
+      "tags": ["monitoring", "grafana", "dashboard", "prometheus"],
+      "complexity": "complex",
+      "languageNotes": "Grafana dashboard JSON 포맷으로, __inputs와 __requires 필드를 통해 datasource 종속성을 선언한다. fixed 버전은 datasource uid를 올바르게 참조하도록 수정되었다."
+    },
+    {
+      "id": "config:infra/docker/grafana/dashboard-4701-raw.json",
+      "type": "config",
+      "name": "dashboard-4701-raw.json",
+      "filePath": "infra/docker/grafana/dashboard-4701-raw.json",
+      "summary": "JVM(Micrometer) Grafana 대시보드 4701의 원본 export JSON으로, Prometheus 데이터소스 기반 JVM 힙·GC·스레드 패널을 포함하며 fixed 버전 생성 전 원본 보관용으로 사용된다.",
+      "tags": ["monitoring", "grafana", "dashboard", "prometheus"],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:infra/docker/grafana/dashboard-4701.json",
+      "type": "config",
+      "name": "dashboard-4701.json",
+      "filePath": "infra/docker/grafana/dashboard-4701.json",
+      "summary": "JVM(Micrometer) Grafana 대시보드 4701의 최종 배포본으로, Prometheus 데이터소스로부터 JVM 메트릭을 수집해 힙 사용량·GC 횟수·스레드 수 등을 시각화하는 대시보드 정의 파일이다.",
+      "tags": ["monitoring", "grafana", "dashboard", "prometheus"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:infra/docker/grafana/dashboard-4701-raw.json",
+      "target": "config:infra/docker/grafana/dashboard-4701-fixed.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:infra/docker/grafana/dashboard-4701-fixed.json",
+      "target": "config:infra/docker/grafana/dashboard-4701.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

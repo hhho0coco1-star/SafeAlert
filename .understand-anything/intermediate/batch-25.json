@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "config:alert-processor-service/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "alert-processor-service/build.gradle",
+      "summary": "alert-processor-service의 Gradle 빌드 설정 파일로, Spring Boot 3.5.14(Java 21), Kafka, MongoDB, Redis, Prometheus, Swagger, OpenTelemetry 에이전트 의존성을 정의하고 bootRun 시 OTLP 트레이싱을 활성화한다.",
+      "tags": ["configuration", "build-system", "spring-boot", "kafka", "infrastructure"],
+      "complexity": "moderate",
+      "languageNotes": "alert-collector-service와 달리 MongoDB 의존성이 추가되어 있으며, Resilience4j는 포함되지 않는다. OpenTelemetry Java Agent를 bootRun JVM 인수로 주입하는 동일한 패턴을 사용한다."
+    },
+    {
+      "id": "config:alert-processor-service/settings.gradle",
+      "type": "config",
+      "name": "settings.gradle",
+      "filePath": "alert-processor-service/settings.gradle",
+      "summary": "alert-processor-service Gradle 프로젝트의 루트 프로젝트 이름을 'alert-processor-service'로 설정하는 단일 라인 파일이다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-processor-service/gradlew.bat",
+      "type": "file",
+      "name": "gradlew.bat",
+      "filePath": "alert-processor-service/gradlew.bat",
+      "summary": "Windows 환경에서 Gradle Wrapper를 실행하는 표준 배치 스크립트로, JAVA_HOME 검증과 Gradle 래퍼 JAR 실행을 자동화한다.",
+      "tags": ["build-system", "script", "gradle", "windows"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:alert-processor-service/build.gradle",
+      "target": "config:alert-processor-service/settings.gradle",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

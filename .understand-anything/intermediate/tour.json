@@ -1,0 +1,130 @@
+[
+  {
+    "order": 1,
+    "title": "프로젝트 개요",
+    "description": "README.md는 SafeAlert의 전체 그림을 가장 빠르게 파악하는 출발점이다. 기상청·행정안전부·환경부 공공 API를 기반으로 실시간 재난·날씨·미세먼지 알림을 구독자에게 전달하는 MSA 플랫폼의 목표, 기술 스택, Phase별 개발 현황이 Mermaid 아키텍처 다이어그램과 함께 정리되어 있다. 02_시스템아키텍처.md는 이 다이어그램을 더 상세하게 풀어 각 마이크로서비스 간 의존 관계와 데이터 흐름을 설명한다. 두 문서를 먼저 읽으면 이어지는 코드 투어의 큰 흐름을 머릿속에 그릴 수 있다.",
+    "nodeIds": ["document:README.md", "document:docs/02_시스템아키텍처.md"]
+  },
+  {
+    "order": 2,
+    "title": "프론트엔드 진입점",
+    "description": "main.jsx는 Vite 기반 React 애플리케이션의 DOM 마운트 지점으로, StrictMode 안에서 App 컴포넌트를 렌더링한다. App.jsx는 그 바로 아래 계층으로, BrowserRouter와 AuthProvider로 앱 전체를 감싸고 ProtectedRoute·AdminRoute·GuestRoute 세 가지 역할 기반 라우트 가드로 모든 페이지 경로를 선언적으로 분류한다. fan-out이 20으로 프론트엔드에서 가장 많은 모듈을 참조하는 파일이므로, 이 파일 하나로 프론트엔드 전체 구조를 조감할 수 있다.",
+    "nodeIds": [
+      "file:frontend/src/main.jsx",
+      "file:frontend/src/App.jsx"
+    ],
+    "languageLesson": "React에서 AuthProvider처럼 앱 최상단을 Context로 감싸는 패턴을 'Provider 패턴'이라 한다. 이렇게 하면 어떤 하위 컴포넌트에서든 useAuth() 한 줄로 전역 인증 상태에 접근할 수 있어 prop drilling을 완전히 제거한다."
+  },
+  {
+    "order": 3,
+    "title": "전역 인증 상태 및 API 클라이언트",
+    "description": "AuthContext.jsx는 React Context API로 로그인 상태·액세스 토큰·사용자 정보를 전역 관리하며, login/logout 함수를 하위 컴포넌트에 공급한다. axios.js는 이 토큰을 모든 API 요청 헤더에 자동 첨부하고, 401 응답 시 리프레시 토큰으로 재발급을 시도한 뒤 대기 중이던 요청들을 일괄 재처리하는 인터셉터를 구현한다. 두 파일의 fan-in이 각각 9, 12로 프론트엔드 전체에서 가장 많이 참조되는 핵심 공유 모듈이다.",
+    "nodeIds": [
+      "file:frontend/src/context/AuthContext.jsx",
+      "file:frontend/src/api/axios.js"
+    ],
+    "languageLesson": "axios.js의 isRefreshing 플래그와 failedQueue 배열 조합은 동시 다발 401 응답이 발생할 때 토큰 재발급 요청이 중복 발생하는 경쟁 조건(race condition)을 방지하는 고전적인 패턴이다. 첫 번째 요청만 실제 재발급을 수행하고 나머지는 큐에서 대기하다 결과를 공유받는다."
+  },
+  {
+    "order": 4,
+    "title": "API Gateway: JWT 인증 및 Rate Limiting",
+    "description": "모든 외부 HTTP 요청은 API Gateway를 통과한다. JwtAuthFilter.java는 Spring Cloud Gateway의 GlobalFilter로 동작하며, 요청 헤더의 Bearer 토큰을 검증하고 사용자 ID를 하위 서비스에 X-User-Id 헤더로 전달한다. RateLimitFilter.java는 Redis를 활용해 IP별 초당 요청 수를 제한하여 서비스 남용을 방지하며, application.yml은 각 마이크로서비스로의 라우팅 규칙과 CORS·OTEL 트레이싱 설정을 통합 관리한다.",
+    "nodeIds": [
+      "file:api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "file:api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "config:api-gateway/src/main/resources/application.yml"
+    ],
+    "languageLesson": "Spring Cloud Gateway의 GlobalFilter는 모든 라우트에 적용되는 필터로, 전통적인 Servlet Filter와 달리 Project Reactor 기반 비동기(WebFlux) 파이프라인에서 동작한다. GatewayFilterChain.filter(exchange)를 호출해야 다음 필터로 요청이 전달된다."
+  },
+  {
+    "order": 5,
+    "title": "인증 서비스: JWT, OAuth2, 이메일 인증",
+    "description": "AuthController.java는 회원가입·로그인·토큰 갱신·비밀번호 재설정·소셜 로그인 콜백 등 인증 관련 모든 REST 엔드포인트를 한 곳에서 제공한다. AuthService.java는 실제 JWT 발급 로직, BCrypt 비밀번호 검증, Google/Kakao OAuth2 연동, 이메일 인증 코드 생성·검증을 담당하며 fan-out이 9로 인증 서비스 내 가장 많은 모듈을 조율한다. User.java 엔티티는 이메일/비밀번호 계정과 소셜 계정을 단일 테이블로 통합 표현하며, 정적 팩토리 메서드 패턴으로 불변성을 보장한다.",
+    "nodeIds": [
+      "file:auth-service/src/main/java/com/safealert/auth/controller/AuthController.java",
+      "file:auth-service/src/main/java/com/safealert/auth/service/AuthService.java",
+      "file:auth-service/src/main/java/com/safealert/auth/domain/User.java"
+    ],
+    "languageLesson": "Java에서 protected 생성자 + 정적 팩토리 메서드(create, createOAuth) 패턴은 객체 생성 방식을 명시적으로 구분하고, 비즈니스 규칙을 생성 시점에 강제할 수 있어 도메인 모델의 무결성을 높인다. new User()를 외부에서 직접 호출하지 못하게 막는 것이 핵심이다."
+  },
+  {
+    "order": 6,
+    "title": "DB 스키마: 핵심 테이블 구조",
+    "description": "docs/db_init.sql에 정의된 세 테이블은 시스템의 데이터 뼈대를 형성한다. users 테이블은 Step 5의 User 엔티티와 1:1로 매핑되며 이메일/소셜 계정 통합 구조를 담는다. subscriptions 테이블은 사용자와 구독 설정을 연결하며, outbox_events 테이블은 Step 7에서 설명할 Transactional Outbox 패턴의 영구 저장소로 PENDING/PUBLISHED/DEAD 상태와 payload를 보관하여 Kafka 발행 전 데이터 유실을 방지한다.",
+    "nodeIds": [
+      "table:docs/db_init.sql:users",
+      "table:docs/db_init.sql:subscriptions",
+      "table:docs/db_init.sql:outbox_events"
+    ],
+    "languageLesson": "SQL에서 status 컬럼과 created_at을 묶은 복합 인덱스(status, created_at)는 '아직 발행되지 않은 이벤트를 오래된 순으로 폴링'하는 쿼리를 인덱스만으로 처리하게 해 Table Full Scan을 방지한다. Outbox 패턴에서 이 인덱스 설계는 폴링 성능을 좌우하는 필수 요소다."
+  },
+  {
+    "order": 7,
+    "title": "구독 서비스 및 Transactional Outbox 패턴",
+    "description": "SubscriptionService.java는 사용자의 지역 구독 생성/수정/삭제를 처리하면서, 같은 트랜잭션 안에서 Step 6의 outbox_events 테이블에 이벤트 레코드를 INSERT한다. 이를 통해 DB 저장과 Kafka 발행 사이의 이원화를 없애 최소 한 번(at-least-once) 전달을 보장한다. OutboxScheduler.java는 5초 간격으로 PENDING 이벤트를 Kafka에 발행하고, 3회 실패 시 DEAD 상태로 전환하는 재시도 정책을 구현한다.",
+    "nodeIds": [
+      "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "file:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java"
+    ],
+    "languageLesson": "Transactional Outbox 패턴은 '비즈니스 데이터 저장'과 '메시지 발행'을 같은 DB 트랜잭션으로 묶어 원자성을 확보한다. 메시지 브로커(Kafka)와 DB가 별도 시스템이므로 두 작업을 하나의 분산 트랜잭션으로 처리하기 어렵지만, Outbox 테이블을 중간 버퍼로 사용하면 이 문제를 DB 수준에서 해결할 수 있다."
+  },
+  {
+    "order": 8,
+    "title": "알림 수집 서비스: 공공 API 및 Circuit Breaker",
+    "description": "AlertCollectorScheduler.java는 1시간 주기로 기상청·행정안전부·환경부 공공 API를 호출하는 스케줄러다. WeatherAlertClient.java를 비롯한 세 개의 API 클라이언트는 각각 외부 HTTP 호출을 담당하며, CircuitBreakerConfig.java는 Resilience4j를 사용해 실패율 임계치·슬라이딩 윈도우·대기 시간을 중앙 관리한다. 외부 공공 API가 일시적으로 불안정해도 Circuit Breaker가 연쇄 장애(cascade failure)를 차단하여 서비스 전체의 안정성을 보호한다.",
+    "nodeIds": [
+      "file:alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java",
+      "file:alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "file:alert-collector-service/src/main/java/com/safealert/collector/config/CircuitBreakerConfig.java"
+    ],
+    "languageLesson": "Circuit Breaker 패턴은 외부 의존성 호출 실패가 설정 임계치를 넘으면 '열림(Open)' 상태로 전환해 이후 요청을 즉시 거부한다. '반열림(Half-Open)' 상태에서 일부 요청을 통과시켜 회복 여부를 검사하고, 성공하면 '닫힘(Closed)'으로 복귀한다. 이 세 상태 전이가 연쇄 장애 방지의 핵심이다."
+  },
+  {
+    "order": 9,
+    "title": "알림 처리 서비스: Kafka 파이프라인",
+    "description": "AlertRawConsumer.java는 alert-collector-service가 Kafka의 raw 토픽에 발행한 원시 알림 데이터를 소비한다. 소비한 메시지는 카테고리별로 분류·정규화한 뒤 MongoDB에 저장하고, 처리 완료된 알림을 processed 토픽에 재발행한다. 이 단계가 '수집 → 처리 → 발송'의 세 단계 파이프라인 중간 허브 역할을 하며, MongoDB는 재난 알림의 다양한 스키마를 수용하기 위한 반정형 데이터 저장소로 선택되었다.",
+    "nodeIds": [
+      "file:alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java"
+    ],
+    "languageLesson": "Kafka에서 Consumer Group을 사용하면 같은 토픽을 여러 인스턴스가 파티션 단위로 나눠 소비할 수 있다. 파티션 수만큼 병렬 소비가 가능하므로 처리량을 수평 확장(horizontal scale)할 수 있으며, 이것이 Step 13에서 살펴볼 alert-processor-service HPA 오토스케일링의 근거가 된다."
+  },
+  {
+    "order": 10,
+    "title": "알림 발송 서비스: Redis Pub/Sub과 WebSocket",
+    "description": "NotificationService.java는 Kafka processed 토픽의 알림을 받아 Redis Pub/Sub 채널에 발행하고, 사용자 알림 이력을 MongoDB에 저장하며, 관리자 수동 발송 기능도 제공한다. AlertRedisSubscriber.java는 Redis 채널을 구독하다가 메시지를 수신하면 STOMP WebSocket으로 해당 지역 구독자에게 알림을 라우팅한다. Redis가 중간 Pub/Sub 버스 역할을 함으로써 notification-service 인스턴스가 여러 개로 수평 확장되어도 어느 인스턴스에 연결된 사용자든 알림을 받을 수 있다.",
+    "nodeIds": [
+      "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "file:notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java"
+    ],
+    "languageLesson": "Redis Pub/Sub은 WebSocket 서버 인스턴스가 여러 개일 때 발생하는 '내 WebSocket 세션이 없는 다른 인스턴스에 메시지가 왔을 때'의 문제를 해결한다. 모든 인스턴스가 같은 채널을 구독하므로 어느 인스턴스에 메시지가 도착해도 해당 토픽을 구독 중인 WebSocket 세션에게 전달할 수 있다."
+  },
+  {
+    "order": 11,
+    "title": "실시간 알림 수신: WebSocket 훅과 대시보드",
+    "description": "useWebSocket.js는 STOMP over SockJS로 여러 토픽을 구독하고 메시지 수신 시 콜백을 호출하는 재사용 가능한 커스텀 훅으로, fan-in이 5로 여러 페이지에서 공유된다. Dashboard.jsx는 이 훅을 사용해 사용자가 구독한 지역 기반으로 WebSocket 토픽을 동적으로 생성하고, 실시간으로 수신된 재난 알림을 카테고리별 필터링과 함께 화면에 표시한다. 이 두 파일이 Step 8~10에서 구축한 수집→처리→발송 파이프라인의 최종 소비자다.",
+    "nodeIds": [
+      "file:frontend/src/hooks/useWebSocket.js",
+      "file:frontend/src/pages/Dashboard.jsx"
+    ],
+    "languageLesson": "React custom hook에서 콜백 함수를 useRef에 저장하는 패턴은 'stale closure' 문제를 방지한다. useEffect 내부에서 최신 state를 참조하는 콜백을 직접 의존성에 넣으면 WebSocket이 매 렌더마다 재연결될 수 있는데, ref에 저장하면 재연결 없이 항상 최신 값을 참조할 수 있다."
+  },
+  {
+    "order": 12,
+    "title": "로컬 실행 환경: docker-compose",
+    "description": "docker-compose.yml은 PostgreSQL·Redis·Kafka·MongoDB·Jaeger·Prometheus·Grafana와 7개 마이크로서비스를 단일 명령으로 로컬에서 실행하는 설정 파일이다. fan-out이 13으로 전체 서비스 의존 관계를 한 파일에서 선언하므로, 어떤 서비스가 어떤 인프라에 의존하는지 가장 직관적으로 파악할 수 있다. 각 서비스의 환경 변수, 포트 매핑, 서비스 간 네트워크 구성이 코드 없이 선언형으로 표현되어 있다.",
+    "nodeIds": [
+      "service:docker-compose.yml"
+    ],
+    "languageLesson": "docker-compose의 depends_on은 컨테이너 시작 순서만 제어하며, 내부 서비스의 준비 완료를 보장하지 않는다. Kafka나 PostgreSQL이 완전히 기동되기 전에 애플리케이션이 연결을 시도해 실패하는 문제를 방지하려면 healthcheck와 condition: service_healthy 조합이 필요하다."
+  },
+  {
+    "order": 13,
+    "title": "Kubernetes 배포 및 오토스케일링",
+    "description": "prometheus.yml은 모든 마이크로서비스의 Prometheus 메트릭 스크레이핑 엔드포인트를 정의하며, CPU 사용량 지표가 HPA의 판단 기준이 된다. hpa.yaml은 api-gateway와 alert-processor-service에 CPU 70% 기준으로 최소 2~최대 5 파드 자동 스케일아웃을 설정하며, 공공 API 재난 경보 급증 시나리오에 대응하기 위한 설계다. 두 파일을 함께 보면 '메트릭 수집 → HPA 판단 → 파드 증감'의 Kubernetes 오토스케일링 루프 전체를 이해할 수 있다.",
+    "nodeIds": [
+      "config:prometheus.yml",
+      "config:infra/hpa.yaml"
+    ],
+    "languageLesson": "Kubernetes HPA(HorizontalPodAutoscaler)는 Metrics Server가 수집한 CPU/메모리 지표를 기반으로 Deployment의 replica 수를 자동 조정한다. Prometheus Adapter를 사용하면 커스텀 메트릭(Kafka Consumer Lag 등)으로도 스케일 기준을 설정할 수 있어 더 정밀한 오토스케일링이 가능하다."
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "config:alert-collector-service/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "alert-collector-service/build.gradle",
+      "summary": "alert-collector-service의 Gradle 빌드 설정 파일로, Spring Boot 3.5.14(Java 21), Kafka, Redis, Resilience4j, Prometheus, Swagger, OpenTelemetry 에이전트 의존성을 정의하고 bootRun 시 OTLP 트레이싱을 활성화한다.",
+      "tags": ["configuration", "build-system", "spring-boot", "kafka", "infrastructure"],
+      "complexity": "moderate",
+      "languageNotes": "Spring Boot 3.5.14와 Java 21을 사용하며, Resilience4j Circuit Breaker 및 OpenTelemetry Java Agent를 bootRun JVM 인수로 주입하는 패턴이 적용되어 있다."
+    },
+    {
+      "id": "config:alert-collector-service/settings.gradle",
+      "type": "config",
+      "name": "settings.gradle",
+      "filePath": "alert-collector-service/settings.gradle",
+      "summary": "alert-collector-service Gradle 프로젝트의 루트 프로젝트 이름을 'alert-collector-service'로 설정하는 단일 라인 파일이다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:alert-collector-service/gradlew.bat",
+      "type": "file",
+      "name": "gradlew.bat",
+      "filePath": "alert-collector-service/gradlew.bat",
+      "summary": "Windows 환경에서 Gradle Wrapper를 실행하는 표준 배치 스크립트로, JAVA_HOME 검증과 Gradle 래퍼 JAR 실행을 자동화한다.",
+      "tags": ["build-system", "script", "gradle", "windows"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:alert-collector-service/build.gradle",
+      "target": "config:alert-collector-service/settings.gradle",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

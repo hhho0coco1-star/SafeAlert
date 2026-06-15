@@ -1,0 +1,33 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java", "language": "java", "sizeLines": 24, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java", "language": "java", "sizeLines": 10, "fileCategory": "code"},
+    {"path": "notification-service/src/main/resources/application.yml", "language": "yaml", "sizeLines": 56, "fileCategory": "config"},
+    {"path": "notification-service/src/main/resources/logback-spring.xml", "language": "xml", "sizeLines": 22, "fileCategory": "config"},
+    {"path": "notification-service/src/main/resources/sql/schema.sql", "language": "sql", "sizeLines": 21, "fileCategory": "data"},
+    {"path": "subscription-service/gradle/wrapper/gradle-wrapper.properties", "language": "properties", "sizeLines": 7, "fileCategory": "config"},
+    {"path": "subscription-service/k8s/deployment.yaml", "language": "yaml", "sizeLines": 46, "fileCategory": "infra"},
+    {"path": "subscription-service/k8s/service.yaml", "language": "yaml", "sizeLines": 14, "fileCategory": "infra"},
+    {"path": "subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java", "language": "java", "sizeLines": 12, "fileCategory": "code"},
+    {"path": "subscription-service/src/main/resources/application.yml", "language": "yaml", "sizeLines": 61, "fileCategory": "config"},
+    {"path": "subscription-service/src/main/resources/logback-spring.xml", "language": "xml", "sizeLines": 22, "fileCategory": "config"},
+    {"path": "subscription-service/src/main/resources/sql/data.sql", "language": "sql", "sizeLines": 270, "fileCategory": "data"},
+    {"path": "subscription-service/src/main/resources/sql/schema.sql", "language": "sql", "sizeLines": 43, "fileCategory": "data"}
+  ],
+  "batchImportData": {
+    "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java": ["notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java"],
+    "notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java": [],
+    "notification-service/src/main/resources/application.yml": [],
+    "notification-service/src/main/resources/logback-spring.xml": [],
+    "notification-service/src/main/resources/sql/schema.sql": [],
+    "subscription-service/gradle/wrapper/gradle-wrapper.properties": [],
+    "subscription-service/k8s/deployment.yaml": [],
+    "subscription-service/k8s/service.yaml": [],
+    "subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java": [],
+    "subscription-service/src/main/resources/application.yml": [],
+    "subscription-service/src/main/resources/logback-spring.xml": [],
+    "subscription-service/src/main/resources/sql/data.sql": [],
+    "subscription-service/src/main/resources/sql/schema.sql": []
+  }
+}

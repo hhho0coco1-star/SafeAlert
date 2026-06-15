@@ -1,0 +1,67 @@
+﻿{
+    "batchIndex":  6,
+    "files":  [
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java",
+                      "language":  "java",
+                      "sizeLines":  69,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java",
+                      "language":  "java",
+                      "sizeLines":  28,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+                      "language":  "java",
+                      "sizeLines":  25,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+                      "language":  "java",
+                      "sizeLines":  7,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+                      "language":  "java",
+                      "sizeLines":  33,
+                      "fileCategory":  "code"
+                  },
+                  {
+                      "path":  "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java",
+                      "language":  "java",
+                      "sizeLines":  29,
+                      "fileCategory":  "code"
+                  }
+              ],
+    "batchImportData":  {
+                            "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java":  [
+                                                                                                                              "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+                                                                                                                              "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+                                                                                                                              "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+                                                                                                                              "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java"
+                                                                                                                          ],
+                            "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java":  [
+                                                                                                                                    "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java"
+                                                                                                                                ],
+                            "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java":  [
+
+                                                                                                                        ],
+                            "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java":  [
+                                                                                                                                           "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java"
+                                                                                                                                       ],
+                            "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java":  [
+
+                                                                                                                                  ],
+                            "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java":  [
+
+                                                                                                                                  ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

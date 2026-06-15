@@ -1,0 +1,266 @@
+{
+  "nodes": [
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java",
+      "type": "file",
+      "name": "GlobalExceptionHandler.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java",
+      "summary": "notification-service 전역 예외 처리기로, IllegalArgumentException 및 MethodArgumentNotValidException을 잡아 표준 ApiResponse 형식의 400 오류 응답을 반환한다.",
+      "tags": ["api-handler", "middleware", "validation", "error-handling"],
+      "complexity": "simple",
+      "languageNotes": "@RestControllerAdvice를 사용해 모든 컨트롤러에 예외 처리를 일괄 적용하는 Spring 패턴."
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java",
+      "type": "file",
+      "name": "NotificationServiceApplication.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java",
+      "summary": "notification-service의 Spring Boot 진입점으로, 애플리케이션 컨텍스트를 초기화하고 서버를 시작한다.",
+      "tags": ["entry-point", "spring-boot"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:notification-service/src/main/resources/application.yml",
+      "type": "config",
+      "name": "application.yml",
+      "filePath": "notification-service/src/main/resources/application.yml",
+      "summary": "notification-service의 런타임 설정 파일로, PostgreSQL 데이터소스, Redis, Kafka 컨슈머(notification-group), JWT, Prometheus, OpenTelemetry OTLP 엔드포인트를 구성한다.",
+      "tags": ["configuration", "spring-boot", "kafka", "monitoring"],
+      "complexity": "moderate",
+      "languageNotes": "포트 8083, Kafka 컨슈머 그룹 notification-group, subscription-service URL을 환경 변수로 주입 받는 구조."
+    },
+    {
+      "id": "config:notification-service/src/main/resources/logback-spring.xml",
+      "type": "config",
+      "name": "logback-spring.xml",
+      "filePath": "notification-service/src/main/resources/logback-spring.xml",
+      "summary": "notification-service의 로깅 설정으로, 콘솔 출력과 Logstash TCP 전송을 병행하며 service_name 필드를 notification-service로 태깅한다.",
+      "tags": ["configuration", "logging", "monitoring", "infrastructure"],
+      "complexity": "simple",
+      "languageNotes": "LogstashTcpSocketAppender를 통해 ELK 스택으로 구조화 로그를 전송하는 패턴."
+    },
+    {
+      "id": "table:notification-service/src/main/resources/sql/schema.sql:notification_history",
+      "type": "table",
+      "name": "notification_history",
+      "filePath": "notification-service/src/main/resources/sql/schema.sql",
+      "summary": "사용자별 알림 발송 이력을 저장하는 테이블로, 재난 카테고리·심각도·제목·내용·상태(SENT 등)와 발송 타임스탬프를 기록한다.",
+      "tags": ["database", "notification", "audit"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:notification-service/src/main/resources/sql/schema.sql",
+      "type": "config",
+      "name": "schema.sql",
+      "filePath": "notification-service/src/main/resources/sql/schema.sql",
+      "summary": "notification_history 테이블과 user/alert 기반 복합 인덱스를 정의하는 DDL 스크립트로, notification-service의 데이터베이스 스키마를 초기화한다.",
+      "tags": ["database", "schema-definition", "migration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:subscription-service/gradle/wrapper/gradle-wrapper.properties",
+      "type": "config",
+      "name": "gradle-wrapper.properties",
+      "filePath": "subscription-service/gradle/wrapper/gradle-wrapper.properties",
+      "summary": "subscription-service 빌드에 사용할 Gradle 8.14.2 버전과 배포판 경로를 고정하는 Gradle Wrapper 설정 파일이다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:subscription-service/k8s/deployment.yaml",
+      "type": "service",
+      "name": "deployment.yaml",
+      "filePath": "subscription-service/k8s/deployment.yaml",
+      "summary": "subscription-service를 safealert-app 네임스페이스에 1 replica로 배포하는 Kubernetes Deployment로, PostgreSQL·Kafka·Jaeger·Logstash 연결 환경 변수를 주입하고 CPU/메모리 리소스 제한을 설정한다.",
+      "tags": ["infrastructure", "deployment", "orchestration", "kubernetes"],
+      "complexity": "moderate",
+      "languageNotes": "imagePullPolicy: Never 설정은 로컬 개발 환경(minikube 등)에서 로컬 이미지를 사용하기 위한 설정이다."
+    },
+    {
+      "id": "service:subscription-service/k8s/service.yaml",
+      "type": "service",
+      "name": "service.yaml",
+      "filePath": "subscription-service/k8s/service.yaml",
+      "summary": "subscription-service Pod를 클러스터 내부에 포트 8085로 노출하는 Kubernetes ClusterIP Service 리소스이다.",
+      "tags": ["infrastructure", "kubernetes", "networking", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "type": "file",
+      "name": "SubscriptionServiceApplication.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "summary": "subscription-service의 Spring Boot 진입점으로, @EnableScheduling을 통해 Outbox 패턴 등 주기적 스케줄 작업을 활성화하고 애플리케이션을 시작한다.",
+      "tags": ["entry-point", "spring-boot", "scheduling"],
+      "complexity": "simple",
+      "languageNotes": "@EnableScheduling 어노테이션으로 @Scheduled 기반 Outbox 이벤트 발행 등 배치 작업을 지원한다."
+    },
+    {
+      "id": "config:subscription-service/src/main/resources/application.yml",
+      "type": "config",
+      "name": "application.yml",
+      "filePath": "subscription-service/src/main/resources/application.yml",
+      "summary": "subscription-service의 런타임 설정 파일로, PostgreSQL 데이터소스, Kafka 프로듀서(subscription-events 토픽), 지역 코드 API 키, Prometheus, OpenTelemetry를 구성하며 data.sql 초기 데이터를 항상 실행하도록 설정한다.",
+      "tags": ["configuration", "spring-boot", "kafka", "monitoring"],
+      "complexity": "moderate",
+      "languageNotes": "포트 8085, sql.init.mode: always로 region_codes 시드 데이터를 매 시작 시 적재한다."
+    },
+    {
+      "id": "config:subscription-service/src/main/resources/logback-spring.xml",
+      "type": "config",
+      "name": "logback-spring.xml",
+      "filePath": "subscription-service/src/main/resources/logback-spring.xml",
+      "summary": "subscription-service의 로깅 설정으로, 콘솔 출력과 Logstash TCP 전송을 병행하며 service_name 필드를 subscription-service로 태깅한다.",
+      "tags": ["configuration", "logging", "monitoring", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:subscription-service/src/main/resources/sql/data.sql:region_codes",
+      "type": "table",
+      "name": "region_codes (seed data)",
+      "filePath": "subscription-service/src/main/resources/sql/data.sql",
+      "summary": "전국 시·도 및 시·군·구 지역 코드 초기 데이터를 region_codes 테이블에 삽입하는 시드 스크립트로, ON CONFLICT DO NOTHING으로 멱등성을 보장한다.",
+      "tags": ["database", "seed-data", "region"],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:subscription-service/src/main/resources/sql/schema.sql",
+      "type": "config",
+      "name": "schema.sql",
+      "filePath": "subscription-service/src/main/resources/sql/schema.sql",
+      "summary": "subscription-service의 핵심 테이블(subscriptions, subscription_regions, subscription_categories, outbox_events, region_codes)을 정의하는 DDL 스크립트로, Outbox 패턴을 위한 outbox_events 테이블을 포함한다.",
+      "tags": ["database", "schema-definition", "outbox-pattern"],
+      "complexity": "moderate",
+      "languageNotes": "outbox_events 테이블로 Transactional Outbox 패턴을 구현해 Kafka 이벤트 발행의 신뢰성을 보장한다."
+    },
+    {
+      "id": "table:subscription-service/src/main/resources/sql/schema.sql:subscriptions",
+      "type": "table",
+      "name": "subscriptions",
+      "filePath": "subscription-service/src/main/resources/sql/schema.sql",
+      "summary": "사용자 구독 엔터티를 저장하는 메인 테이블로, UUID 기반 식별자와 ACTIVE/INACTIVE 상태를 관리한다.",
+      "tags": ["database", "subscription", "core-entity"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:subscription-service/src/main/resources/sql/schema.sql:subscription_regions",
+      "type": "table",
+      "name": "subscription_regions",
+      "filePath": "subscription-service/src/main/resources/sql/schema.sql",
+      "summary": "구독과 지역 코드의 다대다 관계를 저장하는 테이블로, (subscription_id, region_code) 유니크 제약으로 중복 구독을 방지한다.",
+      "tags": ["database", "subscription", "region"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:subscription-service/src/main/resources/sql/schema.sql:subscription_categories",
+      "type": "table",
+      "name": "subscription_categories",
+      "filePath": "subscription-service/src/main/resources/sql/schema.sql",
+      "summary": "구독과 재난 카테고리(기상, 지진 등)의 다대다 관계를 저장하는 테이블로, 중복 카테고리 구독을 방지하는 유니크 제약을 포함한다.",
+      "tags": ["database", "subscription", "category"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:subscription-service/src/main/resources/sql/schema.sql:outbox_events",
+      "type": "table",
+      "name": "outbox_events",
+      "filePath": "subscription-service/src/main/resources/sql/schema.sql",
+      "summary": "Transactional Outbox 패턴을 위한 이벤트 저장 테이블로, 발행 상태(PENDING/PUBLISHED)와 재시도 횟수를 추적하여 Kafka 메시지 발행의 원자성을 보장한다.",
+      "tags": ["database", "outbox-pattern", "event-driven"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "config:notification-service/src/main/resources/application.yml",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:notification-service/src/main/resources/logback-spring.xml",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:notification-service/src/main/resources/sql/schema.sql",
+      "target": "table:notification-service/src/main/resources/sql/schema.sql:notification_history",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "config:subscription-service/src/main/resources/application.yml",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:subscription-service/src/main/resources/logback-spring.xml",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:subscription-service/src/main/resources/sql/schema.sql",
+      "target": "table:subscription-service/src/main/resources/sql/schema.sql:subscriptions",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "config:subscription-service/src/main/resources/sql/schema.sql",
+      "target": "table:subscription-service/src/main/resources/sql/schema.sql:subscription_regions",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "config:subscription-service/src/main/resources/sql/schema.sql",
+      "target": "table:subscription-service/src/main/resources/sql/schema.sql:subscription_categories",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "config:subscription-service/src/main/resources/sql/schema.sql",
+      "target": "table:subscription-service/src/main/resources/sql/schema.sql:outbox_events",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "table:subscription-service/src/main/resources/sql/data.sql:region_codes",
+      "target": "table:subscription-service/src/main/resources/sql/schema.sql:subscriptions",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "service:subscription-service/k8s/deployment.yaml",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:subscription-service/k8s/service.yaml",
+      "target": "service:subscription-service/k8s/deployment.yaml",
+      "type": "serves",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

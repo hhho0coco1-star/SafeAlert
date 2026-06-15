@@ -1,0 +1,13 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "api-gateway/build.gradle", "language": "gradle", "sizeLines": 69, "fileCategory": "config"},
+    {"path": "api-gateway/gradlew.bat", "language": "batch", "sizeLines": 91, "fileCategory": "script"},
+    {"path": "api-gateway/settings.gradle", "language": "gradle", "sizeLines": 0, "fileCategory": "config"}
+  ],
+  "batchImportData": {
+    "api-gateway/build.gradle": [],
+    "api-gateway/gradlew.bat": [],
+    "api-gateway/settings.gradle": []
+  }
+}

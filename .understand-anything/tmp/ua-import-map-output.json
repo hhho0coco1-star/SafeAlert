@@ -1,0 +1,547 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 353,
+    "filesWithImports": 52,
+    "totalEdges": 132
+  },
+  "importMap": {
+    ".claude/CLAUDE.md": [],
+    ".claude/settings.json": [],
+    ".claude/settings.local.json": [],
+    ".env.example": [],
+    ".understand-anything/.understandignore": [],
+    ".understand-anything/config.json": [],
+    ".understand-anything/fingerprints.json": [],
+    ".understand-anything/intermediate/assemble-review.json": [],
+    ".understand-anything/intermediate/assembled-graph.json": [],
+    ".understand-anything/intermediate/batch-1-part-1.json": [],
+    ".understand-anything/intermediate/batch-10.json": [],
+    ".understand-anything/intermediate/batch-11.json": [],
+    ".understand-anything/intermediate/batch-12.json": [],
+    ".understand-anything/intermediate/batch-13.json": [],
+    ".understand-anything/intermediate/batch-14.json": [],
+    ".understand-anything/intermediate/batch-15.json": [],
+    ".understand-anything/intermediate/batch-16.json": [],
+    ".understand-anything/intermediate/batch-17.json": [],
+    ".understand-anything/intermediate/batch-18.json": [],
+    ".understand-anything/intermediate/batch-19.json": [],
+    ".understand-anything/intermediate/batch-2.json": [],
+    ".understand-anything/intermediate/batch-20.json": [],
+    ".understand-anything/intermediate/batch-21.json": [],
+    ".understand-anything/intermediate/batch-22.json": [],
+    ".understand-anything/intermediate/batch-23.json": [],
+    ".understand-anything/intermediate/batch-24.json": [],
+    ".understand-anything/intermediate/batch-25.json": [],
+    ".understand-anything/intermediate/batch-26.json": [],
+    ".understand-anything/intermediate/batch-27.json": [],
+    ".understand-anything/intermediate/batch-28.json": [],
+    ".understand-anything/intermediate/batch-29.json": [],
+    ".understand-anything/intermediate/batch-3.json": [],
+    ".understand-anything/intermediate/batch-30.json": [],
+    ".understand-anything/intermediate/batch-31.json": [],
+    ".understand-anything/intermediate/batch-32.json": [],
+    ".understand-anything/intermediate/batch-4.json": [],
+    ".understand-anything/intermediate/batch-5.json": [],
+    ".understand-anything/intermediate/batch-6.json": [],
+    ".understand-anything/intermediate/batch-7.json": [],
+    ".understand-anything/intermediate/batch-8.json": [],
+    ".understand-anything/intermediate/batch-9.json": [],
+    ".understand-anything/intermediate/batches.json": [],
+    ".understand-anything/intermediate/layers.json": [],
+    ".understand-anything/intermediate/review.json": [],
+    ".understand-anything/intermediate/scan-result.json": [],
+    ".understand-anything/intermediate/tour.json": [],
+    ".understand-anything/knowledge-graph.json": [],
+    ".understand-anything/tmp/assemble-final.cjs": [],
+    ".understand-anything/tmp/batch-prompt-1.json": [],
+    ".understand-anything/tmp/batch-prompt-10.json": [],
+    ".understand-anything/tmp/batch-prompt-11.json": [],
+    ".understand-anything/tmp/batch-prompt-12.json": [],
+    ".understand-anything/tmp/batch-prompt-13.json": [],
+    ".understand-anything/tmp/batch-prompt-14.json": [],
+    ".understand-anything/tmp/batch-prompt-15.json": [],
+    ".understand-anything/tmp/batch-prompt-16.json": [],
+    ".understand-anything/tmp/batch-prompt-17.json": [],
+    ".understand-anything/tmp/batch-prompt-18.json": [],
+    ".understand-anything/tmp/batch-prompt-19.json": [],
+    ".understand-anything/tmp/batch-prompt-2.json": [],
+    ".understand-anything/tmp/batch-prompt-20.json": [],
+    ".understand-anything/tmp/batch-prompt-21.json": [],
+    ".understand-anything/tmp/batch-prompt-22.json": [],
+    ".understand-anything/tmp/batch-prompt-23.json": [],
+    ".understand-anything/tmp/batch-prompt-24.json": [],
+    ".understand-anything/tmp/batch-prompt-25.json": [],
+    ".understand-anything/tmp/batch-prompt-26.json": [],
+    ".understand-anything/tmp/batch-prompt-27.json": [],
+    ".understand-anything/tmp/batch-prompt-28.json": [],
+    ".understand-anything/tmp/batch-prompt-29.json": [],
+    ".understand-anything/tmp/batch-prompt-3.json": [],
+    ".understand-anything/tmp/batch-prompt-30.json": [],
+    ".understand-anything/tmp/batch-prompt-31.json": [],
+    ".understand-anything/tmp/batch-prompt-32.json": [],
+    ".understand-anything/tmp/batch-prompt-4.json": [],
+    ".understand-anything/tmp/batch-prompt-5.json": [],
+    ".understand-anything/tmp/batch-prompt-6.json": [],
+    ".understand-anything/tmp/batch-prompt-7.json": [],
+    ".understand-anything/tmp/batch-prompt-8.json": [],
+    ".understand-anything/tmp/batch-prompt-9.json": [],
+    ".understand-anything/tmp/fingerprint-input.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-1.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-10.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-11.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-12.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-13.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-14.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-15.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-16.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-17.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-18.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-19.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-2.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-20.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-21.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-22.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-23.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-24.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-25.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-26.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-27.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-28.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-29.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-3.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-30.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-31.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-32.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-4.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-5.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-6.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-7.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-8.json": [],
+    ".understand-anything/tmp/ua-file-analyzer-input-9.json": [],
+    ".understand-anything/tmp/ua-import-map-input.json": [],
+    ".understand-anything/tmp/ua-import-map-output.json": [],
+    ".understand-anything/tmp/ua-inline-validate.cjs": [],
+    ".understand-anything/tmp/ua-scan-files.json": [],
+    "공부/info.txt": [],
+    "alert-collector-service/.gitattributes": [],
+    "alert-collector-service/build.gradle": [],
+    "alert-collector-service/Dockerfile": [],
+    "alert-collector-service/gradle/wrapper/gradle-wrapper.jar": [],
+    "alert-collector-service/gradle/wrapper/gradle-wrapper.properties": [],
+    "alert-collector-service/gradlew": [],
+    "alert-collector-service/gradlew.bat": [],
+    "alert-collector-service/k8s/deployment.yaml": [],
+    "alert-collector-service/k8s/service.yaml": [],
+    "alert-collector-service/settings.gradle": [],
+    "alert-collector-service/src/main/java/com/safealert/collector/AlertCollectorServiceApplication.java": [],
+    "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java": [
+      "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/service/DuplicateFilterService.java"
+    ],
+    "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java": [
+      "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/service/DuplicateFilterService.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/service/MeasureStationCacheService.java"
+    ],
+    "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java": [
+      "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/service/DuplicateFilterService.java"
+    ],
+    "alert-collector-service/src/main/java/com/safealert/collector/config/AppConfig.java": [],
+    "alert-collector-service/src/main/java/com/safealert/collector/kafka/AlertKafkaProducer.java": [
+      "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java"
+    ],
+    "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java": [],
+    "alert-collector-service/src/main/java/com/safealert/collector/scheduler/AlertCollectorScheduler.java": [
+      "alert-collector-service/src/main/java/com/safealert/collector/client/DisasterAlertClient.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/client/DustAlertClient.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/client/WeatherAlertClient.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/kafka/AlertKafkaProducer.java",
+      "alert-collector-service/src/main/java/com/safealert/collector/model/AlertRawMessage.java"
+    ],
+    "alert-collector-service/src/main/java/com/safealert/collector/service/DuplicateFilterService.java": [],
+    "alert-collector-service/src/main/java/com/safealert/collector/service/MeasureStationCacheService.java": [],
+    "alert-collector-service/src/main/resources/application.properties": [],
+    "alert-collector-service/src/main/resources/logback-spring.xml": [],
+    "alert-collector-service/src/test/java/com/safealert/collector/AlertCollectorServiceApplicationTests.java": [],
+    "alert-processor-service/.gitattributes": [],
+    "alert-processor-service/build.gradle": [],
+    "alert-processor-service/Dockerfile": [],
+    "alert-processor-service/gradle/wrapper/gradle-wrapper.jar": [],
+    "alert-processor-service/gradle/wrapper/gradle-wrapper.properties": [],
+    "alert-processor-service/gradlew": [],
+    "alert-processor-service/gradlew.bat": [],
+    "alert-processor-service/k8s/deployment.yaml": [],
+    "alert-processor-service/k8s/service.yaml": [],
+    "alert-processor-service/settings.gradle": [],
+    "alert-processor-service/src/main/java/com/safealert/processor/AlertProcessorServiceApplication.java": [],
+    "alert-processor-service/src/main/java/com/safealert/processor/kafka/AlertRawConsumer.java": [
+      "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java",
+      "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java",
+      "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java",
+      "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java"
+    ],
+    "alert-processor-service/src/main/java/com/safealert/processor/kafka/ProcessedAlertProducer.java": [
+      "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java"
+    ],
+    "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java": [],
+    "alert-processor-service/src/main/java/com/safealert/processor/repository/ProcessedAlertRepository.java": [
+      "alert-processor-service/src/main/java/com/safealert/processor/model/ProcessedAlert.java"
+    ],
+    "alert-processor-service/src/main/java/com/safealert/processor/service/AlertClassifierService.java": [],
+    "alert-processor-service/src/main/java/com/safealert/processor/service/DuplicateFilterService.java": [],
+    "alert-processor-service/src/main/resources/application.properties": [],
+    "alert-processor-service/src/main/resources/logback-spring.xml": [],
+    "alert-processor-service/src/test/java/com/safealert/processor/AlertProcessorServiceApplicationTests.java": [],
+    "api-gateway/build.gradle": [],
+    "api-gateway/Dockerfile": [],
+    "api-gateway/gradle/wrapper/gradle-wrapper.properties": [],
+    "api-gateway/gradlew.bat": [],
+    "api-gateway/k8s/deployment.yaml": [],
+    "api-gateway/k8s/service.yaml": [],
+    "api-gateway/settings.gradle": [],
+    "api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java": [],
+    "api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java": [],
+    "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java": [],
+    "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java": [],
+    "api-gateway/src/main/resources/application.yml": [],
+    "api-gateway/src/main/resources/logback-spring.xml": [],
+    "auth-service/build.gradle": [],
+    "auth-service/Dockerfile": [],
+    "auth-service/gradle.properties": [],
+    "auth-service/gradle/wrapper/gradle-wrapper.properties": [],
+    "auth-service/gradlew.bat": [],
+    "auth-service/k8s/deployment.yaml": [],
+    "auth-service/k8s/service.yaml": [],
+    "auth-service/settings.gradle": [],
+    "auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java": [],
+    "auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java": [
+      "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java"
+    ],
+    "auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java": [],
+    "auth-service/src/main/java/com/safealert/auth/config/SecurityConfig.java": [
+      "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java",
+      "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java",
+      "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java"
+    ],
+    "auth-service/src/main/java/com/safealert/auth/controller/AuthController.java": [
+      "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/service/AuthService.java"
+    ],
+    "auth-service/src/main/java/com/safealert/auth/domain/User.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/SendCodeRequest.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/VerifyCodeRequest.java": [],
+    "auth-service/src/main/java/com/safealert/auth/handler/OAuth2LoginSuccessHandler.java": [
+      "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+      "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java"
+    ],
+    "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java": [
+      "auth-service/src/main/java/com/safealert/auth/domain/User.java"
+    ],
+    "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java": [],
+    "auth-service/src/main/java/com/safealert/auth/security/RedisOAuth2AuthorizationRequestRepository.java": [],
+    "auth-service/src/main/java/com/safealert/auth/service/AuthService.java": [
+      "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/AdminUsersResponse.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/ChangePasswordRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/MeResponse.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/UpdateNicknameRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+      "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java"
+    ],
+    "auth-service/src/main/java/com/safealert/auth/service/CustomOAuth2UserService.java": [
+      "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java"
+    ],
+    "auth-service/src/main/resources/application.yml": [],
+    "auth-service/src/main/resources/logback-spring.xml": [],
+    "auth-service/src/main/resources/sql/schema.sql": [],
+    "auth-service/src/test/java/com/safealert/auth/service/AuthServiceTest.java": [
+      "auth-service/src/main/java/com/safealert/auth/domain/User.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/LoginRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/SignupRequest.java",
+      "auth-service/src/main/java/com/safealert/auth/dto/TokenResponse.java",
+      "auth-service/src/main/java/com/safealert/auth/repository/UserRepository.java",
+      "auth-service/src/main/java/com/safealert/auth/security/JwtProvider.java"
+    ],
+    "docker-compose.yml": [],
+    "docs/01_기획서.md": [],
+    "docs/02_시스템아키텍처.md": [],
+    "docs/03_API_DB설계.md": [],
+    "docs/04_개발계획_WBS.md": [],
+    "docs/05_개발환경.md": [],
+    "docs/05_프론트엔드_화면설계.md": [],
+    "docs/05_학습검증가이드.md": [],
+    "docs/06_기술결정근거_ADR.md": [],
+    "docs/06_부하테스트_결과.md": [],
+    "docs/07_기술선택_이유.md": [],
+    "docs/08_시퀀스_다이어그램.md": [],
+    "docs/09_장애테스트_결과.md": [],
+    "docs/10_트러블슈팅_기록.md": [],
+    "docs/11_데모영상_시나리오.md": [],
+    "docs/db_init.sql": [],
+    "docs/mockup/safealert_admin.html": [],
+    "docs/mockup/safealert_dashboard.html": [],
+    "docs/mockup/safealert_history.html": [],
+    "docs/mockup/safealert_landing.html": [],
+    "docs/mockup/safealert_login.html": [],
+    "docs/mockup/safealert_profile.html": [],
+    "docs/mockup/safealert_subscriptions.html": [],
+    "frontend/.env.production": [],
+    "frontend/Dockerfile": [],
+    "frontend/eslint.config.js": [],
+    "frontend/index.html": [],
+    "frontend/k8s/deployment.yaml": [],
+    "frontend/k8s/service.yaml": [],
+    "frontend/nginx.conf": [],
+    "frontend/package.json": [],
+    "frontend/README.md": [],
+    "frontend/src/api/axios.js": [],
+    "frontend/src/App.css": [],
+    "frontend/src/App.jsx": [
+      "frontend/src/components/Navbar.jsx",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/pages/Admin.jsx",
+      "frontend/src/pages/Dashboard.jsx",
+      "frontend/src/pages/FindPassword.jsx",
+      "frontend/src/pages/History.jsx",
+      "frontend/src/pages/Landing.jsx",
+      "frontend/src/pages/Login.jsx",
+      "frontend/src/pages/OAuthSuccess.jsx",
+      "frontend/src/pages/Privacy.jsx",
+      "frontend/src/pages/Profile.jsx",
+      "frontend/src/pages/ResetPassword.jsx",
+      "frontend/src/pages/Subscriptions.jsx",
+      "frontend/src/pages/Terms.jsx",
+      "frontend/src/pages/TestPage.jsx",
+      "frontend/src/routes/AdminRoute.jsx",
+      "frontend/src/routes/GuestRoute.jsx",
+      "frontend/src/routes/ProtectedRoute.jsx"
+    ],
+    "frontend/src/components/Navbar.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/context/AuthContext.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/hooks/useWebSocket.js": [],
+    "frontend/src/index.css": [],
+    "frontend/src/main.jsx": [
+      "frontend/src/App.jsx",
+      "frontend/src/index.css"
+    ],
+    "frontend/src/pages/Admin.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Dashboard.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/hooks/useWebSocket.js"
+    ],
+    "frontend/src/pages/FindPassword.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/History.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Landing.jsx": [],
+    "frontend/src/pages/Login.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/OAuthSuccess.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/Privacy.jsx": [],
+    "frontend/src/pages/Profile.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/ResetPassword.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Subscriptions.jsx": [
+      "frontend/src/api/axios.js"
+    ],
+    "frontend/src/pages/Terms.jsx": [],
+    "frontend/src/pages/TestPage.jsx": [
+      "frontend/src/api/axios.js",
+      "frontend/src/hooks/useWebSocket.js"
+    ],
+    "frontend/src/routes/AdminRoute.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/routes/GuestRoute.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/routes/ProtectedRoute.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/vite.config.js": [],
+    "infra/docker/grafana/dashboard-4701-fixed.json": [],
+    "infra/docker/grafana/dashboard-4701-raw.json": [],
+    "infra/docker/grafana/dashboard-4701.json": [],
+    "infra/docker/grafana/docker.lnk": [],
+    "infra/docker/grafana/provisioning/datasources/prometheus.yml": [],
+    "infra/docker/init-postgresql.sql": [],
+    "infra/hpa.yaml": [],
+    "infra/kafka/kafka.yaml": [],
+    "infra/kafka/values.yaml": [],
+    "infra/mongodb/values.yaml": [],
+    "infra/namespaces.yaml": [],
+    "infra/postgresql/values.yaml": [],
+    "infra/redis/values.yaml": [],
+    "infra/secrets.yaml": [],
+    "k8s/monitoring/elasticsearch.yaml": [],
+    "k8s/monitoring/kibana.yaml": [],
+    "k8s/monitoring/logstash.yaml": [],
+    "load-test/login.js": [],
+    "load-test/subscription.js": [],
+    "load-test/websocket.js": [],
+    "logstash.conf": [],
+    "notification-service/build.gradle": [],
+    "notification-service/Dockerfile": [],
+    "notification-service/gradle.properties": [],
+    "notification-service/gradle/gradle/wrapper/gradle-wrapper.properties": [],
+    "notification-service/gradle/wrapper/gradle-wrapper.properties": [],
+    "notification-service/gradlew.bat": [],
+    "notification-service/k8s/deployment.yaml": [],
+    "notification-service/k8s/service.yaml": [],
+    "notification-service/settings.gradle": [],
+    "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java": [
+      "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/config/SecurityConfig.java": [],
+    "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java": [
+      "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/config/WebSocketConfig.java": [],
+    "notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java": [
+      "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java": [],
+    "notification-service/src/main/java/com/safealert/notification/dto/AdminAlertResponse.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/dto/AdminStatsResponse.java": [],
+    "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java": [],
+    "notification-service/src/main/java/com/safealert/notification/dto/ManualAlertRequest.java": [],
+    "notification-service/src/main/java/com/safealert/notification/dto/NotificationResponse.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/dto/NotificationSummaryResponse.java": [],
+    "notification-service/src/main/java/com/safealert/notification/exception/GlobalExceptionHandler.java": [
+      "notification-service/src/main/java/com/safealert/notification/dto/ApiResponse.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/kafka/AlertProcessedConsumer.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/NotificationServiceApplication.java": [],
+    "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java": [],
+    "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java": [],
+    "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java": [],
+    "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java": [
+      "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "notification-service/src/main/java/com/safealert/notification/security/JwtProvider.java"
+    ],
+    "notification-service/src/main/resources/application.yml": [],
+    "notification-service/src/main/resources/logback-spring.xml": [],
+    "notification-service/src/main/resources/sql/schema.sql": [],
+    "prometheus.yml": [],
+    "README.md": [],
+    "subscription-service/build.gradle": [],
+    "subscription-service/Dockerfile": [],
+    "subscription-service/gradle/wrapper/gradle-wrapper.properties": [],
+    "subscription-service/gradlew.bat": [],
+    "subscription-service/k8s/deployment.yaml": [],
+    "subscription-service/k8s/service.yaml": [],
+    "subscription-service/settings.gradle": [],
+    "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java": [],
+    "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java": [
+      "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java"
+    ],
+    "subscription-service/src/main/java/com/safealert/subscription/SubscriptionServiceApplication.java": [],
+    "subscription-service/src/main/resources/application.yml": [],
+    "subscription-service/src/main/resources/logback-spring.xml": [],
+    "subscription-service/src/main/resources/sql/data.sql": [],
+    "subscription-service/src/main/resources/sql/schema.sql": [],
+    "todo.md": []
+  }
+}

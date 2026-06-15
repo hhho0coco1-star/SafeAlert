@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "document:.claude/CLAUDE.md",
+      "type": "document",
+      "name": "CLAUDE.md",
+      "filePath": ".claude/CLAUDE.md",
+      "summary": "SafeAlert 프로젝트에서 Claude Code AI 에이전트가 따라야 할 8가지 필수 행동 규칙을 정의한 프로젝트 지침서로, 객관적 분석 원칙·단계별 승인 절차·튜토리얼 모드·WBS 동기화·커밋 규칙·Phase 검증 절차 등을 포함한다.",
+      "tags": ["documentation", "configuration", "development", "guidelines"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:.claude/settings.json",
+      "type": "config",
+      "name": "settings.json",
+      "filePath": ".claude/settings.json",
+      "summary": "Claude Code의 프로젝트 수준 설정 파일로, 현재 내용이 비어 있어 기본값을 사용하는 상태이다.",
+      "tags": ["configuration", "ai-assistant", "claude-code"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.claude/settings.local.json",
+      "type": "config",
+      "name": "settings.local.json",
+      "filePath": ".claude/settings.local.json",
+      "summary": "Claude Code의 로컬 전용 설정 파일로, extract-structure.mjs 스캔 스크립트 실행에 대한 Bash 권한을 허용하는 설정이 포함되어 있다.",
+      "tags": ["configuration", "ai-assistant", "permissions", "local"],
+      "complexity": "simple",
+      "languageNotes": "settings.local.json은 .gitignore 대상으로 로컬 환경에만 적용되는 권한 설정을 보관하며, 버전 관리에서 제외되는 것이 일반적이다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:.claude/settings.json",
+      "target": "document:.claude/CLAUDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.claude/settings.local.json",
+      "target": "document:.claude/CLAUDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

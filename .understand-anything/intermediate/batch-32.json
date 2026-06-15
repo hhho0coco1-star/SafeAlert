@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "config:infra/hpa.yaml",
+      "type": "config",
+      "name": "hpa.yaml",
+      "filePath": "infra/hpa.yaml",
+      "summary": "Kubernetes HorizontalPodAutoscaler 정의 파일로, api-gateway와 alert-processor-service 두 Deployment에 대해 CPU 사용률 70% 기준으로 최소 2 ~ 최대 5 파드 사이에서 자동 스케일아웃을 설정한다.",
+      "tags": ["infrastructure", "kubernetes", "autoscaling", "orchestration"],
+      "complexity": "simple",
+      "languageNotes": "autoscaling/v2 API를 사용하며 Resource 타입 메트릭으로 CPU Utilization을 기준으로 스케일링한다."
+    },
+    {
+      "id": "config:infra/namespaces.yaml",
+      "type": "config",
+      "name": "namespaces.yaml",
+      "filePath": "infra/namespaces.yaml",
+      "summary": "SafeAlert 프로젝트의 Kubernetes Namespace 3개(safealert-app·safealert-infra·safealert-monitor)를 생성하는 매니페스트로, 서비스·인프라·모니터링 워크로드를 논리적으로 분리한다.",
+      "tags": ["infrastructure", "kubernetes", "namespace", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:infra/secrets.yaml",
+      "type": "config",
+      "name": "secrets.yaml",
+      "filePath": "infra/secrets.yaml",
+      "summary": "auth-service DB 비밀번호·JWT 시크릿, api-gateway·notification-service 공유 JWT 시크릿, subscription-service DB 비밀번호를 Kubernetes Secret 리소스로 정의하는 파일이다.",
+      "tags": ["infrastructure", "kubernetes", "security", "configuration"],
+      "complexity": "simple",
+      "languageNotes": "stringData 필드를 사용하여 base64 인코딩 없이 평문으로 시크릿 값을 선언한다. 프로덕션 환경에서는 Vault 또는 sealed-secrets로 교체가 권장된다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:infra/namespaces.yaml",
+      "target": "config:infra/hpa.yaml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:infra/namespaces.yaml",
+      "target": "config:infra/secrets.yaml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

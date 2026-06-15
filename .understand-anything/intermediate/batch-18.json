@@ -1,0 +1,186 @@
+{
+  "batchIndex": 18,
+  "nodes": [
+    {
+      "id": "config:.understand-anything/intermediate/assembled-graph.json",
+      "type": "config",
+      "name": "assembled-graph.json",
+      "filePath": ".understand-anything/intermediate/assembled-graph.json",
+      "summary": "배치별 중간 분석 결과를 병합한 최종 어셈블 그래프 파일로, understand-anything 내부 분석 산출물이다.",
+      "tags": ["internal", "tooling", "knowledge-graph"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/assemble-review.json",
+      "type": "config",
+      "name": "assemble-review.json",
+      "filePath": ".understand-anything/intermediate/assemble-review.json",
+      "summary": "그래프 어셈블 과정에서 생성된 검토 보고서로, 엣지 유효성 및 병합 결과를 기록한다.",
+      "tags": ["internal", "tooling", "review"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-1.json",
+      "type": "config",
+      "name": "batch-1.json",
+      "filePath": ".understand-anything/intermediate/batch-1.json",
+      "summary": "배치 1번 파일 분석 결과를 담은 중간 산출물로, 노드 및 엣지 데이터를 포함한다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-1-part-1.json",
+      "type": "config",
+      "name": "batch-1-part-1.json",
+      "filePath": ".understand-anything/intermediate/batch-1-part-1.json",
+      "summary": "배치 1번의 파트 1 분석 결과 파일로, 노드 수가 많아 분할된 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-2.json",
+      "type": "config",
+      "name": "batch-2.json",
+      "filePath": ".understand-anything/intermediate/batch-2.json",
+      "summary": "배치 2번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-3.json",
+      "type": "config",
+      "name": "batch-3.json",
+      "filePath": ".understand-anything/intermediate/batch-3.json",
+      "summary": "배치 3번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-4.json",
+      "type": "config",
+      "name": "batch-4.json",
+      "filePath": ".understand-anything/intermediate/batch-4.json",
+      "summary": "배치 4번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-5.json",
+      "type": "config",
+      "name": "batch-5.json",
+      "filePath": ".understand-anything/intermediate/batch-5.json",
+      "summary": "배치 5번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-6.json",
+      "type": "config",
+      "name": "batch-6.json",
+      "filePath": ".understand-anything/intermediate/batch-6.json",
+      "summary": "배치 6번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-7.json",
+      "type": "config",
+      "name": "batch-7.json",
+      "filePath": ".understand-anything/intermediate/batch-7.json",
+      "summary": "배치 7번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-8.json",
+      "type": "config",
+      "name": "batch-8.json",
+      "filePath": ".understand-anything/intermediate/batch-8.json",
+      "summary": "배치 8번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-9.json",
+      "type": "config",
+      "name": "batch-9.json",
+      "filePath": ".understand-anything/intermediate/batch-9.json",
+      "summary": "배치 9번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-10.json",
+      "type": "config",
+      "name": "batch-10.json",
+      "filePath": ".understand-anything/intermediate/batch-10.json",
+      "summary": "배치 10번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-11.json",
+      "type": "config",
+      "name": "batch-11.json",
+      "filePath": ".understand-anything/intermediate/batch-11.json",
+      "summary": "배치 11번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-12.json",
+      "type": "config",
+      "name": "batch-12.json",
+      "filePath": ".understand-anything/intermediate/batch-12.json",
+      "summary": "배치 12번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-13.json",
+      "type": "config",
+      "name": "batch-13.json",
+      "filePath": ".understand-anything/intermediate/batch-13.json",
+      "summary": "배치 13번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-14.json",
+      "type": "config",
+      "name": "batch-14.json",
+      "filePath": ".understand-anything/intermediate/batch-14.json",
+      "summary": "배치 14번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-15.json",
+      "type": "config",
+      "name": "batch-15.json",
+      "filePath": ".understand-anything/intermediate/batch-15.json",
+      "summary": "배치 15번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batch-16.json",
+      "type": "config",
+      "name": "batch-16.json",
+      "filePath": ".understand-anything/intermediate/batch-16.json",
+      "summary": "배치 16번 파일 분석 결과를 담은 중간 산출물이다.",
+      "tags": ["internal", "tooling", "batch-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batches.json",
+      "type": "config",
+      "name": "batches.json",
+      "filePath": ".understand-anything/intermediate/batches.json",
+      "summary": "전체 배치 구성 정보를 담은 파일로, 각 배치의 파일 목록과 인덱스를 정의한다.",
+      "tags": ["internal", "tooling", "configuration"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

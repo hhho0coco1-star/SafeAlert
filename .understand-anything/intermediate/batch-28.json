@@ -1,0 +1,286 @@
+{
+  "nodes": [
+    {
+      "id": "document:docs/01_기획서.md",
+      "type": "document",
+      "name": "01_기획서.md",
+      "filePath": "docs/01_기획서.md",
+      "summary": "SafeAlert 프로젝트의 전체 기획서로, 배경·목적·사용자 스토리·핵심 기능 목록·비기능 요구사항(성능·가용성·확장성)·주요 시나리오 흐름을 포함한 프로젝트 최상위 요구사항 문서다.",
+      "tags": ["documentation", "requirements", "overview", "entry-point"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/02_시스템아키텍처.md",
+      "type": "document",
+      "name": "02_시스템아키텍처.md",
+      "filePath": "docs/02_시스템아키텍처.md",
+      "summary": "SafeAlert의 전체 MSA 아키텍처를 기술한 문서로, 7개 마이크로서비스의 역할·포트·Replica 수, Kafka 토픽 설계, 데이터 저장소 전략(Database per Service), 장애 복원력 설계, Kubernetes 구성, Observability 스택을 상세히 설명한다.",
+      "tags": ["documentation", "architecture", "infrastructure", "microservices"],
+      "complexity": "complex",
+      "languageNotes": "초기 설계안(Statistics·Admin 독립 서비스, Saga 패턴)과 실제 구현(Notification Service 통합, Outbox 패턴으로 대체)의 차이를 명시적으로 문서화한 ADR 연계 아키텍처 문서다."
+    },
+    {
+      "id": "document:docs/03_API_DB설계.md",
+      "type": "document",
+      "name": "03_API_DB설계.md",
+      "filePath": "docs/03_API_DB설계.md",
+      "summary": "SafeAlert 전체 API 엔드포인트 명세와 DB 스키마 설계를 담은 핵심 설계서로, Auth·Subscription·Notification·Alert 서비스의 Request/Response DTO·에러 코드·HTTP 메서드를 정의하며 CLAUDE.md에서 구현 기준 문서로 지정되어 있다.",
+      "tags": ["documentation", "api-schema", "database", "schema-definition"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:docs/04_개발계획_WBS.md",
+      "type": "document",
+      "name": "04_개발계획_WBS.md",
+      "filePath": "docs/04_개발계획_WBS.md",
+      "summary": "SafeAlert 개발 계획 WBS(Work Breakdown Structure)로, Phase 0~6의 전체 일정·작업 항목·완료 여부를 추적하며 CLAUDE.md 규칙에 따라 작업 완료 시 반드시 갱신해야 하는 프로젝트 진행 현황 문서다.",
+      "tags": ["documentation", "project-management", "development", "planning"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:docs/05_개발환경.md",
+      "type": "document",
+      "name": "05_개발환경.md",
+      "filePath": "docs/05_개발환경.md",
+      "summary": "SafeAlert 개발 환경 구성 가이드로, 각 백엔드 서비스의 실행 명령어·포트, DB/인프라 접속 정보, Prometheus·Grafana·Jaeger·Kibana 대시보드 접속 주소, K8s 포트포워딩 명령어, 공통 트러블슈팅 Q&A를 제공한다.",
+      "tags": ["documentation", "configuration", "development", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/05_프론트엔드_화면설계.md",
+      "type": "document",
+      "name": "05_프론트엔드_화면설계.md",
+      "filePath": "docs/05_프론트엔드_화면설계.md",
+      "summary": "SafeAlert React 프론트엔드의 화면 설계서로, 9개 페이지의 라우팅·접근 권한·UI 컴포넌트 구조, 카테고리 뱃지 색상 체계, 브랜드 컬러 시스템, 각 페이지별 상세 레이아웃과 API 연동 방식을 정의한다.",
+      "tags": ["documentation", "frontend", "ui-design", "component"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:docs/05_학습검증가이드.md",
+      "type": "document",
+      "name": "05_학습검증가이드.md",
+      "filePath": "docs/05_학습검증가이드.md",
+      "summary": "SafeAlert 각 Phase별 학습 목표와 검증 방법을 단계별로 정리한 가이드로, 초보 개발자가 minikube·Kafka·Redis·WebSocket·Kubernetes HPA 등 핵심 기술 개념을 직접 실행하며 이해할 수 있도록 체크리스트와 명령어 예제를 포함한다.",
+      "tags": ["documentation", "tutorial", "learning", "verification"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:docs/06_기술결정근거_ADR.md",
+      "type": "document",
+      "name": "06_기술결정근거_ADR.md",
+      "filePath": "docs/06_기술결정근거_ADR.md",
+      "summary": "SafeAlert의 주요 기술 결정을 ADR(Architecture Decision Record) 형식으로 기록한 문서로, Kafka 선택·Kubernetes 도입·MSA 구조·Redis 활용·Outbox 패턴 등 각 선택의 맥락·비교 선택지·트레이드오프를 면접 답변 수준으로 정리한다.",
+      "tags": ["documentation", "architecture", "decision-record", "technical-design"],
+      "complexity": "complex",
+      "languageNotes": "ADR-001~ADR-007의 번호 체계로 결정 사항을 추적하며, 설계안과 실제 구현 차이(예: Statistics Service 미구현)를 ADR 번호로 상호 참조한다."
+    },
+    {
+      "id": "document:docs/06_부하테스트_결과.md",
+      "type": "document",
+      "name": "06_부하테스트_결과.md",
+      "filePath": "docs/06_부하테스트_결과.md",
+      "summary": "k6를 사용한 SafeAlert 부하 테스트 결과 보고서로, 로그인·구독·알림 조회 API에 대한 개선 전후 p(95) 응답시간·에러율을 비교하며 HikariCP 커넥션 풀 튜닝 등 성능 개선 과정을 기록한다.",
+      "tags": ["documentation", "performance", "testing", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/07_기술선택_이유.md",
+      "type": "document",
+      "name": "07_기술선택_이유.md",
+      "filePath": "docs/07_기술선택_이유.md",
+      "summary": "면접 대비용 기술 선택 근거 문서로, MSA·Kafka·Kubernetes·Redis·WebSocket·Spring Boot 각 기술을 왜 선택했는지 SafeAlert 도메인 특성(재난 알림·실시간·고가용성)에 맞춰 비교표와 트레이드오프 인정 형식으로 정리한다.",
+      "tags": ["documentation", "technical-design", "architecture", "interview-prep"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/08_시퀀스_다이어그램.md",
+      "type": "document",
+      "name": "08_시퀀스_다이어그램.md",
+      "filePath": "docs/08_시퀀스_다이어그램.md",
+      "summary": "SafeAlert 주요 플로우의 Mermaid 시퀀스 다이어그램 모음으로, 회원가입·이메일 인증·로그인·재난 알림 발송·WebSocket 연결 등 서비스 간 상호작용 순서를 시각적으로 표현한다.",
+      "tags": ["documentation", "architecture", "sequence-diagram", "flow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/09_장애테스트_결과.md",
+      "type": "document",
+      "name": "09_장애테스트_결과.md",
+      "filePath": "docs/09_장애테스트_결과.md",
+      "summary": "Phase 3에서 수행한 장애 주입 테스트 결과를 기록한 문서로, Kafka 브로커 중단·Redis 연결 실패·Pod 강제 종료 시나리오에서 Outbox 패턴과 Circuit Breaker가 어떻게 동작하는지 실측 결과와 핵심 코드를 함께 제시한다.",
+      "tags": ["documentation", "testing", "resilience", "chaos-engineering"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/10_트러블슈팅_기록.md",
+      "type": "document",
+      "name": "10_트러블슈팅_기록.md",
+      "filePath": "docs/10_트러블슈팅_기록.md",
+      "summary": "SafeAlert 개발 중 발생한 실제 장애와 해결 과정을 '문제→원인→해결→배운 점' 형식으로 기록한 문서로, WebSocket 다중 인스턴스 알림 미수신(Redis Pub/Sub 도입), 지역 코드 매핑 오류, CORS 문제 등의 트러블슈팅 사례를 담는다.",
+      "tags": ["documentation", "troubleshooting", "debugging", "lessons-learned"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/11_데모영상_시나리오.md",
+      "type": "document",
+      "name": "11_데모영상_시나리오.md",
+      "filePath": "docs/11_데모영상_시나리오.md",
+      "summary": "포트폴리오용 데모 영상 촬영 시나리오와 내레이션 대본으로, 로컬(파트 A)과 AWS EC2(파트 B) 두 파트로 나눠 실시간 알림·HPA 스케일아웃·Grafana 대시보드 등 핵심 기능을 4~5분 안에 보여주는 장면 구성을 정의한다.",
+      "tags": ["documentation", "demo", "portfolio", "deployment"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "table:docs/db_init.sql:users",
+      "type": "table",
+      "name": "users",
+      "filePath": "docs/db_init.sql",
+      "summary": "auth_db의 사용자 테이블로, UUID 기반 기본 키, 이메일·bcrypt 해시 비밀번호·닉네임·역할(USER/ADMIN)·OAuth 공급자 정보·소프트 딜리트 플래그를 저장하며 이메일·OAuth(provider+id) 조합에 고유 인덱스가 적용되어 있다.",
+      "tags": ["database", "schema-definition", "authentication", "user-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "table:docs/db_init.sql:subscriptions",
+      "type": "table",
+      "name": "subscriptions",
+      "filePath": "docs/db_init.sql",
+      "summary": "subscription_db의 구독 마스터 테이블로, UUID 기반 구독 ID와 사용자 ID·상태(ACTIVE 기본값)를 보관하며, subscription_regions·subscription_categories 테이블과 1:N 관계를 형성한다.",
+      "tags": ["database", "schema-definition", "subscription"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:docs/db_init.sql:outbox_events",
+      "type": "table",
+      "name": "outbox_events",
+      "filePath": "docs/db_init.sql",
+      "summary": "Transactional Outbox 패턴을 구현하는 이벤트 저장 테이블로, 이벤트 타입·Aggregate ID·직렬화된 payload·PENDING/PUBLISHED/DEAD 상태를 저장하며 status+created_at 복합 인덱스로 미발행 이벤트 폴링 성능을 최적화한다.",
+      "tags": ["database", "schema-definition", "event-sourcing", "outbox-pattern"],
+      "complexity": "moderate",
+      "languageNotes": "Outbox 패턴의 구현체로, Subscription Service의 구독 변경 이벤트를 DB 트랜잭션과 원자적으로 저장한 뒤 5초 주기 스케줄러가 Kafka로 발행한다."
+    },
+    {
+      "id": "table:docs/db_init.sql:notification_history",
+      "type": "table",
+      "name": "notification_history",
+      "filePath": "docs/db_init.sql",
+      "summary": "notification_db의 알림 발송 이력 테이블로, 사용자별 수신 알림(카테고리·심각도·제목·내용·지역코드·출처·상태)을 기록하며 user_id+created_at 복합 인덱스로 사용자별 이력 조회와 관리자 통계 집계 성능을 보장한다.",
+      "tags": ["database", "schema-definition", "notification", "history"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "schema:docs/db_init.sql",
+      "type": "schema",
+      "name": "db_init.sql",
+      "filePath": "docs/db_init.sql",
+      "summary": "SafeAlert 3개 PostgreSQL 데이터베이스(auth_db·subscription_db·notification_db)의 전체 DDL 초기화 스크립트로, users·subscriptions·subscription_regions·subscription_categories·outbox_events·region_codes·notification_history 7개 테이블과 인덱스를 정의한다.",
+      "tags": ["database", "schema-definition", "migration", "infrastructure"],
+      "complexity": "moderate",
+      "languageNotes": "ALTER TABLE로 idempotent 실행을 보장하며(IF NOT EXISTS·DROP NOT NULL), auth_db → subscription_db → notification_db 순서로 실행해야 외래 키 의존성이 충족된다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "schema:docs/db_init.sql",
+      "target": "table:docs/db_init.sql:users",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "schema:docs/db_init.sql",
+      "target": "table:docs/db_init.sql:subscriptions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "schema:docs/db_init.sql",
+      "target": "table:docs/db_init.sql:outbox_events",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "schema:docs/db_init.sql",
+      "target": "table:docs/db_init.sql:notification_history",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:docs/03_API_DB설계.md",
+      "target": "schema:docs/db_init.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/02_시스템아키텍처.md",
+      "target": "schema:docs/db_init.sql",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/06_기술결정근거_ADR.md",
+      "target": "document:docs/02_시스템아키텍처.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/07_기술선택_이유.md",
+      "target": "document:docs/06_기술결정근거_ADR.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/08_시퀀스_다이어그램.md",
+      "target": "document:docs/02_시스템아키텍처.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/09_장애테스트_결과.md",
+      "target": "document:docs/02_시스템아키텍처.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/06_부하테스트_결과.md",
+      "target": "document:docs/05_개발환경.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/10_트러블슈팅_기록.md",
+      "target": "document:docs/02_시스템아키텍처.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/04_개발계획_WBS.md",
+      "target": "document:docs/01_기획서.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/05_학습검증가이드.md",
+      "target": "document:docs/05_개발환경.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/11_데모영상_시나리오.md",
+      "target": "document:docs/05_프론트엔드_화면설계.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

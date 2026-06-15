@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "service:alert-collector-service/Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "alert-collector-service/Dockerfile",
+      "summary": "alert-collector-service를 컨테이너화하는 Dockerfile로, eclipse-temurin:24-jre-alpine 기반 이미지에서 Gradle 빌드 산출물인 JAR 파일을 복사하여 실행한다.",
+      "tags": ["containerization", "infrastructure", "deployment", "java"],
+      "complexity": "simple",
+      "languageNotes": "JRE-only Alpine 이미지를 사용하여 경량 프로덕션 이미지를 구성하며, Java 24 런타임을 기반으로 한다."
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,104 @@
+{
+  "nodes": [
+    {
+      "id": "file:docs/mockup/safealert_admin.html",
+      "type": "file",
+      "name": "safealert_admin.html",
+      "filePath": "docs/mockup/safealert_admin.html",
+      "summary": "관리자 전용 대시보드 목업 페이지로, 전체 사용자 수·알림 발송 수·시스템 상태 등의 통계 카드와 최근 알림 로그, 사용자 관리 테이블을 인라인 CSS와 Tabler Icons로 구현한 정적 HTML 프로토타입이다.",
+      "tags": ["목업", "관리자", "대시보드", "documentation", "markup"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:docs/mockup/safealert_dashboard.html",
+      "type": "file",
+      "name": "safealert_dashboard.html",
+      "filePath": "docs/mockup/safealert_dashboard.html",
+      "summary": "사용자 메인 대시보드 목업 페이지로, 최근 수신 알림 목록, 구독 중인 지역·채널 요약 카드, 실시간 WebSocket 연결 상태 표시 등을 포함하는 정적 HTML 프로토타입이다.",
+      "tags": ["목업", "대시보드", "사용자", "documentation", "markup"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:docs/mockup/safealert_history.html",
+      "type": "file",
+      "name": "safealert_history.html",
+      "filePath": "docs/mockup/safealert_history.html",
+      "summary": "알림 수신 이력 조회 목업 페이지로, 날짜·유형 필터와 페이지네이션이 포함된 알림 목록 테이블을 정적 HTML로 표현한 프로토타입이다.",
+      "tags": ["목업", "알림이력", "조회", "documentation", "markup"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:docs/mockup/safealert_landing.html",
+      "type": "file",
+      "name": "safealert_landing.html",
+      "filePath": "docs/mockup/safealert_landing.html",
+      "summary": "서비스 소개 랜딩 페이지 목업으로, 히어로 섹션·기능 소개·CTA 버튼 등 마케팅 요소와 함께 회원가입/로그인 네비게이션을 포함한 정적 HTML 프로토타입이다.",
+      "tags": ["목업", "랜딩페이지", "마케팅", "documentation", "markup"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:docs/mockup/safealert_login.html",
+      "type": "file",
+      "name": "safealert_login.html",
+      "filePath": "docs/mockup/safealert_login.html",
+      "summary": "로그인 및 회원가입 화면 목업 페이지로, 이메일/비밀번호 입력 폼과 탭 전환 UI를 인라인 CSS로 구현한 정적 HTML 프로토타입이다.",
+      "tags": ["목업", "로그인", "인증", "documentation", "markup"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:docs/mockup/safealert_profile.html",
+      "type": "file",
+      "name": "safealert_profile.html",
+      "filePath": "docs/mockup/safealert_profile.html",
+      "summary": "내 계정(프로필) 설정 목업 페이지로, 사용자 정보 수정 폼과 알림 수신 채널 설정(이메일·SMS) 토글을 포함한 정적 HTML 프로토타입이다.",
+      "tags": ["목업", "프로필", "계정설정", "documentation", "markup"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:docs/mockup/safealert_subscriptions.html",
+      "type": "file",
+      "name": "safealert_subscriptions.html",
+      "filePath": "docs/mockup/safealert_subscriptions.html",
+      "summary": "구독 설정 관리 목업 페이지로, 지역별·유형별 알림 구독을 추가·삭제하는 인터페이스를 정적 HTML로 표현한 프로토타입이다.",
+      "tags": ["목업", "구독관리", "설정", "documentation", "markup"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:docs/mockup/safealert_admin.html",
+      "target": "file:docs/mockup/safealert_dashboard.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/mockup/safealert_dashboard.html",
+      "target": "file:docs/mockup/safealert_history.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/mockup/safealert_dashboard.html",
+      "target": "file:docs/mockup/safealert_subscriptions.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/mockup/safealert_landing.html",
+      "target": "file:docs/mockup/safealert_login.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/mockup/safealert_dashboard.html",
+      "target": "file:docs/mockup/safealert_profile.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

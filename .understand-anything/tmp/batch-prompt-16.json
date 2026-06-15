@@ -1,0 +1,55 @@
+﻿{
+    "batchIndex":  16,
+    "files":  [
+                  {
+                      "path":  ".env.example",
+                      "language":  "config",
+                      "sizeLines":  36,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "README.md",
+                      "language":  "markdown",
+                      "sizeLines":  370,
+                      "fileCategory":  "docs"
+                  },
+                  {
+                      "path":  "docker-compose.yml",
+                      "language":  "yaml",
+                      "sizeLines":  204,
+                      "fileCategory":  "infra"
+                  },
+                  {
+                      "path":  "prometheus.yml",
+                      "language":  "yaml",
+                      "sizeLines":  45,
+                      "fileCategory":  "config"
+                  },
+                  {
+                      "path":  "todo.md",
+                      "language":  "markdown",
+                      "sizeLines":  50,
+                      "fileCategory":  "docs"
+                  }
+              ],
+    "batchImportData":  {
+                            ".env.example":  [
+
+                                             ],
+                            "README.md":  [
+
+                                          ],
+                            "docker-compose.yml":  [
+
+                                                   ],
+                            "prometheus.yml":  [
+
+                                               ],
+                            "todo.md":  [
+
+                                        ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

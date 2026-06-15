@@ -1,0 +1,21 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Fixed section: 25 duplicate node IDs removed is modest (6% of 440 input nodes) — within normal range, not a systemic upstream issue.",
+    "No nodes with missing id, unknown type, or unknown complexity were found in the assembled graph — the merge script handled all such cases.",
+    "Dropped edge: file:api-gateway/src/main/resources/sql/schema.sql -> table:auth-service/src/main/resources/sql/schema.sql:users (contains). The source node was not batch-analyzed because the api-gateway service is a Spring Cloud Gateway with no SQL schema file. The edge was spurious; dropping it is correct. No recovery needed.",
+    "Cross-batch edge check: all 52 importMap entries with actual targets were verified. Zero missing edges were found where both source and target file: nodes exist in the graph. The 9 edges recovered by the merge script are confirmed present.",
+    "7 importMap source files lack a file: node in the graph (AlertKafkaProducer, OAuth2LoginSuccessHandler, CustomOAuth2UserService, AuthServiceTest, AdminAlertResponse, NotificationResponse, AlertProcessedConsumer). These were not included as analyzed nodes — their import targets are also absent. No recovery attempted.",
+    "13 distinct importMap target paths lack a file: node (AlertRawMessage, DuplicateFilterService, MeasureStationCacheService, ChangePasswordRequest, MeResponse, SendCodeRequest, VerifyCodeRequest, OAuth2LoginSuccessHandler, JwtProvider x2, RedisOAuth2AuthorizationRequestRepository, CustomOAuth2UserService, notification JwtProvider). These are internal files not included in any batch. Their absence reduces edge coverage but does not corrupt graph integrity.",
+    "No unknown node types found in final graph (8 valid types: file, function, class, service, document, config, table, schema).",
+    "Complexity distribution is healthy: simple=283, moderate=96, complex=36. No skew toward unknown values.",
+    "No dangling edges remain in the final graph — all 355 edge endpoints resolve to existing node IDs.",
+    "No duplicate node IDs in output. Graph is structurally consistent.",
+    "Primary data quality concern: ~13 internal service files (mainly auth-service security layer and alert-collector model/service classes) were not batch-analyzed, leaving those cross-file import relationships unrepresented in the graph."
+  ]
+}

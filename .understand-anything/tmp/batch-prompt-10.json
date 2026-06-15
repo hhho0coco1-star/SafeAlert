@@ -1,0 +1,19 @@
+﻿{
+    "batchIndex":  10,
+    "files":  [
+                  {
+                      "path":  "api-gateway/Dockerfile",
+                      "language":  "dockerfile",
+                      "sizeLines":  4,
+                      "fileCategory":  "infra"
+                  }
+              ],
+    "batchImportData":  {
+                            "api-gateway/Dockerfile":  [
+
+                                                       ]
+                        },
+    "neighborMap":  {
+
+                    }
+}

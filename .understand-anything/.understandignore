@@ -1,0 +1,28 @@
+# .understandignore
+# Syntax: same as .gitignore
+#
+# From .gitignore:
+# *.class
+# *.jar
+# *.war
+# *.iml
+# *.code-workspace
+# .mvn/
+# .gradle/
+# .env
+# *.env
+# application-local.yml
+# application-secret.yml
+# *-secret.yaml
+# .DS_Store
+# Thumbs.db
+# logs/
+# *-secret.yaml
+# *kubeconfig*
+
+# Detected dirs:
+# docs/
+
+# Test patterns:
+# *.test.*
+# *.spec.*

@@ -1,0 +1,9 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "alert-processor-service/build.gradle", "language": "gradle", "sizeLines": 50, "fileCategory": "config"},
+    {"path": "alert-processor-service/gradlew.bat", "language": "batch", "sizeLines": 94, "fileCategory": "script"},
+    {"path": "alert-processor-service/settings.gradle", "language": "gradle", "sizeLines": 1, "fileCategory": "config"}
+  ],
+  "batchImportData": {}
+}

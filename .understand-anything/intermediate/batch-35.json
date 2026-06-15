@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "config:subscription-service/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "subscription-service/build.gradle",
+      "summary": "subscription-service의 Gradle 빌드 설정으로, Spring Boot 3.3.5 기반 Java 17 프로젝트를 정의하며 Kafka, JPA, PostgreSQL, Validation, Prometheus, Logstash, Swagger 의존성을 선언하여 구독 관리 기능에 필요한 빌드 환경을 구성한다.",
+      "tags": ["configuration", "build-system", "spring-boot", "kafka", "dependency-management"],
+      "complexity": "moderate",
+      "languageNotes": "bootRun 블록에서 OpenTelemetry Java Agent를 javaagent로 주입하며 otel.service.name을 subscription-service로 지정한다. notification-service 대비 Redis·WebSocket·Security·JWT 의존성이 없어 구독 CRUD에 집중된 경량 구성이다."
+    },
+    {
+      "id": "file:subscription-service/gradlew.bat",
+      "type": "file",
+      "name": "gradlew.bat",
+      "filePath": "subscription-service/gradlew.bat",
+      "summary": "Windows 환경에서 Gradle Wrapper를 실행하기 위한 표준 배치 스크립트로, JAVA_HOME 검증 후 gradle-wrapper.jar를 통해 Gradle 태스크를 실행한다.",
+      "tags": ["build-system", "script", "gradle", "windows"],
+      "complexity": "moderate",
+      "languageNotes": "Apache License 2.0 하에 Gradle 프로젝트가 자동 생성하는 표준 Windows 래퍼 스크립트이며 수동 수정 대상이 아니다."
+    },
+    {
+      "id": "config:subscription-service/settings.gradle",
+      "type": "config",
+      "name": "settings.gradle",
+      "filePath": "subscription-service/settings.gradle",
+      "summary": "Gradle 루트 프로젝트 이름을 'subscription-service'로 지정하는 최소 설정 파일이다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:subscription-service/build.gradle",
+      "target": "config:subscription-service/settings.gradle",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:subscription-service/gradlew.bat",
+      "target": "config:subscription-service/build.gradle",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

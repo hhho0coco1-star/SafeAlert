@@ -1,0 +1,78 @@
+{
+  "batchIndex": 23,
+  "nodes": [
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-21.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-21.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-21.json",
+      "summary": "파일 분석기 21번 배치 입력 임시 파일로, 분석 대상 파일 목록과 임포트 데이터를 포함한다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-22.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-22.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-22.json",
+      "summary": "파일 분석기 22번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-23.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-23.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-23.json",
+      "summary": "파일 분석기 23번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-file-analyzer-input-24.json",
+      "type": "config",
+      "name": "ua-file-analyzer-input-24.json",
+      "filePath": ".understand-anything/tmp/ua-file-analyzer-input-24.json",
+      "summary": "파일 분석기 24번 배치 입력 임시 파일이다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-import-map-input.json",
+      "type": "config",
+      "name": "ua-import-map-input.json",
+      "filePath": ".understand-anything/tmp/ua-import-map-input.json",
+      "summary": "임포트 맵 생성기에 전달되는 입력 임시 파일로, 전체 소스 파일 목록을 포함한다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-import-map-output.json",
+      "type": "config",
+      "name": "ua-import-map-output.json",
+      "filePath": ".understand-anything/tmp/ua-import-map-output.json",
+      "summary": "임포트 맵 생성기의 출력 파일로, 프로젝트 내 모든 파일 간 임포트 관계를 담는다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-inline-validate.cjs",
+      "type": "config",
+      "name": "ua-inline-validate.cjs",
+      "filePath": ".understand-anything/tmp/ua-inline-validate.cjs",
+      "summary": "그래프 인라인 유효성 검사 스크립트로, 노드 및 엣지 데이터의 무결성을 확인하는 임시 파일이다.",
+      "tags": ["internal", "tooling", "script"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/tmp/ua-scan-files.json",
+      "type": "config",
+      "name": "ua-scan-files.json",
+      "filePath": ".understand-anything/tmp/ua-scan-files.json",
+      "summary": "프로젝트 파일 스캔 결과 임시 파일로, 분석 대상 파일 목록과 언어 정보를 포함한다.",
+      "tags": ["internal", "tooling", "temp"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,42 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "api-gateway/gradle/wrapper/gradle-wrapper.properties", "language": "properties", "sizeLines": 7, "fileCategory": "config"},
+    {"path": "api-gateway/k8s/deployment.yaml", "language": "yaml", "sizeLines": 47, "fileCategory": "infra"},
+    {"path": "api-gateway/k8s/service.yaml", "language": "yaml", "sizeLines": 11, "fileCategory": "infra"},
+    {"path": "api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java", "language": "java", "sizeLines": 11, "fileCategory": "code"},
+    {"path": "api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java", "language": "java", "sizeLines": 22, "fileCategory": "code"},
+    {"path": "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java", "language": "java", "sizeLines": 104, "fileCategory": "code"},
+    {"path": "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java", "language": "java", "sizeLines": 62, "fileCategory": "code"},
+    {"path": "api-gateway/src/main/resources/application.yml", "language": "yaml", "sizeLines": 72, "fileCategory": "config"},
+    {"path": "api-gateway/src/main/resources/logback-spring.xml", "language": "xml", "sizeLines": 26, "fileCategory": "config"},
+    {"path": "auth-service/gradle/wrapper/gradle-wrapper.properties", "language": "properties", "sizeLines": 7, "fileCategory": "config"},
+    {"path": "auth-service/k8s/deployment.yaml", "language": "yaml", "sizeLines": 70, "fileCategory": "infra"},
+    {"path": "auth-service/k8s/service.yaml", "language": "yaml", "sizeLines": 25, "fileCategory": "infra"},
+    {"path": "auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java", "language": "java", "sizeLines": 11, "fileCategory": "code"},
+    {"path": "auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java", "language": "java", "sizeLines": 36, "fileCategory": "code"},
+    {"path": "auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java", "language": "java", "sizeLines": 52, "fileCategory": "code"},
+    {"path": "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java", "language": "java", "sizeLines": 27, "fileCategory": "code"},
+    {"path": "auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java", "language": "java", "sizeLines": 14, "fileCategory": "code"},
+    {"path": "auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java", "language": "java", "sizeLines": 17, "fileCategory": "code"},
+    {"path": "auth-service/src/main/resources/application.yml", "language": "yaml", "sizeLines": 98, "fileCategory": "config"},
+    {"path": "auth-service/src/main/resources/logback-spring.xml", "language": "xml", "sizeLines": 24, "fileCategory": "config"},
+    {"path": "auth-service/src/main/resources/sql/schema.sql", "language": "sql", "sizeLines": 19, "fileCategory": "data"},
+    {"path": "frontend/eslint.config.js", "language": "javascript", "sizeLines": 21, "fileCategory": "code"},
+    {"path": "frontend/k8s/deployment.yaml", "language": "yaml", "sizeLines": 27, "fileCategory": "infra"},
+    {"path": "frontend/k8s/service.yaml", "language": "yaml", "sizeLines": 12, "fileCategory": "infra"},
+    {"path": "frontend/nginx.conf", "language": "conf", "sizeLines": 8, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java": [],
+    "api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java": [],
+    "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java": [],
+    "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java": [],
+    "auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java": [],
+    "auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java": [],
+    "auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java": [],
+    "auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java": []
+  }
+}

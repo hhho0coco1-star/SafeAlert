@@ -1,0 +1,17 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java", "language": "java", "sizeLines": 39, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java", "language": "java", "sizeLines": 27, "fileCategory": "code"},
+    {"path": "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java", "language": "java", "sizeLines": 28, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "notification-service/src/main/java/com/safealert/notification/config/RedisConfig.java": [
+      "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java",
+      "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java"
+    ],
+    "notification-service/src/main/java/com/safealert/notification/redis/AlertPublicSubscriber.java": [],
+    "notification-service/src/main/java/com/safealert/notification/redis/AlertRedisSubscriber.java": []
+  },
+  "neighborMap": {}
+}

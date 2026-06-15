@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "id": "config:auth-service/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "auth-service/build.gradle",
+      "summary": "auth-service의 Gradle 빌드 설정 파일로, Spring Boot 3.3.5(Java 17), JPA, PostgreSQL, Redis, Security, OAuth2 클라이언트, JWT, 이메일, 검증, Swagger, Logstash, OpenTelemetry 에이전트 의존성을 정의하여 인증·인가 서비스의 전체 기술 스택을 구성한다.",
+      "tags": ["configuration", "build-system", "spring-boot", "security", "authentication"],
+      "complexity": "moderate",
+      "languageNotes": "OAuth2 클라이언트, JPA(PostgreSQL), Redis, 이메일, JWT를 모두 포함하는 가장 다양한 의존성 구성을 가진 서비스다. ByteBuddy 테스트 의존성은 Java 24 호환성을 위한 명시적 버전 고정이다."
+    },
+    {
+      "id": "config:auth-service/gradle.properties",
+      "type": "config",
+      "name": "gradle.properties",
+      "filePath": "auth-service/gradle.properties",
+      "summary": "auth-service Gradle 빌드의 JVM 인수 및 파일 인코딩을 설정하는 프로퍼티 파일로, 최대 힙 크기를 512MB로 제한한다.",
+      "tags": ["configuration", "build-system", "gradle", "jvm"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:auth-service/settings.gradle",
+      "type": "config",
+      "name": "settings.gradle",
+      "filePath": "auth-service/settings.gradle",
+      "summary": "auth-service Gradle 프로젝트의 루트 프로젝트 이름을 'auth-service'로 설정하는 단일 라인 파일이다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/gradlew.bat",
+      "type": "file",
+      "name": "gradlew.bat",
+      "filePath": "auth-service/gradlew.bat",
+      "summary": "Windows 환경에서 Gradle Wrapper를 실행하는 표준 배치 스크립트로, JAVA_HOME 검증과 Gradle 래퍼 JAR 실행을 자동화한다.",
+      "tags": ["build-system", "script", "gradle", "windows"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:auth-service/build.gradle",
+      "target": "config:auth-service/settings.gradle",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:auth-service/build.gradle",
+      "target": "config:auth-service/gradle.properties",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

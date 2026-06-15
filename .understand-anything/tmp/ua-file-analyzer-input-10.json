@@ -1,0 +1,9 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "api-gateway/Dockerfile", "language": "dockerfile", "sizeLines": 4, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    "api-gateway/Dockerfile": []
+  }
+}

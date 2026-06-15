@@ -1,0 +1,198 @@
+{
+  "nodes": [
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java",
+      "type": "file",
+      "name": "WebSocketAuthInterceptor.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java",
+      "summary": "WebSocket 핸드셰이크 직전에 Authorization 헤더의 Bearer JWT 토큰을 검증하고, 유효한 경우 userId를 WebSocket 세션 속성에 주입하는 인터셉터. 토큰이 없으면 익명 연결을 허용하고, 유효하지 않은 토큰이면 연결을 거부한다.",
+      "tags": ["middleware", "security", "websocket", "authentication"],
+      "complexity": "simple",
+      "languageNotes": "Spring의 HandshakeInterceptor를 구현하며, Lombok @RequiredArgsConstructor로 JwtProvider를 주입받는다."
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java:beforeHandshake",
+      "type": "function",
+      "name": "beforeHandshake",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java",
+      "lineRange": [21, 38],
+      "summary": "WebSocket 핸드셰이크 전 Authorization 헤더의 Bearer 토큰을 파싱·검증하여 userId를 세션 속성에 설정한다. 토큰 없음은 익명 허용, 유효하지 않은 토큰은 연결 거부.",
+      "tags": ["middleware", "security", "authentication", "websocket"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "type": "file",
+      "name": "NotificationController.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "summary": "알림 서비스의 REST API 진입점으로, 사용자 알림 조회·요약·최근 알림 및 관리자 통계·알림 목록·수동 발송 엔드포인트 6개를 제공한다. JWT 토큰을 헤더에서 추출해 NotificationService에 위임한다.",
+      "tags": ["api-handler", "controller", "notification", "admin"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "type": "file",
+      "name": "NotificationHistory.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "summary": "알림 발송 이력을 저장하는 JPA 엔티티로, 수신자 userId, 카테고리·심각도·제목·내용·지역코드·상태·발송 시각 등을 관리한다. 외부 직접 생성을 막고 정적 팩토리 메서드 create()로만 인스턴스를 생성한다.",
+      "tags": ["data-model", "entity", "notification", "database"],
+      "complexity": "moderate",
+      "languageNotes": "UUID 기반 PK, 정적 팩토리 패턴 사용, @NoArgsConstructor(access = PROTECTED)로 외부 직접 생성을 차단한다."
+    },
+    {
+      "id": "class:notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java:NotificationHistory",
+      "type": "class",
+      "name": "NotificationHistory",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "lineRange": [14, 73],
+      "summary": "알림 발송 이력 JPA 엔티티. UUID PK, 사용자/알림/지역 정보, 발송 상태 필드를 가지며 정적 팩토리 메서드로만 생성 가능하다.",
+      "tags": ["data-model", "entity", "jpa"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "type": "file",
+      "name": "NotificationHistoryRepository.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "summary": "NotificationHistory 엔티티에 대한 Spring Data JPA Repository 인터페이스. 카테고리·날짜·키워드 복합 필터 페이징 쿼리, 최근 알림 조회, 사용자/기간별 카운팅 등 다양한 커스텀 쿼리를 정의한다.",
+      "tags": ["data-model", "repository", "jpa", "query"],
+      "complexity": "moderate",
+      "languageNotes": "@Query JPQL과 Spring Data 메서드 명명 규칙을 혼합 사용하며, findByFilters는 countQuery를 별도 명시하여 페이징 성능을 최적화한다."
+    },
+    {
+      "id": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "type": "file",
+      "name": "NotificationService.java",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "summary": "알림 서비스의 핵심 비즈니스 로직을 담당하는 Service 클래스. JWT 토큰으로 사용자 식별, 알림 이력 필터링·요약 조회, 관리자 통계·수동 알림 발송, Redis Pub/Sub 브로드캐스트 및 subscription-service REST 연동을 처리한다.",
+      "tags": ["service", "notification", "business-logic", "admin"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:getNotifications",
+      "type": "function",
+      "name": "getNotifications",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "lineRange": [42, 58],
+      "summary": "JWT 토큰에서 userId를 추출하고 카테고리·날짜범위·키워드 필터를 적용하여 알림 이력을 페이지 단위로 조회한다.",
+      "tags": ["service", "query", "notification", "pagination"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:getSummary",
+      "type": "function",
+      "name": "getSummary",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "lineRange": [68, 79],
+      "summary": "오늘 하루 수신된 알림을 날씨·지진·미세먼지·재난 카테고리별로 집계하여 NotificationSummaryResponse를 반환한다.",
+      "tags": ["service", "aggregation", "notification"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:sendManualAlert",
+      "type": "function",
+      "name": "sendManualAlert",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "lineRange": [106, 155],
+      "summary": "관리자가 수동으로 알림을 발송하는 메서드. 공개 이력 저장 후 Redis Pub/Sub으로 브로드캐스트하고, subscription-service에서 지역별 구독자를 조회해 개인별 이력을 생성한다.",
+      "tags": ["service", "admin", "notification", "redis"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:fetchSubscribersByRegion",
+      "type": "function",
+      "name": "fetchSubscribersByRegion",
+      "filePath": "notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "lineRange": [157, 171],
+      "summary": "subscription-service REST API를 호출하여 특정 지역의 전체 구독자 UUID 목록을 조회한다. 예외 발생 시 빈 목록을 반환한다.",
+      "tags": ["service", "http-client", "subscription"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/config/WebSocketAuthInterceptor.java:beforeHandshake",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:getNotifications",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:getSummary",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/controller/NotificationController.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:sendManualAlert",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java:NotificationHistory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java",
+      "target": "class:notification-service/src/main/java/com/safealert/notification/domain/NotificationHistory.java:NotificationHistory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "target": "file:notification-service/src/main/java/com/safealert/notification/repository/NotificationHistoryRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:getNotifications",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:getSummary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:sendManualAlert",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java",
+      "target": "function:notification-service/src/main/java/com/safealert/notification/service/NotificationService.java:fetchSubscribersByRegion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

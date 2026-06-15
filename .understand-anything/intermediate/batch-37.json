@@ -1,0 +1,402 @@
+{
+  "nodes": [
+    {
+      "id": "config:api-gateway/gradle/wrapper/gradle-wrapper.properties",
+      "type": "config",
+      "name": "gradle-wrapper.properties",
+      "filePath": "api-gateway/gradle/wrapper/gradle-wrapper.properties",
+      "summary": "api-gateway 모듈의 Gradle Wrapper 설정 파일로, Gradle 8.14.2 배포판 URL과 로컬 캐시 경로를 지정한다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:api-gateway/k8s/deployment.yaml",
+      "type": "service",
+      "name": "deployment.yaml",
+      "filePath": "api-gateway/k8s/deployment.yaml",
+      "summary": "api-gateway를 Kubernetes safealert-app 네임스페이스에 2개 레플리카로 배포하며, Redis, JWT Secret, Jaeger, Logstash 환경 변수를 주입한다.",
+      "tags": ["infrastructure", "deployment", "orchestration", "kubernetes"],
+      "complexity": "moderate",
+      "languageNotes": "JWT Secret은 Kubernetes Secret 리소스에서 secretKeyRef로 안전하게 주입된다."
+    },
+    {
+      "id": "service:api-gateway/k8s/service.yaml",
+      "type": "service",
+      "name": "service.yaml",
+      "filePath": "api-gateway/k8s/service.yaml",
+      "summary": "api-gateway Pod를 클러스터 내부에서 8080 포트로 노출하는 ClusterIP 타입의 Kubernetes Service 정의다.",
+      "tags": ["infrastructure", "kubernetes", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "type": "file",
+      "name": "ApiGatewayApplication.java",
+      "filePath": "api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "summary": "Spring Boot API Gateway 서비스의 진입점으로, @SpringBootApplication 어노테이션을 통해 자동 구성과 컴포넌트 스캔을 활성화하고 애플리케이션을 시작한다.",
+      "tags": ["entry-point", "spring-boot", "gateway"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java",
+      "type": "file",
+      "name": "SecurityConfig.java",
+      "filePath": "api-gateway/src/main/java/com/safealert/gateway/config/SecurityConfig.java",
+      "summary": "Spring WebFlux Security 설정 클래스로, CSRF/HTTP Basic/Form Login을 비활성화하고 모든 요청을 허용하여 JWT 필터 기반 인증에 위임한다.",
+      "tags": ["configuration", "security", "middleware"],
+      "complexity": "simple",
+      "languageNotes": "WebFlux 기반 리액티브 스택이므로 ServerHttpSecurity를 사용한다."
+    },
+    {
+      "id": "file:api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "type": "file",
+      "name": "JwtAuthFilter.java",
+      "filePath": "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "summary": "Spring Cloud Gateway의 전역 필터로, 모든 요청의 JWT 토큰을 검증하고 유효한 경우 X-User-Id 헤더를 추가하여 다운스트림 서비스로 전달한다.",
+      "tags": ["middleware", "security", "api-handler", "authentication"],
+      "complexity": "moderate",
+      "languageNotes": "ReadOnlyHttpHeaders 제약을 피하기 위해 ServerHttpRequestDecorator 패턴을 사용하여 헤더를 불변성 위반 없이 변경한다."
+    },
+    {
+      "id": "class:api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java:JwtAuthFilter",
+      "type": "class",
+      "name": "JwtAuthFilter",
+      "filePath": "api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "lineRange": [27, 104],
+      "summary": "GlobalFilter와 Ordered를 구현하는 JWT 인증 전역 필터 클래스로, 화이트리스트 경로 제외 후 Bearer 토큰을 파싱하여 인증을 처리한다.",
+      "tags": ["middleware", "security", "authentication", "filter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "type": "file",
+      "name": "RateLimitFilter.java",
+      "filePath": "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "summary": "Redis를 활용하여 IP 기반으로 분당 60회 요청 제한을 적용하는 Spring Cloud Gateway 전역 필터이며, Redis 장애 시 제한을 우아하게 비활성화한다.",
+      "tags": ["middleware", "rate-limiting", "redis", "api-handler"],
+      "complexity": "moderate",
+      "languageNotes": "ReactiveStringRedisTemplate을 사용하는 논블로킹 리액티브 구현이며, onErrorResume으로 Redis 장애 시 fail-open 전략을 적용한다."
+    },
+    {
+      "id": "class:api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java:RateLimitFilter",
+      "type": "class",
+      "name": "RateLimitFilter",
+      "filePath": "api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "lineRange": [18, 62],
+      "summary": "IP 주소 기반 Redis 슬라이딩 윈도우 Rate Limiting을 구현하는 전역 필터 클래스로, localhost는 제한에서 제외된다.",
+      "tags": ["middleware", "rate-limiting", "redis", "filter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:api-gateway/src/main/resources/application.yml",
+      "type": "config",
+      "name": "application.yml",
+      "filePath": "api-gateway/src/main/resources/application.yml",
+      "summary": "API Gateway의 Spring Cloud Gateway 라우팅 규칙, Redis 연결, CORS 설정, JWT Secret, Prometheus 메트릭, OTEL 트레이싱 엔드포인트를 통합 정의한다.",
+      "tags": ["configuration", "gateway", "routing", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:api-gateway/src/main/resources/logback-spring.xml",
+      "type": "config",
+      "name": "logback-spring.xml",
+      "filePath": "api-gateway/src/main/resources/logback-spring.xml",
+      "summary": "api-gateway 서비스의 Logback 로깅 설정으로, 콘솔 출력과 Logstash TCP 전송을 함께 구성하여 중앙 집중식 로그 수집을 지원한다.",
+      "tags": ["configuration", "monitoring", "logging"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:auth-service/gradle/wrapper/gradle-wrapper.properties",
+      "type": "config",
+      "name": "gradle-wrapper.properties",
+      "filePath": "auth-service/gradle/wrapper/gradle-wrapper.properties",
+      "summary": "auth-service 모듈의 Gradle Wrapper 설정 파일로, Gradle 8.14.2 배포판 URL과 로컬 캐시 경로를 지정한다.",
+      "tags": ["configuration", "build-system", "gradle"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:auth-service/k8s/deployment.yaml",
+      "type": "service",
+      "name": "deployment.yaml",
+      "filePath": "auth-service/k8s/deployment.yaml",
+      "summary": "auth-service를 Kubernetes safealert-app 네임스페이스에 1개 레플리카로 배포하며, PostgreSQL DB, Redis, JWT Secret, Jaeger, Logstash 환경 변수를 Secret에서 주입한다.",
+      "tags": ["infrastructure", "deployment", "orchestration", "kubernetes"],
+      "complexity": "moderate",
+      "languageNotes": "DB 비밀번호와 JWT Secret 모두 auth-secrets Kubernetes Secret에서 secretKeyRef로 참조하여 민감 정보를 안전하게 관리한다."
+    },
+    {
+      "id": "service:auth-service/k8s/service.yaml",
+      "type": "service",
+      "name": "service.yaml",
+      "filePath": "auth-service/k8s/service.yaml",
+      "summary": "auth-service Pod를 클러스터 내부에서 8081 포트로 노출하는 ClusterIP 타입의 Kubernetes Service 정의다.",
+      "tags": ["infrastructure", "kubernetes", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "type": "file",
+      "name": "AuthServiceApplication.java",
+      "filePath": "auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "summary": "Spring Boot 인증 서비스의 진입점으로, @SpringBootApplication 어노테이션을 통해 애플리케이션을 시작한다.",
+      "tags": ["entry-point", "spring-boot", "authentication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java",
+      "type": "file",
+      "name": "GlobalExceptionHandler.java",
+      "filePath": "auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java",
+      "summary": "@RestControllerAdvice를 사용하여 auth-service 전반의 예외(IllegalArgument, IllegalState, DataAccess, RuntimeException)를 통일된 ApiResponse 형식으로 처리하는 전역 예외 핸들러다.",
+      "tags": ["middleware", "error-handling", "api-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java",
+      "type": "file",
+      "name": "RedisConfig.java",
+      "filePath": "auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java",
+      "summary": "Lettuce 클라이언트를 사용하는 Redis 연결 팩토리와 String 직렬화 기반의 RedisTemplate Bean을 구성하며, 연결 타임아웃을 2초로 제한한다.",
+      "tags": ["configuration", "redis", "service"],
+      "complexity": "moderate",
+      "languageNotes": "DisconnectedBehavior.REJECT_COMMANDS 설정으로 Redis 연결 끊김 시 즉시 오류를 반환하여 명령 큐잉을 방지한다."
+    },
+    {
+      "id": "file:auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java",
+      "type": "file",
+      "name": "ApiResponse.java",
+      "filePath": "auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java",
+      "summary": "auth-service API의 통일된 응답 래퍼 DTO로, 성공/실패 여부, 데이터, 메시지, 타임스탬프를 포함하는 제네릭 클래스다.",
+      "tags": ["data-model", "serialization", "type-definition"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java",
+      "type": "file",
+      "name": "RefreshResponse.java",
+      "filePath": "auth-service/src/main/java/com/safealert/auth/dto/RefreshResponse.java",
+      "summary": "JWT 토큰 갱신 응답 DTO로, 새로운 accessToken과 만료 시간(15분, 900초)을 클라이언트에 전달한다.",
+      "tags": ["data-model", "serialization", "authentication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java",
+      "type": "file",
+      "name": "UserResponse.java",
+      "filePath": "auth-service/src/main/java/com/safealert/auth/dto/UserResponse.java",
+      "summary": "사용자 정보 응답 DTO로, userId(UUID), email, nickname 세 필드를 클라이언트에 반환한다.",
+      "tags": ["data-model", "serialization", "authentication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:auth-service/src/main/resources/application.yml",
+      "type": "config",
+      "name": "application.yml",
+      "filePath": "auth-service/src/main/resources/application.yml",
+      "summary": "auth-service의 PostgreSQL, Redis, Gmail SMTP, Google/Kakao OAuth2, JWT, Prometheus, OTEL 트레이싱 등 모든 인프라 연결과 보안 설정을 통합 정의한다.",
+      "tags": ["configuration", "authentication", "oauth2", "monitoring"],
+      "complexity": "complex",
+      "languageNotes": "OAuth2 redirect-uri가 localhost:8080을 하드코딩하여 K8s 환경에서는 환경 변수로 재정의가 필요하다."
+    },
+    {
+      "id": "config:auth-service/src/main/resources/logback-spring.xml",
+      "type": "config",
+      "name": "logback-spring.xml",
+      "filePath": "auth-service/src/main/resources/logback-spring.xml",
+      "summary": "auth-service의 Logback 로깅 설정으로, 콘솔 출력과 Logstash TCP 전송을 함께 구성하여 ELK 스택으로의 중앙 집중식 로그 수집을 지원한다.",
+      "tags": ["configuration", "monitoring", "logging"],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:auth-service/src/main/resources/sql/schema.sql:users",
+      "type": "table",
+      "name": "users",
+      "filePath": "auth-service/src/main/resources/sql/schema.sql",
+      "summary": "사용자 계정 테이블로, UUID 기반 PK, 이메일/비밀번호 해시, 닉네임, 역할(role), OAuth 연동 정보, 소프트 삭제(is_deleted) 플래그를 포함한다.",
+      "tags": ["database", "schema-definition", "authentication"],
+      "complexity": "simple",
+      "languageNotes": "이메일과 (oauth_provider, oauth_id) 조합에 고유 인덱스를 설정하여 소셜 로그인 중복 가입을 방지한다."
+    },
+    {
+      "id": "file:auth-service/src/main/resources/sql/schema.sql",
+      "type": "file",
+      "name": "schema.sql",
+      "filePath": "auth-service/src/main/resources/sql/schema.sql",
+      "summary": "auth-service의 PostgreSQL 스키마 초기화 SQL로, users 테이블과 이메일/OAuth 복합 고유 인덱스를 IF NOT EXISTS 조건으로 생성한다.",
+      "tags": ["database", "migration", "schema-definition"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/eslint.config.js",
+      "type": "file",
+      "name": "eslint.config.js",
+      "filePath": "frontend/eslint.config.js",
+      "summary": "프론트엔드 ESLint flat config로, React Hooks 규칙과 React Refresh 플러그인을 Vite 환경에 맞게 설정하고 dist 디렉토리를 린팅에서 제외한다.",
+      "tags": ["configuration", "build-system", "javascript"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:frontend/k8s/deployment.yaml",
+      "type": "service",
+      "name": "deployment.yaml",
+      "filePath": "frontend/k8s/deployment.yaml",
+      "summary": "frontend 컨테이너를 Kubernetes safealert-app 네임스페이스에 1개 레플리카로 배포하며, 80 포트에서 nginx를 통해 정적 파일을 서빙한다.",
+      "tags": ["infrastructure", "deployment", "kubernetes", "containerization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:frontend/k8s/service.yaml",
+      "type": "service",
+      "name": "service.yaml",
+      "filePath": "frontend/k8s/service.yaml",
+      "summary": "frontend Pod를 클러스터 내부에서 3000 포트로 노출하며, 내부 컨테이너의 80 포트(nginx)로 트래픽을 라우팅하는 ClusterIP Service다.",
+      "tags": ["infrastructure", "kubernetes", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/nginx.conf",
+      "type": "file",
+      "name": "nginx.conf",
+      "filePath": "frontend/nginx.conf",
+      "summary": "React SPA를 위한 nginx 서버 설정으로, 80 포트에서 정적 파일을 서빙하고 try_files 디렉티브로 클라이언트 사이드 라우팅을 지원한다.",
+      "tags": ["configuration", "deployment", "infrastructure"],
+      "complexity": "simple",
+      "languageNotes": "try_files $uri $uri/ /index.html 패턴은 React Router 등 SPA 클라이언트 라우팅의 표준 nginx 설정이다."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "target": "class:api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java:JwtAuthFilter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "target": "class:api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java:RateLimitFilter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:api-gateway/src/main/resources/sql/schema.sql",
+      "target": "table:auth-service/src/main/resources/sql/schema.sql:users",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:auth-service/src/main/resources/sql/schema.sql",
+      "target": "table:auth-service/src/main/resources/sql/schema.sql:users",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:api-gateway/src/main/resources/application.yml",
+      "target": "file:api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:api-gateway/src/main/resources/application.yml",
+      "target": "file:api-gateway/src/main/java/com/safealert/gateway/filter/JwtAuthFilter.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:api-gateway/src/main/resources/application.yml",
+      "target": "file:api-gateway/src/main/java/com/safealert/gateway/filter/RateLimitFilter.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:api-gateway/src/main/resources/logback-spring.xml",
+      "target": "file:api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:auth-service/src/main/resources/application.yml",
+      "target": "file:auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:auth-service/src/main/resources/application.yml",
+      "target": "file:auth-service/src/main/java/com/safealert/auth/config/RedisConfig.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:auth-service/src/main/resources/logback-spring.xml",
+      "target": "file:auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:api-gateway/k8s/deployment.yaml",
+      "target": "file:api-gateway/src/main/java/com/safealert/gateway/ApiGatewayApplication.java",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:auth-service/k8s/deployment.yaml",
+      "target": "file:auth-service/src/main/java/com/safealert/auth/AuthServiceApplication.java",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:frontend/k8s/deployment.yaml",
+      "target": "file:frontend/nginx.conf",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:api-gateway/k8s/service.yaml",
+      "target": "service:api-gateway/k8s/deployment.yaml",
+      "type": "serves",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:auth-service/k8s/service.yaml",
+      "target": "service:auth-service/k8s/deployment.yaml",
+      "type": "serves",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:frontend/k8s/service.yaml",
+      "target": "service:frontend/k8s/deployment.yaml",
+      "type": "serves",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:auth-service/src/main/java/com/safealert/auth/config/GlobalExceptionHandler.java",
+      "target": "file:auth-service/src/main/java/com/safealert/auth/dto/ApiResponse.java",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/nginx.conf",
+      "target": "service:frontend/k8s/deployment.yaml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,666 @@
+{
+  "nodes": [
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "type": "file",
+      "name": "SubscriptionController.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "summary": "구독 서비스의 REST API 진입점으로, 구독 생성·지역 추가/삭제·카테고리 업데이트·구독자 조회 등 9개 엔드포인트를 제공하며 X-User-Id 헤더를 통해 사용자 식별을 처리한다.",
+      "tags": ["api-handler", "entry-point", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java:SubscriptionController",
+      "type": "class",
+      "name": "SubscriptionController",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "lineRange": [21, 89],
+      "summary": "구독 관련 REST 엔드포인트를 정의하는 Spring @RestController로, SubscriptionService에 모든 비즈니스 로직을 위임한다.",
+      "tags": ["api-handler", "rest-controller"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "type": "file",
+      "name": "OutboxEvent.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "summary": "Transactional Outbox 패턴을 구현하는 JPA 엔티티로, Kafka 발행 전 이벤트를 outbox_events 테이블에 저장하고 PENDING/FAILED/DEAD/PUBLISHED 상태를 관리한다.",
+      "tags": ["data-model", "event-handler", "service"],
+      "complexity": "moderate",
+      "languageNotes": "Transactional Outbox 패턴 구현체로 retryCount 3회 초과 시 DEAD 상태로 전환하는 재시도 한계 로직을 포함한다."
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java:OutboxEvent",
+      "type": "class",
+      "name": "OutboxEvent",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "lineRange": [15, 73],
+      "summary": "Kafka 이벤트 발행을 위한 Outbox 패턴 엔티티로, 이벤트 상태 전이(PENDING → PUBLISHED/FAILED/DEAD)를 캡슐화한다.",
+      "tags": ["data-model", "event-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "type": "file",
+      "name": "RegionCode.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "summary": "행정구역 코드(시도/시군구)를 저장하는 JPA 엔티티로, 공공 API에서 동기화한 법정동 코드와 계층적 부모-자식 관계를 나타낸다.",
+      "tags": ["data-model", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java:RegionCode",
+      "type": "class",
+      "name": "RegionCode",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "lineRange": [11, 30],
+      "summary": "시도·시군구 계층 구조를 표현하는 법정동 코드 엔티티로, parentCode를 통해 상하위 관계를 나타낸다.",
+      "tags": ["data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "type": "file",
+      "name": "Subscription.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "summary": "사용자 구독 정보를 저장하는 핵심 JPA 엔티티로, 구독 지역(SubscriptionRegion)과 알림 카테고리(SubscriptionCategory)를 OneToMany 관계로 관리한다.",
+      "tags": ["data-model", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java:Subscription",
+      "type": "class",
+      "name": "Subscription",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "lineRange": [17, 72],
+      "summary": "구독 애그리거트 루트 엔티티로, 지역 추가/삭제 및 카테고리 업데이트 등 도메인 비즈니스 로직을 내부 메서드로 캡슐화한다.",
+      "tags": ["data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "type": "file",
+      "name": "SubscriptionCategory.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "summary": "구독에 연결된 알림 카테고리(재난·날씨·미세먼지 등)를 저장하는 JPA 엔티티로, Subscription과 N:1 관계를 가진다.",
+      "tags": ["data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java:SubscriptionCategory",
+      "type": "class",
+      "name": "SubscriptionCategory",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "lineRange": [12, 31],
+      "summary": "구독 카테고리 자식 엔티티로, Subscription 애그리거트 내에서 관리되며 직접 생성 메서드를 통해서만 생성된다.",
+      "tags": ["data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "type": "file",
+      "name": "SubscriptionRegion.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "summary": "구독에 연결된 관심 지역 정보를 저장하는 JPA 엔티티로, 지역 코드와 지역명을 함께 보관하며 Subscription과 N:1 관계를 가진다.",
+      "tags": ["data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java:SubscriptionRegion",
+      "type": "class",
+      "name": "SubscriptionRegion",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "lineRange": [12, 35],
+      "summary": "구독 지역 자식 엔티티로, Subscription 애그리거트 내에서 cascade 삭제로 생명주기가 관리된다.",
+      "tags": ["data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "type": "file",
+      "name": "ApiResponse.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "summary": "전체 API 응답을 표준화하는 제네릭 래퍼 DTO로, 성공/실패 여부, 데이터, 메시지, 타임스탬프를 포함하는 통일된 응답 포맷을 제공한다.",
+      "tags": ["type-definition", "serialization", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java:ApiResponse",
+      "type": "class",
+      "name": "ApiResponse",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "lineRange": [9, 30],
+      "summary": "ok()와 fail() 정적 팩토리 메서드로 표준화된 API 응답 객체를 생성하는 제네릭 DTO 클래스.",
+      "tags": ["type-definition", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "type": "file",
+      "name": "RegionCodeResponse.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "summary": "지역 코드 조회 결과를 시도-시군구 트리 구조로 직렬화하는 DTO로, null 필드를 JSON에서 제외하는 @JsonInclude 설정이 적용되어 있다.",
+      "tags": ["type-definition", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "type": "file",
+      "name": "SubscriberResponse.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "summary": "특정 지역과 카테고리에 해당하는 구독자 userId 목록을 반환하는 DTO로, alert-processor-service 등 내부 서비스 간 통신에 사용된다.",
+      "tags": ["type-definition", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "type": "file",
+      "name": "SubscriptionRequest.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "summary": "구독 API의 요청 본문을 담는 DTO 클래스로, 지역 추가(AddRegion)와 카테고리 업데이트(UpdateCategories) 두 개의 중첩 정적 클래스를 포함한다.",
+      "tags": ["type-definition", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "type": "file",
+      "name": "SubscriptionResponse.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "summary": "구독 조회 결과를 클라이언트에 반환하는 DTO로, Subscription 엔티티를 구독 ID·사용자 ID·상태·지역 목록·카테고리 목록으로 변환한다.",
+      "tags": ["type-definition", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "type": "file",
+      "name": "GlobalExceptionHandler.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "summary": "Spring @RestControllerAdvice를 사용하여 IllegalArgumentException, IllegalStateException, 유효성 검사 예외를 ApiResponse.fail() 포맷으로 통일하여 처리하는 전역 예외 핸들러.",
+      "tags": ["middleware", "validation", "api-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java:GlobalExceptionHandler",
+      "type": "class",
+      "name": "GlobalExceptionHandler",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "lineRange": [10, 30],
+      "summary": "서비스 레이어에서 발생하는 비즈니스 예외를 400 Bad Request 응답으로 변환하는 전역 컨트롤러 어드바이스.",
+      "tags": ["middleware", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "type": "file",
+      "name": "OutboxEventRepository.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "summary": "OutboxEvent 엔티티에 대한 Spring Data JPA 리포지토리로, PENDING 및 재시도 가능한 FAILED 이벤트를 생성 시간 순으로 조회하는 쿼리 메서드를 제공한다.",
+      "tags": ["service", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "type": "file",
+      "name": "RegionCodeRepository.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "summary": "RegionCode 엔티티에 대한 기본 Spring Data JPA 리포지토리로, 법정동 코드의 CRUD 작업을 제공한다.",
+      "tags": ["service", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+      "type": "file",
+      "name": "SubscriptionRepository.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+      "summary": "Subscription 엔티티에 대한 Spring Data JPA 리포지토리로, 지역 코드+카테고리 또는 지역 코드만으로 활성 구독자 userId를 조회하는 JPQL 커스텀 쿼리를 포함한다.",
+      "tags": ["service", "data-model"],
+      "complexity": "moderate",
+      "languageNotes": "시도(2자리) 코드로 조회 시 하위 시군구(5자리)도 포함하는 SUBSTRING 활용 계층적 지역 조회 로직이 포함되어 있다."
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "type": "file",
+      "name": "OutboxScheduler.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "summary": "5초 간격으로 PENDING·FAILED 상태의 Outbox 이벤트를 Kafka로 발행하고, 실패 시 재시도 횟수를 증가시키며 3회 초과 시 DEAD 상태로 전환하는 스케줄러.",
+      "tags": ["event-handler", "service", "singleton"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java:OutboxScheduler",
+      "type": "class",
+      "name": "OutboxScheduler",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "lineRange": [19, 60],
+      "summary": "@Scheduled(fixedDelay=5000)으로 주기적으로 실행되어 Transactional Outbox 이벤트를 Kafka에 발행하는 컴포넌트.",
+      "tags": ["event-handler", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "type": "file",
+      "name": "RegionCodeSyncService.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "summary": "애플리케이션 시작 시 공공 API(data.go.kr)에서 법정동 코드를 페이징 방식으로 전체 조회하여 region_codes 테이블에 동기화하는 서비스.",
+      "tags": ["service", "singleton"],
+      "complexity": "moderate",
+      "languageNotes": "@PostConstruct를 사용하여 의존성 주입 완료 후 자동 실행되며, 5000개 단위로 페이징하여 전체 법정동 코드를 수집한다."
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java:RegionCodeSyncService",
+      "type": "class",
+      "name": "RegionCodeSyncService",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "lineRange": [21, 100],
+      "summary": "공공 API RestTemplate 호출 및 JSON 파싱을 통해 시도·시군구 레벨의 법정동 코드를 DB에 동기화하는 서비스 클래스.",
+      "tags": ["service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "type": "file",
+      "name": "SubscriptionService.java",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "summary": "구독 서비스의 핵심 비즈니스 로직을 담당하는 서비스로, 구독 생성·지역 관리·카테고리 업데이트 및 구독자 조회를 처리하며 각 변경 작업마다 Outbox 이벤트를 저장한다.",
+      "tags": ["service", "event-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java:SubscriptionService",
+      "type": "class",
+      "name": "SubscriptionService",
+      "filePath": "subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "lineRange": [25, 136],
+      "summary": "구독 생성·지역 추가/삭제·카테고리 업데이트·구독자 조회 등 구독 도메인의 전체 비즈니스 로직을 트랜잭션 범위 안에서 처리하며, Outbox 패턴으로 Kafka 이벤트를 안전하게 발행한다.",
+      "tags": ["service", "event-handler"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java:SubscriptionController",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java:SubscriptionController",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java:OutboxEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java:OutboxEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java:RegionCode",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java:RegionCode",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java:Subscription",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java:Subscription",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java:SubscriptionCategory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java:SubscriptionCategory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java:SubscriptionRegion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java:SubscriptionRegion",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java:ApiResponse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java:ApiResponse",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionCategory.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/SubscriptionRegion.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java:GlobalExceptionHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java:GlobalExceptionHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/exception/GlobalExceptionHandler.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/ApiResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java:OutboxScheduler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java:OutboxScheduler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java:RegionCodeSyncService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java:RegionCodeSyncService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java:SubscriptionService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java:SubscriptionService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/RegionCodeResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriberResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionRequest.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/dto/SubscriptionResponse.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/repository/OutboxEventRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/repository/RegionCodeRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java",
+      "target": "file:subscription-service/src/main/java/com/safealert/subscription/repository/SubscriptionRepository.java",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "class:subscription-service/src/main/java/com/safealert/subscription/controller/SubscriptionController.java:SubscriptionController",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java:SubscriptionService",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java:SubscriptionService",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/Subscription.java:Subscription",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:subscription-service/src/main/java/com/safealert/subscription/service/SubscriptionService.java:SubscriptionService",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java:OutboxEvent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:subscription-service/src/main/java/com/safealert/subscription/scheduler/OutboxScheduler.java:OutboxScheduler",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/OutboxEvent.java:OutboxEvent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:subscription-service/src/main/java/com/safealert/subscription/service/RegionCodeSyncService.java:RegionCodeSyncService",
+      "target": "class:subscription-service/src/main/java/com/safealert/subscription/domain/RegionCode.java:RegionCode",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

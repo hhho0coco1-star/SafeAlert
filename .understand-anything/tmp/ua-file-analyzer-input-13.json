@@ -1,0 +1,9 @@
+{
+  "projectRoot": "C:/study/SafeAlert",
+  "batchFiles": [
+    {"path": "notification-service/Dockerfile", "language": "dockerfile", "sizeLines": 4, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    "notification-service/Dockerfile": []
+  }
+}
