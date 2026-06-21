@@ -625,8 +625,8 @@
 | Google OAuth 콜백 | `/oauth2/success` | 불필요 | — | ✅ |
 | 이용약관 | `/terms` | 불필요 | — | ✅ |
 | 개인정보처리방침 | `/privacy` | 불필요 | — | ✅ |
-| 비밀번호 찾기 | `/find-password` | 불필요 | POST /api/auth/password/send-reset | ⬜ 미구현 |
-| 비밀번호 재설정 | `/reset-password` | 불필요 | POST /api/auth/password/reset | ⬜ 미구현 |
+| 비밀번호 찾기 | `/find-password` | 불필요 | POST /api/auth/password/send-reset | ✅ |
+| 비밀번호 재설정 | `/reset-password` | 불필요 | POST /api/auth/password/reset | ✅ |
 
 ### 공통 규칙
 - JWT Access Token → `localStorage`에 저장

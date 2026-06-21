@@ -46,19 +46,49 @@ public class DisasterAlertClient {
     );
 
 
+    private static final int NUM_OF_ROWS = 20;
+
     @CircuitBreaker(name = "disasterApi", fallbackMethod = "fetchFallback")
     public List<AlertRawMessage> fetch() {
         List<AlertRawMessage> results = new ArrayList<>();
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl("https://www.safetydata.go.kr/V2/api/DSSP-IF-00247")
-                .queryParam("serviceKey", apiKey)
-                .queryParam("numOfRows", 10)
-                .queryParam("pageNo", 1)
-                .queryParam("type", "json")
-                .build(true)
-                .toUri();
 
         try {
+            // 1단계: totalCount 조회 → 마지막 페이지 계산
+            URI countUri = UriComponentsBuilder
+                    .fromHttpUrl("https://www.safetydata.go.kr/V2/api/DSSP-IF-00247")
+                    .queryParam("serviceKey", apiKey)
+                    .queryParam("numOfRows", 1)
+                    .queryParam("pageNo", 1)
+                    .queryParam("type", "json")
+                    .build(true)
+                    .toUri();
+
+            ResponseEntity<String> countResp = restTemplate.getForEntity(countUri, String.class);
+            if (!countResp.getStatusCode().is2xxSuccessful()) {
+                log.warn("[행정안전부] totalCount 조회 실패 - status: {}", countResp.getStatusCode());
+                return results;
+            }
+
+            JsonNode countRoot = objectMapper.readTree(countResp.getBody());
+            int totalCount = countRoot.path("totalCount").asInt(0);
+            if (totalCount == 0) {
+                log.info("[행정안전부] 데이터 없음 (totalCount=0)");
+                return results;
+            }
+
+            int lastPage = (int) Math.ceil((double) totalCount / NUM_OF_ROWS);
+            log.info("[행정안전부] totalCount={}, 마지막 페이지={}", totalCount, lastPage);
+
+            // 2단계: 마지막 페이지 조회 → 최신 데이터 수신
+            URI uri = UriComponentsBuilder
+                    .fromHttpUrl("https://www.safetydata.go.kr/V2/api/DSSP-IF-00247")
+                    .queryParam("serviceKey", apiKey)
+                    .queryParam("numOfRows", NUM_OF_ROWS)
+                    .queryParam("pageNo", lastPage)
+                    .queryParam("type", "json")
+                    .build(true)
+                    .toUri();
+
             ResponseEntity<String> resp = restTemplate.getForEntity(uri, String.class);
             if (!resp.getStatusCode().is2xxSuccessful()) {
                 log.warn("[행정안전부] API 응답 오류 - status: {}", resp.getStatusCode());
@@ -84,10 +114,9 @@ public class DisasterAlertClient {
                 String crtDt = item.path("CRT_DT").asText();
                 String dstSeNm = item.path("DST_SE_NM").asText();
 
-                // 오늘 날짜 데이터만 수집 (과거 재난문자 재수집 방지)
+                // 오늘 날짜 데이터만 수집
                 try {
-                    LocalDate msgDate = LocalDate.parse(crtDt, fmt);
-                    if (!msgDate.equals(today)) continue;
+                    if (!LocalDate.parse(crtDt, fmt).equals(today)) continue;
                 } catch (Exception ex) {
                     log.warn("[행정안전부] 날짜 파싱 실패 - crtDt: {}", crtDt);
                     continue;

@@ -73,7 +73,8 @@ minikube와 실제 EKS의 API가 동일하므로 취업 후 전환 비용이 최
 > **실제 구현:** K8s 매니페스트(Deployment·Service·Secret·Namespace)는 7개 서비스 모두 작성 완료했다.
 > 다만 일상 개발은 docker-compose(인프라) + `gradlew bootRun`(서비스)로 진행했고,
 > 모니터링 스택은 `safealert-monitor` 네임스페이스에 K8s 배포 완료했다.
-> **전체 K8s 실배포 + HPA·자동복구 실측은 Phase 6에서 수행한다.**
+> **전체 K8s 실배포 + HPA·자동복구 실측은 Phase 6에서 수행 완료**했다.
+> (AWS EC2 minikube에 7개 서비스 전체 배포, api-gateway HPA 2→4 스케일아웃 실측 — README 참조)
 
 ---
 
@@ -284,5 +285,5 @@ Spring에서 STOMP WebSocket 지원이 잘 되어 있어 구현 비용이 낮다
 
 **트레이드오프:**
 - 클라이언트당 하나의 WebSocket 연결 유지 → 10,000 동시 연결 시 리소스 부하
-- Notification Service HPA로 부하에 따라 인스턴스 자동 증가로 대응 (HPA는 Phase 6에서 구현·검증 예정)
+- Notification Service HPA로 부하에 따라 인스턴스 자동 증가로 대응 (HPA는 Phase 6에서 구현·검증 완료 — api-gateway 2→4 스케일아웃 실측)
 - SSE 대비 구현 복잡도 약간 높음 (STOMP 프로토콜 이해 필요)

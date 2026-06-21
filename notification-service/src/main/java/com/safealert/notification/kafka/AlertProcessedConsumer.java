@@ -55,15 +55,21 @@ public class AlertProcessedConsumer {
                 broadcastTargets = List.of(region);
             }
 
+            // 공개 이력 저장 후 createdAt을 payload에 추가하여 WebSocket 전달
+            NotificationHistory publicRecord = historyRepository.save(
+                    NotificationHistory.create(null, category, title, content, region, source, severity));
+
+            java.util.Map<String, Object> payloadMap = new java.util.LinkedHashMap<>();
+            root.fields().forEachRemaining(e -> payloadMap.put(e.getKey(), e.getValue()));
+            payloadMap.put("createdAt", publicRecord.getCreatedAt().toString());
+            String enrichedPayload = objectMapper.writeValueAsString(payloadMap);
+
             for (String code : broadcastTargets) {
-                redisTemplate.convertAndSend("alert:broadcast:" + code, message);
+                redisTemplate.convertAndSend("alert:broadcast:" + code, enrichedPayload);
             }
 
             // 전체 공개 피드 단일 발행 (TestPage용 — 중복 없이 1건)
-            redisTemplate.convertAndSend("alert:public", message);
-
-            // 공개 이력 저장 (recent API용, 구독자 유무 무관)
-            historyRepository.save(NotificationHistory.create(null, category, title, content, region, source, severity));
+            redisTemplate.convertAndSend("alert:public", enrichedPayload);
 
             List<String> subscriberTargets = "전국".equals(region) ? ALL_REGION_CODES : List.of(region);
             Set<UUID> subscriberSet = new java.util.HashSet<>();

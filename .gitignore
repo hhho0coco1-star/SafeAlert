@@ -33,3 +33,6 @@ logs/
 # Kubernetes 시크릿 파일 (생성 시 제외)
 *-secret.yaml
 *kubeconfig*
+
+# Kafka Streams 런타임 상태 저장소 (실행 시 생성)
+data/
