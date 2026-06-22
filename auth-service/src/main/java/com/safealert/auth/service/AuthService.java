@@ -23,7 +23,7 @@ import java.util.UUID;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.internet.MimeMessage;
-import java.util.Random;
+import java.security.SecureRandom;
 import org.springframework.beans.factory.annotation.Value;
 
 @Service
@@ -62,7 +62,7 @@ public class AuthService {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다");
         }
 
-        String accessToken = jwtProvider.generateAccessToken(user.getUserId());
+        String accessToken = jwtProvider.generateAccessToken(user.getUserId(), user.getRole());
         String refreshToken = jwtProvider.generateRefreshToken(user.getUserId());
 
         redisTemplate.opsForValue().set(
@@ -86,7 +86,9 @@ public class AuthService {
             throw new IllegalArgumentException("유효하지 않은 Refresh Token입니다");
         }
 
-        return jwtProvider.generateAccessToken(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        return jwtProvider.generateAccessToken(userId, user.getRole());
     }
 
     public void logout(String accessToken) {
@@ -172,7 +174,7 @@ public class AuthService {
         if (userRepository.existsByEmail(email))
             throw new IllegalArgumentException("이미 가입된 메일입니다.");
 
-        String code = String.format("%06d", new Random().nextInt(1000000));
+        String code = String.format("%06d", new SecureRandom().nextInt(1000000));
         redisTemplate.opsForValue().set(
             "email:verify:code:" + email, code, 5, TimeUnit.MINUTES);
 

@@ -171,6 +171,9 @@ public class NotificationService {
     }
 
     private void validateAdmin(String accessToken) {
-        jwtProvider.getUserId(accessToken);
+        String role = jwtProvider.getRole(accessToken);
+        if (!"ADMIN".equals(role)) {
+            throw new IllegalArgumentException("관리자 권한이 필요합니다.");
+        }
     }
 }

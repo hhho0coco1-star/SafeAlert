@@ -29,8 +29,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME:hhho0coco0@gmail.com}
-    password: ${MAIL_PASSWORD:fjrl ubln ecku opkf}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -64,7 +64,7 @@ spring:
             user-name-attribute: id
 
 jwt:
-  secret: safealert-auth-service-jwt-secret-key-must-be-at-least-256-bits-long
+  secret: ${JWT_SECRET:safealert-jwt-secret-key-must-be-at-least-256-bits-long-for-hs256}
   access-token-expiry: 900000       # 15분 (ms)
   refresh-token-expiry: 604800000   # 7일 (ms)
 

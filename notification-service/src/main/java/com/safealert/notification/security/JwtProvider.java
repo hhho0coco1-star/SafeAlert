@@ -22,4 +22,13 @@ public class JwtProvider {
                 .getPayload();
         return UUID.fromString(claims.getSubject());
     }
+
+    public String getRole(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get("role", String.class);
+    }
 }

@@ -73,7 +73,7 @@ when(userRepository.existsByEmail("test@example.com")).thenReturn(true);
         User user = User.create("test@example.com", "hashedPassword", "닉네임");
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("password123", "hashedPassword")).thenReturn(true);
-        when(jwtProvider.generateAccessToken(any())).thenReturn("accessToken");
+        when(jwtProvider.generateAccessToken(any(), any())).thenReturn("accessToken");
         when(jwtProvider.generateRefreshToken(any())).thenReturn("refreshToken");
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
 

@@ -28,9 +28,10 @@ public class JwtProvider {
         this.refreshTokenExpiry = refreshTokenExpiry;
     }
 
-    public String generateAccessToken(UUID userId) {
+    public String generateAccessToken(UUID userId, String role) {
         return Jwts.builder()
                 .subject(userId.toString()) // userId 저장
+                .claim("role", role)        // role 클레임 추가
                 .issuedAt(new Date()) // 토큰 발급시간
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiry)) // 유효시간
                 .signWith(secretKey) // 비밀키 서명

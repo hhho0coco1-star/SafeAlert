@@ -41,7 +41,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         User user = userRepository.findByOauthProviderAndOauthId(provider, oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        String accessToken = jwtProvider.generateAccessToken(user.getUserId());
+        String accessToken = jwtProvider.generateAccessToken(user.getUserId(), user.getRole());
         String refreshToken = jwtProvider.generateRefreshToken(user.getUserId());
 
         redisTemplate.opsForValue().set(

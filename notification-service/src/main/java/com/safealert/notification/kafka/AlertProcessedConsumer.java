@@ -82,11 +82,11 @@ public class AlertProcessedConsumer {
                 return;
             }
 
-            for (UUID userId : subscriberSet) {
-                NotificationHistory history = NotificationHistory.create(
-                        userId, category, title, content, region, source, severity);
-                historyRepository.save(history);
-            }
+            List<NotificationHistory> histories = subscriberSet.stream()
+                    .map(userId -> NotificationHistory.create(
+                            userId, category, title, content, region, source, severity))
+                    .toList();
+            historyRepository.saveAll(histories);
 
             log.info("알림 Push 완료 - region: {}, category: {}, 수신자: {}명", region, category, subscriberSet.size());
         } catch (Exception e) {
