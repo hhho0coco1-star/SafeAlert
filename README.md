@@ -18,7 +18,9 @@
 
 ## 데모 영상
 
-> 촬영 후 업로드 예정
+[![SafeAlert 데모 영상](https://img.youtube.com/vi/hhbrZ7_pNX4/0.jpg)](https://youtu.be/hhbrZ7_pNX4)
+
+> 로컬 실행(파트 A) + AWS EC2 Kubernetes HPA 스케일아웃(파트 B)
 
 ---
 

@@ -50,7 +50,9 @@
 
 ### 영상 편집 및 README 업데이트
 
-- [ ] 파트 A + 파트 B Clipchamp(클립챔프)에서 합치기
-- [ ] 영상 편집 (장면 3·장면 7 비중 크게)
-- [ ] ezgif.com으로 GIF 변환
-- [ ] README 상단 데모 섹션에 GIF 첨부 + 커밋
+- [x] 파트 A + 파트 B Clipchamp(클립챔프)에서 합치기 ✅
+- [x] 영상 편집 (장면 3·장면 7 비중 크게) ✅
+- [x] 포트폴리오 업로드 완료 ✅
+- [x] 유튜브 업로드 완료 ✅ (https://youtu.be/hhbrZ7_pNX4)
+- [x] README 데모 섹션 수정 — 유튜브 썸네일 + 링크 방식(A) 적용 ✅
+- [x] README 수정 후 커밋 + push ✅
