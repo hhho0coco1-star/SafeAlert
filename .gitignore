@@ -37,3 +37,10 @@ logs/
 
 # Kafka Streams 런타임 상태 저장소 (실행 시 생성)
 data/
+
+# AI 도구 캐시 / 로컬 설정 (개인 환경 전용)
+.understand-anything/
+.claude/
+
+# 개인 학습 메모
+공부/
