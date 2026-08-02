@@ -66,7 +66,7 @@ public class DisasterAlertClient {
             ResponseEntity<String> countResp = restTemplate.getForEntity(countUri, String.class);
             if (!countResp.getStatusCode().is2xxSuccessful()) {
                 log.warn("[행정안전부] totalCount 조회 실패 - status: {}", countResp.getStatusCode());
-                return results;
+                throw new IllegalStateException("행정안전부 totalCount 조회 실패 - status: " + countResp.getStatusCode());
             }
 
             JsonNode countRoot = objectMapper.readTree(countResp.getBody());
@@ -92,16 +92,16 @@ public class DisasterAlertClient {
             ResponseEntity<String> resp = restTemplate.getForEntity(uri, String.class);
             if (!resp.getStatusCode().is2xxSuccessful()) {
                 log.warn("[행정안전부] API 응답 오류 - status: {}", resp.getStatusCode());
-                return results;
+                throw new IllegalStateException("행정안전부 API 응답 오류 - status: " + resp.getStatusCode());
             }
 
             JsonNode root = objectMapper.readTree(resp.getBody());
             JsonNode body = root.path("body");
 
             if (!body.isArray()) {
-                log.warn("[행정안전부] body 배열 없음 - resultCode: {}",
-                        root.path("header").path("resultCode").asText());
-                return results;
+                String resultCode = root.path("header").path("resultCode").asText();
+                log.warn("[행정안전부] body 배열 없음 - resultCode: {}", resultCode);
+                throw new IllegalStateException("행정안전부 API 오류 응답 - resultCode: " + resultCode);
             }
 
             LocalDate today = LocalDate.now();
@@ -138,11 +138,13 @@ public class DisasterAlertClient {
             }
 
             log.info("[행정안전부] 수집 완료 - {}건 신규", results.size());
+            return results;
+        } catch (IllegalStateException e) {
+            throw e; // resultCode·상태코드 오류는 Circuit Breaker가 봐야 하므로 그대로 전파
         } catch (Exception e) {
             log.error("[행정안전부] API 호출 실패 - {}", e.getMessage());
+            throw new IllegalStateException("행정안전부 API 호출 실패", e);
         }
-
-        return results;
     }
 
     public List<AlertRawMessage> fetchFallback(Exception e) {

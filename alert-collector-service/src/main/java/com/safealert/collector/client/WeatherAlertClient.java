@@ -63,7 +63,7 @@ public class WeatherAlertClient {
 
             if (!"00".equals(resultCode)) {
                 log.warn("[기상청] API 오류 - resultCode: {}", resultCode);
-                return results;
+                throw new IllegalStateException("기상청 API 오류 응답 - resultCode: " + resultCode);
             }
 
             JsonNode items = root.path("response").path("body").path("items").path("item");
@@ -93,12 +93,14 @@ public class WeatherAlertClient {
             }
 
             log.info("[기상청] API 응답 수신 완료 - {}건 신규", results.size());
+            return results;
 
+        } catch (IllegalStateException e) {
+            throw e; // resultCode 오류는 Circuit Breaker가 봐야 하므로 그대로 전파
         } catch (Exception e) {
             log.error("[기상청] API 호출 실패 - {}", e.getMessage());
+            throw new IllegalStateException("기상청 API 호출 실패", e);
         }
-
-        return results;
     }
 
     public List<AlertRawMessage> fetchFallback(Exception e) {

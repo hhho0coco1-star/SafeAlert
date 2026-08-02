@@ -54,6 +54,7 @@ public class DustAlertClient {
 
         List<AlertRawMessage> results = new ArrayList<>();
         String today = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        int failCount = 0;
 
         for (Map.Entry<String, String> entry : SIDO_TO_CODE.entrySet()) {
             String sido = entry.getKey();
@@ -75,6 +76,13 @@ public class DustAlertClient {
                 log.info("[환경부] {} API 응답 수신 완료", sido);
 
                 JsonNode root = objectMapper.readTree(response);
+                String resultCode = root.path("response").path("header").path("resultCode").asText();
+                if (!"00".equals(resultCode)) {
+                    log.warn("[환경부] {} API 오류 - resultCode: {}", sido, resultCode);
+                    failCount++;
+                    continue;
+                }
+
                 JsonNode items = root.path("response").path("body").path("items");
                 if (!items.isArray()) continue;
 
@@ -99,7 +107,13 @@ public class DustAlertClient {
                 }
             } catch (Exception e) {
                 log.error("[환경부] {} API 호출 실패 - {}", sido, e.getMessage());
+                failCount++;
             }
+        }
+
+        if (failCount == SIDO_TO_CODE.size()) {
+            // 일부 지역 실패는 감내하되(다른 지역은 계속 수집), 전 지역이 다 실패하면 실제 장애로 보고 Circuit Breaker에 알린다
+            throw new IllegalStateException("환경부 API 전체 지역 호출 실패 (" + failCount + "/" + SIDO_TO_CODE.size() + ")");
         }
 
         return results;
