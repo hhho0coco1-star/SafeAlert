@@ -40,7 +40,7 @@
 - **이메일 인증**: 회원가입 이메일 인증 코드, 비밀번호 찾기/재설정
 - **구독 설정**: 시/군/구 단위 지역 구독 (최대 10개), 카테고리(기상·재난·미세먼지) 구독
 - **실시간 알림**: WebSocket(STOMP)으로 구독 지역 재난 알림 5초 이내 수신
-- **공공 API 수집**: 기상청·행정안전부·환경부 API 1시간 주기 자동 수집 + Circuit Breaker
+- **공공 API 수집**: 기상청·행정안전부 API 5분 주기, 환경부(미세먼지) API 1시간 주기 자동 수집 + Circuit Breaker
 - **알림 이력**: 수신한 알림 목록 조회, 지역·카테고리 필터링
 - **관리자 기능**: 수동 알림 발송, 회원 관리, 통계 대시보드
 - **API Gateway**: JWT 인증, Rate Limiting(분당 60건/IP), 라우팅
@@ -127,7 +127,7 @@ graph TB
 | **Auth Service** | 8081 | 회원가입, 로그인, JWT 발급, OAuth2 소셜 로그인, 이메일 인증 | Spring Boot, PostgreSQL, Redis |
 | **Subscription Service** | 8085 | 시/군/구 단위 지역 구독, Outbox 이벤트 발행 | Spring Boot, PostgreSQL, Kafka |
 | **Notification Service** | 8083 | Kafka 소비, WebSocket Push, 알림 이력 저장 | Spring Boot, WebSocket, Kafka, Redis |
-| **Alert Collector** | 8086 | 공공 API 3종 1시간 주기 수집, Circuit Breaker | Spring Boot, Resilience4j, Kafka |
+| **Alert Collector** | 8086 | 공공 API 3종 수집(기상·재난 5분 / 미세먼지 1시간), Circuit Breaker | Spring Boot, Resilience4j, Kafka |
 | **Alert Processor** | 8087 | 지역 분류, 중복 필터, MongoDB 저장 (Replica 3) | Spring Boot, Kafka, MongoDB |
 | **React Frontend** | 5173 | UI, 실시간 알림 수신, 관리자 대시보드 | React 18, Vite, Tailwind CSS |
 
