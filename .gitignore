@@ -44,3 +44,7 @@ data/
 
 # 개인 학습 메모
 공부/
+
+# 개인 면접 준비 자료 (로컬 전용 — bd2a994에서 추적 제외 결정)
+docs/1[2-7]*면접*
+docs/17-interview-full-study-note.*

@@ -48,6 +48,22 @@
   - AuthService.java: import `java.util.Random` → `java.security.SecureRandom` 교체
   - 177번째 줄: `new Random().nextInt()` → `new SecureRandom().nextInt()` 변경
 
+### 🔵 런타임 검증 (docker-compose up 필요)
+
+- [ ] **validateAdmin() role 검증 확인**
+  - 일반 유저 로그인 → `GET /api/admin/stats` 호출 → 400 응답 확인
+  - 관리자 로그인 → 동일 API 호출 → 정상 응답 확인
+
+- [ ] **Docker JWT Secret 수정 검증**
+  - `docker-compose up` 실행 후 로그인 → 구독 조회·알림 API 호출 → 401 없이 정상 응답 확인
+
+- [ ] **Gmail 비밀번호 환경변수화 검증**
+  - 회원가입 → 이메일 인증 코드 실제 수신 확인
+
+- [ ] **공공 API 키 환경변수화 검증**
+  - alert-collector-service 기동 로그에서 수집 성공 메시지 확인
+  - `[스케줄러] 기상청 수집 완료 - N건` 로그 출력 여부
+
 ### 영상 편집 및 README 업데이트
 
 - [x] 파트 A + 파트 B Clipchamp(클립챔프)에서 합치기 ✅
